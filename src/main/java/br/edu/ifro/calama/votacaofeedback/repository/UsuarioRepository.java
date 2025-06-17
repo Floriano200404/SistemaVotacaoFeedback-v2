@@ -12,7 +12,7 @@ public class UsuarioRepository {
         return null;
     }
 
-    public boolean autenticar(String login, String senha) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   public boolean autenticar(String login, String senha) {
+    return "admin".equals(login) && "123".equals(senha);
+}
 }
