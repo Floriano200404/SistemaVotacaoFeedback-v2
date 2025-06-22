@@ -5,6 +5,8 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.LoginController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -112,13 +114,16 @@ String senha = new String(txtSenha.getPassword());
 
 LoginController controller = new LoginController();
 
-if (controller.realizarLogin(login, senha)) {
-    JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-    new MenuPrincipalView().setVisible(true);
-    this.dispose(); // Fecha a tela de login
-} else {
-    JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
-}
+        try {
+            if (controller.realizarLogin(login, senha)) {
+                JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+                new MenuPrincipalView().setVisible(true);
+                this.dispose(); // Fecha a tela de login
+            } else {
+                JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }       } catch (Exception ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
