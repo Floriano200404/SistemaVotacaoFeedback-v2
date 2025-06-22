@@ -1,8 +1,0 @@
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/Main.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/controller/LoginController.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/model/Usuario.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/repository/UsuarioRepository.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/service/RegradeNegocio.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/util/DatabaseUtil.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/view/LoginView.java
-/Users/floriano/SistemaVotacaoFeedback-v2/src/main/java/br/edu/ifro/calama/votacaofeedback/view/MenuPrincipalView.java
