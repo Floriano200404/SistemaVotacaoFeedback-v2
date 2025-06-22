@@ -1,0 +1,20 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Target directory
+/target/
+
+# NetBeans specific
+nb-configuration.xml
+.nb-gradle/
+
+# Mac specific
+.DS_Store
