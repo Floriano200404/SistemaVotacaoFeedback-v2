@@ -26,12 +26,9 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         painelFundo = new javax.swing.JPanel();
         painelSidebar = new javax.swing.JPanel();
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        labelIconeMenu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -46,12 +43,22 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         painelSidebar.setLayout(painelSidebarLayout);
         painelSidebarLayout.setHorizontalGroup(
             painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 134, Short.MAX_VALUE)
+            .addGap(0, 135, Short.MAX_VALUE)
         );
         painelSidebarLayout.setVerticalGroup(
             painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 651, Short.MAX_VALUE)
         );
+
+        labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu2.png"))); // NOI18N
+        labelIconeMenu.setBounds(new java.awt.Rectangle(220, 10, 40, 40));
+        labelIconeMenu.setMaximumSize(new java.awt.Dimension(40, 40));
+        labelIconeMenu.setMinimumSize(new java.awt.Dimension(40, 40));
+        labelIconeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconeMenuMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,18 +66,57 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelSidebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 860, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(638, 638, 638)
+                        .addComponent(painelFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelIconeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 456, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(labelIconeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(468, 468, 468)
+                .addComponent(painelFundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(painelSidebar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
+       System.out.println("CLIQUE DETECTADO!"); // Nosso teste para confirmar a conexão
+
+// Código da animação em uma nova Thread
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        // COLE ISTO NO LUGAR:
+if (painelSidebar.getWidth() > 0) { // Se a largura for MAIOR QUE ZERO, feche!
+    try {
+        for (int i = painelSidebar.getWidth(); i >= 0; i--) {
+            painelSidebar.setSize(i, 600); 
+            Thread.sleep(1); 
+        }
+    } catch (InterruptedException ex) {
+        System.out.println(ex);
+    }
+} else { // Senão (se for 0), abra!
+    try {
+        for (int i = 0; i <= 210; i++) {
+            painelSidebar.setSize(i, 600);
+            Thread.sleep(1);
+        }
+    } catch (InterruptedException ex) {
+        System.out.println(ex);
+    }
+}
+    }
+}).start();
+    }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -108,7 +154,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JPanel painelFundo;
     private javax.swing.JPanel painelSidebar;
     // End of variables declaration//GEN-END:variables
