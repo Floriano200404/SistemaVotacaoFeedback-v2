@@ -32,7 +32,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
-        setPreferredSize(new java.awt.Dimension(1000, 600));
 
         painelFundo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -50,7 +49,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             .addGap(0, 651, Short.MAX_VALUE)
         );
 
-        labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu2.png"))); // NOI18N
+        labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu.png"))); // NOI18N
         labelIconeMenu.setBounds(new java.awt.Rectangle(220, 10, 40, 40));
         labelIconeMenu.setMaximumSize(new java.awt.Dimension(40, 40));
         labelIconeMenu.setMinimumSize(new java.awt.Dimension(40, 40));
