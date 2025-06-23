@@ -20,7 +20,6 @@ public class UsuarioRepository {
         String sql = "INSERT INTO Usuarios (nome, CPF, matricula, email, senha, Tipo_usuario) VALUES (?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
 
-        // Usamos Statement.RETURN_GENERATED_KEYS para poder pegar o ID de volta
         try (Connection conexao = DatabaseUtil.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -33,7 +32,6 @@ public class UsuarioRepository {
 
             ps.executeUpdate();
 
-            // Pega o ID que o banco gerou para o novo usuário
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     idGerado = rs.getInt(1);
@@ -61,7 +59,6 @@ public class UsuarioRepository {
         }
     }
     
-    // ... seu método autenticar continua aqui ...
 
     public Usuario autenticar(String login, String senha) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

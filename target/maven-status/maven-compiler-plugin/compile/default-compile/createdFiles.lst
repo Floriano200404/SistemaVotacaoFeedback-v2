@@ -7,11 +7,14 @@ br\edu\ifro\calama\votacaofeedback\repository\UsuarioRepository.class
 br\edu\ifro\calama\votacaofeedback\view\MenuPrincipalView.class
 br\edu\ifro\calama\votacaofeedback\util\DatabaseUtil.class
 br\edu\ifro\calama\votacaofeedback\util\TesteConexao.class
+br\edu\ifro\calama\votacaofeedback\view\CadastroView$jPainelGradient.class
+br\edu\ifro\calama\votacaofeedback\view\CadastroView$6.class
 br\edu\ifro\calama\votacaofeedback\view\CadastroView$3.class
 br\edu\ifro\calama\votacaofeedback\view\LoginView$1.class
 br\edu\ifro\calama\votacaofeedback\view\CadastroView$2.class
 br\edu\ifro\calama\votacaofeedback\controller\LoginController.class
 br\edu\ifro\calama\votacaofeedback\view\CadastroView$1.class
+br\edu\ifro\calama\votacaofeedback\view\CadastroView$7.class
 br\edu\ifro\calama\votacaofeedback\controller\CadastroController.class
 br\edu\ifro\calama\votacaofeedback\view\MenuPrincipalView$1.class
 br\edu\ifro\calama\votacaofeedback\view\LoginView$2.class

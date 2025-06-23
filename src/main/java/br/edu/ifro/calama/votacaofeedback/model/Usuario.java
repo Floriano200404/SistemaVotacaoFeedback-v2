@@ -9,7 +9,6 @@ public class Usuario {
     private String cpf;
     private String matricula;
 
-    // Construtores, Getters e Setters...
     public Usuario() {}
 
     public int getId() { return id; }
