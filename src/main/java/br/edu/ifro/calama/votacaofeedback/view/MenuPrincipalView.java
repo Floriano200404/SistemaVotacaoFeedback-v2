@@ -13,9 +13,20 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     /**
      * Creates new form MenuPrincipalView
      */
-    public MenuPrincipalView() {
-        initComponents();
-    }
+   
+   public MenuPrincipalView() {
+    initComponents();
+
+  
+
+    painelPrincipal.setLayout(null);
+    painelSidebar.setBounds(0, 0, 210, 550);
+    painelConteudo.setBounds(210, 0, 790, 550);
+    painelPrincipal.revalidate();
+    painelPrincipal.repaint();
+
+}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,57 +37,137 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        painelHeader = new javax.swing.JPanel();
+        labelIconeMenu = new javax.swing.JLabel();
+        painelPrincipal = new javax.swing.JPanel();
+        painelSidebar = new javax.swing.JPanel();
+        painelConteudo = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 204));
+
+        painelHeader.setBackground(new java.awt.Color(0, 0, 51));
+        painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
+
+        labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu.png"))); // NOI18N
+        labelIconeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconeMenuMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelHeaderLayout = new javax.swing.GroupLayout(painelHeader);
+        painelHeader.setLayout(painelHeaderLayout);
+        painelHeaderLayout.setHorizontalGroup(
+            painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelHeaderLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(labelIconeMenu)
+                .addContainerGap(350, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        painelHeaderLayout.setVerticalGroup(
+            painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelHeaderLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelIconeMenu)
+                .addGap(15, 15, 15))
         );
+
+        getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
+
+        painelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
+        painelSidebar.setBounds(0,0,210,550);
+
+        javax.swing.GroupLayout painelSidebarLayout = new javax.swing.GroupLayout(painelSidebar);
+        painelSidebar.setLayout(painelSidebarLayout);
+        painelSidebarLayout.setHorizontalGroup(
+            painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 90, Short.MAX_VALUE)
+        );
+        painelSidebarLayout.setVerticalGroup(
+            painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+
+        painelPrincipal.add(painelSidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 250));
+
+        javax.swing.GroupLayout painelConteudoLayout = new javax.swing.GroupLayout(painelConteudo);
+        painelConteudo.setLayout(painelConteudoLayout);
+        painelConteudoLayout.setHorizontalGroup(
+            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 310, Short.MAX_VALUE)
+        );
+        painelConteudoLayout.setVerticalGroup(
+            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+
+        painelPrincipal.add(painelConteudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 310, 250));
+
+        getContentPane().add(painelPrincipal, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
+        // Animação da sidebar em uma nova Thread para não travar a interface
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
+        if (painelSidebar.getWidth() > 0) {
+            try {
+                // Animação para fechar, começando da largura atual
+                for (int i = painelSidebar.getWidth(); i >= 0; i--) {
+                    painelSidebar.setSize(i, painelSidebar.getHeight()); 
+                    Thread.sleep(1); 
+                }
+            } catch (InterruptedException ex) {
+                System.out.println(ex);
+            }
+        } else {
+            try {
+                // Animação para abrir, de 0 até a largura desejada (210)
+                for (int i = 0; i <= 210; i++) {
+                    painelSidebar.setSize(i, painelSidebar.getHeight());
+                    Thread.sleep(1);
+                }
+            } catch (InterruptedException ex) {
+                System.out.println(ex);
+            }
+        }
+    }
+}).start();
+    }//GEN-LAST:event_labelIconeMenuMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuPrincipalView().setVisible(true);
-            }
-        });
+ public static void main(String args[]) {
+    /* Set the FlatLaf look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    try {
+        javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
+    } catch( Exception ex ) {
+        System.err.println( "Failed to initialize LaF" );
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new MenuPrincipalView().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel labelIconeMenu;
+    private javax.swing.JPanel painelConteudo;
+    private javax.swing.JPanel painelHeader;
+    private javax.swing.JPanel painelPrincipal;
+    private javax.swing.JPanel painelSidebar;
     // End of variables declaration//GEN-END:variables
 }
