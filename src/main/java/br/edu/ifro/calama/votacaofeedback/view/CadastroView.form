@@ -230,7 +230,6 @@
             <Component class="javax.swing.JTextField" name="txtNome">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="Nome do Usu&#xe1;rio"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomeActionPerformed"/>
@@ -239,7 +238,6 @@
             <Component class="javax.swing.JTextField" name="txtEmail">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="aluno@estudante.ifro.edu.br"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
@@ -248,7 +246,6 @@
             <Component class="javax.swing.JPasswordField" name="txtSenha">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="************"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbxPerfilInstitucional">
@@ -296,7 +293,6 @@
             <Component class="javax.swing.JTextField" name="txtCpf">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="000.000.000-00"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCpfActionPerformed"/>
@@ -305,7 +301,6 @@
             <Component class="javax.swing.JTextField" name="txtMatricula">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="0000000000000"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="JlabConfirmarSenha">
@@ -323,7 +318,6 @@
             <Component class="javax.swing.JPasswordField" name="pwdConfirmarSenha">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="************"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnCadastrar">

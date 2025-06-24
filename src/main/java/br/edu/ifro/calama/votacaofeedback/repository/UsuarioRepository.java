@@ -10,14 +10,8 @@ import java.sql.Statement;
 
 public class UsuarioRepository {
 
-    /**
-     * Cadastra um novo usuário e retorna o ID gerado.
-     * @param usuario O objeto Usuario com os dados a serem inseridos.
-     * @return O ID (int) do usuário recém-criado.
-     * @throws java.sql.SQLException
-     */
     public int cadastrar(Usuario usuario) throws SQLException, Exception {
-        String sql = "INSERT INTO Usuarios (nome, CPF, matricula, email, senha, Tipo_usuario) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Usuarios (nome, CPF, matricula, email, senha, Tipo_usuario) VALUES (?, ?, ?, ?, SHA2(?, 256), ?)";
         int idGerado = -1;
 
         try (Connection conexao = DatabaseUtil.getConnection();
@@ -41,26 +35,36 @@ public class UsuarioRepository {
         return idGerado;
     }
 
-    /**
-     * Associa um usuário a um grupo na tabela de junção.
-     * @param idUsuario O ID do usuário.
-     * @param idGrupo O ID do grupo.
-     * @throws java.sql.SQLException
-     */
     public void associarUsuarioAGrupo(int idUsuario, int idGrupo) throws SQLException, Exception {
         String sql = "INSERT INTO Usuario_Grupos (id_usuario, id_grupo) VALUES (?, ?)";
-
         try (Connection conexao = DatabaseUtil.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql)) {
-
             ps.setInt(1, idUsuario);
             ps.setInt(2, idGrupo);
             ps.executeUpdate();
         }
     }
-    
 
-    public Usuario autenticar(String login, String senha) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Usuario autenticar(String email, String senha) throws SQLException, Exception {
+        String sql = "SELECT * FROM Usuarios WHERE email = ? AND senha = SHA2(?, 256)";
+        Usuario usuarioEncontrado = null;
+
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement ps = conexao.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setString(2, senha);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    usuarioEncontrado = new Usuario();
+                    usuarioEncontrado.setId(rs.getInt("id_usuario"));
+                    usuarioEncontrado.setNome(rs.getString("nome"));
+                    usuarioEncontrado.setEmail(rs.getString("email"));
+                    usuarioEncontrado.setTipo_usuario(rs.getString("Tipo_usuario"));
+                }
+            }
+        }
+        return usuarioEncontrado;
     }
 }

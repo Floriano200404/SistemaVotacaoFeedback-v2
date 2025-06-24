@@ -49,9 +49,15 @@ public class CadastroView extends javax.swing.JFrame {
             
             Color color1 = new Color(9, 32, 63);
             Color color2 = new Color(0, 0, 0);
-            GradientPaint gp = new GradientPaint (0, 0, color1, 180, height, color2);
+            
+            int pontoTransicaoX = (int) (width * 0.25);
+
+            g2d.setColor(color1);
+            g2d.fillRect(0, 0, pontoTransicaoX, height);
+            
+            GradientPaint gp = new GradientPaint (pontoTransicaoX, 0, color1, width, 0, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, width, height);
+            g2d.fillRect(pontoTransicaoX, 0, width - pontoTransicaoX, height);
         }
     }
 
@@ -113,7 +119,6 @@ public class CadastroView extends javax.swing.JFrame {
         JlabPerfil.setText("Perfil Institucional:");
 
         txtNome.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtNome.setText("Nome do Usuário");
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
@@ -121,7 +126,6 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         txtEmail.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtEmail.setText("aluno@estudante.ifro.edu.br");
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -129,7 +133,6 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         txtSenha.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtSenha.setText("************");
 
         cbxPerfilInstitucional.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxPerfilInstitucional.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +152,6 @@ public class CadastroView extends javax.swing.JFrame {
         JlabMatricula.setText("Matrícula:");
 
         txtCpf.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtCpf.setText("000.000.000-00");
         txtCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCpfActionPerformed(evt);
@@ -157,7 +159,6 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         txtMatricula.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtMatricula.setText("0000000000000");
 
         JlabConfirmarSenha.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         JlabConfirmarSenha.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,7 +166,6 @@ public class CadastroView extends javax.swing.JFrame {
         JlabConfirmarSenha.setText("Confimar Senha:");
 
         pwdConfirmarSenha.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        pwdConfirmarSenha.setText("************");
 
         btnCadastrar.setBackground(new java.awt.Color(0, 149, 255));
         btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -312,13 +312,21 @@ public class CadastroView extends javax.swing.JFrame {
     String senha = new String(txtSenha.getPassword());
     String perfilSelecionado = (String) cbxPerfilInstitucional.getSelectedItem();
 
-
+    if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || perfilSelecionado.contains("Selecionar")) {
+        JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos e selecione um perfil.", "Erro", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    
     try {
         CadastroController controller = new CadastroController();
         controller.processarCadastro(nome, cpf, matricula, email, senha, perfilSelecionado);
         
-        JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso! Faça o login para continuar.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         
+        LoginView telaLogin = new LoginView();
+        telaLogin.setVisible(true);
+        this.dispose();
         
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage(), "Erro de Banco de Dados", JOptionPane.ERROR_MESSAGE);

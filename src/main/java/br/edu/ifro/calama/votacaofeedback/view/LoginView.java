@@ -34,19 +34,17 @@ public class LoginView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         txtSenha = new javax.swing.JPasswordField();
-        txtLogin = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
+        btnCadastre_se = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Login");
 
-        txtSenha.setText("jPasswordField1");
-
-        txtLogin.setText("jTextField1");
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
 
@@ -57,27 +55,40 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
+        btnCadastre_se.setText("cadastra-se");
+        btnCadastre_se.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastre_seActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtLogin)
-                    .addComponent(btnEntrar)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtEmail)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnEntrar)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnCadastre_se)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(btnEntrar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntrar)
+                    .addComponent(btnCadastre_se))
                 .addContainerGap())
         );
 
@@ -109,26 +120,51 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
- String login = txtLogin.getText();
-String senha = new String(txtSenha.getPassword());
+    String email = txtEmail.getText().trim();
+    String senha = new String(txtSenha.getPassword()).trim();
+    
+    System.out.println("--- 1. DENTRO DA VIEW ---");
+    System.out.println("Email lido do campo: [" + email + "]");
+    System.out.println("Senha lida do campo: [" + senha + "]");
+    
+    if (email.isEmpty() || senha.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, preencha ambos os campos.", "Erro", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-LoginController controller = new LoginController();
-
+    LoginController controller = new LoginController();
+    boolean loginBemSucedido = false;
         try {
-            if (controller.realizarLogin(login, senha)) {
-                JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-                new MenuPrincipalView().setVisible(true);
-                this.dispose(); // Fecha a tela de login
-            } else {
-                JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }       } catch (Exception ex) {
+            loginBemSucedido = controller.realizarLogin(email, senha);
+        } catch (Exception ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        if (loginBemSucedido) {
+        // Se o login deu certo, abre a tela do menu principal
+        MenuPrincipalView menu = new MenuPrincipalView();
+        menu.setVisible(true);
+        
+        // E fecha a tela de login
+        this.dispose();
+        } else {
+        // Se o login falhou, mostra uma mensagem de erro
+        JOptionPane.showMessageDialog(this, "Email ou senha incorretos.", "Falha no Login", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
-    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void btnCadastre_seActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastre_seActionPerformed
+    CadastroView telaCadastro = new CadastroView();
+    
+    telaCadastro.setVisible(true);
+    
+    this.dispose();
+
+    }//GEN-LAST:event_btnCadastre_seActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,6 +195,7 @@ LoginController controller = new LoginController();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new LoginView().setVisible(true);
             }
@@ -166,10 +203,11 @@ LoginController controller = new LoginController();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCadastre_se;
     private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtLogin;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
