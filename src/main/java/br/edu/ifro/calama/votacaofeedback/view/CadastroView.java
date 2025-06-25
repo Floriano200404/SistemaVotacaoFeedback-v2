@@ -94,7 +94,7 @@ public class CadastroView extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(11, 80, 127));
 
         jPanel1.setBackground(new java.awt.Color(11, 20, 81));
 

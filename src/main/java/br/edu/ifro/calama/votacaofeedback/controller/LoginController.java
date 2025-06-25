@@ -4,13 +4,10 @@
  */
 package br.edu.ifro.calama.votacaofeedback.controller;
 
-// Imports necessários para a classe funcionar
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.repository.UsuarioRepository;
 
-/**
- * Controller responsável pela lógica de login.
- */
+
 public class LoginController {
 
     public boolean realizarLogin(String email, String senha) throws Exception {
