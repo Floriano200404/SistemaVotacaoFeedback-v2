@@ -18,6 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 public class ToastUtil extends JDialog {
@@ -45,10 +46,12 @@ public class ToastUtil extends JDialog {
 
         JLabel label = new JLabel(message);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("Arial", Font.BOLD, 14));
-
+        label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 15, 5, 15);
+        gbc.insets = new Insets(10, 20, 10, 20);
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(label, gbc);
 
         add(panel);

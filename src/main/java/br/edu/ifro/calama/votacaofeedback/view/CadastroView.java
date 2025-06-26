@@ -15,11 +15,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.PlainDocument;
 
@@ -35,6 +38,17 @@ public class CadastroView extends javax.swing.JFrame {
     public CadastroView() throws java.text.ParseException {
     initComponents(); 
 
+    this.setLocationRelativeTo(null); 
+
+    jPanelDegrade.setFocusable(true);
+
+    jPanelDegrade.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            jPanelDegrade.requestFocusInWindow();
+        }
+    });
+    
     cbxPerfilInstitucional.removeAllItems(); 
 
     cbxPerfilInstitucional.addItem("Selecionar Perfil Institucional");
@@ -55,19 +69,17 @@ public class CadastroView extends javax.swing.JFrame {
     PlainDocument docMatricula = (PlainDocument) txtMatricula.getDocument();
     docMatricula.setDocumentFilter(new FiltroNumerosUtil());
     
-    final String placeholderMatricula = "0000000000000"; // Ou a quantidade de zeros desejada
+    final String placeholderMatricula = "0000000000000";
     final Color corPlaceholder = Color.GRAY;
     final Color corDigitacao = Color.BLACK;
 
-    // 2. Configure o estado inicial do campo de matrícula
     txtMatricula.setText(placeholderMatricula);
     txtMatricula.setForeground(corPlaceholder);
 
     txtMatricula.addFocusListener(new FocusAdapter() {
     @Override
     public void focusGained(FocusEvent e) {
-        // Quando o usuário CLICA DENTRO do campo:
-        // Se o texto estiver cinza, limpa o campo e muda a cor para preto.
+
         if (txtMatricula.getForeground().equals(corPlaceholder)) {
             txtMatricula.setText("");
             txtMatricula.setForeground(corDigitacao);
@@ -76,8 +88,6 @@ public class CadastroView extends javax.swing.JFrame {
 
     @Override
     public void focusLost(FocusEvent e) {
-        // Quando o usuário CLICA FORA do campo:
-        // Se o campo estiver vazio, recoloca o texto do placeholder e a cor cinza.
         if (txtMatricula.getText().isEmpty()) {
             txtMatricula.setForeground(corPlaceholder);
             txtMatricula.setText(placeholderMatricula);
@@ -94,7 +104,7 @@ public class CadastroView extends javax.swing.JFrame {
     
     try {
        MaskFormatter mascaraCpf = new MaskFormatter("###.###.###-##");
-       mascaraCpf.setPlaceholderCharacter(' ');      
+       mascaraCpf.setPlaceholderCharacter('_');      
        mascaraCpf.install(txtCpf);
         
     } catch (ParseException e) {
@@ -126,7 +136,11 @@ public class CadastroView extends javax.swing.JFrame {
                 txtCpf.setText(placeholderCpf);
             }
         }
-    });  
+    });
+    SwingUtilities.invokeLater(() -> {
+    jPanelDegrade.requestFocusInWindow();
+    });
+    
 }
     class  jPainelGradient extends JPanel {
         @Override
@@ -244,6 +258,11 @@ public class CadastroView extends javax.swing.JFrame {
 
         txtCpf.setMinimumSize(new java.awt.Dimension(64, 23));
         txtCpf.setPreferredSize(new java.awt.Dimension(64, 23));
+        txtCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCpfActionPerformed(evt);
+            }
+        });
 
         txtMatricula.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
@@ -343,7 +362,7 @@ public class CadastroView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanelFormLayout.createSequentialGroup()
                                 .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(164, 164, 164)))
+                                .addGap(85, 85, 85)))
                         .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxPerfilInstitucional, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JlabPerfil))
@@ -510,6 +529,10 @@ public class CadastroView extends javax.swing.JFrame {
 
     this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfActionPerformed
 
     /**
      * @param args the command line arguments
