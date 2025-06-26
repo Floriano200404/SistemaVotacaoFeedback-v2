@@ -3,128 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
-
 /**
  *
  * @author Aluno
  */
 public class MenuPrincipalView extends javax.swing.JFrame {
-
+private java.util.List<javax.swing.JButton> botoesDoMenu;
+    private javax.swing.JButton botaoAtivo;
     /**
      * Creates new form MenuPrincipalView
      */
    
    public MenuPrincipalView() {
     initComponents();
+    inicializarMenuLateral();
 
-criarVotacao.setOpaque(false);
-criarVotacao.setContentAreaFilled(false);
-criarVotacao.setBorderPainted(false);
-criarVotacao.setFocusPainted(false);
-
-criarVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-criarVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
-
-criarVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-
-try {
-    criarVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/criarVoto.png")));
-} catch (Exception e) {
-    System.out.println("ERRO: Ícone do botão 'Criar Votação' não encontrado!");
-    // Se não achar o ícone, pelo menos o texto fica certo.
-    criarVotacao.setText("Criar Votação");
-}
-
-  
-
-
-
-aprovarVotacao.setOpaque(false);
-aprovarVotacao.setContentAreaFilled(false);
-aprovarVotacao.setBorderPainted(false);
-aprovarVotacao.setFocusPainted(false);
-
-aprovarVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-aprovarVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
-
-aprovarVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-
-try {
-    aprovarVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/list_check.png")));
-} catch (Exception e) {
-    System.out.println("ERRO: Ícone do botão 'aprovar votação' não encontrado!");
-    // Se não achar o ícone, pelo menos o texto fica certo.
-    aprovarVotacao.setText("aprovar votação");
-}
-
-  
-
-gerenciaVotacao.setOpaque(false);
-gerenciaVotacao.setContentAreaFilled(false);
-gerenciaVotacao.setBorderPainted(false);
-gerenciaVotacao.setFocusPainted(false);
-
-gerenciaVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-gerenciaVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
-
-gerenciaVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-try {
-    gerenciaVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/configpast.png")));
-} catch (Exception e) {
-    System.out.println("ERRO: Ícone do botão 'gerencia votação' não encontrado!");
-    gerenciaVotacao.setText("gerencia votação");
-}
-
-
-participarVotacao.setOpaque(false);
-participarVotacao.setContentAreaFilled(false);
-participarVotacao.setBorderPainted(false);
-participarVotacao.setFocusPainted(false);
-
-participarVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-participarVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
-
-participarVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-try {
-    participarVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/peoplemais.png")));
-} catch (Exception e) {
-    System.out.println("ERRO: Ícone do botão 'Participar Votação' não encontrado!");
-    participarVotacao.setText("Participar de Votação");
-}
-
-
-
-
-votoArquivado.setOpaque(false);
-votoArquivado.setContentAreaFilled(false);
-votoArquivado.setBorderPainted(false);
-votoArquivado.setFocusPainted(false);
-
-votoArquivado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-votoArquivado.setForeground(new java.awt.Color(50, 50, 50)); 
-
-votoArquivado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-try {
-    votoArquivado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/arquivada.png")));
-} catch (Exception e) {
-    System.out.println("ERRO: Ícone do botão 'Votações Arquivadas' não encontrado!");
-    votoArquivado.setText("Votações Arquivadas");
-}
-
-
-for (javax.swing.JButton btn : new javax.swing.JButton[]{criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado}) {
-    btn.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, btn.getPreferredSize().height));
-}
 }
     
 
@@ -185,7 +78,7 @@ for (javax.swing.JButton btn : new javax.swing.JButton[]{criarVotacao, participa
         painelConteudo.setLayout(painelConteudoLayout);
         painelConteudoLayout.setHorizontalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 517, Short.MAX_VALUE)
+            .addGap(0, 497, Short.MAX_VALUE)
         );
         painelConteudoLayout.setVerticalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +88,7 @@ for (javax.swing.JButton btn : new javax.swing.JButton[]{criarVotacao, participa
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
         painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
-        painelSidebar.setPreferredSize(new java.awt.Dimension(210, 0));
+        painelSidebar.setPreferredSize(new java.awt.Dimension(230, 0));
         painelSidebar.setLayout(new javax.swing.BoxLayout(painelSidebar, javax.swing.BoxLayout.Y_AXIS));
         painelSidebar.add(menutxt);
 
@@ -287,9 +180,110 @@ new Thread(new Runnable() {
         // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
+   // ===================================================================
+//  INÍCIO DA NOVA LÓGICA DO MENU LATERAL (COPIE TUDO ABAIXO)
+// ===================================================================
+
+// MÉTODO PRINCIPAL QUE ORGANIZA TUDO
+private void inicializarMenuLateral() {
+    // Coloca todos os botões em uma lista para fácil acesso
+    botoesDoMenu = java.util.Arrays.asList(criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado);
+
+    // 1. Aplica o estilo visual INICIAL a cada botão
+    configurarBotao(criarVotacao, "criarVoto.png");
+    configurarBotao(participarVotacao, "peoplemais.png");
+    configurarBotao(gerenciaVotacao, "configpast.png");
+    configurarBotao(aprovarVotacao, "list_check.png");
+    configurarBotao(votoArquivado, "arquivada.png");
+
+    // 2. Adiciona os eventos de mouse e clique a todos os botões
+    for (javax.swing.JButton botao : botoesDoMenu) {
+        adicionarListeners(botao);
+    }
+
+    // 3. Define o estado inicial (primeiro botão como ativo)
+    botaoAtivo = criarVotacao;
+    atualizarAparenciaBotoes();
+}
+
+// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
+private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
+    // Estilo visual "flat"
+    botao.setOpaque(false);
+    botao.setContentAreaFilled(false);
+    botao.setBorderPainted(false);
+    botao.setFocusPainted(false);
+    
+    // Alinhamento e cursor
+    botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+    botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    
+    // Espaçamentos internos e entre ícone/texto
+    botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
+    botao.setIconTextGap(15);
+
+    // Fonte
+    botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+
+    // Tenta carregar o ícone
+    try {
+        botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
+    } catch (Exception e) {
+        System.out.println("ERRO ao carregar ícone: " + nomeIcone);
+    }
+}
+
+// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
+private void atualizarAparenciaBotoes() {
+    final java.awt.Color COR_TEXTO_ATIVO = java.awt.Color.WHITE;
+    final java.awt.Color COR_TEXTO_INATIVO = new java.awt.Color(50, 50, 50);
+    final java.awt.Color COR_FUNDO_ATIVO = new java.awt.Color(88, 101, 242); // Azul
+
+    for (javax.swing.JButton botao : botoesDoMenu) {
+        if (botao == botaoAtivo) {
+            // Estilo do botão ATIVO
+            botao.setOpaque(true);
+            botao.setBackground(COR_FUNDO_ATIVO);
+            botao.setForeground(COR_TEXTO_ATIVO);
+        } else {
+            // Estilo do botão INATIVO
+            botao.setOpaque(false);
+            botao.setBackground(getBackground()); 
+            botao.setForeground(COR_TEXTO_INATIVO);
+        }
+    }
+}
+
+// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
+private void adicionarListeners(javax.swing.JButton botao) {
+    final java.awt.Color COR_HOVER = new java.awt.Color(225, 225, 225);
+
+    botao.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            if (botao != botaoAtivo) {
+                botao.setBackground(COR_HOVER);
+                botao.setOpaque(true);
+            }
+        }
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            atualizarAparenciaBotoes();
+        }
+    });
+
+    botao.addActionListener(e -> {
+        botaoAtivo = botao;
+        atualizarAparenciaBotoes();
+    });
+}
+// ===================================================================
+//  FIM DA NOVA LÓGICA
+// ===================================================================
+
+//     * @param args the command line arguments
+//     */
  public static void main(String args[]) {
     /* Set the FlatLaf look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -321,4 +315,6 @@ new Thread(new Runnable() {
     private javax.swing.JButton participarVotacao;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
+
+
 }
