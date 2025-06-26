@@ -18,12 +18,6 @@ import javax.swing.JTextField;
 
 public class PlaceHolderUtil {
     
-
-    /**
-     * Adiciona um placeholder a um JTextField.
-     * @param textField O campo de texto.
-     * @param placeholder O texto do placeholder.
-     */
     public static void setPlaceholder(final JTextField textField, final String placeholder) {
         // Define o estado inicial
         textField.setText(placeholder);
@@ -48,11 +42,6 @@ public class PlaceHolderUtil {
         });
     }
 
-    /**
-     * Adiciona um placeholder a um JPasswordField.
-     * @param passwordField O campo de senha.
-     * @param placeholder O texto do placeholder.
-     */
     public static void setPlaceholder(final JPasswordField passwordField, final String placeholder) {
         // Define o estado inicial
         passwordField.setText(placeholder);
