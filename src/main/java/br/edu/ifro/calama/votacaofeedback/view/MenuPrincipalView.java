@@ -17,7 +17,114 @@ public class MenuPrincipalView extends javax.swing.JFrame {
    public MenuPrincipalView() {
     initComponents();
 
+criarVotacao.setOpaque(false);
+criarVotacao.setContentAreaFilled(false);
+criarVotacao.setBorderPainted(false);
+criarVotacao.setFocusPainted(false);
+
+criarVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+criarVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
+
+criarVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+
+try {
+    criarVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/criarVoto.png")));
+} catch (Exception e) {
+    System.out.println("ERRO: Ícone do botão 'Criar Votação' não encontrado!");
+    // Se não achar o ícone, pelo menos o texto fica certo.
+    criarVotacao.setText("Criar Votação");
+}
+
   
+
+
+
+aprovarVotacao.setOpaque(false);
+aprovarVotacao.setContentAreaFilled(false);
+aprovarVotacao.setBorderPainted(false);
+aprovarVotacao.setFocusPainted(false);
+
+aprovarVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+aprovarVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
+
+aprovarVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+
+try {
+    aprovarVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/list_check.png")));
+} catch (Exception e) {
+    System.out.println("ERRO: Ícone do botão 'aprovar votação' não encontrado!");
+    // Se não achar o ícone, pelo menos o texto fica certo.
+    aprovarVotacao.setText("aprovar votação");
+}
+
+  
+
+gerenciaVotacao.setOpaque(false);
+gerenciaVotacao.setContentAreaFilled(false);
+gerenciaVotacao.setBorderPainted(false);
+gerenciaVotacao.setFocusPainted(false);
+
+gerenciaVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+gerenciaVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
+
+gerenciaVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+try {
+    gerenciaVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/configpast.png")));
+} catch (Exception e) {
+    System.out.println("ERRO: Ícone do botão 'gerencia votação' não encontrado!");
+    gerenciaVotacao.setText("gerencia votação");
+}
+
+
+participarVotacao.setOpaque(false);
+participarVotacao.setContentAreaFilled(false);
+participarVotacao.setBorderPainted(false);
+participarVotacao.setFocusPainted(false);
+
+participarVotacao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+participarVotacao.setForeground(new java.awt.Color(50, 50, 50)); 
+
+participarVotacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+try {
+    participarVotacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/peoplemais.png")));
+} catch (Exception e) {
+    System.out.println("ERRO: Ícone do botão 'Participar Votação' não encontrado!");
+    participarVotacao.setText("Participar de Votação");
+}
+
+
+
+
+votoArquivado.setOpaque(false);
+votoArquivado.setContentAreaFilled(false);
+votoArquivado.setBorderPainted(false);
+votoArquivado.setFocusPainted(false);
+
+votoArquivado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+votoArquivado.setForeground(new java.awt.Color(50, 50, 50)); 
+
+votoArquivado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+try {
+    votoArquivado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/arquivada.png")));
+} catch (Exception e) {
+    System.out.println("ERRO: Ícone do botão 'Votações Arquivadas' não encontrado!");
+    votoArquivado.setText("Votações Arquivadas");
+}
+
+
+for (javax.swing.JButton btn : new javax.swing.JButton[]{criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado}) {
+    btn.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, btn.getPreferredSize().height));
+}
 }
     
 
@@ -34,6 +141,13 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         labelIconeMenu = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
         painelSidebar = new javax.swing.JPanel();
+        menutxt = new javax.swing.JLabel();
+        criarVotacao = new javax.swing.JButton();
+        participarVotacao = new javax.swing.JButton();
+        gerenciaVotacao = new javax.swing.JButton();
+        aprovarVotacao = new javax.swing.JButton();
+        votoArquivado = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -55,7 +169,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             .addGroup(painelHeaderLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(labelIconeMenu)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(677, Short.MAX_VALUE))
         );
         painelHeaderLayout.setVerticalGroup(
             painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,7 +185,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         painelConteudo.setLayout(painelConteudoLayout);
         painelConteudoLayout.setHorizontalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+            .addGap(0, 517, Short.MAX_VALUE)
         );
         painelConteudoLayout.setVerticalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,17 +196,44 @@ public class MenuPrincipalView extends javax.swing.JFrame {
 
         painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
         painelSidebar.setPreferredSize(new java.awt.Dimension(210, 0));
+        painelSidebar.setLayout(new javax.swing.BoxLayout(painelSidebar, javax.swing.BoxLayout.Y_AXIS));
+        painelSidebar.add(menutxt);
 
-        javax.swing.GroupLayout painelSidebarLayout = new javax.swing.GroupLayout(painelSidebar);
-        painelSidebar.setLayout(painelSidebarLayout);
-        painelSidebarLayout.setHorizontalGroup(
-            painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-        );
-        painelSidebarLayout.setVerticalGroup(
-            painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
-        );
+        criarVotacao.setText("Criar Votação");
+        criarVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(criarVotacao);
+
+        participarVotacao.setText("Participar de Votação ");
+        participarVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                participarVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(participarVotacao);
+
+        gerenciaVotacao.setText("Gerenciar Votação");
+        gerenciaVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerenciaVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(gerenciaVotacao);
+
+        aprovarVotacao.setText("Aprovar Votações\n");
+        aprovarVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aprovarVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(aprovarVotacao);
+
+        votoArquivado.setText("Votações Arquivadas");
+        painelSidebar.add(votoArquivado);
+        painelSidebar.add(filler1);
 
         getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
@@ -130,6 +271,22 @@ new Thread(new Runnable() {
 }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
+    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_criarVotacaoActionPerformed
+
+    private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_participarVotacaoActionPerformed
+
+    private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gerenciaVotacaoActionPerformed
+
+    private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aprovarVotacaoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -152,9 +309,16 @@ new Thread(new Runnable() {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JButton criarVotacao;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JLabel labelIconeMenu;
+    private javax.swing.JLabel menutxt;
     private javax.swing.JPanel painelConteudo;
     private javax.swing.JPanel painelHeader;
     private javax.swing.JPanel painelSidebar;
+    private javax.swing.JButton participarVotacao;
+    private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
 }
