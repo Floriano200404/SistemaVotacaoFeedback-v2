@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -65,13 +65,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtSenha" alignment="0" pref="192" max="32767" attributes="0"/>
+                          <Component id="txtLogin" alignment="0" max="32767" attributes="0"/>
+                          <Component id="pwdSenha" alignment="0" pref="192" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnEntrar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                          <Component id="btnCadastre_se" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCadastrar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="84" max="32767" attributes="0"/>
@@ -82,13 +82,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                  <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtLogin" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="txtSenha" min="-2" max="-2" attributes="0"/>
+                  <Component id="pwdSenha" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnEntrar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnCadastre_se" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -96,27 +96,33 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JPasswordField" name="txtSenha">
+        <Component class="javax.swing.JPasswordField" name="pwdSenha">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtEmail">
+        <Component class="javax.swing.JTextField" name="txtLogin">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEntrar">
           <Properties>
             <Property name="text" type="java.lang.String" value="entrar"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntrarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnCadastre_se">
+        <Component class="javax.swing.JButton" name="btnCadastrar">
           <Properties>
             <Property name="text" type="java.lang.String" value="cadastra-se"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastre_seActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

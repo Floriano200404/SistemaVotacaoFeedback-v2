@@ -5,6 +5,7 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.LoginController;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -33,32 +34,34 @@ public class LoginView extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        txtSenha = new javax.swing.JPasswordField();
-        txtEmail = new javax.swing.JTextField();
+        pwdSenha = new javax.swing.JPasswordField();
+        txtLogin = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
-        btnCadastre_se = new javax.swing.JButton();
+        btnCadastrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Login");
 
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                txtLoginActionPerformed(evt);
             }
         });
 
         btnEntrar.setText("entrar");
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
             }
         });
 
-        btnCadastre_se.setText("cadastra-se");
-        btnCadastre_se.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrar.setText("cadastra-se");
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastre_seActionPerformed(evt);
+                btnCadastrarActionPerformed(evt);
             }
         });
 
@@ -70,25 +73,25 @@ public class LoginView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtEmail)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                        .addComponent(txtLogin)
+                        .addComponent(pwdSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEntrar)
                         .addGap(64, 64, 64)
-                        .addComponent(btnCadastre_se)))
+                        .addComponent(btnCadastrar)))
                 .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar)
-                    .addComponent(btnCadastre_se))
+                    .addComponent(btnCadastrar))
                 .addContainerGap())
         );
 
@@ -117,11 +120,12 @@ public class LoginView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-    String email = txtEmail.getText().trim();
-    String senha = new String(txtSenha.getPassword()).trim();
+    String email = txtLogin.getText().trim();
+    String senha = new String(pwdSenha.getPassword()).trim();
     
     System.out.println("--- 1. DENTRO DA VIEW ---");
     System.out.println("Email lido do campo: [" + email + "]");
@@ -153,18 +157,23 @@ public class LoginView extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    }//GEN-LAST:event_txtLoginActionPerformed
 
-    private void btnCadastre_seActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastre_seActionPerformed
-    CadastroView telaCadastro = new CadastroView();
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+    CadastroView telaCadastro = null;
+        try {
+            telaCadastro = new CadastroView();
+        } catch (ParseException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
     telaCadastro.setVisible(true);
     
     this.dispose();
 
-    }//GEN-LAST:event_btnCadastre_seActionPerformed
+    }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,11 +212,11 @@ public class LoginView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastre_se;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JPasswordField pwdSenha;
+    private javax.swing.JTextField txtLogin;
     // End of variables declaration//GEN-END:variables
 }

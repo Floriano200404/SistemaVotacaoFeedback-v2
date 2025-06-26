@@ -78,7 +78,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         painelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
-        painelSidebar.setBounds(0,0,210,550);
 
         javax.swing.GroupLayout painelSidebarLayout = new javax.swing.GroupLayout(painelSidebar);
         painelSidebar.setLayout(painelSidebarLayout);
@@ -109,6 +108,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         getContentPane().add(painelPrincipal, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
