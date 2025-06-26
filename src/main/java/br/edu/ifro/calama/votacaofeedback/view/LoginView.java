@@ -76,6 +76,11 @@ public class LoginView extends javax.swing.JFrame {
         btnEsqueciSenhaCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
         btnEsqueciSenhaCustom.setBorderColor(new Color(127, 140, 141)); // Borda
         
+        // --- CONFIGURAÇÃO DO CAMPO DE E-MAIL ARREDONDADO ---
+        txtLogin.setBackground(Color.WHITE);
+        txtLogin.setForeground(new Color(127, 140, 141));
+        txtLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        PlaceHolderUtil.setPlaceholder(txtLogin, "Digite seu e-mail");
     }
 
     
@@ -112,14 +117,14 @@ public class LoginView extends javax.swing.JFrame {
         jPanel2 = new jPanelGradient();
         jPanel1 = new javax.swing.JPanel();
         btnEntrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
-        txtLogin = new javax.swing.JTextField();
+        txtLogin = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
         jLabLogin = new javax.swing.JLabel();
         jLabSenha = new javax.swing.JLabel();
         jLabEmail = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         btnEsqueciSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil(15, new java.awt.Color(255, 255, 255));
         pwdSenha = new javax.swing.JPasswordField();
         jLabEye = new javax.swing.JLabel();
         jLabLogo = new javax.swing.JLabel();
@@ -193,9 +198,10 @@ public class LoginView extends javax.swing.JFrame {
         btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setPreferredSize(new java.awt.Dimension(403, 38));
+        jPanel3.setPreferredSize(new java.awt.Dimension(403, 39));
 
         pwdSenha.setBorder(null);
+        pwdSenha.setMargin(new java.awt.Insets(5, 10, 5, 10));
         pwdSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pwdSenhaActionPerformed(evt);
@@ -221,15 +227,18 @@ public class LoginView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(pwdSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabEye)
                 .addGap(13, 13, 13))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabEye, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-            .addComponent(pwdSenha)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabEye, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pwdSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -267,7 +276,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addComponent(jLabEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
