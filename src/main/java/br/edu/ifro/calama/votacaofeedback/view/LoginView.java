@@ -6,6 +6,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.LoginController;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
+import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
 import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -51,9 +52,30 @@ public class LoginView extends javax.swing.JFrame {
             System.err.println("Erro ao carregar os ícones de olho.");
             e.printStackTrace();
         }
+        //CAMPO PARA DEIXAR O BOTÃO DE ACESSAR REDONDO
+        RoundedButtonUtil BotaoRedondo = (RoundedButtonUtil) btnEntrar;
+        BotaoRedondo.setRadius(20); 
         
-        System.out.println("Ícone Aberto está nulo? " + (iconeOlhoAberto == null));
-        System.out.println("Ícone Fechado está nulo? " + (iconeOlhoFechado == null));
+        //CAMPO PARA DEIXAR O BOTÃO DE CADASTRAR REDONDO e com hover
+        RoundedButtonUtil btnCadastrarCustom = (RoundedButtonUtil) btnCadastrar;
+        btnCadastrarCustom.setRadius(20);
+        btnCadastrarCustom.setForeground(Color.WHITE);
+        
+        btnCadastrarCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
+        btnCadastrarCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
+        btnCadastrarCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
+        btnCadastrarCustom.setBorderColor(new Color(127, 140, 141)); // Borda
+        
+        //CAMPO PARA DEIXAR O BOTÃO DE ESQUECI A SENHA REDONDO e com hover
+        RoundedButtonUtil btnEsqueciSenhaCustom = (RoundedButtonUtil) btnEsqueciSenha;
+        btnEsqueciSenhaCustom.setRadius(20);       
+        btnEsqueciSenhaCustom.setForeground(Color.WHITE);
+        
+        btnEsqueciSenhaCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
+        btnEsqueciSenhaCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
+        btnEsqueciSenhaCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
+        btnEsqueciSenhaCustom.setBorderColor(new Color(127, 140, 141)); // Borda
+        
     }
 
     
@@ -89,14 +111,14 @@ public class LoginView extends javax.swing.JFrame {
 
         jPanel2 = new jPanelGradient();
         jPanel1 = new javax.swing.JPanel();
-        btnEntrar = new javax.swing.JButton();
+        btnEntrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         txtLogin = new javax.swing.JTextField();
         jLabLogin = new javax.swing.JLabel();
         jLabSenha = new javax.swing.JLabel();
         jLabEmail = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnCadastrar = new javax.swing.JButton();
-        btnEsqueciSenha = new javax.swing.JButton();
+        btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        btnEsqueciSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         jPanel3 = new javax.swing.JPanel();
         pwdSenha = new javax.swing.JPasswordField();
         jLabEye = new javax.swing.JLabel();

@@ -199,6 +199,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntrarActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtLogin">
               <Properties>
@@ -257,6 +260,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="btnEsqueciSenha">
               <Properties>
@@ -265,6 +271,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()"/>
+              </AuxValues>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanel3">
               <Properties>
