@@ -7,6 +7,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.controller.CadastroController;
 import br.edu.ifro.calama.votacaofeedback.util.FiltroNumerosUtil;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
+import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import com.formdev.flatlaf.json.ParseException;
 import java.awt.Color;
@@ -48,6 +49,26 @@ public class CadastroView extends javax.swing.JFrame {
             jPanelDegrade.requestFocusInWindow();
         }
     });
+    
+        //CAMPO PARA DEIXAR O BOTÃO DE CADASTRAR REDONDO e com hover
+        RoundedButtonUtil btnCadastrarCustom = (RoundedButtonUtil) btnCadastrar;
+        btnCadastrarCustom.setRadius(20);
+        btnCadastrarCustom.setForeground(Color.WHITE);
+        
+        btnCadastrarCustom.setColor(new Color(0, 149, 255)); // Cinza principal (asbestos)
+        btnCadastrarCustom.setColorOver(new Color(30, 169, 255)); // Cinza mais claro para hover
+        btnCadastrarCustom.setColorClick(new Color(0, 129, 225)); // Cinza mais escuro para clique
+        btnCadastrarCustom.setBorderColor(new Color(0, 149, 255)); // Borda
+        
+        //CAMPO PARA DEIXAR O BOTÃO DE ESQUECI A SENHA REDONDO e com hover
+        RoundedButtonUtil btnCancelarCustom = (RoundedButtonUtil) btnCancelar;
+        btnCancelarCustom.setRadius(20);       
+        btnCancelarCustom.setForeground(Color.WHITE);
+        
+        btnCancelarCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
+        btnCancelarCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
+        btnCancelarCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para cliqueAdd commentMore actions
+        btnCancelarCustom.setBorderColor(new Color(127, 140, 141)); // Borda
     
     cbxPerfilInstitucional.removeAllItems(); 
 
@@ -191,8 +212,8 @@ public class CadastroView extends javax.swing.JFrame {
         pwdConfirmarSenha = new javax.swing.JPasswordField();
         jLabTitulo = new javax.swing.JLabel();
         jPanelBotoes = new javax.swing.JPanel();
-        btnCadastrar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnCancelar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -281,29 +302,34 @@ public class CadastroView extends javax.swing.JFrame {
         jPanelBotoes.setBackground(new java.awt.Color(11, 20, 81));
         jPanelBotoes.setOpaque(false);
 
-        btnCadastrar.setBackground(new java.awt.Color(0, 149, 255));
-        btnCadastrar.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
-        btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setBackground(new java.awt.Color(157, 157, 157));
-        btnCancelar.setFont(new java.awt.Font("Leelawadee UI", 0, 12)); // NOI18N
+        btnCancelar.setBackground(new java.awt.Color(127, 140, 141));
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setMaximumSize(new java.awt.Dimension(80, 23));
-        btnCancelar.setMinimumSize(new java.awt.Dimension(80, 23));
-        btnCancelar.setPreferredSize(new java.awt.Dimension(80, 23));
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.setBorderColor(new java.awt.Color(127, 140, 141));
+        btnCancelar.setColor(new java.awt.Color(127, 140, 141));
+        btnCancelar.setColorClick(new java.awt.Color(93, 109, 126));
+        btnCancelar.setColorOver(new java.awt.Color(149, 165, 166));
+        btnCancelar.setMaximumSize(new java.awt.Dimension(96, 23));
+        btnCancelar.setMinimumSize(new java.awt.Dimension(96, 23));
+        btnCancelar.setPreferredSize(new java.awt.Dimension(96, 23));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnCadastrar.setBackground(new java.awt.Color(0, 149, 255));
+        btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrar.setText("CADASTRAR");
+        btnCadastrar.setBorderColor(new java.awt.Color(0, 149, 255));
+        btnCadastrar.setColor(new java.awt.Color(0, 149, 255));
+        btnCadastrar.setColorClick(new java.awt.Color(0, 129, 225));
+        btnCadastrar.setColorOver(new java.awt.Color(30, 169, 255));
+        btnCadastrar.setName(""); // NOI18N
+        btnCadastrar.setOver(true);
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
             }
         });
 
@@ -311,21 +337,21 @@ public class CadastroView extends javax.swing.JFrame {
         jPanelBotoes.setLayout(jPanelBotoesLayout);
         jPanelBotoesLayout.setHorizontalGroup(
             jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotoesLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+            .addGroup(jPanelBotoesLayout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanelBotoesLayout.setVerticalGroup(
             jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotoesLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotoesLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout jPanelFormLayout = new javax.swing.GroupLayout(jPanelForm);
@@ -365,8 +391,7 @@ public class CadastroView extends javax.swing.JFrame {
                                 .addGap(85, 85, 85)))
                         .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxPerfilInstitucional, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JlabPerfil))
-                        .addGap(87, 87, 87))
+                            .addComponent(JlabPerfil)))
                     .addGroup(jPanelFormLayout.createSequentialGroup()
                         .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelFormLayout.createSequentialGroup()
@@ -378,8 +403,8 @@ public class CadastroView extends javax.swing.JFrame {
                                 .addGap(263, 263, 263)
                                 .addComponent(JlabMatricula)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104))))
+                        .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(87, 87, 87))
         );
         jPanelFormLayout.setVerticalGroup(
             jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,16 +421,16 @@ public class CadastroView extends javax.swing.JFrame {
                     .addComponent(txtNome)
                     .addComponent(cbxPerfilInstitucional)
                     .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JlabSenha)
+                    .addComponent(JlabEmail))
+                .addGap(12, 12, 12)
+                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelFormLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JlabSenha)
-                            .addComponent(JlabEmail))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(45, 45, 45)
                         .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JlabConfirmarSenha)
@@ -413,11 +438,12 @@ public class CadastroView extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelFormLayout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFormLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5))))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -435,7 +461,24 @@ public class CadastroView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void cbxPerfilInstitucionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPerfilInstitucionalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxPerfilInstitucionalActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfActionPerformed
+
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+
     String nome = txtNome.getText();
     String cpf = txtCpf.getText();
     String matricula = txtMatricula.getText();
@@ -445,12 +488,12 @@ public class CadastroView extends javax.swing.JFrame {
     String perfilSelecionado = (String) cbxPerfilInstitucional.getSelectedItem();
 
     if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || matricula.isEmpty() || perfilSelecionado.contains("Selecionar")) {
-        new ToastUtil(this, jPanelBotoes, "Por favor, preencha todos os campos e selecione um perfil.", ToastUtil.ToastType.ERROR).display();
+        new ToastUtil(this, jPanelBotoes, "Preencha todos os campos.", ToastUtil.ToastType.ERROR).display();
         return;
     }
 
     if (confirmarSenha.isEmpty()) {
-        new ToastUtil(this, jPanelBotoes, "Por favor, confirme sua senha.", ToastUtil.ToastType.ERROR).display();
+        new ToastUtil(this, jPanelBotoes, "Confirme sua senha.", ToastUtil.ToastType.ERROR).display();
         return; 
     }
 
@@ -463,7 +506,7 @@ public class CadastroView extends javax.swing.JFrame {
 
     String emailMinusculo = email.toLowerCase();
     if (!emailMinusculo.endsWith("@estudante.ifro.edu.br") && !emailMinusculo.endsWith("@ifro.edu.br")) {
-        new ToastUtil(this, jPanelBotoes, "Por favor, utilize um email institucional válido.", ToastUtil.ToastType.ERROR).display();
+        new ToastUtil(this, jPanelBotoes, "Utilize um email institucional válido.", ToastUtil.ToastType.ERROR).display();
         return;
     }
 
@@ -474,14 +517,14 @@ public class CadastroView extends javax.swing.JFrame {
         }
     } else { 
         if (!emailMinusculo.contains("@estudante.ifro.edu.br")) {
-            new ToastUtil(this, jPanelBotoes, "Alunos devem usar um email @estudante.ifro.edu.br.", ToastUtil.ToastType.ERROR).display();
+            new ToastUtil(this, jPanelBotoes, "Perfil e email são incompatíveis", ToastUtil.ToastType.ERROR).display();
             return;
         }
     }
     
     String cpfApenasDigitos = txtCpf.getText().replaceAll("[^0-9]", "");
     if (cpfApenasDigitos.length() != 11) {
-        new ToastUtil(this, jPanelBotoes, "O CPF é inválido. Deve conter 11 dígitos.", ToastUtil.ToastType.ERROR).display();
+        new ToastUtil(this, jPanelBotoes, "O CPF é inválido.", ToastUtil.ToastType.ERROR).display();
         return;
     }
     
@@ -502,25 +545,34 @@ public class CadastroView extends javax.swing.JFrame {
             telaLogin.setVisible(true);
             this.dispose();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
-            ToastUtil toast = new ToastUtil(this, jPanelBotoes, "Erro ao cadastrar: " + e.getMessage(), ToastUtil.ToastType.ERROR);
-            toast.display();
-            e.printStackTrace();
-}
+          if (e.getErrorCode() == 1062) {
+        
+          String mensagemTecnica = e.getMessage().toLowerCase();
+          
+          if (mensagemTecnica.contains("usuarios.cpf_unique")) { // Supondo que sua constraint se chame 'cpf_unique'
+            new ToastUtil(this, jPanelBotoes, "Este CPF já está cadastrado.", ToastUtil.ToastType.ERROR).display();
+          
+          } else if (mensagemTecnica.contains("usuarios.un_email_usuario")) {
+            new ToastUtil(this, jPanelBotoes, "Este e-mail já está em uso.", ToastUtil.ToastType.ERROR).display();
+        
+          } else if (mensagemTecnica.contains("usuarios.matricula_unique")) {
+            new ToastUtil(this, jPanelBotoes, "Esta matrícula já está cadastrada.", ToastUtil.ToastType.ERROR).display();
+        
+          } else {
+            new ToastUtil(this, jPanelBotoes, "Dados duplicados. Tente novamente.", ToastUtil.ToastType.ERROR).display();
+          }
+        
+          } else {
+           new ToastUtil(this, jPanelBotoes, "Erro inesperado no o banco de dados.", ToastUtil.ToastType.ERROR).display();
+    }
+
+          e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroView.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
-
-    private void cbxPerfilInstitucionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPerfilInstitucionalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxPerfilInstitucionalActionPerformed
-
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
     LoginView telaLogin = new LoginView();
@@ -529,10 +581,6 @@ public class CadastroView extends javax.swing.JFrame {
 
     this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCpfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -581,8 +629,8 @@ public class CadastroView extends javax.swing.JFrame {
     private javax.swing.JLabel JlabNome;
     private javax.swing.JLabel JlabPerfil;
     private javax.swing.JLabel JlabSenha;
-    private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnCancelar;
+    private br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnCadastrar;
+    private br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnCancelar;
     private javax.swing.JComboBox<String> cbxPerfilInstitucional;
     private javax.swing.JLabel jLabTitulo;
     private javax.swing.JPanel jPanelBotoes;

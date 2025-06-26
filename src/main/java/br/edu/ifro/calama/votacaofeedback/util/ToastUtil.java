@@ -7,12 +7,15 @@ package br.edu.ifro.calama.votacaofeedback.util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -21,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+//para deixar a mensagem de erro ou sucesso em baixo dos botões
 public class ToastUtil extends JDialog {
 
     public enum ToastType {
@@ -32,10 +36,29 @@ public class ToastUtil extends JDialog {
     public ToastUtil(JFrame owner, String message, ToastType type) {
         super(owner);
         setUndecorated(true);
+        setBackground(new Color(0, 0, 0, 0));
         setAlwaysOnTop(true);
         setFocusable(false);
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel() {
+        @Override
+        protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g2.setColor(getBackground());
+
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+
+        g2.dispose();
+    }
+};
+        
+        panel.setOpaque(false);
+        
         panel.setLayout(new GridBagLayout());
         panel.setPreferredSize(new Dimension(350, 50));
         if (type == ToastType.SUCCESS) {
@@ -46,7 +69,7 @@ public class ToastUtil extends JDialog {
 
         JLabel label = new JLabel(message);
         label.setForeground(Color.WHITE);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        label.setFont(new Font("Segoe UI", Font.BOLD, 13));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 20, 10, 20);
