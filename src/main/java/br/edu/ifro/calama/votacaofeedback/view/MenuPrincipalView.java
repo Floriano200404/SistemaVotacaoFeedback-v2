@@ -3,27 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
-
 /**
  *
  * @author Aluno
  */
 public class MenuPrincipalView extends javax.swing.JFrame {
-
+private java.util.List<javax.swing.JButton> botoesDoMenu;
+    private javax.swing.JButton botaoAtivo;
     /**
      * Creates new form MenuPrincipalView
      */
    
    public MenuPrincipalView() {
     initComponents();
-
-  
-
-    painelPrincipal.setLayout(null);
-    painelSidebar.setBounds(0, 0, 210, 550);
-    painelConteudo.setBounds(210, 0, 790, 550);
-    painelPrincipal.revalidate();
-    painelPrincipal.repaint();
+    inicializarMenuLateral();
 
 }
     
@@ -39,12 +32,18 @@ public class MenuPrincipalView extends javax.swing.JFrame {
 
         painelHeader = new javax.swing.JPanel();
         labelIconeMenu = new javax.swing.JLabel();
-        painelPrincipal = new javax.swing.JPanel();
-        painelSidebar = new javax.swing.JPanel();
         painelConteudo = new javax.swing.JPanel();
+        painelSidebar = new javax.swing.JPanel();
+        menutxt = new javax.swing.JLabel();
+        criarVotacao = new javax.swing.JButton();
+        participarVotacao = new javax.swing.JButton();
+        gerenciaVotacao = new javax.swing.JButton();
+        aprovarVotacao = new javax.swing.JButton();
+        votoArquivado = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -63,7 +62,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             .addGroup(painelHeaderLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(labelIconeMenu)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(677, Short.MAX_VALUE))
         );
         painelHeaderLayout.setVerticalGroup(
             painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,40 +74,63 @@ public class MenuPrincipalView extends javax.swing.JFrame {
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
-        painelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout painelSidebarLayout = new javax.swing.GroupLayout(painelSidebar);
-        painelSidebar.setLayout(painelSidebarLayout);
-        painelSidebarLayout.setHorizontalGroup(
-            painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
-        );
-        painelSidebarLayout.setVerticalGroup(
-            painelSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-
-        painelPrincipal.add(painelSidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 250));
-
         javax.swing.GroupLayout painelConteudoLayout = new javax.swing.GroupLayout(painelConteudo);
         painelConteudo.setLayout(painelConteudoLayout);
         painelConteudoLayout.setHorizontalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
+            .addGap(0, 497, Short.MAX_VALUE)
         );
         painelConteudoLayout.setVerticalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 453, Short.MAX_VALUE)
         );
 
-        painelPrincipal.add(painelConteudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 0, 310, 250));
+        getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(painelPrincipal, java.awt.BorderLayout.CENTER);
+        painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
+        painelSidebar.setPreferredSize(new java.awt.Dimension(230, 0));
+        painelSidebar.setLayout(new javax.swing.BoxLayout(painelSidebar, javax.swing.BoxLayout.Y_AXIS));
+        painelSidebar.add(menutxt);
+
+        criarVotacao.setText("Criar Votação");
+        criarVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(criarVotacao);
+
+        participarVotacao.setText("Participar de Votação ");
+        participarVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                participarVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(participarVotacao);
+
+        gerenciaVotacao.setText("Gerenciar Votação");
+        gerenciaVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerenciaVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(gerenciaVotacao);
+
+        aprovarVotacao.setText("Aprovar Votações\n");
+        aprovarVotacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aprovarVotacaoActionPerformed(evt);
+            }
+        });
+        painelSidebar.add(aprovarVotacao);
+
+        votoArquivado.setText("Votações Arquivadas");
+        painelSidebar.add(votoArquivado);
+        painelSidebar.add(filler1);
+
+        getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
@@ -142,9 +164,126 @@ new Thread(new Runnable() {
 }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_criarVotacaoActionPerformed
+
+    private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_participarVotacaoActionPerformed
+
+    private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gerenciaVotacaoActionPerformed
+
+    private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aprovarVotacaoActionPerformed
+
+    
+   // ===================================================================
+//  INÍCIO DA NOVA LÓGICA DO MENU LATERAL (COPIE TUDO ABAIXO)
+// ===================================================================
+
+// MÉTODO PRINCIPAL QUE ORGANIZA TUDO
+private void inicializarMenuLateral() {
+    // Coloca todos os botões em uma lista para fácil acesso
+    botoesDoMenu = java.util.Arrays.asList(criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado);
+
+    // 1. Aplica o estilo visual INICIAL a cada botão
+    configurarBotao(criarVotacao, "criarVoto.png");
+    configurarBotao(participarVotacao, "peoplemais.png");
+    configurarBotao(gerenciaVotacao, "configpast.png");
+    configurarBotao(aprovarVotacao, "list_check.png");
+    configurarBotao(votoArquivado, "arquivada.png");
+
+    // 2. Adiciona os eventos de mouse e clique a todos os botões
+    for (javax.swing.JButton botao : botoesDoMenu) {
+        adicionarListeners(botao);
+    }
+
+    // 3. Define o estado inicial (primeiro botão como ativo)
+    botaoAtivo = criarVotacao;
+    atualizarAparenciaBotoes();
+}
+
+// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
+private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
+    // Estilo visual "flat"
+    botao.setOpaque(false);
+    botao.setContentAreaFilled(false);
+    botao.setBorderPainted(false);
+    botao.setFocusPainted(false);
+    
+    // Alinhamento e cursor
+    botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+    botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    
+    // Espaçamentos internos e entre ícone/texto
+    botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
+    botao.setIconTextGap(15);
+
+    // Fonte
+    botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+
+    // Tenta carregar o ícone
+    try {
+        botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
+    } catch (Exception e) {
+        System.out.println("ERRO ao carregar ícone: " + nomeIcone);
+    }
+}
+
+// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
+private void atualizarAparenciaBotoes() {
+    final java.awt.Color COR_TEXTO_ATIVO = java.awt.Color.WHITE;
+    final java.awt.Color COR_TEXTO_INATIVO = new java.awt.Color(50, 50, 50);
+    final java.awt.Color COR_FUNDO_ATIVO = new java.awt.Color(88, 101, 242); // Azul
+
+    for (javax.swing.JButton botao : botoesDoMenu) {
+        if (botao == botaoAtivo) {
+            // Estilo do botão ATIVO
+            botao.setOpaque(true);
+            botao.setBackground(COR_FUNDO_ATIVO);
+            botao.setForeground(COR_TEXTO_ATIVO);
+        } else {
+            // Estilo do botão INATIVO
+            botao.setOpaque(false);
+            botao.setBackground(getBackground()); 
+            botao.setForeground(COR_TEXTO_INATIVO);
+        }
+    }
+}
+
+// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
+private void adicionarListeners(javax.swing.JButton botao) {
+    final java.awt.Color COR_HOVER = new java.awt.Color(225, 225, 225);
+
+    botao.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            if (botao != botaoAtivo) {
+                botao.setBackground(COR_HOVER);
+                botao.setOpaque(true);
+            }
+        }
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            atualizarAparenciaBotoes();
+        }
+    });
+
+    botao.addActionListener(e -> {
+        botaoAtivo = botao;
+        atualizarAparenciaBotoes();
+    });
+}
+// ===================================================================
+//  FIM DA NOVA LÓGICA
+// ===================================================================
+
+//     * @param args the command line arguments
+//     */
  public static void main(String args[]) {
     /* Set the FlatLaf look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -164,10 +303,18 @@ new Thread(new Runnable() {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JButton criarVotacao;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JLabel labelIconeMenu;
+    private javax.swing.JLabel menutxt;
     private javax.swing.JPanel painelConteudo;
     private javax.swing.JPanel painelHeader;
-    private javax.swing.JPanel painelPrincipal;
     private javax.swing.JPanel painelSidebar;
+    private javax.swing.JButton participarVotacao;
+    private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
+
+
 }
