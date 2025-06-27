@@ -22,7 +22,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+<<<<<<< HEAD
+/target/
+=======
 
 # Arquivos de sistema do macOS
 .DS_Store
 target/
+>>>>>>> 529505a09964cfb0f094cb4c06dade2763db4f73

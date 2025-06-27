@@ -18,7 +18,8 @@ import javax.swing.JButton;
  *
  * @author Athos
  */
-public class RoundedButtonUtil extends javax.swing.JButton {
+public class RoundedButtonUtil extends JButton {
+
 
     private boolean over;
     private Color color;
@@ -45,6 +46,14 @@ public class RoundedButtonUtil extends javax.swing.JButton {
         setFocusPainted(false);
         setBorderPainted(false);
 
+        setColor(new Color(52, 152, 219)); // Azul padrão
+        colorOver = new Color(74, 172, 239); // Azul mais claro para hover
+        colorClick = new Color(41, 128, 185); // Azul mais escuro para clique
+        borderColor = new Color(52, 152, 219);
+        setContentAreaFilled(false); // Remove o preenchimento padrão do botão
+        setBorderPainted(false);
+        setFocusPainted(false);
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
@@ -63,6 +72,7 @@ public class RoundedButtonUtil extends javax.swing.JButton {
 
             @Override
             public void mouseReleased(MouseEvent me) {
+                // A cor volta para a cor de hover (se o mouse ainda estiver sobre) ou normal
                 if (over) {
                     setBackground(colorOver);
                 } else {
@@ -129,6 +139,11 @@ public class RoundedButtonUtil extends javax.swing.JButton {
         g2.setColor(borderColor);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 
+        // Pinta a borda
+        g2.setColor(borderColor);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+
+        // Define a cor de fundo com base no estado do mouse (pressionado, hover, normal)
         if (getModel().isPressed()) {
             g2.setColor(colorClick);
         } else if (getModel().isRollover()) {
@@ -137,6 +152,7 @@ public class RoundedButtonUtil extends javax.swing.JButton {
             g2.setColor(color);
         }
 
+        // Pinta o fundo do botão com um pequeno recuo para a borda
         g2.fillRoundRect(2, 2, getWidth() - 4, getHeight() - 4, radius, radius);
 
         g2.dispose();

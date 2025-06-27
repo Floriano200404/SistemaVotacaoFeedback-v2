@@ -53,6 +53,11 @@ public class PlaceHolderUtil {
                 if (String.valueOf(passwordField.getPassword()).equals(placeholder)) {
                     passwordField.setText("");
                     passwordField.setEchoChar('*');
+                }
+                // Cuidado: getPassword() retorna char[], não String
+                if (String.valueOf(passwordField.getPassword()).equals(placeholder)) {
+                    passwordField.setText("");
+                    passwordField.setEchoChar('*'); // Começa a mascarar a senha
                     passwordField.setForeground(Color.BLACK);
                 }
             }
@@ -61,6 +66,8 @@ public class PlaceHolderUtil {
             public void focusLost(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).isEmpty()) {
                     passwordField.setEchoChar((char) 0);
+
+                    passwordField.setEchoChar((char) 0); // Mostra o placeholder novamente
                     passwordField.setForeground(Color.GRAY);
                     passwordField.setText(placeholder);
                 }
