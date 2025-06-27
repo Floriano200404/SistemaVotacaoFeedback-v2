@@ -3,6 +3,7 @@ br\edu\ifro\calama\votacaofeedback\service\RegradeNegocio.class
 br\edu\ifro\calama\votacaofeedback\view\MenuPrincipalView$2.class
 br\edu\ifro\calama\votacaofeedback\Main.class
 br\edu\ifro\calama\votacaofeedback\view\LoginView$3.class
+br\edu\ifro\calama\votacaofeedback\view\RecuperacaoDeSenhaView$1.class
 br\edu\ifro\calama\votacaofeedback\repository\UsuarioRepository.class
 br\edu\ifro\calama\votacaofeedback\view\MenuPrincipalView.class
 br\edu\ifro\calama\votacaofeedback\util\DatabaseUtil.class
