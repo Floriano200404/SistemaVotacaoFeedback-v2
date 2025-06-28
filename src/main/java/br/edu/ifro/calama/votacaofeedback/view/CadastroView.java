@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -36,6 +37,11 @@ import javax.swing.text.PlainDocument;
  * @author Athos
  */
 public class CadastroView extends javax.swing.JFrame {
+    
+    private ImageIcon iconeOlhoAberto;
+    private ImageIcon iconeOlhoFechado;
+    private boolean senhaVisivel = false;
+    private final String PLACEHOLDER_SENHA = "Digite sua senha";
 
     public CadastroView() throws java.text.ParseException {
     initComponents();
@@ -52,11 +58,29 @@ public class CadastroView extends javax.swing.JFrame {
     this.setLocationRelativeTo(null); 
 
     jPanelDegrade.setFocusable(true);
+    jPanelPrincipal.setFocusable(true);
+    
+    jPanelSenha.setFocusable(true);
+        
+        try {
+            iconeOlhoAberto = new ImageIcon(getClass().getResource("/icons/eye_open.png"));
+            iconeOlhoFechado = new ImageIcon(getClass().getResource("/icons/eye_closed.png"));
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar os ícones de olho.");
+            e.printStackTrace();
+        }
 
     jPanelDegrade.addMouseListener(new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent e) {
             jPanelDegrade.requestFocusInWindow();
+        }
+    });
+    
+    jPanelPrincipal.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            jPanelPrincipal.requestFocusInWindow();
         }
     });
     
@@ -161,6 +185,7 @@ public class CadastroView extends javax.swing.JFrame {
     });
     SwingUtilities.invokeLater(() -> {
     jPanelDegrade.requestFocusInWindow();
+    jPanelPrincipal.requestFocusInWindow();
     });
     
 }
@@ -193,25 +218,28 @@ public class CadastroView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelDegrade = new jPainelGradient();
-        jPanelForm = new javax.swing.JPanel();
+        jPanelPrincipal = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil();
+        jLabTitulo = new javax.swing.JLabel();
         JlabNome = new javax.swing.JLabel();
-        JlabEmail = new javax.swing.JLabel();
         JlabSenha = new javax.swing.JLabel();
+        JlabConfirmarSenha = new javax.swing.JLabel();
+        JlabCpf = new javax.swing.JLabel();
+        JlabEmail = new javax.swing.JLabel();
+        JlabMatricula = new javax.swing.JLabel();
         JlabPerfil = new javax.swing.JLabel();
         txtNome = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
+        jPanelSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil();
+        jLabEye = new javax.swing.JLabel();
         pwdSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedPasswordFieldUtil();
+        jPanelConfirmarSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil();
         pwdConfirmarSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedPasswordFieldUtil();
-        txtCpf = new br.edu.ifro.calama.votacaofeedback.util.RoundedFormattedTextFieldUtil();
+        jLabEye1 = new javax.swing.JLabel();
         txtEmail = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
+        txtCpf = new br.edu.ifro.calama.votacaofeedback.util.RoundedFormattedTextFieldUtil();
         txtMatricula = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
         cbxPerfil = new br.edu.ifro.calama.votacaofeedback.util.RoundedComboBoxUtil();
-        JlabCpf = new javax.swing.JLabel();
-        JlabMatricula = new javax.swing.JLabel();
-        JlabConfirmarSenha = new javax.swing.JLabel();
-        jLabTitulo = new javax.swing.JLabel();
         jPanelBotoes = new javax.swing.JPanel();
         btnCancelar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
@@ -221,24 +249,47 @@ public class CadastroView extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanelDegrade.setBackground(new java.awt.Color(9, 32, 63));
+        jPanelDegrade.setPreferredSize(new java.awt.Dimension(1480, 800));
         jPanelDegrade.setLayout(new java.awt.GridBagLayout());
 
-        jPanelForm.setBackground(new java.awt.Color(11, 20, 81));
+        jPanelPrincipal.setBackground(new java.awt.Color(11, 41, 81));
+        jPanelPrincipal.setToolTipText("");
+        jPanelPrincipal.setPreferredSize(new java.awt.Dimension(1246, 602));
+
+        jLabTitulo.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+        jLabTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabTitulo.setText("CADASTRO");
 
         JlabNome.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         JlabNome.setForeground(new java.awt.Color(255, 255, 255));
         JlabNome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JlabNome.setText("Nome Completo:");
 
+        JlabSenha.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        JlabSenha.setForeground(new java.awt.Color(255, 255, 255));
+        JlabSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JlabSenha.setText("Senha:");
+
+        JlabConfirmarSenha.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        JlabConfirmarSenha.setForeground(new java.awt.Color(255, 255, 255));
+        JlabConfirmarSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JlabConfirmarSenha.setText("Confimar Senha:");
+
+        JlabCpf.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        JlabCpf.setForeground(new java.awt.Color(255, 255, 255));
+        JlabCpf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JlabCpf.setText("CPF:");
+
         JlabEmail.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         JlabEmail.setForeground(new java.awt.Color(255, 255, 255));
         JlabEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JlabEmail.setText("E-mail Institucional:");
 
-        JlabSenha.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
-        JlabSenha.setForeground(new java.awt.Color(255, 255, 255));
-        JlabSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JlabSenha.setText("Senha:");
+        JlabMatricula.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        JlabMatricula.setForeground(new java.awt.Color(255, 255, 255));
+        JlabMatricula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JlabMatricula.setText("Matrícula:");
 
         JlabPerfil.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         JlabPerfil.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,13 +303,72 @@ public class CadastroView extends javax.swing.JFrame {
             }
         });
 
+        jLabEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
+        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabEye.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabEyeMouseClicked(evt);
+            }
+        });
+
         pwdSenha.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        pwdSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwdSenhaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelSenhaLayout = new javax.swing.GroupLayout(jPanelSenha);
+        jPanelSenha.setLayout(jPanelSenhaLayout);
+        jPanelSenhaLayout.setHorizontalGroup(
+            jPanelSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSenhaLayout.createSequentialGroup()
+                .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabEye)
+                .addContainerGap())
+        );
+        jPanelSenhaLayout.setVerticalGroup(
+            jPanelSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSenhaLayout.createSequentialGroup()
+                .addGroup(jPanelSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabEye, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12))
+        );
 
         pwdConfirmarSenha.setBorder(null);
 
-        txtCpf.setBorder(null);
+        jLabEye1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
+        jLabEye1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabEye1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabEye1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelConfirmarSenhaLayout = new javax.swing.GroupLayout(jPanelConfirmarSenha);
+        jPanelConfirmarSenha.setLayout(jPanelConfirmarSenhaLayout);
+        jPanelConfirmarSenhaLayout.setHorizontalGroup(
+            jPanelConfirmarSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConfirmarSenhaLayout.createSequentialGroup()
+                .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabEye1)
+                .addContainerGap())
+        );
+        jPanelConfirmarSenhaLayout.setVerticalGroup(
+            jPanelConfirmarSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelConfirmarSenhaLayout.createSequentialGroup()
+                .addGroup(jPanelConfirmarSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabEye1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         txtEmail.setBorder(null);
+
+        txtCpf.setBorder(null);
 
         txtMatricula.setBorder(null);
         txtMatricula.addActionListener(new java.awt.event.ActionListener() {
@@ -267,25 +377,11 @@ public class CadastroView extends javax.swing.JFrame {
             }
         });
 
-        JlabCpf.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
-        JlabCpf.setForeground(new java.awt.Color(255, 255, 255));
-        JlabCpf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JlabCpf.setText("CPF:");
-
-        JlabMatricula.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
-        JlabMatricula.setForeground(new java.awt.Color(255, 255, 255));
-        JlabMatricula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JlabMatricula.setText("Matrícula:");
-
-        JlabConfirmarSenha.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
-        JlabConfirmarSenha.setForeground(new java.awt.Color(255, 255, 255));
-        JlabConfirmarSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JlabConfirmarSenha.setText("Confimar Senha:");
-
-        jLabTitulo.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        jLabTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        jLabTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabTitulo.setText("CADASTRO");
+        cbxPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPerfilActionPerformed(evt);
+            }
+        });
 
         jPanelBotoes.setBackground(new java.awt.Color(11, 20, 81));
         jPanelBotoes.setOpaque(false);
@@ -293,6 +389,10 @@ public class CadastroView extends javax.swing.JFrame {
         btnCancelar.setBorder(null);
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("CANCELAR");
+        btnCancelar.setBorderColor(new java.awt.Color(127, 140, 141));
+        btnCancelar.setColor(new java.awt.Color(127, 140, 141));
+        btnCancelar.setColorClick(new java.awt.Color(93, 109, 126));
+        btnCancelar.setColorOver(new java.awt.Color(149, 165, 166));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -313,116 +413,94 @@ public class CadastroView extends javax.swing.JFrame {
         jPanelBotoesLayout.setHorizontalGroup(
             jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotoesLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(23, 23, 23)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(19, 19, 19))
         );
         jPanelBotoesLayout.setVerticalGroup(
             jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotoesLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(0, 0, 0)
                 .addGroup(jPanelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                .addGap(0, 0, 0))
         );
 
-        javax.swing.GroupLayout jPanelFormLayout = new javax.swing.GroupLayout(jPanelForm);
-        jPanelForm.setLayout(jPanelFormLayout);
-        jPanelFormLayout.setHorizontalGroup(
-            jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFormLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelFormLayout.createSequentialGroup()
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JlabConfirmarSenha)
-                            .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(85, 85, 85)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JlabMatricula)
-                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(85, 85, 85)
-                        .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelFormLayout.createSequentialGroup()
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelFormLayout.createSequentialGroup()
-                                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JlabNome, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(85, 85, 85)
-                                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JlabCpf)
-                                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanelFormLayout.createSequentialGroup()
-                                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JlabSenha)
-                                    .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(85, 85, 85)
-                                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JlabEmail))))
-                        .addGap(85, 85, 85)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelFormLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(cbxPerfil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(JlabPerfil))))
-                .addGap(0, 100, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFormLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
+        jPanelPrincipal.setLayout(jPanelPrincipalLayout);
+        jPanelPrincipalLayout.setHorizontalGroup(
+            jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(120, Short.MAX_VALUE)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JlabSenha)
+                    .addComponent(jPanelConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JlabConfirmarSenha)
+                    .addComponent(JlabNome)
+                    .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(85, 85, 85)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(JlabCpf, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JlabEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JlabMatricula, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(85, 85, 85)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JlabPerfil)
+                    .addComponent(cbxPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(119, Short.MAX_VALUE))
+            .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                .addGap(563, 563, 563)
                 .addComponent(jLabTitulo)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanelFormLayout.setVerticalGroup(
-            jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFormLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
+        jPanelPrincipalLayout.setVerticalGroup(
+            jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                .addGap(103, 103, 103)
                 .addComponent(jLabTitulo)
-                .addGap(55, 55, 55)
-                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(50, 50, 50)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JlabNome)
                     .addComponent(JlabCpf)
                     .addComponent(JlabPerfil))
                 .addGap(12, 12, 12)
-                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelFormLayout.createSequentialGroup()
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JlabSenha)
                             .addComponent(JlabEmail))
                         .addGap(12, 12, 12)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pwdSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(55, 55, 55)
-                        .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelFormLayout.createSequentialGroup()
-                                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(JlabConfirmarSenha)
-                                    .addComponent(JlabMatricula))
-                                .addGap(12, 12, 12)
-                                .addGroup(jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 120, Short.MAX_VALUE))
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JlabConfirmarSenha)
+                            .addComponent(JlabMatricula))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanelConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMatricula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
+                        .addGap(184, 184, 184)
+                        .addComponent(jPanelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.ipady = 120;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(100, 120, 100, 120);
-        jPanelDegrade.add(jPanelForm, gridBagConstraints);
+        jPanelDegrade.add(jPanelPrincipal, new java.awt.GridBagConstraints());
 
         getContentPane().add(jPanelDegrade, java.awt.BorderLayout.CENTER);
 
@@ -430,75 +508,127 @@ public class CadastroView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatriculaActionPerformed
+    private void jLabEye1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabEye1MouseClicked
+        System.out.println("Lógica de clique iniciada. Estado atual de 'senhaVisivel': " + senhaVisivel);
 
-    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        String textoAtual = String.valueOf(pwdConfirmarSenha.getPassword());
+        if (textoAtual.equals(PLACEHOLDER_SENHA)) {
+            return;
+        }
+
+        senhaVisivel = !senhaVisivel;
+
+        if (senhaVisivel) {
+
+            pwdConfirmarSenha.setEchoChar((char) 0);
+
+            jLabEye1.setIcon(iconeOlhoAberto);
+
+            System.out.println("A senha agora está visível.");
+
+        } else {
+
+            pwdConfirmarSenha.setEchoChar('*');
+
+            jLabEye1.setIcon(iconeOlhoFechado);
+
+            System.out.println("A senha agora está escondida.");
+        }
+    }//GEN-LAST:event_jLabEye1MouseClicked
+
+    private void jLabEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabEyeMouseClicked
+        System.out.println("Lógica de clique iniciada. Estado atual de 'senhaVisivel': " + senhaVisivel);
+
+        String textoAtual = String.valueOf(pwdSenha.getPassword());
+        if (textoAtual.equals(PLACEHOLDER_SENHA)) {
+            return;
+        }
+
+        senhaVisivel = !senhaVisivel;
+
+        if (senhaVisivel) {
+
+            pwdSenha.setEchoChar((char) 0);
+
+            jLabEye.setIcon(iconeOlhoAberto);
+
+            System.out.println("A senha agora está visível.");
+
+        } else {
+
+            pwdSenha.setEchoChar('*');
+
+            jLabEye.setIcon(iconeOlhoFechado);
+
+            System.out.println("A senha agora está escondida.");
+        }
+    }//GEN-LAST:event_jLabEyeMouseClicked
+
+    private void pwdSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeActionPerformed
+    }//GEN-LAST:event_pwdSenhaActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
-    String nome = txtNome.getText();
-    String cpf = txtCpf.getText();
-    String matricula = txtMatricula.getText();
-    String email = txtEmail.getText();
-    String senha = new String(pwdSenha.getPassword());
-    String confirmarSenha = new String (pwdConfirmarSenha.getPassword());
-    String perfilSelecionado = (String) cbxPerfil.getSelectedItem();
+        String nome = txtNome.getText();
+        String cpf = txtCpf.getText();
+        String matricula = txtMatricula.getText();
+        String email = txtEmail.getText();
+        String senha = new String(pwdSenha.getPassword());
+        String confirmarSenha = new String (pwdConfirmarSenha.getPassword());
+        String perfilSelecionado = (String) cbxPerfil.getSelectedItem();
 
-    if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || matricula.isEmpty() || perfilSelecionado.contains("Selecionar")) {
-        new ToastUtil(this, jPanelBotoes, "Preencha todos os campos.", ToastUtil.ToastType.ERROR).display();
-        return;
-    }
-
-    if (confirmarSenha.isEmpty()) {
-        new ToastUtil(this, jPanelBotoes, "Confirme sua senha.", ToastUtil.ToastType.ERROR).display();
-        return; 
-    }
-
-    if (!senha.equals(confirmarSenha)) {
-        new ToastUtil(this, jPanelBotoes, "As senhas não conferem. Tente novamente.", ToastUtil.ToastType.ERROR).display();
-        pwdSenha.setText("");
-        pwdConfirmarSenha.setText("");
-        return;
-    }
-
-    String emailMinusculo = email.toLowerCase();
-    if (!emailMinusculo.endsWith("@estudante.ifro.edu.br") && !emailMinusculo.endsWith("@ifro.edu.br")) {
-        new ToastUtil(this, jPanelBotoes, "Utilize um email institucional válido.", ToastUtil.ToastType.ERROR).display();
-        return;
-    }
-
-    if (perfilSelecionado.equals("PROFESSOR") || perfilSelecionado.equals("SERVIDORES DO CAMPUS")) {
-        if (emailMinusculo.contains("@estudante.ifro.edu.br")) {
-            new ToastUtil(this, jPanelBotoes, "Perfil e email são incompatíveis.", ToastUtil.ToastType.ERROR).display();
+        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || cpf.isEmpty() || matricula.isEmpty() || perfilSelecionado.contains("Selecionar")) {
+            new ToastUtil(this, jPanelBotoes, "Preencha todos os campos.", ToastUtil.ToastType.ERROR).display();
             return;
         }
-    } else { 
-        if (!emailMinusculo.contains("@estudante.ifro.edu.br")) {
-            new ToastUtil(this, jPanelBotoes, "Perfil e email são incompatíveis", ToastUtil.ToastType.ERROR).display();
+
+        if (confirmarSenha.isEmpty()) {
+            new ToastUtil(this, jPanelBotoes, "Confirme sua senha.", ToastUtil.ToastType.ERROR).display();
             return;
         }
-    }
-    
-    String cpfApenasDigitos = txtCpf.getText().replaceAll("[^0-9]", "");
-    if (cpfApenasDigitos.length() != 11) {
-        new ToastUtil(this, jPanelBotoes, "O CPF é inválido.", ToastUtil.ToastType.ERROR).display();
-        return;
-    }
-    
-    String matriculaApenasDigitos = matricula.replaceAll("[^0-9]", "");
-    if (matriculaApenasDigitos.length() != 13) { 
-        new ToastUtil(this, jPanelBotoes, "A Matrícula parece ser inválida.", ToastUtil.ToastType.ERROR).display();
-        return;
-    }
-    
+
+        if (!senha.equals(confirmarSenha)) {
+            new ToastUtil(this, jPanelBotoes, "As senhas não conferem. Tente novamente.", ToastUtil.ToastType.ERROR).display();
+            pwdSenha.setText("");
+            pwdConfirmarSenha.setText("");
+            return;
+        }
+
+        String emailMinusculo = email.toLowerCase();
+        if (!emailMinusculo.endsWith("@estudante.ifro.edu.br") && !emailMinusculo.endsWith("@ifro.edu.br")) {
+            new ToastUtil(this, jPanelBotoes, "Utilize um email institucional válido.", ToastUtil.ToastType.ERROR).display();
+            return;
+        }
+
+        if (perfilSelecionado.equals("PROFESSOR") || perfilSelecionado.equals("SERVIDORES DO CAMPUS")) {
+            if (emailMinusculo.contains("@estudante.ifro.edu.br")) {
+                new ToastUtil(this, jPanelBotoes, "Perfil e email são incompatíveis.", ToastUtil.ToastType.ERROR).display();
+                return;
+            }
+        } else {
+            if (!emailMinusculo.contains("@estudante.ifro.edu.br")) {
+                new ToastUtil(this, jPanelBotoes, "Perfil e email são incompatíveis", ToastUtil.ToastType.ERROR).display();
+                return;
+            }
+        }
+
+        String cpfApenasDigitos = txtCpf.getText().replaceAll("[^0-9]", "");
+        if (cpfApenasDigitos.length() != 11) {
+            new ToastUtil(this, jPanelBotoes, "O CPF é inválido.", ToastUtil.ToastType.ERROR).display();
+            return;
+        }
+
+        String matriculaApenasDigitos = matricula.replaceAll("[^0-9]", "");
+        if (matriculaApenasDigitos.length() != 13) {
+            new ToastUtil(this, jPanelBotoes, "A Matrícula parece ser inválida.", ToastUtil.ToastType.ERROR).display();
+            return;
+        }
+
         try {
             CadastroController controller = new CadastroController();
             controller.processarCadastro(nome, cpf, matricula, email, senha, perfilSelecionado);
- 
+
             ToastUtil toast = new ToastUtil(this, jPanelBotoes, "Parabéns! Cadastro Feito com Sucesso!", ToastUtil.ToastType.SUCCESS);
             toast.display();
 
@@ -508,39 +638,50 @@ public class CadastroView extends javax.swing.JFrame {
 
         } catch (SQLException e) {
 
-          if (e.getErrorCode() == 1062) {
-        
-          String mensagemTecnica = e.getMessage().toLowerCase();
-          
-          if (mensagemTecnica.contains("usuarios.cpf_unique")) { // Supondo que sua constraint se chame 'cpf_unique'
-            new ToastUtil(this, jPanelBotoes, "Este CPF já está cadastrado.", ToastUtil.ToastType.ERROR).display();
-          
-          } else if (mensagemTecnica.contains("usuarios.un_email_usuario")) {
-            new ToastUtil(this, jPanelBotoes, "Este e-mail já está em uso.", ToastUtil.ToastType.ERROR).display();
-        
-          } else if (mensagemTecnica.contains("usuarios.matricula_unique")) {
-            new ToastUtil(this, jPanelBotoes, "Esta matrícula já está cadastrada.", ToastUtil.ToastType.ERROR).display();
-        
-          } else {
-            new ToastUtil(this, jPanelBotoes, "Dados duplicados. Tente novamente.", ToastUtil.ToastType.ERROR).display();
-          }
-        
-          } else {
-           new ToastUtil(this, jPanelBotoes, "Erro inesperado no o banco de dados.", ToastUtil.ToastType.ERROR).display();
-    }
+            if (e.getErrorCode() == 1062) {
 
-          e.printStackTrace();
+                String mensagemTecnica = e.getMessage().toLowerCase();
+
+                if (mensagemTecnica.contains("usuarios.cpf_unique")) { // Supondo que sua constraint se chame 'cpf_unique'
+                    new ToastUtil(this, jPanelBotoes, "Este CPF já está cadastrado.", ToastUtil.ToastType.ERROR).display();
+
+                } else if (mensagemTecnica.contains("usuarios.un_email_usuario")) {
+                    new ToastUtil(this, jPanelBotoes, "Este e-mail já está em uso.", ToastUtil.ToastType.ERROR).display();
+
+                } else if (mensagemTecnica.contains("usuarios.matricula_unique")) {
+                    new ToastUtil(this, jPanelBotoes, "Esta matrícula já está cadastrada.", ToastUtil.ToastType.ERROR).display();
+
+                } else {
+                    new ToastUtil(this, jPanelBotoes, "Dados duplicados. Tente novamente.", ToastUtil.ToastType.ERROR).display();
+                }
+
+            } else {
+                new ToastUtil(this, jPanelBotoes, "Erro inesperado no o banco de dados.", ToastUtil.ToastType.ERROR).display();
+            }
+
+            e.printStackTrace();
         } catch (Exception ex) {
             Logger.getLogger(CadastroView.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-    LoginView telaLogin = new LoginView();
+        LoginView telaLogin = new LoginView();
 
-    telaLogin.setVisible(true);
+        telaLogin.setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-    this.dispose();    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMatriculaActionPerformed
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void cbxPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPerfilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxPerfilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -592,10 +733,14 @@ public class CadastroView extends javax.swing.JFrame {
     private br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnCadastrar;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnCancelar;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedComboBoxUtil cbxPerfil;
+    private javax.swing.JLabel jLabEye;
+    private javax.swing.JLabel jLabEye1;
     private javax.swing.JLabel jLabTitulo;
     private javax.swing.JPanel jPanelBotoes;
+    private br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil jPanelConfirmarSenha;
     private javax.swing.JPanel jPanelDegrade;
-    private javax.swing.JPanel jPanelForm;
+    private br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil jPanelPrincipal;
+    private br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil jPanelSenha;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedPasswordFieldUtil pwdConfirmarSenha;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedPasswordFieldUtil pwdSenha;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedFormattedTextFieldUtil txtCpf;
