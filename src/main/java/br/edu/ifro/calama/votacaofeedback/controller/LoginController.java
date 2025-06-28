@@ -4,15 +4,21 @@
  */
 package br.edu.ifro.calama.votacaofeedback.controller;
 
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.repository.UsuarioRepository;
 
-/**
- *
- * @author Aluno
- */
 
 public class LoginController {
-    public boolean realizarLogin(String login, String senha) {
-        return new UsuarioRepository().autenticar(login, senha);
+
+    public boolean realizarLogin(String email, String senha) throws Exception {
+        
+        System.out.println("--- TENTANDO LOGIN ---");
+        System.out.println("Email recebido: [" + email + "]");
+        System.out.println("Senha recebida: [" + senha + "]");
+        
+        UsuarioRepository repository = new UsuarioRepository();
+        
+        Usuario usuarioAutenticado = repository.autenticar(email, senha);
+        return usuarioAutenticado != null;
     }
 }

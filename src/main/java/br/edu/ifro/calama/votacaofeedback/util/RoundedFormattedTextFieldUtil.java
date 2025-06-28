@@ -4,10 +4,7 @@
  */
 package br.edu.ifro.calama.votacaofeedback.util;
 
-/**
- *
- * @author Athos
- */
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -15,11 +12,15 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
-import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
 
-public class RoundedTextFieldUtil extends JTextField {
+/**
+ *
+ * @author Athos
+ */
+public class RoundedFormattedTextFieldUtil extends JFormattedTextField {
 
-    public RoundedTextFieldUtil() {
+    public RoundedFormattedTextFieldUtil() {
         setOpaque(false);
         setBorder(new RoundedBorderUtil(15, new java.awt.Insets(4, 10, 4, 10)));
         

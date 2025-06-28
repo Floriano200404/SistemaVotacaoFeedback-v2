@@ -12,6 +12,8 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,9 +26,6 @@ import javax.swing.JPanel;
 
 public class LoginView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginView
-     */
     private ImageIcon iconeOlhoAberto;
     private ImageIcon iconeOlhoFechado;
     private boolean senhaVisivel = false;
@@ -52,31 +51,27 @@ public class LoginView extends javax.swing.JFrame {
             System.err.println("Erro ao carregar os ícones de olho.");
             e.printStackTrace();
         }
-        //CAMPO PARA DEIXAR O BOTÃO DE ACESSAR REDONDO
         RoundedButtonUtil BotaoRedondo = (RoundedButtonUtil) btnEntrar;
         BotaoRedondo.setRadius(20); 
         
-        //CAMPO PARA DEIXAR O BOTÃO DE CADASTRAR REDONDO e com hover
         RoundedButtonUtil btnCadastrarCustom = (RoundedButtonUtil) btnCadastrar;
         btnCadastrarCustom.setRadius(20);
         btnCadastrarCustom.setForeground(Color.WHITE);
         
-        btnCadastrarCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
-        btnCadastrarCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
-        btnCadastrarCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
-        btnCadastrarCustom.setBorderColor(new Color(127, 140, 141)); // Borda
+        btnCadastrarCustom.setColor(new Color(127, 140, 141));
+        btnCadastrarCustom.setColorOver(new Color(149, 165, 166));
+        btnCadastrarCustom.setColorClick(new Color(93, 109, 126));
+        btnCadastrarCustom.setBorderColor(new Color(127, 140, 141));
         
-        //CAMPO PARA DEIXAR O BOTÃO DE ESQUECI A SENHA REDONDO e com hover
         RoundedButtonUtil btnEsqueciSenhaCustom = (RoundedButtonUtil) btnEsqueciSenha;
         btnEsqueciSenhaCustom.setRadius(20);       
         btnEsqueciSenhaCustom.setForeground(Color.WHITE);
         
-        btnEsqueciSenhaCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
-        btnEsqueciSenhaCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
-        btnEsqueciSenhaCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
-        btnEsqueciSenhaCustom.setBorderColor(new Color(127, 140, 141)); // Borda
+        btnEsqueciSenhaCustom.setColor(new Color(127, 140, 141));
+        btnEsqueciSenhaCustom.setColorOver(new Color(149, 165, 166));
+        btnEsqueciSenhaCustom.setColorClick(new Color(93, 109, 126));
+        btnEsqueciSenhaCustom.setBorderColor(new Color(127, 140, 141));
         
-        // --- CONFIGURAÇÃO DO CAMPO DE E-MAIL ARREDONDADO ---
         txtLogin.setBackground(Color.WHITE);
         txtLogin.setForeground(new Color(127, 140, 141));
         txtLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -379,21 +374,35 @@ public class LoginView extends javax.swing.JFrame {
 
         LoginController controller = new LoginController();
 
-        if (controller.realizarLogin(login, senha)) {
-            JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-            new MenuPrincipalView().setVisible(true);
-            this.dispose(); // Fecha a tela de login
-        } else {
-            JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+        try {
+            if (controller.realizarLogin(login, senha)) {
+                JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+                new MenuPrincipalView().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        try {
+        CadastroView telaDeCadastro = new CadastroView();
+
+        telaDeCadastro.setVisible(true);
+
+        this.dispose();
+
+    } catch (java.text.ParseException e) {
+        
+        JOptionPane.showMessageDialog(this, "Erro ao abrir a tela de cadastro.", "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jLabLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabLogoMouseClicked
-        // TODO add your handling code here:
         try {
         java.net.URI link = new java.net.URI("https://portal.ifro.edu.br/");
         java.awt.Desktop.getDesktop().browse(link);
@@ -404,17 +413,14 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabLogoMouseClicked
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        // TODO add your handling code here:
         jPanel1.requestFocusInWindow();
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        // TODO add your handling code here:
         jPanel1.requestFocusInWindow();
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jLabTextIFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabTextIFMouseClicked
-        // TODO add your handling code here:
         try {
         java.net.URI link = new java.net.URI("https://portal.ifro.edu.br/");
         java.awt.Desktop.getDesktop().browse(link);
@@ -425,39 +431,27 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabTextIFMouseClicked
 
     private void jLabEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabEyeMouseClicked
-        // TODO add your handling code here:
         System.out.println("Lógica de clique iniciada. Estado atual de 'senhaVisivel': " + senhaVisivel);
         
         String textoAtual = String.valueOf(pwdSenha.getPassword());
         if (textoAtual.equals(PLACEHOLDER_SENHA)) {
-        // ...não faça absolutamente NADA. Apenas saia do método.
         return; 
         }
         
         senhaVisivel = !senhaVisivel;
         
         if (senhaVisivel) {
-            // Se agora a senha deve ficar VISÍVEL:
 
-            // 1. Mostra o texto no campo de senha
-            // (Substitua 'passSenha' pelo nome correto se for diferente)
             pwdSenha.setEchoChar((char) 0); 
 
-            // 2. Mostra o ícone de OLHO ABERTO
-            // (Substitua 'jLabEye' pelo nome correto se for diferente)
             jLabEye.setIcon(iconeOlhoAberto);
 
             System.out.println("A senha agora está visível.");
 
         } else {
-            // Se agora a senha deve ficar ESCONDIDA:
 
-            // 1. Esconde o texto no campo de senha com '*'
-            // (Substitua 'passSenha' pelo nome correto se for diferente)
             pwdSenha.setEchoChar('*');
 
-            // 2. Mostra o ícone de OLHO FECHADO
-            // (Substitua 'jLabEye' pelo nome correto se for diferente)
             jLabEye.setIcon(iconeOlhoFechado);
 
             System.out.println("A senha agora está escondida.");
