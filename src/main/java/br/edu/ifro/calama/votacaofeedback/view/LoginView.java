@@ -157,7 +157,7 @@ public class LoginView extends javax.swing.JFrame {
         btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrar.setText("ACESSAR");
         btnEntrar.setBorder(null);
-        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEntrar.setName("btnEntrar"); // NOI18N
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +192,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabEmail.setText("E-mail Institucional:");
 
         btnCadastrar.setText("CADASTRAR");
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -219,7 +219,7 @@ public class LoginView extends javax.swing.JFrame {
         });
 
         jLabEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
-        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabEyeMouseClicked(evt);
@@ -241,8 +241,8 @@ public class LoginView extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabEye, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pwdSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                    .addComponent(jLabEye, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(pwdSenha, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -294,11 +294,11 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEsqueciSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
-        jLabLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabLogo.setName("FOTO DO IF"); // NOI18N
         jLabLogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -307,7 +307,7 @@ public class LoginView extends javax.swing.JFrame {
         });
 
         jLabTextIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
-        jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabTextIF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabTextIFMouseClicked(evt);
@@ -330,7 +330,7 @@ public class LoginView extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabTextIF, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(100, 100, 100))))
@@ -338,20 +338,19 @@ public class LoginView extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(199, 199, 199)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(246, 246, 246)
-                        .addComponent(jLabTextIF)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(200, 200, 200)
+                                .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(246, 246, 246)
+                                .addComponent(jLabTextIF)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)))
+                .addGap(0, 125, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -427,46 +426,36 @@ public class LoginView extends javax.swing.JFrame {
     private void jLabEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabEyeMouseClicked
         // TODO add your handling code here:
         System.out.println("Lógica de clique iniciada. Estado atual de 'senhaVisivel': " + senhaVisivel);
-        
         String textoAtual = String.valueOf(pwdSenha.getPassword());
         if (textoAtual.equals(PLACEHOLDER_SENHA)) {
-        // ...não faça absolutamente NADA. Apenas saia do método.
         return; 
         }
         
         senhaVisivel = !senhaVisivel;
         
         if (senhaVisivel) {
-            // Se agora a senha deve ficar VISÍVEL:
-
-            // 1. Mostra o texto no campo de senha
-            // (Substitua 'passSenha' pelo nome correto se for diferente)
             pwdSenha.setEchoChar((char) 0); 
-
-            // 2. Mostra o ícone de OLHO ABERTO
-            // (Substitua 'jLabEye' pelo nome correto se for diferente)
             jLabEye.setIcon(iconeOlhoAberto);
-
             System.out.println("A senha agora está visível.");
-
         } else {
-            // Se agora a senha deve ficar ESCONDIDA:
-
-            // 1. Esconde o texto no campo de senha com '*'
-            // (Substitua 'passSenha' pelo nome correto se for diferente)
             pwdSenha.setEchoChar('*');
-
-            // 2. Mostra o ícone de OLHO FECHADO
-            // (Substitua 'jLabEye' pelo nome correto se for diferente)
             jLabEye.setIcon(iconeOlhoFechado);
-
             System.out.println("A senha agora está escondida.");
         }
     }//GEN-LAST:event_jLabEyeMouseClicked
 
     private void jLabLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabLoginMouseClicked
         // TODO add your handling code here:
+        String nomeUsuario = "Estenio Silva";
+        String emailUsuario = "estenio.silva@exemplo.com";
+        String cpfUsuario = "123.456.789-00";
+        String matriculaUsuario = "2024010203";
+        String cursoAtual = "Análise e Desenv. de Sistemas";
         
+        PerfilView perfil = new PerfilView(this, nomeUsuario, emailUsuario, cpfUsuario, matriculaUsuario, cursoAtual);
+        perfil.setVisible(true);    
+        
+        System.out.println("Modal de perfil foi fechada.");
     }//GEN-LAST:event_jLabLoginMouseClicked
 
     /**
