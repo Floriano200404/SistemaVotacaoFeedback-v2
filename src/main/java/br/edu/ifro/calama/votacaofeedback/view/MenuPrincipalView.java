@@ -68,6 +68,11 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
         labelLogo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelLogo.setForeground(new java.awt.Color(255, 255, 255));
         labelLogo.setText("OCTACORE");
+        labelLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelLogoMouseClicked(evt);
+            }
+        });
         painelHeaderEsquerda.add(labelLogo);
 
         painelHeader.add(painelHeaderEsquerda, java.awt.BorderLayout.LINE_START);
@@ -192,6 +197,15 @@ new Thread(new Runnable() {
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
+
+    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
+        if (botoesDoMenu != null && !botoesDoMenu.isEmpty()) { 
+    botaoAtivo = botoesDoMenu.get(0);                  
+    atualizarAparenciaBotoes();                        
+}
+
+System.out.println("Logo clicado! Voltando para a tela inicial."); // Parte 4
+    }//GEN-LAST:event_labelLogoMouseClicked
 
     
    // ===================================================================
