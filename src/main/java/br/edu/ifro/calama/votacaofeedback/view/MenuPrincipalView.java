@@ -17,13 +17,31 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
    public MenuPrincipalView() {
     initComponents();
     inicializarMenuLateral();
-//    painelDosCards.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-//    painelDosCards.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-//    painelDosCards.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-//    painelDosCards.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-//    painelDosCards.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
-//    
+ // Cria todos os cards primeiro
+javax.swing.JComponent[] cards = {
+    criarCard("VOTAÇÕES ATIVAS", "8 Votações"),
+    criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"),
+    criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"),
+    criarCard("CRIAR VOTAÇÃO", "8 Votações"),
+    criarCard("EDITAR VOTAÇÃO", "8 Votações")
+};
 
+// Para cada card, vamos criar uma "bandeja" para ele
+for (javax.swing.JComponent card : cards) {
+    // 1. Cria a bandeja e a deixa transparente
+    javax.swing.JPanel painelBandeja = new javax.swing.JPanel();
+    painelBandeja.setOpaque(false);
+
+    // 2. Define o layout da bandeja para alinhar o card no TOPO e à ESQUERDA
+    // FlowLayout.LEADING garante o alinhamento à esquerda.
+    painelBandeja.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 0, 0));
+
+    // 3. Adiciona o card azul DENTRO da bandeja
+    painelBandeja.add(card);
+
+    // 4. Adiciona a BANDEJA (e não o card diretamente) na grade principal
+    painelDosCards.add(painelBandeja);
+}
 }
     
 
@@ -45,8 +63,9 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
         labelIconePerfil = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
         painelTopoConteudo = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtbemVindo = new javax.swing.JLabel();
+        textGuia = new javax.swing.JTextArea();
+        painelDosCards = new javax.swing.JPanel();
         painelSidebar = new javax.swing.JPanel();
         menutxt = new javax.swing.JLabel();
         criarVotacao = new javax.swing.JButton();
@@ -105,23 +124,27 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
 
         painelTopoConteudo.setLayout(new javax.swing.BoxLayout(painelTopoConteudo, javax.swing.BoxLayout.Y_AXIS));
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bem-Vindo, Nome do Usuário!");
-        jLabel1.setAlignmentX(0.5F);
-        painelTopoConteudo.add(jLabel1);
+        txtbemVindo.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        txtbemVindo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtbemVindo.setText("Bem-Vindo, Nome do Usuário!");
+        txtbemVindo.setAlignmentX(0.5F);
+        painelTopoConteudo.add(txtbemVindo);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Bem-vindo(a) de volta!\n\nEste é o seu painel de controle para o Sistema de Votação. Acompanhe as votações ativas, gerencie propostas pendentes de aprovação e acesse os resultados arquivados.\n\nPara começar, selecione uma das opções no menu de navegação à sua esquerda ou utilize um dos atalhos nos cartões abaixo para acesso rápido às principais funções.");
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setBorder(null);
-        jTextArea1.setOpaque(false);
-        painelTopoConteudo.add(jTextArea1);
+        textGuia.setEditable(false);
+        textGuia.setColumns(20);
+        textGuia.setLineWrap(true);
+        textGuia.setRows(5);
+        textGuia.setText("Bem-vindo(a) de volta!\n\nEste é o seu painel de controle para o Sistema de Votação. Acompanhe as votações ativas, gerencie propostas pendentes de aprovação e acesse os resultados arquivados.\n\nPara começar, selecione uma das opções no menu de navegação à sua esquerda ou utilize um dos atalhos nos cartões abaixo para acesso rápido às principais funções.");
+        textGuia.setWrapStyleWord(true);
+        textGuia.setBorder(null);
+        textGuia.setOpaque(false);
+        painelTopoConteudo.add(textGuia);
 
         painelConteudo.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
+
+        painelDosCards.setOpaque(false);
+        painelDosCards.setLayout(new java.awt.GridLayout(2, 3, 15, 15));
+        painelConteudo.add(painelDosCards, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -227,12 +250,49 @@ new Thread(new Runnable() {
 System.out.println("Logo clicado! Voltando para a tela inicial."); // Parte 4
     }//GEN-LAST:event_labelLogoMouseClicked
 
-    
-   // ===================================================================
-//  INÍCIO DA NOVA LÓGICA DO MENU LATERAL (COPIE TUDO ABAIXO)
-// ===================================================================
+// Este novo método cria um JPanel, que é muito melhor para usar como "card"
+private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
+    // 1. O card agora é um JPanel. Podemos definir a cor de fundo sem problemas.
+    javax.swing.JPanel card = new javax.swing.JPanel();
+    card.setBackground(new java.awt.Color(27, 126, 196)); // O fundo azul dos cards
+    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS)); // Alinha textos um embaixo do outro
+    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)); // Cria um espaçamento interno (padding)
+    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); // Mostra a "mãozinha" ao passar o mouse
 
-// MÉTODO PRINCIPAL QUE ORGANIZA TUDO
+    // 2. O título e o subtítulo são JLabels com texto branco
+    javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
+    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+    labelTitulo.setForeground(java.awt.Color.WHITE);
+
+    javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
+    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+    labelSubtitulo.setForeground(java.awt.Color.WHITE);
+
+    // 3. Adiciona os textos ao card
+    card.add(labelTitulo);
+    // Adiciona um pequeno espaço vertical de 5 pixels entre o título e o subtítulo
+    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))); 
+    card.add(labelSubtitulo);
+
+    // 4. Adiciona um efeito de hover para o card inteiro
+    card.addMouseListener(new java.awt.event.MouseAdapter() {
+        // Guarda a cor original e a cor de destaque
+        final java.awt.Color corOriginal = new java.awt.Color(27, 126, 196);
+        final java.awt.Color corHover = new java.awt.Color(47, 146, 246); // Um azul um pouco mais claro
+
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            card.setBackground(corHover); // Muda a cor quando o mouse entra
+        }
+
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            card.setBackground(corOriginal); // Volta à cor original quando o mouse sai
+        }
+    });
+
+    return card;
+}
 private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
     botoesDoMenu = java.util.Arrays.asList(criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado);
@@ -280,52 +340,7 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
         System.out.println("ERRO ao carregar ícone: " + nomeIcone);
     }
 }
-private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
-    // 1. O card agora é um JPanel.
-    javax.swing.JPanel card = new javax.swing.JPanel();
-    card.setBackground(new java.awt.Color(27, 126, 196)); // O fundo azul dos cards
-    // Usa BoxLayout para alinhar os textos um embaixo do outro
-    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS)); 
-    // Cria um espaçamento interno (padding)
-    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); // Mãozinha ao passar o mouse
 
-    // 2. O título é um JLabel com texto branco e em negrito.
-    javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
-    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
-    labelTitulo.setForeground(java.awt.Color.WHITE);
-
-    // 3. O subtítulo é outro JLabel, com texto branco e normal.
-    javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
-    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
-    labelSubtitulo.setForeground(java.awt.Color.WHITE);
-
-    // 4. Adiciona os textos ao card.
-    card.add(labelTitulo);
-    // Adiciona um pequeno espaço vertical entre o título e o subtítulo
-    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))); 
-    card.add(labelSubtitulo);
-    
-    // 5. Adiciona um efeito de hover para o card inteiro
-    card.addMouseListener(new java.awt.event.MouseAdapter() {
-        // Cor original do card
-        final java.awt.Color corOriginal = new java.awt.Color(27, 126, 196);
-        // Cor mais clara para quando o mouse passar por cima
-        final java.awt.Color corHover = new java.awt.Color(47, 146, 246);
-
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            card.setBackground(corHover);
-        }
-
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            card.setBackground(corOriginal);
-        }
-    });
-
-    return card;
-}
 
 // MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
 private void atualizarAparenciaBotoes() {
@@ -371,9 +386,6 @@ private void adicionarListeners(javax.swing.JButton botao) {
         atualizarAparenciaBotoes();
     });
 }
-// ===================================================================
-//  FIM DA NOVA LÓGICA
-// ===================================================================
 
 //     * @param args the command line arguments
 //     */
@@ -400,20 +412,21 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JLabel labelIconePerfil;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelNomeUsuario;
     private javax.swing.JLabel menutxt;
     private javax.swing.JPanel painelConteudo;
+    private javax.swing.JPanel painelDosCards;
     private javax.swing.JPanel painelHeader;
     private javax.swing.JPanel painelHeaderDireita;
     private javax.swing.JPanel painelHeaderEsquerda;
     private javax.swing.JPanel painelSidebar;
     private javax.swing.JPanel painelTopoConteudo;
     private javax.swing.JButton participarVotacao;
+    private javax.swing.JTextArea textGuia;
+    private javax.swing.JLabel txtbemVindo;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
 
