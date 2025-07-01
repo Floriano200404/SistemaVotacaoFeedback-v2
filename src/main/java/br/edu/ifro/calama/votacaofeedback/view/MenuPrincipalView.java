@@ -31,7 +31,12 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
     private void initComponents() {
 
         painelHeader = new javax.swing.JPanel();
+        painelHeaderEsquerda = new javax.swing.JPanel();
         labelIconeMenu = new javax.swing.JLabel();
+        labelLogo = new javax.swing.JLabel();
+        painelHeaderDireita = new javax.swing.JPanel();
+        labelNomeUsuario = new javax.swing.JLabel();
+        labelIconePerfil = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
         painelSidebar = new javax.swing.JPanel();
         menutxt = new javax.swing.JLabel();
@@ -47,6 +52,10 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
+        painelHeader.setLayout(new java.awt.BorderLayout());
+
+        painelHeaderEsquerda.setOpaque(false);
+        painelHeaderEsquerda.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu.png"))); // NOI18N
         labelIconeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -54,23 +63,27 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
                 labelIconeMenuMouseClicked(evt);
             }
         });
+        painelHeaderEsquerda.add(labelIconeMenu);
 
-        javax.swing.GroupLayout painelHeaderLayout = new javax.swing.GroupLayout(painelHeader);
-        painelHeader.setLayout(painelHeaderLayout);
-        painelHeaderLayout.setHorizontalGroup(
-            painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelHeaderLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(labelIconeMenu)
-                .addContainerGap(677, Short.MAX_VALUE))
-        );
-        painelHeaderLayout.setVerticalGroup(
-            painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelIconeMenu)
-                .addGap(15, 15, 15))
-        );
+        labelLogo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        labelLogo.setForeground(new java.awt.Color(255, 255, 255));
+        labelLogo.setText("OCTACORE");
+        painelHeaderEsquerda.add(labelLogo);
+
+        painelHeader.add(painelHeaderEsquerda, java.awt.BorderLayout.LINE_START);
+
+        painelHeaderDireita.setOpaque(false);
+        painelHeaderDireita.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        labelNomeUsuario.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        labelNomeUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelNomeUsuario.setText("jLabel1");
+        painelHeaderDireita.add(labelNomeUsuario);
+
+        labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        painelHeaderDireita.add(labelIconePerfil);
+
+        painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
@@ -308,9 +321,14 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JLabel labelIconeMenu;
+    private javax.swing.JLabel labelIconePerfil;
+    private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelNomeUsuario;
     private javax.swing.JLabel menutxt;
     private javax.swing.JPanel painelConteudo;
     private javax.swing.JPanel painelHeader;
+    private javax.swing.JPanel painelHeaderDireita;
+    private javax.swing.JPanel painelHeaderEsquerda;
     private javax.swing.JPanel painelSidebar;
     private javax.swing.JButton participarVotacao;
     private javax.swing.JButton votoArquivado;
