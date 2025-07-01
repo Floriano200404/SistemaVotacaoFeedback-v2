@@ -9,6 +9,8 @@ package br.edu.ifro.calama.votacaofeedback.view;
  * @author esten
  */
 
+import br.edu.ifro.calama.votacaofeedback.util.AlinhamentoSelectUtil;
+import br.edu.ifro.calama.votacaofeedback.util.RotatingArrowUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil; 
 import br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil; 
 import java.awt.BorderLayout;
@@ -34,6 +36,9 @@ public class PerfilView extends JDialog {
 
     private final Font FONT_INPUT = new Font("Segoe UI", Font.BOLD, 14);
     private final Font FONT_LABEL = new Font("Segoe UI", Font.BOLD, 16);
+    
+    private boolean popupVisivel = false;
+    
     public PerfilView(JFrame parent, String nome, String email, String cpf, String matricula, String cursoAtual) {
         super(parent, true);
 
@@ -203,18 +208,88 @@ public class PerfilView extends JDialog {
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
+        
         gbc.anchor = GridBagConstraints.WEST;
-        String[] cursos = {"Análise e Desenv. de Sistemas", "Engenharia Civil", "Licenciatura em Química", "Medicina"};
-        JComboBox<String> comboCurso = new JComboBox<>(cursos);
+        String[] cursos = {"Análise e Desenv. de Sistemas", "Engenharia Civil", "Engenharia Química", "Licenciatura em Física"};
+        final JComboBox<String> comboCurso = new JComboBox<>(cursos);
         comboCurso.setFont(FONT_INPUT);
         comboCurso.setSelectedItem(cursoAtual);
         comboCurso.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        comboCurso.setRenderer(new AlinhamentoSelectUtil());
+        comboCurso.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
+            @Override
+            protected javax.swing.JButton createArrowButton() {
+                return new javax.swing.JButton() {
+                    @Override
+                    public int getWidth() {
+                        return 0;
+                    }
+                };
+            }
+
+            @Override
+            public void paintCurrentValueBackground(java.awt.Graphics g, java.awt.Rectangle bounds, boolean hasFocus) {
+                
+            }
+        });
+        
         comboCurso.setBorder(null);
+        
+        
+        final RotatingArrowUtil lblArrow = new RotatingArrowUtil();
+        lblArrow.setForeground(new Color(100, 100, 100));
+        lblArrow.setPreferredSize(new java.awt.Dimension(30, 0));
+        lblArrow.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        lblArrow.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (popupVisivel) {
+                    comboCurso.setPopupVisible(false);
+                } else {
+                    comboCurso.showPopup();
+                }
+                e.consume();
+            }
+        });
+        
+        // Forçando o Hand Cursor na lista que abre (popup)
+        comboCurso.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent e) {
+                popupVisivel = true;
+                lblArrow.rotateTo(180, 200);
+            }
+            @Override
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {
+                popupVisivel = false;
+                lblArrow.rotateTo(0, 200);
+            }
+            @Override
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent e) {
+                popupVisivel = false;
+                lblArrow.rotateTo(0, 200);
+            }
+        });
+
+        Object popup = comboCurso.getUI().getAccessibleChild(comboCurso, 0);
+        if (popup instanceof javax.swing.plaf.basic.BasicComboPopup) {
+            javax.swing.JList list = ((javax.swing.plaf.basic.BasicComboPopup) popup).getList();
+            list.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(java.awt.event.MouseEvent e) {
+                    list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                }
+            });
+        }
+
         RoundedPanelUtil comboPanel = new RoundedPanelUtil(15, Color.WHITE);
         comboPanel.setLayout(new BorderLayout());
 
         
-        comboCurso.setBorder(new EmptyBorder(0, 5, 0, 0));
+        //comboCurso.setBorder(new EmptyBorder(0, 5, 0, 0));
+        comboPanel.add(lblArrow, BorderLayout.EAST);
         comboPanel.add(comboCurso, BorderLayout.CENTER);
         formPanel.add(comboPanel, gbc);
 
@@ -256,11 +331,10 @@ public class PerfilView extends JDialog {
     }
     
     private void styleTextField(JTextField field) {
-    field.setOpaque(false); // Deixa o fundo transparente
-    field.setBorder(null); // Remove a borda
-    field.setHorizontalAlignment(JTextField.RIGHT); // Alinha o texto à direita
-    field.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Define uma fonte
-    field.setFont(FONT_INPUT);
-    field.setForeground(new Color(80, 80, 80)); // Define a cor do texto
-}
+        field.setOpaque(false);
+        field.setBorder(null);
+        field.setHorizontalAlignment(JTextField.RIGHT);
+        field.setFont(FONT_INPUT);
+        field.setForeground(new Color(80, 80, 80));
+    }
 }
