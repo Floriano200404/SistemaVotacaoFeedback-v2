@@ -55,6 +55,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
             <Property name="alignment" type="int" value="0"/>
+            <Property name="horizontalGap" type="int" value="30"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="labelIconeMenu">
@@ -92,6 +93,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
             <Property name="alignment" type="int" value="2"/>
+            <Property name="horizontalGap" type="int" value="20"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="labelNomeUsuario">
@@ -102,7 +104,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="jLabel1"/>
+                <Property name="text" type="java.lang.String" value="Nome Usuario"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelIconePerfil">

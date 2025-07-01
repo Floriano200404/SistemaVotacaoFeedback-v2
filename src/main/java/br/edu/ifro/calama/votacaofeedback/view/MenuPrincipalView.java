@@ -55,7 +55,7 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
         painelHeader.setLayout(new java.awt.BorderLayout());
 
         painelHeaderEsquerda.setOpaque(false);
-        painelHeaderEsquerda.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        painelHeaderEsquerda.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 5));
 
         labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu.png"))); // NOI18N
         labelIconeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -73,11 +73,11 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
         painelHeader.add(painelHeaderEsquerda, java.awt.BorderLayout.LINE_START);
 
         painelHeaderDireita.setOpaque(false);
-        painelHeaderDireita.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        painelHeaderDireita.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 20, 5));
 
         labelNomeUsuario.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
         labelNomeUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        labelNomeUsuario.setText("jLabel1");
+        labelNomeUsuario.setText("Nome Usuario");
         painelHeaderDireita.add(labelNomeUsuario);
 
         labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
