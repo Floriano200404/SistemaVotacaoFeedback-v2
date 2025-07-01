@@ -17,6 +17,12 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
    public MenuPrincipalView() {
     initComponents();
     inicializarMenuLateral();
+//    painelDosCards.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+//    painelDosCards.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+//    painelDosCards.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+//    painelDosCards.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+//    painelDosCards.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+//    
 
 }
     
@@ -38,6 +44,9 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
         labelNomeUsuario = new javax.swing.JLabel();
         labelIconePerfil = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
+        painelTopoConteudo = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextArea1 = new javax.swing.JTextArea();
         painelSidebar = new javax.swing.JPanel();
         menutxt = new javax.swing.JLabel();
         criarVotacao = new javax.swing.JButton();
@@ -92,16 +101,27 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout painelConteudoLayout = new javax.swing.GroupLayout(painelConteudo);
-        painelConteudo.setLayout(painelConteudoLayout);
-        painelConteudoLayout.setHorizontalGroup(
-            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
-        );
-        painelConteudoLayout.setVerticalGroup(
-            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
-        );
+        painelConteudo.setLayout(new java.awt.BorderLayout());
+
+        painelTopoConteudo.setLayout(new javax.swing.BoxLayout(painelTopoConteudo, javax.swing.BoxLayout.Y_AXIS));
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Bem-Vindo, Nome do Usuário!");
+        jLabel1.setAlignmentX(0.5F);
+        painelTopoConteudo.add(jLabel1);
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Bem-vindo(a) de volta!\n\nEste é o seu painel de controle para o Sistema de Votação. Acompanhe as votações ativas, gerencie propostas pendentes de aprovação e acesse os resultados arquivados.\n\nPara começar, selecione uma das opções no menu de navegação à sua esquerda ou utilize um dos atalhos nos cartões abaixo para acesso rápido às principais funções.");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setBorder(null);
+        jTextArea1.setOpaque(false);
+        painelTopoConteudo.add(jTextArea1);
+
+        painelConteudo.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -260,6 +280,52 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
         System.out.println("ERRO ao carregar ícone: " + nomeIcone);
     }
 }
+private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
+    // 1. O card agora é um JPanel.
+    javax.swing.JPanel card = new javax.swing.JPanel();
+    card.setBackground(new java.awt.Color(27, 126, 196)); // O fundo azul dos cards
+    // Usa BoxLayout para alinhar os textos um embaixo do outro
+    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS)); 
+    // Cria um espaçamento interno (padding)
+    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); // Mãozinha ao passar o mouse
+
+    // 2. O título é um JLabel com texto branco e em negrito.
+    javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
+    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+    labelTitulo.setForeground(java.awt.Color.WHITE);
+
+    // 3. O subtítulo é outro JLabel, com texto branco e normal.
+    javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
+    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+    labelSubtitulo.setForeground(java.awt.Color.WHITE);
+
+    // 4. Adiciona os textos ao card.
+    card.add(labelTitulo);
+    // Adiciona um pequeno espaço vertical entre o título e o subtítulo
+    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))); 
+    card.add(labelSubtitulo);
+    
+    // 5. Adiciona um efeito de hover para o card inteiro
+    card.addMouseListener(new java.awt.event.MouseAdapter() {
+        // Cor original do card
+        final java.awt.Color corOriginal = new java.awt.Color(27, 126, 196);
+        // Cor mais clara para quando o mouse passar por cima
+        final java.awt.Color corHover = new java.awt.Color(47, 146, 246);
+
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            card.setBackground(corHover);
+        }
+
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            card.setBackground(corOriginal);
+        }
+    });
+
+    return card;
+}
 
 // MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
 private void atualizarAparenciaBotoes() {
@@ -334,6 +400,8 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JLabel labelIconePerfil;
     private javax.swing.JLabel labelLogo;
@@ -344,6 +412,7 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JPanel painelHeaderDireita;
     private javax.swing.JPanel painelHeaderEsquerda;
     private javax.swing.JPanel painelSidebar;
+    private javax.swing.JPanel painelTopoConteudo;
     private javax.swing.JButton participarVotacao;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
