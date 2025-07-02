@@ -45,6 +45,22 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         aprovarVotacao = new javax.swing.JButton();
         votoArquivado = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        painelConteudo = new javax.swing.JPanel();
+        TituloPrincipal = new javax.swing.JLabel();
+        TituloVotacao = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JTextField();
+        TituloDesc = new javax.swing.JLabel();
+        txtDescricao = new javax.swing.JTextArea();
+        TituloDateI = new javax.swing.JLabel();
+        txtDataInicial = new javax.swing.JFormattedTextField();
+        TituloDateF = new javax.swing.JLabel();
+        txtDataFinal = new javax.swing.JFormattedTextField();
+        TituloParticipante = new javax.swing.JLabel();
+        comboParticipantes = new javax.swing.JComboBox<>();
+        tituloDivulga = new javax.swing.JLabel();
+        txtDataDivulgacao = new javax.swing.JFormattedTextField();
+        btnCancelar = new javax.swing.JButton();
+        btnAvancar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,6 +149,132 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
+        TituloPrincipal.setText("CRIAR VOTAÇÃO");
+
+        TituloVotacao.setText("Título da Votação");
+
+        txtTitulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTituloActionPerformed(evt);
+            }
+        });
+
+        TituloDesc.setText("Descrição da Votação");
+
+        txtDescricao.setColumns(20);
+        txtDescricao.setRows(5);
+
+        TituloDateI.setText("Data Inicial da Votação");
+
+        txtDataInicial.setText("jFormattedTextField1");
+        txtDataInicial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataInicialActionPerformed(evt);
+            }
+        });
+
+        TituloDateF.setText("Data Final da Votação");
+
+        txtDataFinal.setText("jFormattedTextField1");
+
+        TituloParticipante.setText("Participantes");
+
+        comboParticipantes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        tituloDivulga.setText("Data De Divulgação dos Resultados");
+
+        txtDataDivulgacao.setText("jFormattedTextField1");
+
+        btnCancelar.setText("X Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnAvancar.setText("Avançar");
+        btnAvancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvancarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelConteudoLayout = new javax.swing.GroupLayout(painelConteudo);
+        painelConteudo.setLayout(painelConteudoLayout);
+        painelConteudoLayout.setHorizontalGroup(
+            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelConteudoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TituloPrincipal)
+                .addGap(87, 87, 87))
+            .addGroup(painelConteudoLayout.createSequentialGroup()
+                .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelConteudoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TituloVotacao)
+                            .addGroup(painelConteudoLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TituloDesc)
+                                    .addComponent(TituloDateI)
+                                    .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TituloDateF)))
+                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(painelConteudoLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TituloParticipante)
+                            .addComponent(tituloDivulga)
+                            .addComponent(txtDataDivulgacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(painelConteudoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnCancelar)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnAvancar)))
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+        painelConteudoLayout.setVerticalGroup(
+            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelConteudoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TituloPrincipal)
+                .addGap(18, 18, 18)
+                .addComponent(TituloVotacao, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloDesc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloDateI)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TituloDateF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TituloParticipante)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tituloDivulga)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtDataDivulgacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAvancar))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -192,6 +334,28 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
+
+    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTituloActionPerformed
+
+    private void txtDataInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataInicialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataInicialActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
+   CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView();
+
+    // 2. Torna a nova janela visível.
+    telaDeCriacao.setVisible(true);
+
+    // 3. Fecha a janela atual do menu principal de forma limpa.
+    this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAvancarActionPerformed
 private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
@@ -297,7 +461,16 @@ private void adicionarListeners(javax.swing.JButton botao) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel TituloDateF;
+    private javax.swing.JLabel TituloDateI;
+    private javax.swing.JLabel TituloDesc;
+    private javax.swing.JLabel TituloParticipante;
+    private javax.swing.JLabel TituloPrincipal;
+    private javax.swing.JLabel TituloVotacao;
     private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JButton btnAvancar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> comboParticipantes;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
@@ -306,11 +479,18 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelNomeUsuario;
     private javax.swing.JLabel menutxt;
+    private javax.swing.JPanel painelConteudo;
     private javax.swing.JPanel painelHeader;
     private javax.swing.JPanel painelHeaderDireita;
     private javax.swing.JPanel painelHeaderEsquerda;
     private javax.swing.JPanel painelSidebar;
     private javax.swing.JButton participarVotacao;
+    private javax.swing.JLabel tituloDivulga;
+    private javax.swing.JFormattedTextField txtDataDivulgacao;
+    private javax.swing.JFormattedTextField txtDataFinal;
+    private javax.swing.JFormattedTextField txtDataInicial;
+    private javax.swing.JTextArea txtDescricao;
+    private javax.swing.JTextField txtTitulo;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
 }
