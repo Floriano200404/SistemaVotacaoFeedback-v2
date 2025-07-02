@@ -5,8 +5,10 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.LoginController;
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -372,19 +374,39 @@ public class LoginView extends javax.swing.JFrame {
         String login = txtLogin.getText();
         String senha = new String(pwdSenha.getPassword());
 
-        LoginController controller = new LoginController();
-
-        try {
-            if (controller.realizarLogin(login, senha)) {
-                JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-                new MenuPrincipalView().setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        if (login.isEmpty() || senha.isEmpty()) {
+        // Para erros de validação, vamos usar uma posição central para chamar mais atenção.
+        ToastUtil toast = new ToastUtil(this, "Preencha todos os campos.", 
+                                        ToastUtil.ToastType.ERROR, 
+                                        ToastUtil.ToastPosition.TOP_RIGHT); // <-- Posição adicionada
+        toast.display();
+        return;
         }
+
+    // --- Lógica de login ---
+        LoginController controller = new LoginController();
+    try {
+        // É recomendado que seu controller retorne um objeto "Usuario"
+        // para você ter acesso a todos os dados dele, não apenas um boolean.
+        Usuario usuarioLogado = controller.realizarLogin(login, senha); 
+
+        if (usuarioLogado != null) { // Login bem-sucedido
+            
+            // 1. Pega o nome a partir do objeto retornado pelo controller
+            String nomeDoUsuario = usuarioLogado.getNome(); 
+
+            // 2. Cria a tela principal USANDO O NOVO CONSTRUTOR e passando o nome
+            new MenuPrincipalView(nomeDoUsuario).setVisible(true);
+            
+            this.dispose(); // Fecha a tela de login
+        } else {
+            // Lógica de erro de login
+            JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception ex) {
+        // Lógica para outras exceções
+        Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
