@@ -8,14 +8,15 @@ package br.edu.ifro.calama.votacaofeedback.view;
  * @author Aluno
  */
 public class MenuPrincipalView extends javax.swing.JFrame {
-private java.util.List<javax.swing.JButton> botoesDoMenu;
-    private javax.swing.JButton botaoAtivo;
+//private java.util.List<javax.swing.JButton> botoesDoMenu;
+//    private javax.swing.JButton botaoAtivo;
     /**
      * Creates new form MenuPrincipalView
      */
    
    public MenuPrincipalView() {
     initComponents();
+    
     inicializarMenuLateral();
 // 1. Cria os painéis para as duas linhas ("prateleiras")
 // Usamos FlowLayout.CENTER para centralizar os cards em cada linha.
@@ -35,32 +36,7 @@ linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
 linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
 
 // 4. Adiciona as duas prateleiras ao painel principal dos cards, que as empilhará
-  painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-  painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(linhaDeCima);
-painelDosCards.add(linhaDeBaixo);
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
+
 }
     
 
@@ -261,12 +237,12 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        if (botoesDoMenu != null && !botoesDoMenu.isEmpty()) { 
-    botaoAtivo = botoesDoMenu.get(0);                  
-    atualizarAparenciaBotoes();                        
-}
+     // Ação temporária: Apenas imprime no console para sabermos que funcionou.
+    System.out.println("Botão HOME (Logo OCTACORE) clicado!");
 
-System.out.println("Logo clicado! Voltando para a tela inicial."); // Parte 4
+    // Futuramente, quando tivermos o CardLayout, a linha abaixo será usada
+    // para mostrar a tela principal do dashboard.
+    // Exemplo: cardLayout.show(painelConteudo, "cardDashboard");
     }//GEN-LAST:event_labelLogoMouseClicked
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
@@ -318,8 +294,9 @@ private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
 }
 private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
-    botoesDoMenu = java.util.Arrays.asList(criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado);
-
+     java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
+        criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
+    );
     // 1. Aplica o estilo visual INICIAL a cada botão
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
@@ -328,22 +305,17 @@ private void inicializarMenuLateral() {
     configurarBotao(votoArquivado, "arquivada.png");
 
     // 2. Adiciona os eventos de mouse e clique a todos os botões
-    for (javax.swing.JButton botao : botoesDoMenu) {
+    for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
 
-    // 3. Define o estado inicial (primeiro botão como ativo)
-    botaoAtivo = criarVotacao;
-    atualizarAparenciaBotoes();
+   
 }
 
 // MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
     // Estilo visual "flat"
-    botao.setOpaque(false);
-    botao.setContentAreaFilled(false);
-    botao.setBorderPainted(false);
-    botao.setFocusPainted(false);
+   botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
     // Alinhamento e cursor
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -366,47 +338,37 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
 
 
 // MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
-private void atualizarAparenciaBotoes() {
-    final java.awt.Color COR_TEXTO_ATIVO = java.awt.Color.WHITE;
-    final java.awt.Color COR_TEXTO_INATIVO = new java.awt.Color(50, 50, 50);
-    final java.awt.Color COR_FUNDO_ATIVO = new java.awt.Color(88, 101, 242); // Azul
 
-    for (javax.swing.JButton botao : botoesDoMenu) {
-        if (botao == botaoAtivo) {
-            // Estilo do botão ATIVO
-            botao.setOpaque(true);
-            botao.setBackground(COR_FUNDO_ATIVO);
-            botao.setForeground(COR_TEXTO_ATIVO);
-        } else {
-            // Estilo do botão INATIVO
-            botao.setOpaque(false);
-            botao.setBackground(getBackground()); 
-            botao.setForeground(COR_TEXTO_INATIVO);
-        }
-    }
-}
 
 // MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
+// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    final java.awt.Color COR_HOVER = new java.awt.Color(225, 225, 225);
+    // Define as cores que vamos usar
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
 
+    // Adiciona os eventos de mouse para o efeito de HOVER
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            if (botao != botaoAtivo) {
-                botao.setBackground(COR_HOVER);
-                botao.setOpaque(true);
-            }
+            // Quando o mouse entra, o fundo do botão fica azul claro
+            botao.setBackground(COR_HOVER_AZUL);
+            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
         }
+
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            atualizarAparenciaBotoes();
+            // Quando o mouse sai, o fundo volta a ser transparente
+            botao.setOpaque(false);
+            // A linha abaixo é opcional, mas garante a cor certa
+            botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
+    // Adiciona a AÇÃO DE CLIQUE (que agora não faz nenhuma mudança visual)
     botao.addActionListener(e -> {
-        botaoAtivo = botao;
-        atualizarAparenciaBotoes();
+        System.out.println("Botão '" + botao.getText() + "' clicado!");
+        // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
     });
 }
 
