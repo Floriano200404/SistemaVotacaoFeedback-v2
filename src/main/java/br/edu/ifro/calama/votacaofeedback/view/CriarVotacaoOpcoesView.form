@@ -214,21 +214,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="txtOpcao2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="TituloP" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPergunta" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtOpcao1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtOpcao2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="TituloP" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPergunta" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="TituloO1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtOpcao1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="TituloO2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -308,6 +301,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Voltar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnFinalizar">
           <Properties>
