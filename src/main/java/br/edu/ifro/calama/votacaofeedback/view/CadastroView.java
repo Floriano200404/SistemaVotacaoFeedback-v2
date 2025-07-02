@@ -219,6 +219,7 @@ public class CadastroView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu1 = new java.awt.PopupMenu();
         jPanelDegrade = new jPainelGradient();
         jPanelPrincipal = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil();
         jLabTitulo = new javax.swing.JLabel();
@@ -244,6 +245,8 @@ public class CadastroView extends javax.swing.JFrame {
         btnCancelar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
 
+        popupMenu1.setLabel("popupMenu1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -252,7 +255,7 @@ public class CadastroView extends javax.swing.JFrame {
         jPanelDegrade.setPreferredSize(new java.awt.Dimension(1480, 800));
         jPanelDegrade.setLayout(new java.awt.GridBagLayout());
 
-        jPanelPrincipal.setBackground(new java.awt.Color(11, 41, 81));
+        jPanelPrincipal.setBackground(new java.awt.Color(9, 32, 63));
         jPanelPrincipal.setToolTipText("");
         jPanelPrincipal.setPreferredSize(new java.awt.Dimension(1246, 602));
 
@@ -304,7 +307,7 @@ public class CadastroView extends javax.swing.JFrame {
         });
 
         jLabEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
-        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabEyeMouseClicked(evt);
@@ -340,7 +343,7 @@ public class CadastroView extends javax.swing.JFrame {
         pwdConfirmarSenha.setBorder(null);
 
         jLabEye1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
-        jLabEye1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabEye1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabEye1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabEye1MouseClicked(evt);
@@ -472,24 +475,25 @@ public class CadastroView extends javax.swing.JFrame {
                     .addComponent(JlabCpf)
                     .addComponent(JlabPerfil))
                 .addGap(12, 12, 12)
-                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbxPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPrincipalLayout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JlabSenha)
-                            .addComponent(JlabEmail))
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JlabEmail, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JlabSenha))
                         .addGap(12, 12, 12)
                         .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(55, 55, 55)
-                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JlabConfirmarSenha)
-                            .addComponent(JlabMatricula))
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JlabConfirmarSenha, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JlabMatricula, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(12, 12, 12)
                         .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanelConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -741,6 +745,7 @@ public class CadastroView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDegrade;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil jPanelPrincipal;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil jPanelSenha;
+    private java.awt.PopupMenu popupMenu1;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedPasswordFieldUtil pwdConfirmarSenha;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedPasswordFieldUtil pwdSenha;
     private br.edu.ifro.calama.votacaofeedback.util.RoundedFormattedTextFieldUtil txtCpf;

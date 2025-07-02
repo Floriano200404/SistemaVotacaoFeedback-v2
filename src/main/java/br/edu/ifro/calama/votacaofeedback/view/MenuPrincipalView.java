@@ -17,31 +17,50 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
    public MenuPrincipalView() {
     initComponents();
     inicializarMenuLateral();
- // Cria todos os cards primeiro
-javax.swing.JComponent[] cards = {
-    criarCard("VOTAÇÕES ATIVAS", "8 Votações"),
-    criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"),
-    criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"),
-    criarCard("CRIAR VOTAÇÃO", "8 Votações"),
-    criarCard("EDITAR VOTAÇÃO", "8 Votações")
-};
+// 1. Cria os painéis para as duas linhas ("prateleiras")
+// Usamos FlowLayout.CENTER para centralizar os cards em cada linha.
+javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
 
-// Para cada card, vamos criar uma "bandeja" para ele
-for (javax.swing.JComponent card : cards) {
-    // 1. Cria a bandeja e a deixa transparente
-    javax.swing.JPanel painelBandeja = new javax.swing.JPanel();
-    painelBandeja.setOpaque(false);
+javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+linhaDeBaixo.setOpaque(false);
 
-    // 2. Define o layout da bandeja para alinhar o card no TOPO e à ESQUERDA
-    // FlowLayout.LEADING garante o alinhamento à esquerda.
-    painelBandeja.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEADING, 0, 0));
+// 2. Adiciona os 3 cards de cima na primeira prateleira
+linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
 
-    // 3. Adiciona o card azul DENTRO da bandeja
-    painelBandeja.add(card);
+// 3. Adiciona os 2 cards de baixo na segunda prateleira
+linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
 
-    // 4. Adiciona a BANDEJA (e não o card diretamente) na grade principal
-    painelDosCards.add(painelBandeja);
-}
+// 4. Adiciona as duas prateleiras ao painel principal dos cards, que as empilhará
+  painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+  painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(linhaDeCima);
+painelDosCards.add(linhaDeBaixo);
+ painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+ painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+ painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
 }
     
 
@@ -143,7 +162,7 @@ for (javax.swing.JComponent card : cards) {
         painelConteudo.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
 
         painelDosCards.setOpaque(false);
-        painelDosCards.setLayout(new java.awt.GridLayout(2, 3, 15, 15));
+        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
         painelConteudo.add(painelDosCards, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
@@ -250,44 +269,48 @@ new Thread(new Runnable() {
 System.out.println("Logo clicado! Voltando para a tela inicial."); // Parte 4
     }//GEN-LAST:event_labelLogoMouseClicked
 
-// Este novo método cria um JPanel, que é muito melhor para usar como "card"
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
-    // 1. O card agora é um JPanel. Podemos definir a cor de fundo sem problemas.
+    // O card continua sendo um JPanel
     javax.swing.JPanel card = new javax.swing.JPanel();
-    card.setBackground(new java.awt.Color(27, 126, 196)); // O fundo azul dos cards
-    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS)); // Alinha textos um embaixo do outro
-    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15)); // Cria um espaçamento interno (padding)
-    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); // Mostra a "mãozinha" ao passar o mouse
 
-    // 2. O título e o subtítulo são JLabels com texto branco
+    // --- MUDANÇA IMPORTANTE: Definindo um tamanho ---
+    // Define um tamanho preferido para o card, para que o GridLayout não o estique.
+    card.setPreferredSize(new java.awt.Dimension(300, 65));
+
+    // --- MUDANÇAS DE ESTILO ---
+    // Cor azul mais vibrante, idêntica à do Figma
+    card.setBackground(new java.awt.Color(48, 162, 218)); 
+    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
+    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Padding interno
+    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    // Título e subtítulo com fontes e cores mais próximas do design
     javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
-    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
     labelTitulo.setForeground(java.awt.Color.WHITE);
 
     javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
-    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
-    labelSubtitulo.setForeground(java.awt.Color.WHITE);
+    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
+    labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255)); // Um branco levemente azulado
 
-    // 3. Adiciona os textos ao card
+    // Adiciona os componentes ao card
     card.add(labelTitulo);
-    // Adiciona um pequeno espaço vertical de 5 pixels entre o título e o subtítulo
-    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))); 
+    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8))); // Espaço entre textos
     card.add(labelSubtitulo);
 
-    // 4. Adiciona um efeito de hover para o card inteiro
+    // Efeito hover (não precisa mudar, já estava bom)
     card.addMouseListener(new java.awt.event.MouseAdapter() {
-        // Guarda a cor original e a cor de destaque
-        final java.awt.Color corOriginal = new java.awt.Color(27, 126, 196);
-        final java.awt.Color corHover = new java.awt.Color(47, 146, 246); // Um azul um pouco mais claro
+        final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
+        final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
 
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            card.setBackground(corHover); // Muda a cor quando o mouse entra
+            card.setBackground(corHover);
         }
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            card.setBackground(corOriginal); // Volta à cor original quando o mouse sai
+            card.setBackground(corOriginal);
         }
     });
 
