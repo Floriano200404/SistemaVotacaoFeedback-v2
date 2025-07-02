@@ -15,11 +15,13 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.BorderFactory;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
-public class RoundedTextFieldUtil extends JTextField {
+public class RoundedPasswordFieldUtil extends JPasswordField {
 
-    public RoundedTextFieldUtil() {
+    private Shape shape;
+
+    public RoundedPasswordFieldUtil() {
         setOpaque(false);
         setBorder(new RoundedBorderUtil(15, new java.awt.Insets(4, 10, 4, 10)));
         
