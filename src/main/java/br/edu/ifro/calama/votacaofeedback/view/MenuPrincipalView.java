@@ -36,7 +36,32 @@ linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
 linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
 
 // 4. Adiciona as duas prateleiras ao painel principal dos cards, que as empilhará
-
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+  painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(linhaDeCima);
+painelDosCards.add(linhaDeBaixo);
+ painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+ painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+ painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
+painelDosCards.add(javax.swing.Box.createVerticalGlue());
 }
     
 
@@ -149,6 +174,11 @@ linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
         painelSidebar.add(menutxt);
 
         criarVotacao.setText("Criar Votação");
+        criarVotacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                criarVotacaoMouseClicked(evt);
+            }
+        });
         criarVotacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 criarVotacaoActionPerformed(evt);
@@ -221,7 +251,14 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        // TODO add your handling code here:
+           CriarVotacaoView telaDeCriacao = new CriarVotacaoView();
+
+    // 2. Torna a nova janela visível.
+    telaDeCriacao.setVisible(true);
+
+    // 3. Fecha a janela atual do menu principal de forma limpa.
+    this.dispose();
+ // TODO add your handling code here:
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
@@ -237,13 +274,18 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-     // Ação temporária: Apenas imprime no console para sabermos que funcionou.
-    System.out.println("Botão HOME (Logo OCTACORE) clicado!");
+       MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
 
-    // Futuramente, quando tivermos o CardLayout, a linha abaixo será usada
-    // para mostrar a tela principal do dashboard.
-    // Exemplo: cardLayout.show(painelConteudo, "cardDashboard");
+    // 2. Torna a nova janela visível.
+    telaDeCriacao.setVisible(true);
+
+    // 3. Fecha a janela atual do menu principal de forma limpa.
+    this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
+
+    private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
+               // TODO add your handling code here:
+    }//GEN-LAST:event_criarVotacaoMouseClicked
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     // O card continua sendo um JPanel
