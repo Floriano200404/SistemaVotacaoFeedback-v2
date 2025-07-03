@@ -34,9 +34,8 @@ public class LoginView extends javax.swing.JFrame {
     
     public LoginView() {
         initComponents();
-<<<<<<< HEAD
+
         
-=======
         txtLogin.setMargin(new java.awt.Insets(2, 10, 2, 2));
         pwdSenha.setMargin(new java.awt.Insets(2, 10, 2, 2));
         
@@ -79,7 +78,6 @@ public class LoginView extends javax.swing.JFrame {
         txtLogin.setForeground(new Color(127, 140, 141));
         txtLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         PlaceHolderUtil.setPlaceholder(txtLogin, "Digite seu e-mail");
->>>>>>> e45d8a8cef5be22e52d9db534548161e231cc9ee
     }
 
     
