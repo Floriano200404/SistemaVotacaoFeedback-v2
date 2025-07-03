@@ -190,7 +190,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 .addComponent(btnVoltar)
                 .addGap(18, 18, 18)
                 .addComponent(btnFinalizar)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGap(0, 938, Short.MAX_VALUE))
             .addGroup(PainelConteudoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +224,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                     .addComponent(btnAdicionarOpcao)
                     .addComponent(btnVoltar)
                     .addComponent(btnFinalizar))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(549, Short.MAX_VALUE))
         );
 
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);

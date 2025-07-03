@@ -238,7 +238,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                         .addComponent(btnCancelar)
                         .addGap(45, 45, 45)
                         .addComponent(btnAvancar)))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(1006, Short.MAX_VALUE))
         );
         painelConteudoLayout.setVerticalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,7 +273,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAvancar))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);

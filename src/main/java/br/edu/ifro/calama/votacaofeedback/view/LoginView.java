@@ -94,7 +94,21 @@ public class LoginView extends javax.swing.JFrame {
     }
     
     public void exibirMensagem(String mensagem) {
-        javax.swing.JOptionPane.showMessageDialog(this, mensagem);
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT
+        );
+
+        toast.display();
+        
+    }
+    
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
+    );
+    
+    toast.display();
+
     }
 
     

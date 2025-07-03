@@ -5,6 +5,7 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 
 /**
  *
@@ -33,20 +34,17 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }
     
     if (this.usuariologado != null) {
-        // Pega o nome do objeto Usuario (supondo que exista o método getNome())
+
         String nomeDoUsuario = this.usuariologado.getNome();
         
-        // 1. Atualiza o JLabel do cabeçalho (canto superior direito)
         labelNomeUsuario.setText(nomeDoUsuario);
         
-        // 2. Atualiza o JLabel de boas-vindas principal
         txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+   
     }
-    
     inicializarMenuLateral();
-// 1. Cria os painéis para as duas linhas ("prateleiras")
-// Usamos FlowLayout.CENTER para centralizar os cards em cada linha.
-javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+            
+    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
 linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
 
 javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
