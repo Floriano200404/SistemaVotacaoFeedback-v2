@@ -33,6 +33,7 @@ public class LoginView extends javax.swing.JFrame {
     private boolean senhaVisivel = false;
     
     private final String PLACEHOLDER_SENHA = "Digite sua senha";
+    private Usuario usuarioLogado;
     
     public LoginView() {
         initComponents();
@@ -78,6 +79,22 @@ public class LoginView extends javax.swing.JFrame {
         txtLogin.setForeground(new Color(127, 140, 141));
         txtLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         PlaceHolderUtil.setPlaceholder(txtLogin, "Digite seu e-mail");
+    }
+    
+    public javax.swing.JTextField getTxtLogin() {
+    // IMPORTANTE: Se o nome da sua variável não for 'txtLogin', 
+    // troque pelo nome correto aqui.
+        return txtLogin; 
+    }
+    
+    public javax.swing.JPasswordField getTxtSenha() {
+    // IMPORTANTE: Se o nome da sua variável não for 'txtSenha', 
+    // troque pelo nome correto aqui.
+        return pwdSenha;
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensagem);
     }
 
     
@@ -371,42 +388,9 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoginActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        String login = txtLogin.getText();
-        String senha = new String(pwdSenha.getPassword());
-
-        if (login.isEmpty() || senha.isEmpty()) {
-        // Para erros de validação, vamos usar uma posição central para chamar mais atenção.
-        ToastUtil toast = new ToastUtil(this, "Preencha todos os campos.", 
-            ToastUtil.ToastType.ERROR, 
-            ToastUtil.ToastPosition.TOP_RIGHT); // <-- Posição adicionada
-        toast.display();
-        return;
-        }
-
-        LoginController controller = new LoginController();
-        try {
-            if (controller.realizarLogin(login, senha)) {
-                ToastUtil toast = new ToastUtil(this, "Login realizado com sucesso!", 
-                    ToastUtil.ToastType.SUCCESS, 
-                    ToastUtil.ToastPosition.TOP_RIGHT);
-                toast.display();
-
-                new MenuPrincipalView().setVisible(true);
-                this.dispose();
-            } else {
-            // Para erro de credenciais, também no centro.
-                ToastUtil toast = new ToastUtil(this, "Login ou senha inválidos.", 
-                    ToastUtil.ToastType.ERROR, 
-                    ToastUtil.ToastPosition.TOP_RIGHT);
-                toast.display();
-            }
-        } catch (Exception ex) {
-            ToastUtil toast = new ToastUtil(this, "Ocorreu um erro inesperado.", 
-                ToastUtil.ToastType.ERROR, 
-                ToastUtil.ToastPosition.TOP_RIGHT);
-            toast.display();
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        LoginController controller = new LoginController(this);
+    
+        controller.autenticar();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed

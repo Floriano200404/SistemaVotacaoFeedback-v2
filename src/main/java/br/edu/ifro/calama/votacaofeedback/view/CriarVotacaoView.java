@@ -4,6 +4,8 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+
 /**
  *
  * @author floriano
@@ -11,6 +13,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 public class CriarVotacaoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
+    private Usuario usuarioLogado;
 
     /**
      * Creates new form CriarVotacaoView
@@ -310,7 +313,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-          MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+          MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
 
     // 2. Torna a nova janela visível.
     telaDeCriacao.setVisible(true);

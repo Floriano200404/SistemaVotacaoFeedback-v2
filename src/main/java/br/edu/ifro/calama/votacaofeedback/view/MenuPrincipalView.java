@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+
 /**
  *
  * @author Aluno
@@ -14,8 +17,31 @@ public class MenuPrincipalView extends javax.swing.JFrame {
      * Creates new form MenuPrincipalView
      */
    
-   public MenuPrincipalView() {
+    private Usuario usuariologado;
+    
+   public MenuPrincipalView(Usuario usuario) {
     initComponents();
+    
+    this.usuariologado = usuario;
+    
+    if (this.usuariologado != null) {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
+    } else {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu um usuário NULO!");
+    }
+    
+    if (this.usuariologado != null) {
+        // Pega o nome do objeto Usuario (supondo que exista o método getNome())
+        String nomeDoUsuario = this.usuariologado.getNome();
+        
+        // 1. Atualiza o JLabel do cabeçalho (canto superior direito)
+        labelNomeUsuario.setText(nomeDoUsuario);
+        
+        // 2. Atualiza o JLabel de boas-vindas principal
+        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+    }
     
     inicializarMenuLateral();
 // 1. Cria os painéis para as duas linhas ("prateleiras")
@@ -97,6 +123,8 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1480, 800));
+        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -274,7 +302,7 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-       MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+       MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
 
     // 2. Torna a nova janela visível.
     telaDeCriacao.setVisible(true);
@@ -416,23 +444,23 @@ private void adicionarListeners(javax.swing.JButton botao) {
 
 //     * @param args the command line arguments
 //     */
- public static void main(String args[]) {
+ //public static void main(String args[]) {
     /* Set the FlatLaf look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    try {
-        javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
-    } catch( Exception ex ) {
-        System.err.println( "Failed to initialize LaF" );
-    }
+    //try {
+       // javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
+    //} catch( Exception ex ) {
+       // System.err.println( "Failed to initialize LaF" );
+    //}
     //</editor-fold>
 
     /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new MenuPrincipalView().setVisible(true);
-        }
-    });
-}
+    //java.awt.EventQueue.invokeLater(new Runnable() {
+        //public void run() {
+            //new MenuPrincipalView().setVisible(true);
+        //}
+    //});
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;
