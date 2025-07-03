@@ -15,8 +15,6 @@ import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil; 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -51,7 +49,7 @@ public class PerfilView extends JDialog {
             }
         });
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
+        mainPanel.setBorder(new EmptyBorder(25, 35, 25, 35));
         
         setContentPane(mainPanel);
 
@@ -79,7 +77,7 @@ public class PerfilView extends JDialog {
         RoundedButtonUtil btnClose = new RoundedButtonUtil();
         btnClose.setText("X");
         btnClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnClose.setFont(new Font("Arial", Font.BOLD, 14));
+        btnClose.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnClose.setForeground(Color.GRAY);
         btnClose.setColor(new Color(245, 245, 245));
         btnClose.setColorOver(new Color(220, 220, 220));
@@ -93,6 +91,20 @@ public class PerfilView extends JDialog {
         headerPanel.add(btnClose, BorderLayout.EAST);
         
         return headerPanel;
+    }
+    
+    private void addSeparator(JPanel panel, GridBagConstraints gbc, int y) {
+        gbc.gridx = 0;
+        gbc.gridy = y;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JSeparator separator = new JSeparator();
+        separator.setForeground(new Color(220, 220, 220)); 
+        panel.add(separator, gbc);
+
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
     }
     
     private JPanel createDisabledFieldPanel(String text) {
@@ -118,37 +130,42 @@ public class PerfilView extends JDialog {
         formPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 5, 8, 5);
+        gbc.insets = new Insets(10, 5, 10, 5); 
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0; 
 
-        
-        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
-        formPanel.add(new JSeparator(), gbc); // --- Linha Separadora ---
-        gbc.gridwidth = 1;
+        addSeparator(formPanel, gbc, 0);
 
-        
-        gbc.gridx = 0; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
+        gbc.gridy = 1;
+        gbc.gridx = 0; gbc.weightx = 0; formPanel.add(new JLabel("Nome do Usuário:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0; formPanel.add(createDisabledFieldPanel(nome), gbc);
+        addSeparator(formPanel, gbc, 2);
 
-        gbc.gridy = 1; formPanel.add(new JLabel("Nome do Usuário:"), gbc);
-        gbc.gridy = 2; formPanel.add(new JLabel("Email Institucional:"), gbc);
-        gbc.gridy = 3; formPanel.add(new JLabel("CPF:"), gbc);
-        gbc.gridy = 4; formPanel.add(new JLabel("Matrícula:"), gbc);
-        gbc.gridy = 5; formPanel.add(new JLabel("Curso:"), gbc);
+        gbc.gridy = 3;
+        gbc.gridx = 0; gbc.weightx = 0; formPanel.add(new JLabel("Email Institucional:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0; formPanel.add(createDisabledFieldPanel(email), gbc);
+        addSeparator(formPanel, gbc, 4);
 
-        
-        for(Component comp : formPanel.getComponents()){
-            if(comp instanceof JLabel){
+        gbc.gridy = 5;
+        gbc.gridx = 0; gbc.weightx = 0; formPanel.add(new JLabel("CPF:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0; formPanel.add(createDisabledFieldPanel(cpf), gbc);
+        addSeparator(formPanel, gbc, 6);
+
+        gbc.gridy = 7;
+        gbc.gridx = 0; gbc.weightx = 0; formPanel.add(new JLabel("Matrícula:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0; formPanel.add(createDisabledFieldPanel(matricula), gbc);
+        addSeparator(formPanel, gbc, 8);
+
+        gbc.gridy = 9;
+        gbc.gridx = 0; gbc.weightx = 0; formPanel.add(new JLabel("Curso:"), gbc);
+        gbc.gridx = 1; gbc.weightx = 1.0; formPanel.add(createDisabledFieldPanel("Análise e Desenv. de Sistemas"), gbc);
+
+        addSeparator(formPanel, gbc, 10);
+
+        for (java.awt.Component comp : formPanel.getComponents()) {
+            if (comp instanceof JLabel) {
                 comp.setFont(FONT_LABEL);
             }
         }
-        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1.0;
-        gbc.gridy = 1; formPanel.add(createDisabledFieldPanel(nome), gbc);
-        gbc.gridy = 2; formPanel.add(createDisabledFieldPanel(email), gbc);
-        gbc.gridy = 3; formPanel.add(createDisabledFieldPanel(cpf), gbc);
-        gbc.gridy = 4; formPanel.add(createDisabledFieldPanel(matricula), gbc);
-        gbc.gridy = 5; formPanel.add(createDisabledFieldPanel("Análise e Desenv. de Sistemas"), gbc);
 
         return formPanel;
     }
