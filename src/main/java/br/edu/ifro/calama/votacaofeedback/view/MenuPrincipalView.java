@@ -270,7 +270,13 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        // TODO add your handling code here:
+     AprovarVotacaoView telaDeCriacao = new AprovarVotacaoView();
+
+    // 2. Torna a nova janela visível.
+    telaDeCriacao.setVisible(true);
+
+    // 3. Fecha a janela atual do menu principal de forma limpa.
+    this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
