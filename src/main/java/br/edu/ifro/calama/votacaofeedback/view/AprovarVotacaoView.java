@@ -44,6 +44,7 @@ public class AprovarVotacaoView extends javax.swing.JFrame {
         aprovarVotacao = new javax.swing.JButton();
         votoArquivado = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        painelConteudo = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +137,10 @@ public class AprovarVotacaoView extends javax.swing.JFrame {
         painelSidebar.add(filler1);
 
         getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
+
+        painelConteudo.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        painelConteudo.setLayout(new java.awt.GridLayout(0, 5, 15, 15));
+        getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -321,6 +326,7 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelNomeUsuario;
     private javax.swing.JLabel menutxt;
+    private javax.swing.JPanel painelConteudo;
     private javax.swing.JPanel painelHeader;
     private javax.swing.JPanel painelHeaderDireita;
     private javax.swing.JPanel painelHeaderEsquerda;
