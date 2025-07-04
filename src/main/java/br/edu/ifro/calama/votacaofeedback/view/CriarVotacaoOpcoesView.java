@@ -4,10 +4,14 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoView;
+import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import javax.swing.Timer;
 
 /**
@@ -356,21 +360,55 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.votacaoEmAndamento.setPergunta(pergunta);
         this.votacaoEmAndamento.setStatus("PENDENTE"); // Definimos o status final
             
-            VotacaoRepository repository = new VotacaoRepository();
-            repository.criar(this.votacaoEmAndamento);
+            VotacaoRepository votacaoRepository = new VotacaoRepository();
+    // AQUI NÓS CAPTURAMOS O ID QUE O MÉTODO RETORNA
+    int idNovaVotacao = 0;
+            try {
+                idNovaVotacao = votacaoRepository.criar(this.votacaoEmAndamento);
+            } catch (Exception ex) {
+                System.getLogger(CriarVotacaoOpcoesView.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
 
-        // Feedback de sucesso e navegação
-            exibirMensagemDeSucesso("Votação e opções criadas com sucesso!");
-            Timer timer = new Timer(1500, e -> {
-                new MenuPrincipalView(this.usuarioLogado).setVisible(true);
-                this.dispose();
-            });
-            timer.setRepeats(false);
-            timer.start();
+    // --- PARTE 2: Salvar as Opções ---
+    // Apenas prossiga se a votação principal foi salva com sucesso (ID > 0)
+    if (idNovaVotacao > 0) {
+        
+        OpcaoVotoRepository opcaoRepository = new OpcaoVotoRepository();
+
+        // Salva a Opção 1, se ela tiver texto
+        String textoOpcao1 = txtOpcao1.getText().trim();
+        if (!textoOpcao1.isEmpty()) {
+            OpcaoVoto opcao1 = new OpcaoVoto();
+            opcao1.setDescricao(textoOpcao1);
+            opcao1.setIdVotacao(idNovaVotacao); // Usa o ID para fazer a ligação
+            opcaoRepository.criar(opcao1);
+        }
+
+        // Salva a Opção 2, se ela tiver texto
+        String textoOpcao2 = txtOpcao2.getText().trim();
+        if (!textoOpcao2.isEmpty()) {
+            OpcaoVoto opcao2 = new OpcaoVoto();
+            opcao2.setDescricao(textoOpcao2);
+            opcao2.setIdVotacao(idNovaVotacao); // Usa o ID para fazer a ligação
+            opcaoRepository.criar(opcao2);
+        }
+
+        exibirMensagemDeSucesso("Votação criada com sucesso!");
+        Timer timer = new Timer(1500, e -> {
+            new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+            this.dispose();
+        });
+        timer.setRepeats(false);
+        timer.start();
+        
+        } else {
+        // Caso a votação principal não tenha sido salva
+            exibirMensagem("Falha ao salvar os dados principais da votação.");
+        }
 
         } catch (Exception e) {
-            exibirMensagem("Ocorreu um erro ao finalizar a votação");
-            e.printStackTrace();
+            exibirMensagem("Erro ao finalizar a votação: " + e.getMessage());
+                e.printStackTrace();
         }
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
