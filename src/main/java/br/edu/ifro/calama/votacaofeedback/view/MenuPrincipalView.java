@@ -18,6 +18,13 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     initComponents();
     
     inicializarMenuLateral();
+    // --- CÓDIGO NOVO AQUI ---
+    // 1. Cria uma instância da sua tela de aprovação
+    AprovarVotacaoView telaDeAprovacao = new AprovarVotacaoView();
+
+    // 2. Adiciona ela manualmente ao CardLayout com o nome "cardAprovar"
+    painelConteudo.add(telaDeAprovacao, "cardAprovar");
+    // --- FIM DO CÓDIGO NOVO ---
 // 1. Cria os painéis para as duas linhas ("prateleiras")
 // Usamos FlowLayout.CENTER para centralizar os cards em cada linha.
 javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
@@ -35,32 +42,22 @@ linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
 linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
 linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
 
-// 4. Adiciona as duas prateleiras ao painel principal dos cards, que as empilhará
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-  painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
+// Garante que o painel principal dos cards vai empilhar na VERTICAL
+painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+
+// 1. Adiciona um "calço" de 20 pixels no topo para criar uma margem.
+painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+
+// 2. Adiciona a fileira de cima.
 painelDosCards.add(linhaDeCima);
+
+// 3. Adiciona um "calço" de 15 pixels ENTRE as fileiras.
+painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+
+// 4. Adiciona a fileira de baixo.
 painelDosCards.add(linhaDeBaixo);
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
+
+// 5. Adiciona a "mola" no final para empurrar tudo para cima e ocupar o espaço vazio.
 painelDosCards.add(javax.swing.Box.createVerticalGlue());
 }
     
@@ -82,6 +79,7 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         labelNomeUsuario = new javax.swing.JLabel();
         labelIconePerfil = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
+        cardDashboard = new javax.swing.JPanel();
         painelTopoConteudo = new javax.swing.JPanel();
         txtbemVindo = new javax.swing.JLabel();
         textGuia = new javax.swing.JTextArea();
@@ -140,7 +138,9 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
-        painelConteudo.setLayout(new java.awt.BorderLayout());
+        painelConteudo.setLayout(new java.awt.CardLayout());
+
+        cardDashboard.setLayout(new java.awt.BorderLayout());
 
         painelTopoConteudo.setLayout(new javax.swing.BoxLayout(painelTopoConteudo, javax.swing.BoxLayout.Y_AXIS));
 
@@ -160,11 +160,13 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         textGuia.setOpaque(false);
         painelTopoConteudo.add(textGuia);
 
-        painelConteudo.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
+        cardDashboard.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
 
         painelDosCards.setOpaque(false);
         painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-        painelConteudo.add(painelDosCards, java.awt.BorderLayout.CENTER);
+        cardDashboard.add(painelDosCards, java.awt.BorderLayout.CENTER);
+
+        painelConteudo.add(cardDashboard, "card4");
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -270,13 +272,8 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-     AprovarVotacaoView telaDeCriacao = new AprovarVotacaoView();
-
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
-
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();   // TODO add your handling code here:
+    java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
@@ -442,6 +439,7 @@ private void adicionarListeners(javax.swing.JButton botao) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JPanel cardDashboard;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
