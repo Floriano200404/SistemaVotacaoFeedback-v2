@@ -9,11 +9,7 @@ public class Main {
     public static void main(String[] args) {
         
         java.awt.EventQueue.invokeLater(() -> {
-            LoginView telaDeLogin = new LoginView();
-            
-            telaDeLogin.setLocationRelativeTo(null);
-            
-            telaDeLogin.setVisible(true);
+            new LoginView().setVisible(true);
         });
     }
 }

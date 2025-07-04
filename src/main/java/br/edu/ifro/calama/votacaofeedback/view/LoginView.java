@@ -45,6 +45,8 @@ public class LoginView extends javax.swing.JFrame {
         PlaceHolderUtil.setPlaceholder(txtLogin, "aluno@estudante.ifro.edu.br");
         PlaceHolderUtil.setPlaceholder(pwdSenha, "Digite sua senha");
         
+        this.setLocationRelativeTo(null);
+        
         jPanel1.setFocusable(true);
         
         try {

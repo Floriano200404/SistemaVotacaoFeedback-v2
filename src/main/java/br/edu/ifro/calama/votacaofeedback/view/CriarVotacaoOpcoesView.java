@@ -275,10 +275,9 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
         MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
 
-        // 2. Torna a nova janela visível.
+        telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
 
-        // 3. Fecha a janela atual do menu principal de forma limpa.
         this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
@@ -306,6 +305,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         
         CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado);
         
+        telaCriarVotacao.setLocationRelativeTo(null);
         telaCriarVotacao.setVisible(true);
         
         this.dispose();

@@ -672,6 +672,7 @@ public class CadastroView extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         LoginView telaLogin = new LoginView();
 
+        telaLogin.setLocationRelativeTo(null);
         telaLogin.setVisible(true);
         
         this.dispose();
