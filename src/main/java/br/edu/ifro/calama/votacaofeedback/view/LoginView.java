@@ -189,7 +189,7 @@ public class LoginView extends javax.swing.JFrame {
         btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btnEntrar.setText("ACESSAR");
         btnEntrar.setBorder(null);
-        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnEntrar.setName("btnEntrar"); // NOI18N
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +224,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabEmail.setText("E-mail Institucional:");
 
         btnCadastrar.setText("CADASTRAR");
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -232,7 +232,12 @@ public class LoginView extends javax.swing.JFrame {
         });
 
         btnEsqueciSenha.setText("ESQUECI A SENHA");
-        btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEsqueciSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsqueciSenhaActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setPreferredSize(new java.awt.Dimension(403, 39));
@@ -251,7 +256,7 @@ public class LoginView extends javax.swing.JFrame {
         });
 
         jLabEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
-        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabEye.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabEyeMouseClicked(evt);
@@ -330,7 +335,7 @@ public class LoginView extends javax.swing.JFrame {
         );
 
         jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
-        jLabLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabLogo.setName("FOTO DO IF"); // NOI18N
         jLabLogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -339,7 +344,7 @@ public class LoginView extends javax.swing.JFrame {
         });
 
         jLabTextIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
-        jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabTextIF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabTextIFMouseClicked(evt);
@@ -486,6 +491,10 @@ public class LoginView extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jLabLoginMouseClicked
+
+    private void btnEsqueciSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueciSenhaActionPerformed
+        
+    }//GEN-LAST:event_btnEsqueciSenhaActionPerformed
 
     /**
      * @param args the command line arguments

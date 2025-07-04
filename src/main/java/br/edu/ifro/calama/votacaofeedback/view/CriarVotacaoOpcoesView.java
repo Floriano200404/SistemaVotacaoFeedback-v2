@@ -5,6 +5,10 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import javax.swing.Timer;
 
 /**
  *
@@ -14,14 +18,16 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
     private Usuario usuarioLogado;
+    private Votacao votacaoEmAndamento;
 
     /**
      * Creates new form CriarVotacaoOpcoesView
      */
-    public CriarVotacaoOpcoesView(Usuario usuario) {
+    public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) {
         initComponents();
         
         this.usuarioLogado = usuario;
+        this.votacaoEmAndamento = votacao;
         
         if (this.usuarioLogado != null) {
             // No modo Design, dê um nome de variável para o JLabel que mostra o nome
@@ -30,6 +36,18 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         }
         
         inicializarMenuLateral();
+    }
+    
+    public void exibirMensagem(String mensagem) {
+
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_CENTER);
+        toast.display();
+    }
+
+    public void exibirMensagemDeSucesso(String mensagem) {
+
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.BOTTOM_RIGHT);
+        toast.display();
     }
 
     /**
@@ -159,15 +177,21 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         TituloP.setText("Pergunta");
 
-        txtPergunta.setText("jTextField1");
+        txtPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPerguntaActionPerformed(evt);
+            }
+        });
 
         TituloO1.setText("Opção 1");
 
-        txtOpcao1.setText("jTextField2");
-
         TituloO2.setText("Opção 2");
 
-        txtOpcao2.setText("jTextField3");
+        txtOpcao2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOpcao2ActionPerformed(evt);
+            }
+        });
 
         btnAdicionarOpcao.setText("Adicionar Opção.");
         btnAdicionarOpcao.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +208,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         });
 
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelConteudoLayout = new javax.swing.GroupLayout(PainelConteudo);
         PainelConteudo.setLayout(PainelConteudoLayout);
@@ -202,14 +231,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 .addGap(0, 938, Short.MAX_VALUE))
             .addGroup(PainelConteudoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TituloP)
-                    .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TituloO1)
-                    .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TituloO2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(TituloO2)
+                    .addComponent(txtPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(txtOpcao1)
+                    .addComponent(txtOpcao2))
+                .addContainerGap(1089, Short.MAX_VALUE))
         );
         PainelConteudoLayout.setVerticalGroup(
             PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +332,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         
-        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado);
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, votacaoEmAndamento);
         
         telaCriarVotacao.setLocationRelativeTo(null);
         telaCriarVotacao.setVisible(true);
@@ -311,6 +340,47 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.dispose();
                 
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {     
+            // 1. Coletar os dados desta segunda tela (usando os nomes do seu Navigator)
+            String pergunta = txtPergunta.getText();
+        
+        // Validação simples
+            if (pergunta.trim().isEmpty()) {
+                exibirMensagem("O campo 'Pergunta' é obrigatório para finalizar.");
+                return;
+        }
+
+        // 2. Completar o objeto 'votacaoEmAndamento' que já temos
+        this.votacaoEmAndamento.setPergunta(pergunta);
+        this.votacaoEmAndamento.setStatus("PENDENTE"); // Definimos o status final
+            
+            VotacaoRepository repository = new VotacaoRepository();
+            repository.criar(this.votacaoEmAndamento);
+
+        // Feedback de sucesso e navegação
+            exibirMensagemDeSucesso("Votação e opções criadas com sucesso!");
+            Timer timer = new Timer(1500, e -> {
+                new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+                this.dispose();
+            });
+            timer.setRepeats(false);
+            timer.start();
+
+        } catch (Exception e) {
+            exibirMensagem("Ocorreu um erro ao finalizar a votação");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPerguntaActionPerformed
+
+    private void txtOpcao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcao2ActionPerformed
 private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
