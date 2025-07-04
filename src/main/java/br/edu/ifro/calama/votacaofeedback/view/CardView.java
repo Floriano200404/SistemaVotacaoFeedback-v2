@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 
 /**
  *
@@ -16,7 +17,15 @@ public class CardView extends javax.swing.JPanel {
     public CardView() {
         initComponents();
     }
+// Este método vai DENTRO da classe CardView.java
+public void setDados(Votacao votacao) {
+    // Garanta que os nomes das variáveis aqui são os mesmos do seu design
+    lblTituloVotacao.setText(votacao.getTitulo()); 
 
+    // Exemplo para preencher o campo de datas. 
+    // Supondo que você tenha um JTextArea com a variável 'txtAreaDatas'
+    // txtAreaDatas.setText(votacao.getDetalhes());
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +40,7 @@ public class CardView extends javax.swing.JPanel {
         Local = new javax.swing.JLabel();
         lblTituloVotacao = new javax.swing.JLabel();
         dtinicio = new javax.swing.JLabel();
-        returdadosdt = new javax.swing.JLabel();
+        lblDetalhes = new javax.swing.JLabel();
         dtfim = new javax.swing.JLabel();
         returdadosdt2 = new javax.swing.JLabel();
         dtresult = new javax.swing.JLabel();
@@ -55,8 +64,8 @@ public class CardView extends javax.swing.JPanel {
         dtinicio.setText("Data inicio");
         add(dtinicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, -1, -1));
 
-        returdadosdt.setText("resultData");
-        add(returdadosdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
+        lblDetalhes.setText("resultData");
+        add(lblDetalhes, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
 
         dtfim.setText("Data fim");
         add(dtfim, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
@@ -80,9 +89,23 @@ public class CardView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVerVotacaoActionPerformed
+         // 1. Descobre qual é a janela principal (o JFrame) que está por trás de tudo.
+    //    É importante para o pop-up saber quem é sua "janela-mãe".
+    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
+    // 2. Cria o nosso novo diálogo de detalhes.
+    //    (Assumindo que sua classe de pop-up se chama DetalhesVotacaoDialog)
+    //    O 'true' no final o torna "modal" (bloqueia a janela de trás até ser fechado).
+    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true);
+
+    // 3. (Passo Futuro): Aqui é onde enviaremos os dados da votação específica para o pop-up.
+    //    Por enquanto, ele só vai abrir.
+
+    // 4. Centraliza o pop-up em relação à janela principal e, finalmente, o torna visível.
+    dialog.setLocationRelativeTo(parentWindow);
+    dialog.setVisible(true);
+    }//GEN-LAST:event_btnVerVotacaoActionPerformed
+// Este método vai DENTRO da classe CardView.java
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Local;
@@ -91,10 +114,12 @@ public class CardView extends javax.swing.JPanel {
     private javax.swing.JLabel dtinicio;
     private javax.swing.JLabel dtresult;
     private javax.swing.JLabel lblCampus;
+    private javax.swing.JLabel lblDetalhes;
     private javax.swing.JLabel lblInstituicao;
     private javax.swing.JLabel lblTituloVotacao;
-    private javax.swing.JLabel returdadosdt;
     private javax.swing.JLabel returdadosdt2;
     private javax.swing.JLabel returdadosdt3;
     // End of variables declaration//GEN-END:variables
+
+   
 }
