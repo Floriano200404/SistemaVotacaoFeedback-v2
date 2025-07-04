@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+
 /**
  *
  * @author Aluno
@@ -14,20 +18,42 @@ public class MenuPrincipalView extends javax.swing.JFrame {
      * Creates new form MenuPrincipalView
      */
    
-   public MenuPrincipalView() {
+    private Usuario usuariologado;
+    
+   public MenuPrincipalView(Usuario usuario) {
     initComponents();
     
+    this.usuariologado = usuario;
+    
+    if (this.usuariologado != null) {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
+    } else {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu um usuário NULO!");
+    }
+    
+    if (this.usuariologado != null) {
+
+        String nomeDoUsuario = this.usuariologado.getNome();
+        
+        labelNomeUsuario.setText(nomeDoUsuario);
+        
+        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+   
+    }
     inicializarMenuLateral();
-    // --- CÓDIGO NOVO AQUI ---
-    // 1. Cria uma instância da sua tela de aprovação
+
     AprovarVotacaoView telaDeAprovacao = new AprovarVotacaoView();
 
-    // 2. Adiciona ela manualmente ao CardLayout com o nome "cardAprovar"
+ 
     painelConteudo.add(telaDeAprovacao, "cardAprovar");
-    // --- FIM DO CÓDIGO NOVO ---
-// 1. Cria os painéis para as duas linhas ("prateleiras")
-// Usamos FlowLayout.CENTER para centralizar os cards em cada linha.
-javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+   
+    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+
+            
+    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+
 linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
 
 javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
@@ -95,6 +121,8 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1480, 800));
+        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -253,14 +281,13 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-           CriarVotacaoView telaDeCriacao = new CriarVotacaoView();
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado);
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
- // TODO add your handling code here:
+        this.dispose();
+
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
@@ -277,7 +304,7 @@ cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-       MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+       MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
 
     // 2. Torna a nova janela visível.
     telaDeCriacao.setVisible(true);
@@ -419,23 +446,23 @@ private void adicionarListeners(javax.swing.JButton botao) {
 
 //     * @param args the command line arguments
 //     */
- public static void main(String args[]) {
+ //public static void main(String args[]) {
     /* Set the FlatLaf look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    try {
-        javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
-    } catch( Exception ex ) {
-        System.err.println( "Failed to initialize LaF" );
-    }
+    //try {
+       // javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
+    //} catch( Exception ex ) {
+       // System.err.println( "Failed to initialize LaF" );
+    //}
     //</editor-fold>
 
     /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new MenuPrincipalView().setVisible(true);
-        }
-    });
-}
+    //java.awt.EventQueue.invokeLater(new Runnable() {
+        //public void run() {
+            //new MenuPrincipalView().setVisible(true);
+        //}
+    //});
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;

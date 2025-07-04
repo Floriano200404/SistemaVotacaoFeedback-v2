@@ -58,9 +58,6 @@
       <SubComponents>
         <Container class="br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil" name="jPanelPrincipal">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="3f" green="20" red="9" type="rgb"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[1246, 602]"/>

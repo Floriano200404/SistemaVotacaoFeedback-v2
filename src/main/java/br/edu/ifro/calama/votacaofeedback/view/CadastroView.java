@@ -255,7 +255,7 @@ public class CadastroView extends javax.swing.JFrame {
         jPanelDegrade.setPreferredSize(new java.awt.Dimension(1480, 800));
         jPanelDegrade.setLayout(new java.awt.GridBagLayout());
 
-        jPanelPrincipal.setBackground(new java.awt.Color(9, 32, 63));
+        jPanelPrincipal.setBackground(new java.awt.Color(11, 41, 81));
         jPanelPrincipal.setToolTipText("");
         jPanelPrincipal.setPreferredSize(new java.awt.Dimension(1246, 602));
 
@@ -672,7 +672,10 @@ public class CadastroView extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         LoginView telaLogin = new LoginView();
 
+        telaLogin.setLocationRelativeTo(null);
         telaLogin.setVisible(true);
+        
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed

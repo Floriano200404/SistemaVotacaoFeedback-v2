@@ -4,6 +4,8 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+
 /**
  *
  * @author floriano
@@ -11,12 +13,20 @@ package br.edu.ifro.calama.votacaofeedback.view;
 public class CriarVotacaoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
+    private Usuario usuarioLogado;
 
     /**
      * Creates new form CriarVotacaoView
      */
-    public CriarVotacaoView() {
+    public CriarVotacaoView(Usuario usuario) {
         initComponents();
+        this.usuarioLogado = usuario;
+        
+        if (this.usuarioLogado != null) {
+            // Supondo que o JLabel que mostra o nome do usuário se chame 'labelNomeUsuario'
+            // Você precisa dar um nome de variável para ele no modo Design do NetBeans
+            labelNomeUsuario.setText(this.usuarioLogado.getNome());
+        }
         
     inicializarMenuLateral();
     }
@@ -235,7 +245,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                         .addComponent(btnCancelar)
                         .addGap(45, 45, 45)
                         .addComponent(btnAvancar)))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(1006, Short.MAX_VALUE))
         );
         painelConteudoLayout.setVerticalGroup(
             painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +280,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAvancar))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
@@ -310,13 +320,12 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-          MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
@@ -348,9 +357,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
-   CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView();
+    CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado);
 
-    // 2. Torna a nova janela visível.
+    telaDeCriacao.setLocationRelativeTo(null);
     telaDeCriacao.setVisible(true);
 
     // 3. Fecha a janela atual do menu principal de forma limpa.
@@ -438,27 +447,7 @@ private void adicionarListeners(javax.swing.JButton botao) {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CriarVotacaoView().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TituloDateF;
