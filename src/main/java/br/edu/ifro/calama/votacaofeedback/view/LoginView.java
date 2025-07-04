@@ -34,6 +34,8 @@ public class LoginView extends javax.swing.JFrame {
     
     public LoginView() {
         initComponents();
+
+        
         txtLogin.setMargin(new java.awt.Insets(2, 10, 2, 2));
         pwdSenha.setMargin(new java.awt.Insets(2, 10, 2, 2));
         
