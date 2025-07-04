@@ -52,7 +52,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
 
             
-    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+    
 
 linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
 
