@@ -4,6 +4,8 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+
 /**
  *
  * @author floriano
@@ -11,12 +13,22 @@ package br.edu.ifro.calama.votacaofeedback.view;
 public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
+    private Usuario usuarioLogado;
 
     /**
      * Creates new form CriarVotacaoOpcoesView
      */
-    public CriarVotacaoOpcoesView() {
+    public CriarVotacaoOpcoesView(Usuario usuario) {
         initComponents();
+        
+        this.usuarioLogado = usuario;
+        
+        if (this.usuarioLogado != null) {
+            // No modo Design, dê um nome de variável para o JLabel que mostra o nome
+            // (ex: labelNomeUsuario) e use-o aqui.
+            labelNomeUsuario.setText(this.usuarioLogado.getNome());
+        }
+        
         inicializarMenuLateral();
     }
 
@@ -165,6 +177,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         btnFinalizar.setText("Finalizar");
 
@@ -182,21 +199,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 .addComponent(btnVoltar)
                 .addGap(18, 18, 18)
                 .addComponent(btnFinalizar)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGap(0, 938, Short.MAX_VALUE))
             .addGroup(PainelConteudoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TituloP)
-                            .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TituloO1)
-                            .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TituloO2))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TituloP)
+                    .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TituloO1)
+                    .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TituloO2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PainelConteudoLayout.setVerticalGroup(
             PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +233,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                     .addComponent(btnAdicionarOpcao)
                     .addComponent(btnVoltar)
                     .addComponent(btnFinalizar))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(549, Short.MAX_VALUE))
         );
 
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
@@ -260,12 +273,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
 
-        // 2. Torna a nova janela visível.
+        telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
 
-        // 3. Fecha a janela atual do menu principal de forma limpa.
         this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
@@ -288,6 +300,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado);
+        
+        telaCriarVotacao.setLocationRelativeTo(null);
+        telaCriarVotacao.setVisible(true);
+        
+        this.dispose();
+                
+    }//GEN-LAST:event_btnVoltarActionPerformed
 private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
@@ -370,27 +393,7 @@ private void adicionarListeners(javax.swing.JButton botao) {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CriarVotacaoOpcoesView().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelConteudo;

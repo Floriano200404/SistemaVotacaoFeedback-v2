@@ -5,8 +5,10 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.LoginController;
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -31,6 +33,7 @@ public class LoginView extends javax.swing.JFrame {
     private boolean senhaVisivel = false;
     
     private final String PLACEHOLDER_SENHA = "Digite sua senha";
+    private Usuario usuarioLogado;
     
     public LoginView() {
         initComponents();
@@ -43,6 +46,8 @@ public class LoginView extends javax.swing.JFrame {
         
         PlaceHolderUtil.setPlaceholder(txtLogin, "aluno@estudante.ifro.edu.br");
         PlaceHolderUtil.setPlaceholder(pwdSenha, "Digite sua senha");
+        
+        this.setLocationRelativeTo(null);
         
         jPanel1.setFocusable(true);
         
@@ -78,6 +83,36 @@ public class LoginView extends javax.swing.JFrame {
         txtLogin.setForeground(new Color(127, 140, 141));
         txtLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         PlaceHolderUtil.setPlaceholder(txtLogin, "Digite seu e-mail");
+    }
+    
+    public javax.swing.JTextField getTxtLogin() {
+    // IMPORTANTE: Se o nome da sua variável não for 'txtLogin', 
+    // troque pelo nome correto aqui.
+        return txtLogin; 
+    }
+    
+    public javax.swing.JPasswordField getTxtSenha() {
+    // IMPORTANTE: Se o nome da sua variável não for 'txtSenha', 
+    // troque pelo nome correto aqui.
+        return pwdSenha;
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT
+        );
+
+        toast.display();
+        
+    }
+    
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
+    );
+    
+    toast.display();
+
     }
 
     
@@ -371,22 +406,9 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoginActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        String login = txtLogin.getText();
-        String senha = new String(pwdSenha.getPassword());
-
-        LoginController controller = new LoginController();
-
-        try {
-            if (controller.realizarLogin(login, senha)) {
-                JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-                new MenuPrincipalView().setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        LoginController controller = new LoginController(this);
+    
+        controller.autenticar();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
