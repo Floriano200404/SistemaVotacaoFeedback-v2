@@ -11,7 +11,15 @@ import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
-
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.border.AbstractBorder;
+import java.awt.Insets;
+import java.awt.Component;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 /**
  *
  * @author USER
@@ -68,11 +76,11 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
 
         jPanelFundoPrincipal = new GradientPanel();
         jPanelCaixaTexto = new javax.swing.JPanel();
-        bntEnviarEmail = new javax.swing.JButton();
-        txtEmail = new javax.swing.JTextField();
+        bntEnviarEmail = new RoundedButton("ENVIAR E-MAIL");
+        txtEmail = new RoundedTextField(20);
         jLaRelembrarSenha = new javax.swing.JLabel();
         jLabEmail = new javax.swing.JLabel();
-        bntVoltar = new javax.swing.JButton();
+        bntVoltar = new RoundedButton("VOLTAR");
         jLabOrientacoes = new javax.swing.JLabel();
         jLabIF = new javax.swing.JLabel();
         jLabLogo = new javax.swing.JLabel();
@@ -85,7 +93,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
 
         jPanelCaixaTexto.setBackground(new java.awt.Color(11, 41, 81));
 
-        bntEnviarEmail.setBackground(new java.awt.Color(0, 149, 255));
+        bntEnviarEmail.setBackground(new java.awt.Color(0, 153, 255));
         bntEnviarEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bntEnviarEmail.setForeground(new java.awt.Color(255, 255, 255));
         bntEnviarEmail.setText("ENVIAR E-MAIL");
@@ -96,7 +104,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             }
         });
 
-        txtEmail.setBorder(null);
+        txtEmail.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 8, 4, 15));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -105,7 +113,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
 
         jLaRelembrarSenha.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLaRelembrarSenha.setForeground(new java.awt.Color(255, 255, 255));
-        jLaRelembrarSenha.setText("RELEMBRAR SENHA");
+        jLaRelembrarSenha.setText("RELEMBRAR A SENHA");
         jLaRelembrarSenha.setName(""); // NOI18N
 
         jLabEmail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -127,17 +135,17 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
                 .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jLaRelembrarSenha))
+                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabEmail)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(bntEnviarEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabOrientacoes))))
-                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(jLaRelembrarSenha)))
+                                .addComponent(jLabOrientacoes)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanelCaixaTextoLayout.setVerticalGroup(
@@ -145,7 +153,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCaixaTextoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLaRelembrarSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(jLabEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,11 +161,12 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
                 .addComponent(bntEnviarEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabOrientacoes)
-                .addGap(54, 54, 54)
+                .addGap(56, 56, 56)
                 .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGap(54, 54, 54))
         );
 
+        jLabIF.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
         jLabIF.setMaximumSize(new java.awt.Dimension(100, 160));
 
@@ -165,6 +174,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         jLabLogo.setMaximumSize(new java.awt.Dimension(203, 230));
         jLabLogo.setMinimumSize(new java.awt.Dimension(203, 230));
 
+        jLabInfo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/img-Photoroom.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelFundoPrincipalLayout = new javax.swing.GroupLayout(jPanelFundoPrincipal);
@@ -172,33 +182,32 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         jPanelFundoPrincipalLayout.setHorizontalGroup(
             jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addGap(109, 109, 109)
                 .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(55, 55, 55)
+                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(9, Short.MAX_VALUE))
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         jPanelFundoPrincipalLayout.setVerticalGroup(
             jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabIF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabInfo)))
-                .addGap(77, 77, 77))
+                    .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)))
+                .addComponent(jLabInfo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelFundoPrincipal, java.awt.BorderLayout.CENTER);
@@ -208,7 +217,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
                 enviarEmailRecuperacao();
-    //GEN-LAST:event_txtEmailActionPerformed
+                                            
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void bntEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEnviarEmailActionPerformed
@@ -311,5 +320,96 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             }
         }
     }
+  private class RoundedButton extends JButton {
+    private int cornerRadius = 15; // Raio dos cantos
+
+    public RoundedButton(String text) {
+        super(text);
+        setContentAreaFilled(false); // Não pinta a área de conteúdo padrão
+        setFocusPainted(false);      // Não pinta o foco
+        setBorderPainted(false);     // Não pinta a borda
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Define a cor de fundo baseada no estado do botão (pressionado, hover, normal)
+        if (getModel().isPressed()) {
+            g2.setColor(getBackground().darker());
+        } else if (getModel().isRollover()) {
+            g2.setColor(getBackground().brighter());
+        } else {
+            g2.setColor(getBackground());
+        }
+
+        // Desenha o retângulo com cantos arredondados
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
+
+        // Deixa o método pai pintar o texto (label) do botão por cima
+        super.paintComponent(g);
+
+        g2.dispose();
+    }
+}
+
+/**
+ * Classe customizada para um campo de texto com fundo e bordas arredondadas.
+ */
+private class RoundedTextField extends JTextField {
+    private Shape shape;
+    private int cornerRadius = 15;
+
+    public RoundedTextField(int size) {
+        super(size);
+        setOpaque(false); // Essencial para que o fundo personalizado seja visível
+        setBorder(new RoundedBorder(cornerRadius)); // Define uma borda que adiciona espaçamento
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        // Pinta o fundo branco (ou a cor de fundo definida)
+        g2.setColor(getBackground());
+        g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, cornerRadius, cornerRadius);
+
+        // Deixa o método pai pintar o texto, o cursor, etc.
+        super.paintComponent(g);
+        g2.dispose();
+    }
+    
+    // Este método ajuda a definir a área de colisão do componente
+    @Override
+    public boolean contains(int x, int y) {
+        if (shape == null || !shape.getBounds().equals(getBounds())) {
+            shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, cornerRadius, cornerRadius);
+        }
+        return shape.contains(x, y);
+    }
+    
+    // Uma borda customizada apenas para criar um espaçamento (padding) interno
+    private class RoundedBorder extends AbstractBorder {
+        private int radius;
+
+        RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            // Define o espaçamento: top, left, bottom, right
+            return new Insets(4, 15, 4, 15);
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            // Não desenhamos nada aqui, a borda é invisível, serve apenas para o padding.
+        }
+    }
+}
+  
 }
 
