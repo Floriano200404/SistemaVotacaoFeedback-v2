@@ -277,14 +277,13 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-           CriarVotacaoView telaDeCriacao = new CriarVotacaoView();
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado);
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
- // TODO add your handling code here:
+        this.dispose();
+
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
