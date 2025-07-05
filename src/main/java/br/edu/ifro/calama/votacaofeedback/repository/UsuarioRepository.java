@@ -48,7 +48,7 @@ public class UsuarioRepository {
     public Usuario autenticar(String email, String senha) throws SQLException, Exception {
         String sql = "SELECT * FROM Usuarios WHERE email = ? AND senha = SHA2(?, 256)";
         Usuario usuarioEncontrado = null;
-
+                 
         try (Connection conexao = DatabaseUtil.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql)) {
 
@@ -65,6 +65,17 @@ public class UsuarioRepository {
                 }
             }
         }
+        
+        if (usuarioEncontrado != null) {
+            System.out.println("--- DEBUG REPOSITORY ---");
+            System.out.println("Usuário ENCONTRADO no banco de dados.");
+            System.out.println("ID do Usuário: " + usuarioEncontrado.getId());
+            System.out.println("Nome do Usuário: " + usuarioEncontrado.getNome());
+        } else {
+            System.out.println("--- DEBUG REPOSITORY ---");
+            System.out.println("Usuário NÃO ENCONTRADO no banco com as credenciais fornecidas.");
+        }
+        
         return usuarioEncontrado;
-    }
+    } 
 }

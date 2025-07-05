@@ -5,8 +5,10 @@
     <artifactId>SistemaVotacaoFeedbackV2</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -17,8 +19,12 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
+            
+            
+     
         </plugins>
     </build>
+    
     <dependencies>
         <dependency>
             <groupId>org.netbeans.external</groupId>
@@ -36,10 +42,17 @@
             <version>3.4.1</version>
         </dependency>
     </dependencies>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<<<<<<< HEAD
         <maven.compiler.release>24</maven.compiler.release>
         <maven.compiler.release>24</maven.compiler.release>
+=======
+        
+        <maven.compiler.release>24</maven.compiler.release>
+        
+>>>>>>> 81bdc61df21ada09ad9e1bdb5e6090f806210324
         <exec.mainClass>br.edu.ifro.calama.votacaofeedback.Main</exec.mainClass>
-    </properties> 
+    </properties>
 </project>

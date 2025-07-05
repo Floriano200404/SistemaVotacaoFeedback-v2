@@ -5,88 +5,32 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
-import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 
 /**
  *
- * @author Aluno
+ * @author floriano
  */
-public class MenuPrincipalView extends javax.swing.JFrame {
-//private java.util.List<javax.swing.JButton> botoesDoMenu;
-//    private javax.swing.JButton botaoAtivo;
+public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
+    private Usuario usuarioLogado;
+
     /**
-     * Creates new form MenuPrincipalView
+     * Creates new form CriarVotacaoOpcoesView
      */
-   
-    private Usuario usuariologado;
-    
-   public MenuPrincipalView(Usuario usuario) {
-    initComponents();
-    
-    this.usuariologado = usuario;
-    
-    if (this.usuariologado != null) {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
-    } else {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu um usuário NULO!");
-    }
-    
-    if (this.usuariologado != null) {
-
-        String nomeDoUsuario = this.usuariologado.getNome();
+    public CriarVotacaoOpcoesView(Usuario usuario) {
+        initComponents();
         
-        labelNomeUsuario.setText(nomeDoUsuario);
+        this.usuarioLogado = usuario;
         
-        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
-   
+        if (this.usuarioLogado != null) {
+            // No modo Design, dê um nome de variável para o JLabel que mostra o nome
+            // (ex: labelNomeUsuario) e use-o aqui.
+            labelNomeUsuario.setText(this.usuarioLogado.getNome());
+        }
+        
+        inicializarMenuLateral();
     }
-    inicializarMenuLateral();
-
-    AprovarVotacaoView telaDeAprovacao = new AprovarVotacaoView();
-
- 
-    painelConteudo.add(telaDeAprovacao, "cardAprovar");
-   
-    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-
-            
-    
-
-linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
-
-javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-linhaDeBaixo.setOpaque(false);
-
-// 2. Adiciona os 3 cards de cima na primeira prateleira
-linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-
-// 3. Adiciona os 2 cards de baixo na segunda prateleira
-linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
-
-// Garante que o painel principal dos cards vai empilhar na VERTICAL
-painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-
-// 1. Adiciona um "calço" de 20 pixels no topo para criar uma margem.
-painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
-
-// 2. Adiciona a fileira de cima.
-painelDosCards.add(linhaDeCima);
-
-// 3. Adiciona um "calço" de 15 pixels ENTRE as fileiras.
-painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
-
-// 4. Adiciona a fileira de baixo.
-painelDosCards.add(linhaDeBaixo);
-
-// 5. Adiciona a "mola" no final para empurrar tudo para cima e ocupar o espaço vazio.
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-}
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,12 +48,6 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         painelHeaderDireita = new javax.swing.JPanel();
         labelNomeUsuario = new javax.swing.JLabel();
         labelIconePerfil = new javax.swing.JLabel();
-        painelConteudo = new javax.swing.JPanel();
-        cardDashboard = new javax.swing.JPanel();
-        painelTopoConteudo = new javax.swing.JPanel();
-        txtbemVindo = new javax.swing.JLabel();
-        textGuia = new javax.swing.JTextArea();
-        painelDosCards = new javax.swing.JPanel();
         painelSidebar = new javax.swing.JPanel();
         menutxt = new javax.swing.JLabel();
         criarVotacao = new javax.swing.JButton();
@@ -118,11 +56,19 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         aprovarVotacao = new javax.swing.JButton();
         votoArquivado = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        PainelConteudo = new javax.swing.JPanel();
+        TituloPrincipal = new javax.swing.JLabel();
+        TituloP = new javax.swing.JLabel();
+        txtPergunta = new javax.swing.JTextField();
+        TituloO1 = new javax.swing.JLabel();
+        txtOpcao1 = new javax.swing.JTextField();
+        TituloO2 = new javax.swing.JLabel();
+        txtOpcao2 = new javax.swing.JTextField();
+        btnAdicionarOpcao = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        btnFinalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(1480, 800));
-        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -166,49 +112,12 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
-        painelConteudo.setLayout(new java.awt.CardLayout());
-
-        cardDashboard.setLayout(new java.awt.BorderLayout());
-
-        painelTopoConteudo.setLayout(new javax.swing.BoxLayout(painelTopoConteudo, javax.swing.BoxLayout.Y_AXIS));
-
-        txtbemVindo.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        txtbemVindo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtbemVindo.setText("Bem-Vindo, Nome do Usuário!");
-        txtbemVindo.setAlignmentX(0.5F);
-        painelTopoConteudo.add(txtbemVindo);
-
-        textGuia.setEditable(false);
-        textGuia.setColumns(20);
-        textGuia.setLineWrap(true);
-        textGuia.setRows(5);
-        textGuia.setText("Bem-vindo(a) de volta!\n\nEste é o seu painel de controle para o Sistema de Votação. Acompanhe as votações ativas, gerencie propostas pendentes de aprovação e acesse os resultados arquivados.\n\nPara começar, selecione uma das opções no menu de navegação à sua esquerda ou utilize um dos atalhos nos cartões abaixo para acesso rápido às principais funções.");
-        textGuia.setWrapStyleWord(true);
-        textGuia.setBorder(null);
-        textGuia.setOpaque(false);
-        painelTopoConteudo.add(textGuia);
-
-        cardDashboard.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
-
-        painelDosCards.setOpaque(false);
-        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-        cardDashboard.add(painelDosCards, java.awt.BorderLayout.CENTER);
-
-        painelConteudo.add(cardDashboard, "card4");
-
-        getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
-
         painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
         painelSidebar.setPreferredSize(new java.awt.Dimension(230, 0));
         painelSidebar.setLayout(new javax.swing.BoxLayout(painelSidebar, javax.swing.BoxLayout.Y_AXIS));
         painelSidebar.add(menutxt);
 
         criarVotacao.setText("Criar Votação");
-        criarVotacao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                criarVotacaoMouseClicked(evt);
-            }
-        });
         criarVotacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 criarVotacaoActionPerformed(evt);
@@ -246,48 +155,134 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
 
         getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
+        TituloPrincipal.setText("CRIAR VOTAÇÃO - OPÇÕES");
+
+        TituloP.setText("Pergunta");
+
+        txtPergunta.setText("jTextField1");
+
+        TituloO1.setText("Opção 1");
+
+        txtOpcao1.setText("jTextField2");
+
+        TituloO2.setText("Opção 2");
+
+        txtOpcao2.setText("jTextField3");
+
+        btnAdicionarOpcao.setText("Adicionar Opção.");
+        btnAdicionarOpcao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarOpcaoActionPerformed(evt);
+            }
+        });
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
+        btnFinalizar.setText("Finalizar");
+
+        javax.swing.GroupLayout PainelConteudoLayout = new javax.swing.GroupLayout(PainelConteudo);
+        PainelConteudo.setLayout(PainelConteudoLayout);
+        PainelConteudoLayout.setHorizontalGroup(
+            PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelConteudoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TituloPrincipal)
+                .addGap(22, 22, 22))
+            .addGroup(PainelConteudoLayout.createSequentialGroup()
+                .addComponent(btnAdicionarOpcao)
+                .addGap(27, 27, 27)
+                .addComponent(btnVoltar)
+                .addGap(18, 18, 18)
+                .addComponent(btnFinalizar)
+                .addGap(0, 938, Short.MAX_VALUE))
+            .addGroup(PainelConteudoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TituloP)
+                    .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TituloO1)
+                    .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TituloO2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PainelConteudoLayout.setVerticalGroup(
+            PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PainelConteudoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(TituloPrincipal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TituloP)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TituloO1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TituloO2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAdicionarOpcao)
+                    .addComponent(btnVoltar)
+                    .addComponent(btnFinalizar))
+                .addContainerGap(549, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
         // Animação da sidebar em uma nova Thread para não travar a interface
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
-        if (painelSidebar.getWidth() > 0) {
-            try {
-                // Animação para fechar, começando da largura atual
-                for (int i = painelSidebar.getWidth(); i >= 0; i--) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight()); 
-                    Thread.sleep(1); 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
+                if (painelSidebar.getWidth() > 0) {
+                    try {
+                        // Animação para fechar, começando da largura atual
+                        for (int i = painelSidebar.getWidth(); i >= 0; i--) {
+                            painelSidebar.setSize(i, painelSidebar.getHeight());
+                            Thread.sleep(1);
+                        }
+                    } catch (InterruptedException ex) {
+                        System.out.println(ex);
+                    }
+                } else {
+                    try {
+                        // Animação para abrir, de 0 até a largura desejada (210)
+                        for (int i = 0; i <= 210; i++) {
+                            painelSidebar.setSize(i, painelSidebar.getHeight());
+                            Thread.sleep(1);
+                        }
+                    } catch (InterruptedException ex) {
+                        System.out.println(ex);
+                    }
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
             }
-        } else {
-            try {
-                // Animação para abrir, de 0 até a largura desejada (210)
-                for (int i = 0; i <= 210; i++) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight());
-                    Thread.sleep(1);
-                }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
-            }
-        }
-    }
-}).start();
+        }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
-    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado);
+    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
 
         telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
 
         this.dispose();
+    }//GEN-LAST:event_labelLogoMouseClicked
 
+    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
+        // TODO add your handling code here:
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
@@ -299,71 +294,23 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-    java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
-    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-       MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
+    private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
-
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
-    }//GEN-LAST:event_labelLogoMouseClicked
-
-    private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
-               // TODO add your handling code here:
-    }//GEN-LAST:event_criarVotacaoMouseClicked
-
-private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
-    // O card continua sendo um JPanel
-    javax.swing.JPanel card = new javax.swing.JPanel();
-
-    // --- MUDANÇA IMPORTANTE: Definindo um tamanho ---
-    // Define um tamanho preferido para o card, para que o GridLayout não o estique.
-    card.setPreferredSize(new java.awt.Dimension(300, 65));
-
-    // --- MUDANÇAS DE ESTILO ---
-    // Cor azul mais vibrante, idêntica à do Figma
-    card.setBackground(new java.awt.Color(48, 162, 218)); 
-    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
-    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Padding interno
-    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-    // Título e subtítulo com fontes e cores mais próximas do design
-    javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
-    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-    labelTitulo.setForeground(java.awt.Color.WHITE);
-
-    javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
-    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
-    labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255)); // Um branco levemente azulado
-
-    // Adiciona os componentes ao card
-    card.add(labelTitulo);
-    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8))); // Espaço entre textos
-    card.add(labelSubtitulo);
-
-    // Efeito hover (não precisa mudar, já estava bom)
-    card.addMouseListener(new java.awt.event.MouseAdapter() {
-        final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
-        final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
-
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            card.setBackground(corHover);
-        }
-
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            card.setBackground(corOriginal);
-        }
-    });
-
-    return card;
-}
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado);
+        
+        telaCriarVotacao.setLocationRelativeTo(null);
+        telaCriarVotacao.setVisible(true);
+        
+        this.dispose();
+                
+    }//GEN-LAST:event_btnVoltarActionPerformed
 private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
@@ -443,30 +390,21 @@ private void adicionarListeners(javax.swing.JButton botao) {
         // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
     });
 }
-
-//     * @param args the command line arguments
-//     */
- //public static void main(String args[]) {
-    /* Set the FlatLaf look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    //try {
-       // javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
-    //} catch( Exception ex ) {
-       // System.err.println( "Failed to initialize LaF" );
-    //}
-    //</editor-fold>
-
-    /* Create and display the form */
-    //java.awt.EventQueue.invokeLater(new Runnable() {
-        //public void run() {
-            //new MenuPrincipalView().setVisible(true);
-        //}
-    //});
-//}
+    /**
+     * @param args the command line arguments
+     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PainelConteudo;
+    private javax.swing.JLabel TituloO1;
+    private javax.swing.JLabel TituloO2;
+    private javax.swing.JLabel TituloP;
+    private javax.swing.JLabel TituloPrincipal;
     private javax.swing.JButton aprovarVotacao;
-    private javax.swing.JPanel cardDashboard;
+    private javax.swing.JButton btnAdicionarOpcao;
+    private javax.swing.JButton btnFinalizar;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
@@ -475,18 +413,14 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelNomeUsuario;
     private javax.swing.JLabel menutxt;
-    private javax.swing.JPanel painelConteudo;
-    private javax.swing.JPanel painelDosCards;
     private javax.swing.JPanel painelHeader;
     private javax.swing.JPanel painelHeaderDireita;
     private javax.swing.JPanel painelHeaderEsquerda;
     private javax.swing.JPanel painelSidebar;
-    private javax.swing.JPanel painelTopoConteudo;
     private javax.swing.JButton participarVotacao;
-    private javax.swing.JTextArea textGuia;
-    private javax.swing.JLabel txtbemVindo;
+    private javax.swing.JTextField txtOpcao1;
+    private javax.swing.JTextField txtOpcao2;
+    private javax.swing.JTextField txtPergunta;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
-
-
 }
