@@ -2,23 +2,28 @@ package br.edu.ifro.calama.votacaofeedback.model;
 
 public class Usuario {
     private int id;
-    private String login;
-    private String senha;
     private String nome;
-    private String tipo;
+    private String email;
+    private String senha;
+    private String tipo_usuario;
+    private String cpf;
+    private String matricula;
 
-    public Usuario(int id, String login, String senha, String nome, String tipo) {
-        this.id = id;
-        this.login = login;
-        this.senha = senha;
-        this.nome = nome;
-        this.tipo = tipo;
-    }
+    public Usuario() {}
 
-    // Getters
     public int getId() { return id; }
-    public String getLogin() { return login; }
-    public String getSenha() { return senha; }
+    public void setId(int id) { this.id = id; }
     public String getNome() { return nome; }
-    public String getTipo() { return tipo; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+    public String getTipo_usuario() { return tipo_usuario; }
+    public void setTipo_usuario(String tipo_usuario) { this.tipo_usuario = tipo_usuario; }
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
+    public String getMatricula() { return matricula; }
+    public void setMatricula(String matricula) { this.matricula = matricula; }
+
 }

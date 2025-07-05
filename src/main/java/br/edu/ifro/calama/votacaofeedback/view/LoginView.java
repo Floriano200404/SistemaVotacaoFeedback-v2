@@ -5,13 +5,17 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.LoginController;
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,24 +28,27 @@ import javax.swing.JPanel;
 
 public class LoginView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginView
-     */
     private ImageIcon iconeOlhoAberto;
     private ImageIcon iconeOlhoFechado;
     private boolean senhaVisivel = false;
     
+    
     private final String PLACEHOLDER_SENHA = "Digite sua senha";
+    private Usuario usuarioLogado;
     
     public LoginView() {
         initComponents();
+
+        
         txtLogin.setMargin(new java.awt.Insets(2, 10, 2, 2));
         pwdSenha.setMargin(new java.awt.Insets(2, 10, 2, 2));
-        
+        jPanelImages.setOpaque(false);
         PlaceHolderUtil.setPlaceholder(pwdSenha, PLACEHOLDER_SENHA);
         
         PlaceHolderUtil.setPlaceholder(txtLogin, "aluno@estudante.ifro.edu.br");
         PlaceHolderUtil.setPlaceholder(pwdSenha, "Digite sua senha");
+        
+        this.setLocationRelativeTo(null);
         
         jPanel1.setFocusable(true);
         
@@ -52,35 +59,61 @@ public class LoginView extends javax.swing.JFrame {
             System.err.println("Erro ao carregar os ícones de olho.");
             e.printStackTrace();
         }
-        //CAMPO PARA DEIXAR O BOTÃO DE ACESSAR REDONDO
         RoundedButtonUtil BotaoRedondo = (RoundedButtonUtil) btnEntrar;
         BotaoRedondo.setRadius(20); 
         
-        //CAMPO PARA DEIXAR O BOTÃO DE CADASTRAR REDONDO e com hover
         RoundedButtonUtil btnCadastrarCustom = (RoundedButtonUtil) btnCadastrar;
         btnCadastrarCustom.setRadius(20);
         btnCadastrarCustom.setForeground(Color.WHITE);
         
-        btnCadastrarCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
-        btnCadastrarCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
-        btnCadastrarCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
-        btnCadastrarCustom.setBorderColor(new Color(127, 140, 141)); // Borda
+        btnCadastrarCustom.setColor(new Color(127, 140, 141));
+        btnCadastrarCustom.setColorOver(new Color(149, 165, 166));
+        btnCadastrarCustom.setColorClick(new Color(93, 109, 126));
+        btnCadastrarCustom.setBorderColor(new Color(127, 140, 141));
         
-        //CAMPO PARA DEIXAR O BOTÃO DE ESQUECI A SENHA REDONDO e com hover
         RoundedButtonUtil btnEsqueciSenhaCustom = (RoundedButtonUtil) btnEsqueciSenha;
         btnEsqueciSenhaCustom.setRadius(20);       
         btnEsqueciSenhaCustom.setForeground(Color.WHITE);
         
-        btnEsqueciSenhaCustom.setColor(new Color(127, 140, 141)); // Cinza principal (asbestos)
-        btnEsqueciSenhaCustom.setColorOver(new Color(149, 165, 166)); // Cinza mais claro para hover
-        btnEsqueciSenhaCustom.setColorClick(new Color(93, 109, 126)); // Cinza mais escuro para clique
-        btnEsqueciSenhaCustom.setBorderColor(new Color(127, 140, 141)); // Borda
+        btnEsqueciSenhaCustom.setColor(new Color(127, 140, 141));
+        btnEsqueciSenhaCustom.setColorOver(new Color(149, 165, 166));
+        btnEsqueciSenhaCustom.setColorClick(new Color(93, 109, 126));
+        btnEsqueciSenhaCustom.setBorderColor(new Color(127, 140, 141));
         
-        // --- CONFIGURAÇÃO DO CAMPO DE E-MAIL ARREDONDADO ---
         txtLogin.setBackground(Color.WHITE);
         txtLogin.setForeground(new Color(127, 140, 141));
         txtLogin.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         PlaceHolderUtil.setPlaceholder(txtLogin, "Digite seu e-mail");
+    }
+    
+    public javax.swing.JTextField getTxtLogin() {
+    // IMPORTANTE: Se o nome da sua variável não for 'txtLogin', 
+    // troque pelo nome correto aqui.
+        return txtLogin; 
+    }
+    
+    public javax.swing.JPasswordField getTxtSenha() {
+    // IMPORTANTE: Se o nome da sua variável não for 'txtSenha', 
+    // troque pelo nome correto aqui.
+        return pwdSenha;
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT
+        );
+
+        toast.display();
+        
+    }
+    
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
+    );
+    
+    toast.display();
+
     }
 
     
@@ -113,23 +146,26 @@ public class LoginView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new jPanelGradient();
         jPanel1 = new javax.swing.JPanel();
-        btnEntrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
-        txtLogin = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
         jLabLogin = new javax.swing.JLabel();
-        jLabSenha = new javax.swing.JLabel();
         jLabEmail = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
-        btnEsqueciSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
-        jPanel3 = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil(15, new java.awt.Color(255, 255, 255));
+        txtLogin = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
+        jLabSenha = new javax.swing.JLabel();
+        painelSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil(15, new java.awt.Color(255, 255, 255));
         pwdSenha = new javax.swing.JPasswordField();
         jLabEye = new javax.swing.JLabel();
-        jLabLogo = new javax.swing.JLabel();
-        jLabTextIF = new javax.swing.JLabel();
+        btnEntrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        jSeparator1 = new javax.swing.JSeparator();
+        painelBotoes = new javax.swing.JPanel();
+        btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        btnEsqueciSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        jPanelImages = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabTextIF = new javax.swing.JLabel();
+        jLabLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(9, 32, 63));
@@ -141,16 +177,20 @@ public class LoginView extends javax.swing.JFrame {
                 jPanel2MouseClicked(evt);
             }
         });
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(11, 41, 81));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jPanel1.setMinimumSize(new java.awt.Dimension(450, 600));
         jPanel1.setName("DivLogin"); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(643, 567));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
             }
         });
+<<<<<<< HEAD
 
         btnEntrar.setBackground(new java.awt.Color(0, 149, 255));
         btnEntrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -171,6 +211,9 @@ public class LoginView extends javax.swing.JFrame {
                 txtLoginActionPerformed(evt);
             }
         });
+=======
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+>>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
 
         jLabLogin.setBackground(new java.awt.Color(255, 255, 255));
         jLabLogin.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
@@ -182,28 +225,60 @@ public class LoginView extends javax.swing.JFrame {
                 jLabLoginMouseClicked(evt);
             }
         });
-
-        jLabSenha.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabSenha.setForeground(new java.awt.Color(255, 255, 255));
-        jLabSenha.setText("Senha:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 30, 0);
+        jPanel1.add(jLabLogin, gridBagConstraints);
 
         jLabEmail.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabEmail.setForeground(new java.awt.Color(255, 255, 255));
         jLabEmail.setText("E-mail Institucional:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 80, 5, 80);
+        jPanel1.add(jLabEmail, gridBagConstraints);
 
+<<<<<<< HEAD
         btnCadastrar.setText("CADASTRAR");
         btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+=======
+        txtLogin.setName(""); // NOI18N
+        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
+                txtLoginActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 80, 15, 80);
+        jPanel1.add(txtLogin, gridBagConstraints);
 
-        btnEsqueciSenha.setText("ESQUECI A SENHA");
-        btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabSenha.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabSenha.setForeground(new java.awt.Color(255, 255, 255));
+        jLabSenha.setText("Senha:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 80, 5, 80);
+        jPanel1.add(jLabSenha, gridBagConstraints);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setPreferredSize(new java.awt.Dimension(403, 39));
+        painelSenha.setBackground(new java.awt.Color(255, 255, 255));
+        painelSenha.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        painelSenha.setMinimumSize(new java.awt.Dimension(24, 40));
+        painelSenha.setPreferredSize(new java.awt.Dimension(403, 39));
+        painelSenha.setLayout(new java.awt.BorderLayout());
 
         pwdSenha.setBorder(null);
         pwdSenha.setMargin(new java.awt.Insets(5, 10, 5, 10));
@@ -217,6 +292,7 @@ public class LoginView extends javax.swing.JFrame {
                 pwdSenhaKeyPressed(evt);
             }
         });
+        painelSenha.add(pwdSenha, java.awt.BorderLayout.CENTER);
 
         jLabEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
         jLabEye.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -225,7 +301,9 @@ public class LoginView extends javax.swing.JFrame {
                 jLabEyeMouseClicked(evt);
             }
         });
+        painelSenha.add(jLabEye, java.awt.BorderLayout.EAST);
 
+<<<<<<< HEAD
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -296,6 +374,87 @@ public class LoginView extends javax.swing.JFrame {
                     .addComponent(btnEsqueciSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(134, Short.MAX_VALUE))
         );
+=======
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 80, 20, 80);
+        jPanel1.add(painelSenha, gridBagConstraints);
+
+        btnEntrar.setBackground(new java.awt.Color(0, 149, 255));
+        btnEntrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrar.setText("ACESSAR");
+        btnEntrar.setBorder(null);
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEntrar.setName("btnEntrar"); // NOI18N
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 80, 10, 80);
+        jPanel1.add(btnEntrar, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 80, 10, 80);
+        jPanel1.add(jSeparator1, gridBagConstraints);
+
+        painelBotoes.setOpaque(false);
+        painelBotoes.setLayout(new java.awt.GridLayout(1, 2, 60, 0));
+
+        btnCadastrar.setText("CADASTRAR");
+        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+        painelBotoes.add(btnCadastrar);
+
+        btnEsqueciSenha.setText("ESQUECI A SENHA");
+        btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        painelBotoes.add(btnEsqueciSenha);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 80, 20, 80);
+        jPanel1.add(painelBotoes, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 99;
+        gridBagConstraints.ipady = 43;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(63, 29, 90, 0);
+        jPanel2.add(jPanel1, gridBagConstraints);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/textoeditado1.png"))); // NOI18N
+
+        jLabTextIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabTextIF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabTextIFMouseClicked(evt);
+            }
+        });
+>>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
 
         jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
         jLabLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -306,6 +465,7 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jLabTextIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
         jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabTextIF.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -351,7 +511,44 @@ public class LoginView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)))
                 .addGap(0, 125, Short.MAX_VALUE))
+=======
+        javax.swing.GroupLayout jPanelImagesLayout = new javax.swing.GroupLayout(jPanelImages);
+        jPanelImages.setLayout(jPanelImagesLayout);
+        jPanelImagesLayout.setHorizontalGroup(
+            jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelImagesLayout.createSequentialGroup()
+                        .addComponent(jLabLogo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabTextIF)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
         );
+        jPanelImagesLayout.setVerticalGroup(
+            jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelImagesLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabTextIF))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(63, 0, 90, 20);
+        jPanel2.add(jPanelImages, gridBagConstraints);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -373,26 +570,27 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoginActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        String login = txtLogin.getText();
-        String senha = new String(pwdSenha.getPassword());
-
-        LoginController controller = new LoginController();
-
-        if (controller.realizarLogin(login, senha)) {
-            JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
-            new MenuPrincipalView().setVisible(true);
-            this.dispose(); // Fecha a tela de login
-        } else {
-            JOptionPane.showMessageDialog(this, "Login ou senha inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        LoginController controller = new LoginController(this);
+    
+        controller.autenticar();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        // TODO add your handling code here:
+        try {
+        CadastroView telaDeCadastro = new CadastroView();
+
+        telaDeCadastro.setVisible(true);
+
+        this.dispose();
+
+    } catch (java.text.ParseException e) {
+        
+        JOptionPane.showMessageDialog(this, "Erro ao abrir a tela de cadastro.", "Erro Inesperado", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jLabLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabLogoMouseClicked
-        // TODO add your handling code here:
         try {
         java.net.URI link = new java.net.URI("https://portal.ifro.edu.br/");
         java.awt.Desktop.getDesktop().browse(link);
@@ -403,17 +601,14 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabLogoMouseClicked
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        // TODO add your handling code here:
         jPanel1.requestFocusInWindow();
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        // TODO add your handling code here:
         jPanel1.requestFocusInWindow();
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jLabTextIFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabTextIFMouseClicked
-        // TODO add your handling code here:
         try {
         java.net.URI link = new java.net.URI("https://portal.ifro.edu.br/");
         java.awt.Desktop.getDesktop().browse(link);
@@ -424,7 +619,6 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabTextIFMouseClicked
 
     private void jLabEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabEyeMouseClicked
-        // TODO add your handling code here:
         System.out.println("Lógica de clique iniciada. Estado atual de 'senhaVisivel': " + senhaVisivel);
         String textoAtual = String.valueOf(pwdSenha.getPassword());
         if (textoAtual.equals(PLACEHOLDER_SENHA)) {
@@ -434,11 +628,23 @@ public class LoginView extends javax.swing.JFrame {
         senhaVisivel = !senhaVisivel;
         
         if (senhaVisivel) {
+<<<<<<< HEAD
             pwdSenha.setEchoChar((char) 0); 
+=======
+
+            pwdSenha.setEchoChar((char) 0); 
+
+>>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
             jLabEye.setIcon(iconeOlhoAberto);
             System.out.println("A senha agora está visível.");
         } else {
+<<<<<<< HEAD
             pwdSenha.setEchoChar('*');
+=======
+
+            pwdSenha.setEchoChar('*');
+
+>>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
             jLabEye.setIcon(iconeOlhoFechado);
             System.out.println("A senha agora está escondida.");
         }
@@ -506,8 +712,10 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelImages;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel painelBotoes;
+    private javax.swing.JPanel painelSenha;
     private javax.swing.JPasswordField pwdSenha;
     private javax.swing.JTextField txtLogin;
     // End of variables declaration//GEN-END:variables
