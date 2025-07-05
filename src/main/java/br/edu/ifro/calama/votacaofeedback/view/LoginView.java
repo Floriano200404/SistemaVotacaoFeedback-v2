@@ -190,30 +190,7 @@ public class LoginView extends javax.swing.JFrame {
                 jPanel1MouseClicked(evt);
             }
         });
-<<<<<<< HEAD
-
-        btnEntrar.setBackground(new java.awt.Color(0, 149, 255));
-        btnEntrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEntrar.setText("ACESSAR");
-        btnEntrar.setBorder(null);
-        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnEntrar.setName("btnEntrar"); // NOI18N
-        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntrarActionPerformed(evt);
-            }
-        });
-
-        txtLogin.setName(""); // NOI18N
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
-            }
-        });
-=======
         jPanel1.setLayout(new java.awt.GridBagLayout());
->>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
 
         jLabLogin.setBackground(new java.awt.Color(255, 255, 255));
         jLabLogin.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
@@ -242,14 +219,8 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 80, 5, 80);
         jPanel1.add(jLabEmail, gridBagConstraints);
 
-<<<<<<< HEAD
-        btnCadastrar.setText("CADASTRAR");
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-=======
         txtLogin.setName(""); // NOI18N
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
->>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
             }
@@ -303,78 +274,6 @@ public class LoginView extends javax.swing.JFrame {
         });
         painelSenha.add(jLabEye, java.awt.BorderLayout.EAST);
 
-<<<<<<< HEAD
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pwdSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabEye)
-                .addGap(13, 13, 13))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabEye, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(pwdSenha, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(jLabLogin)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnEsqueciSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 120, Short.MAX_VALUE))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(jLabEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEsqueciSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(134, Short.MAX_VALUE))
-        );
-=======
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -454,7 +353,6 @@ public class LoginView extends javax.swing.JFrame {
                 jLabTextIFMouseClicked(evt);
             }
         });
->>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
 
         jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
         jLabLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -465,53 +363,6 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
-<<<<<<< HEAD
-        jLabTextIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
-        jLabTextIF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabTextIF.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabTextIFMouseClicked(evt);
-            }
-        });
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/textoeditado1.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(194, 194, 194)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabLogo)
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabTextIF, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addGap(100, 100, 100))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(200, 200, 200)
-                                .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(246, 246, 246)
-                                .addComponent(jLabTextIF)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)))
-                .addGap(0, 125, Short.MAX_VALUE))
-=======
         javax.swing.GroupLayout jPanelImagesLayout = new javax.swing.GroupLayout(jPanelImages);
         jPanelImages.setLayout(jPanelImagesLayout);
         jPanelImagesLayout.setHorizontalGroup(
@@ -525,7 +376,6 @@ public class LoginView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabTextIF)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
->>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
         );
         jPanelImagesLayout.setVerticalGroup(
             jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -620,6 +470,7 @@ public class LoginView extends javax.swing.JFrame {
 
     private void jLabEyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabEyeMouseClicked
         System.out.println("Lógica de clique iniciada. Estado atual de 'senhaVisivel': " + senhaVisivel);
+        
         String textoAtual = String.valueOf(pwdSenha.getPassword());
         if (textoAtual.equals(PLACEHOLDER_SENHA)) {
         return; 
@@ -628,40 +479,26 @@ public class LoginView extends javax.swing.JFrame {
         senhaVisivel = !senhaVisivel;
         
         if (senhaVisivel) {
-<<<<<<< HEAD
-            pwdSenha.setEchoChar((char) 0); 
-=======
 
             pwdSenha.setEchoChar((char) 0); 
 
->>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
             jLabEye.setIcon(iconeOlhoAberto);
+
             System.out.println("A senha agora está visível.");
+
         } else {
-<<<<<<< HEAD
-            pwdSenha.setEchoChar('*');
-=======
 
             pwdSenha.setEchoChar('*');
 
->>>>>>> 957c8a7f2499e0ff8ac4831932380c10cbd22a76
             jLabEye.setIcon(iconeOlhoFechado);
+
             System.out.println("A senha agora está escondida.");
         }
     }//GEN-LAST:event_jLabEyeMouseClicked
 
     private void jLabLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabLoginMouseClicked
         // TODO add your handling code here:
-        String nomeUsuario = "Estenio Silva";
-        String emailUsuario = "estenio.silva@exemplo.com";
-        String cpfUsuario = "123.456.789-00";
-        String matriculaUsuario = "2024010203";
-        String cursoAtual = "Análise e Desenv. de Sistemas";
         
-        PerfilView perfil = new PerfilView(this, nomeUsuario, emailUsuario, cpfUsuario, matriculaUsuario, cursoAtual);
-        perfil.setVisible(true);    
-        
-        System.out.println("Modal de perfil foi fechada.");
     }//GEN-LAST:event_jLabLoginMouseClicked
 
     /**
