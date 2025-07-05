@@ -45,9 +45,14 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<<<<<<< HEAD
+        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
+=======
         
         <maven.compiler.release>24</maven.compiler.release>
         
+>>>>>>> 81bdc61df21ada09ad9e1bdb5e6090f806210324
         <exec.mainClass>br.edu.ifro.calama.votacaofeedback.Main</exec.mainClass>
     </properties>
 </project>
