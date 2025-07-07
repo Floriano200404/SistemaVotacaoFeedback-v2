@@ -5,6 +5,7 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,9 +23,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
     private Usuario usuarioLogado;
 
-    /**
-     * Creates new form CriarVotacaoView
-     */
+    
     public CriarVotacaoView(Usuario usuario) {
         initComponents();
         this.usuarioLogado = usuario;
@@ -34,6 +33,29 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         }
         aplicarEstilos();
         inicializarMenuLateral();
+        txtDescricao.setLineWrap(true);
+        txtDescricao.setWrapStyleWord(true);
+        
+        PlaceHolderUtil.setPlaceholder(txtTitulo, "Digite o título da votação");
+        PlaceHolderUtil.setPlaceholder(txtDescricao, "Descreva aqui os detalhes da sua votação...");
+        PlaceHolderUtil.setPlaceholder(txtDataInicial, "dd/mm/aaaa");
+        PlaceHolderUtil.setPlaceholder(txtDataFinal, "dd/mm/aaaa");
+        PlaceHolderUtil.setPlaceholder(txtDataDivulgacao, "dd/mm/aaaa");
+        
+        java.awt.event.MouseAdapter focusRemoverListener = new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                java.awt.Component component = (java.awt.Component) e.getSource();
+                component.requestFocusInWindow();
+            }
+        };
+
+        painelHeader.addMouseListener(focusRemoverListener);
+        painelSidebar.addMouseListener(focusRemoverListener);
+        painelConteudo.addMouseListener(focusRemoverListener);
+
+        this.getContentPane().addMouseListener(focusRemoverListener);
+
     }
 
     private void aplicarEstilos() {
@@ -46,44 +68,30 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             txtDataDivulgacao, 
             comboParticipantes,
         };
-        Border bordaArredondadaPreta = (Border) new RoundedVotacoesUtil(15, Color.BLACK); // 15 é o raio do arredondamento
+        Border bordaArredondadaPreta = (Border) new RoundedVotacoesUtil(15, Color.BLACK);
 
         for (JComponent componente : campos) {
-            componente.setBackground(Color.WHITE); // Fundo branco
-            componente.setForeground(Color.BLACK); // Texto preto
-
-            // Define a altura e mantém a largura preferida
+            componente.setBackground(Color.WHITE); 
+            componente.setForeground(Color.BLACK);
             componente.setPreferredSize(new Dimension(componente.getPreferredSize().width, ALTURA_PADRAO));
-
-            // Aplica a borda arredondada
             componente.setBorder(bordaArredondadaPreta);
-
-            // Adiciona padding interno específico para JTextFields
             if (componente instanceof JTextField) {
                 JTextField textField = (JTextField) componente;
-                // Insets(top, left, bottom, right)
                 textField.setMargin(new Insets(2, 10, 2, 10)); 
             }
         }
-
-        // --- Estiliza os Botões ---
-
-        // Cria a borda para os botões (pode ser a mesma ou outra)
         Border bordaBotao = (Border) new RoundedVotacoesUtil(15, new Color(0x6A6A6A)); 
 
-        // Botão Cancelar
         btnCancelar.setText("CANCELAR");
-        btnCancelar.setBackground(new Color(0x6A6A6A)); // Cor cinza (Hex)
-        btnCancelar.setForeground(Color.WHITE); // Texto branco
-        btnCancelar.setPreferredSize(new Dimension(120, ALTURA_PADRAO)); // Largura de 120, mesma altura dos campos
+        btnCancelar.setBackground(new Color(0x6A6A6A));
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
         btnCancelar.setBorder(bordaBotao);
-        btnCancelar.setFocusPainted(false); // Remove a borda pontilhada de foco
-
-        // Botão Avançar
+        btnCancelar.setFocusPainted(false); 
         Border bordaBotaoAvancar = (Border) new RoundedVotacoesUtil(15, new Color(0x0095FF));
         btnAvancar.setText("AVANÇAR");
-        btnAvancar.setBackground(new Color(0x0095FF)); // Cor azul (Hex)
-        btnAvancar.setForeground(Color.WHITE); // Texto branco
+        btnAvancar.setBackground(new Color(0x0095FF)); 
+        btnAvancar.setForeground(Color.WHITE);
         btnAvancar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
         btnAvancar.setBorder(bordaBotaoAvancar);
         btnAvancar.setFocusPainted(false);
@@ -458,58 +466,58 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     telaDeCriacao.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnAvancarActionPerformed
-private void inicializarMenuLateral() {
-     java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
-        criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
-    );
-    configurarBotao(criarVotacao, "criarVoto.png");
-    configurarBotao(participarVotacao, "peoplemais.png");
-    configurarBotao(gerenciaVotacao, "configpast.png");
-    configurarBotao(aprovarVotacao, "list_check.png");
-    configurarBotao(votoArquivado, "arquivada.png");
+    private void inicializarMenuLateral() {
+         java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
+            criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
+        );
+        configurarBotao(criarVotacao, "criarVoto.png");
+        configurarBotao(participarVotacao, "peoplemais.png");
+        configurarBotao(gerenciaVotacao, "configpast.png");
+        configurarBotao(aprovarVotacao, "list_check.png");
+        configurarBotao(votoArquivado, "arquivada.png");
 
-    for (javax.swing.JButton botao : botoes) {
-        adicionarListeners(botao);
-    }
-
-   
-}
-private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-   botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
-    botao.setIconTextGap(15);
-    botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-    try {
-        botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
-    } catch (Exception e) {
-        System.out.println("ERRO ao carregar ícone: " + nomeIcone);
-    }
-}
-
-private void adicionarListeners(javax.swing.JButton botao) {
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
-
-    botao.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true);
+        for (javax.swing.JButton botao : botoes) {
+            adicionarListeners(botao);
         }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            botao.setOpaque(false);
-            botao.setBackground(COR_FUNDO_SIDEBAR); 
-        }
-    });
 
-    botao.addActionListener(e -> {
-        System.out.println("Botão '" + botao.getText() + "' clicado!");
-    });
-}
+    }
+    private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
+       botao.putClientProperty("JButton.buttonType", "toolBarButton");
+        botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        botao.setIconTextGap(15);
+        botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        try {
+            botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
+        } catch (Exception e) {
+            System.out.println("ERRO ao carregar ícone: " + nomeIcone);
+        }
+    }
+
+    private void adicionarListeners(javax.swing.JButton botao) {
+        final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+        final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
+
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botao.setBackground(COR_HOVER_AZUL);
+                botao.setOpaque(true);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botao.setOpaque(false);
+                botao.setBackground(COR_FUNDO_SIDEBAR); 
+            }
+        });
+
+        botao.addActionListener(e -> {
+            System.out.println("Botão '" + botao.getText() + "' clicado!");
+        });
+    }
     /**
      * @param args the command line arguments
      */
