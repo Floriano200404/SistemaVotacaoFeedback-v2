@@ -9,9 +9,11 @@ import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
+import br.edu.ifro.calama.votacaofeedback.util.GrupoComboBoxRendererUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,24 +46,49 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     carregarGrupos();
     }
     
-    private void carregarGrupos() {
-        try {
-            GrupoRepository grupoRepository = new GrupoRepository();
-            List<Grupo> grupos = grupoRepository.buscarTodos();
-            
-            // Limpa o ComboBox (comboParticipantes) antes de adicionar os novos itens
-            comboParticipantes.removeAllItems();
-            
-            // Adiciona cada objeto Grupo da lista ao ComboBox
-            for (Grupo grupo : grupos) {
-                comboParticipantes.addItem(grupo);
-            }
-            
-        } catch (Exception e) {
-            exibirMensagem("Erro ao carregar grupos: " + e.getMessage());
-            e.printStackTrace();
-        }
+   private void carregarGrupos() {
+    try {
+        // 1. Cria uma lista vazia para montar todas as opções
+        List<Grupo> gruposParaExibir = new ArrayList<>();
+
+        // 2. Adiciona os grupos virtuais que planejamos
+        
+        // Grupo Virtual: Todos (Servidores e Alunos)
+        Grupo grupoTodos = new Grupo();
+        grupoTodos.setIdGrupo(-3); // ID negativo para identificar como virtual
+        grupoTodos.setNome("TODOS OS ALUNOS");
+        gruposParaExibir.add(grupoTodos);
+
+        // Grupo Virtual: Todos os Alunos
+        Grupo grupoAlunos = new Grupo();
+        grupoAlunos.setIdGrupo(-2); // ID negativo diferente
+        grupoAlunos.setNome("TODOS OS SERVIDORES");
+        gruposParaExibir.add(grupoAlunos);
+        
+        // Grupo Virtual: Todos os Servidores
+        Grupo grupoServidores = new Grupo();
+        grupoServidores.setIdGrupo(-1); // ID negativo diferente
+        grupoServidores.setNome("SERVIDORES E ALUNOS");
+        gruposParaExibir.add(grupoServidores);
+
+        // 3. Busca e adiciona os grupos reais do banco (cursos, etc.)
+        GrupoRepository grupoRepository = new GrupoRepository();
+        gruposParaExibir.addAll(grupoRepository.buscarTodos());
+        
+        // 4. Popula o ComboBox com o modelo de dados completo
+        comboParticipantes.setModel(new javax.swing.DefaultComboBoxModel(gruposParaExibir.toArray()));
+        
+        // 5. Aplica o renderizador para mostrar o placeholder
+        comboParticipantes.setRenderer(new GrupoComboBoxRendererUtil("Selecionar Participantes"));
+
+        // 6. Define o estado inicial como "nada selecionado" para que o placeholder apareça
+        comboParticipantes.setSelectedIndex(-1);
+        
+    } catch (Exception e) {
+        exibirMensagem("Erro ao carregar grupos: " + e.getMessage());
+        e.printStackTrace();
     }
+}
     
     public javax.swing.JTextField getTxtTitulo() {
         return txtTitulo;
@@ -251,6 +278,12 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         TituloParticipante.setText("Participantes");
 
+        comboParticipantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboParticipantesActionPerformed(evt);
+            }
+        });
+
         tituloDivulga.setText("Data De Divulgação dos Resultados");
 
         btnCancelar.setText("X Cancelar");
@@ -427,8 +460,12 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         String dataDivulgacaoStr = getTxtDataDivulgacao().getText();
         Object itemSelecionado = getComboParticipantes().getSelectedItem();
         
+        if (itemSelecionado == null) {
+            exibirMensagem("Por favor, selecione um grupo de participantes.");
+            return;
+        }
+
         Grupo grupoSelecionado = (Grupo) itemSelecionado;
-        // Pega o ID daquele objeto
         int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
         
         // Validação simples
@@ -470,6 +507,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }
 // TODO add your handling code here:
     }//GEN-LAST:event_btnAvancarActionPerformed
+
+    private void comboParticipantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboParticipantesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboParticipantesActionPerformed
     private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
