@@ -380,6 +380,9 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()&#xd;&#xa;"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAvancar">
                   <Properties>
@@ -388,6 +391,9 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAvancarActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()&#xd;&#xa;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

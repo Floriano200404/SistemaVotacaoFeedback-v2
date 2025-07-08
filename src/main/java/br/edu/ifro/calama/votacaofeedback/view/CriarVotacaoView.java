@@ -83,14 +83,20 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         Border bordaBotao = (Border) new RoundedVotacoesUtil(15, new Color(0x6A6A6A)); 
 
         btnCancelar.setText("CANCELAR");
-        btnCancelar.setBackground(new Color(0x6A6A6A));
+        
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnCancelar).setColor(new Color(0x6A6A6A)); 
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnCancelar).setColorOver(new Color(0x8A8A8A));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnCancelar).setColorClick(new Color(0x5A5A5A));
         btnCancelar.setForeground(Color.WHITE);
         btnCancelar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
         btnCancelar.setBorder(bordaBotao);
         btnCancelar.setFocusPainted(false); 
+        
         Border bordaBotaoAvancar = (Border) new RoundedVotacoesUtil(15, new Color(0x0095FF));
         btnAvancar.setText("AVANÇAR");
-        btnAvancar.setBackground(new Color(0x0095FF)); 
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnAvancar).setColor(new Color(0x0095FF));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnAvancar).setColorOver(new Color(0x33ADFF));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnAvancar).setColorClick(new Color(0x0078CC));
         btnAvancar.setForeground(Color.WHITE);
         btnAvancar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
         btnAvancar.setBorder(bordaBotaoAvancar);
@@ -132,8 +138,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         tituloDivulga = new javax.swing.JLabel();
         txtDataDivulgacao = new javax.swing.JFormattedTextField();
         jPanelBotoesInferiores = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JButton();
-        btnAvancar = new javax.swing.JButton();
+        btnCancelar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()
+        ;
+        btnAvancar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()
+        ;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
