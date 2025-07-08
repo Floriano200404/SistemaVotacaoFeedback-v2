@@ -28,8 +28,6 @@ public Votacao(String titulo, Date dataInicio, Date dataFim, Date dataResultado)
     this.dataResultado = dataResultado;
 }
 
-    
-
     public int getIdVotacao() { return idVotacao; }
     public void setIdVotacao(int idVotacao) { this.idVotacao = idVotacao; }
 

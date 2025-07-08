@@ -33,10 +33,6 @@ public class Grupo {
         this.tipo_grupo = tipo;
     }
     
-    /**
-     * Este método é o "truque" para o JComboBox funcionar facilmente.
-     * Ele garante que o nome do grupo seja exibido na lista.
-     */
     @Override
     public String toString() {
         return this.nome;

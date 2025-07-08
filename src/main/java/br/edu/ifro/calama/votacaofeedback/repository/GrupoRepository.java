@@ -21,10 +21,7 @@ public class GrupoRepository {
 
 
     public List<Grupo> buscarTodos() throws SQLException, Exception {
-    // Agora o SELECT também busca a nova coluna
     String sql = "SELECT id_Grupos, nome, tipo_grupo FROM grupos WHERE UPPER(nome) NOT IN ('PROFESSORES', 'SERVIDORES') ORDER BY nome";
-
-    System.out.println("Executando SQL para buscar grupos: " + sql);
     
     List<Grupo> grupos = new ArrayList<>();
 

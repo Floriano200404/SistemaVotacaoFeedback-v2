@@ -12,12 +12,10 @@ public class OpcaoVoto {
     
     private int idOpcaoVoto;
     private String descricao;
-    private int idVotacao; // Chave estrangeira para ligar com a Votacao
+    private int idVotacao;
 
-    // Construtor vazio
     public OpcaoVoto() {}
 
-    // Getters e Setters
     public int getIdOpcaoVoto() { return idOpcaoVoto; }
     public void setIdOpcaoVoto(int idOpcaoVoto) { this.idOpcaoVoto = idOpcaoVoto; }
 

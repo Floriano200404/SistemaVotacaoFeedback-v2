@@ -34,7 +34,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private Votacao votacaoEmAndamento;
     private List<JLabel> todosOsLabelsDeOpcao;
     private List<JTextField> todosOsCamposDeOpcao;
-    private int opcoesVisiveis = 2; // Começamos com 2 opções visíveis
+    private int opcoesVisiveis = 2;
 
     /**
      * autor Athos
@@ -46,8 +46,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.votacaoEmAndamento = votacao;
         
         if (this.usuarioLogado != null) {
-            // No modo Design, dê um nome de variável para o JLabel que mostra o nome
-            // (ex: labelNomeUsuario) e use-o aqui.
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
         
@@ -58,19 +56,16 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         todosOsLabelsDeOpcao.get(i).setVisible(false);
         todosOsCamposDeOpcao.get(i).setVisible(false);
     }
-        
         inicializarMenuLateral();
     }
         
     public void exibirMensagem(String mensagem) {
-
-        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_CENTER);
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
         toast.display();
     }
 
     public void exibirMensagemDeSucesso(String mensagem) {
-
-        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.BOTTOM_RIGHT);
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
         toast.display();
     }
 
@@ -391,7 +386,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                     }
                 } else {
                     try {
-                        // Animação para abrir, de 0 até a largura desejada (210)
                         for (int i = 0; i <= 210; i++) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -431,21 +425,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         try {
-            // 1. Coletar os dados desta segunda tela (usando os nomes do seu Navigator)
             String pergunta = txtPergunta.getText();
 
-            // Validação simples
             if (pergunta.trim().isEmpty()) {
                 exibirMensagem("O campo 'Pergunta' é obrigatório para finalizar.");
                 return;
             }
 
-            // 2. Completar o objeto 'votacaoEmAndamento' que já temos
             this.votacaoEmAndamento.setPergunta(pergunta);
             this.votacaoEmAndamento.setStatus("PENDENTE"); // Definimos o status final
 
             VotacaoRepository votacaoRepository = new VotacaoRepository();
-            // AQUI NÓS CAPTURAMOS O ID QUE O MÉTODO RETORNA
             int idNovaVotacao = 0;
             try {
                 idNovaVotacao = votacaoRepository.criar(this.votacaoEmAndamento);
@@ -453,15 +443,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 System.getLogger(CriarVotacaoOpcoesView.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
 
-            // --- PARTE 2: Salvar as Opções ---
-            // Apenas prossiga se a votação principal foi salva com sucesso (ID > 0)
             if (idNovaVotacao > 0) {
 
                 OpcaoVotoRepository opcaoRepository = new OpcaoVotoRepository();
 
-                // Salva a Opção 1, se ela tiver texto
                 for (JTextField campoOpcao : todosOsCamposDeOpcao) {
-                    // SÓ SALVA SE O CAMPO ESTIVER VISÍVEL E COM TEXTO
                     if (campoOpcao.isVisible() && !campoOpcao.getText().trim().isEmpty()) {
                         OpcaoVoto opcao = new OpcaoVoto();
                         opcao.setDescricao(campoOpcao.getText().trim());
@@ -474,12 +460,12 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 Timer timer = new Timer(1500, e -> {
                     new MenuPrincipalView(this.usuarioLogado).setVisible(true);
                     this.dispose();
+                    this.setLocationRelativeTo(null);
                 });
                 timer.setRepeats(false);
                 timer.start();
 
             } else {
-                // Caso a votação principal não tenha sido salva
                 exibirMensagem("Falha ao salvar os dados principais da votação.");
             }
 
@@ -503,15 +489,12 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
 
         if (opcoesVisiveis < todosOsLabelsDeOpcao.size()) {
-            // Pega o próximo label e campo da lista e os torna visíveis
             todosOsLabelsDeOpcao.get(opcoesVisiveis).setVisible(true);
             todosOsCamposDeOpcao.get(opcoesVisiveis).setVisible(true);
 
-            opcoesVisiveis++; // Incrementa o contador para a próxima vez
+            opcoesVisiveis++;
         } else {
-            // Opcional: Avisa que chegou no limite
             exibirMensagem("Limite máximo de opções atingido.");
-            btnAdicionarOpcao.setEnabled(false); // Desabilita o botão
         }
     }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
 
@@ -552,20 +535,13 @@ private void inicializarMenuLateral() {
 
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
    
-   botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    
-    
+    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    
-    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
-
-    
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -577,10 +553,9 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
 
 private void adicionarListeners(javax.swing.JButton botao) {
    
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
 
-    
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -598,10 +573,8 @@ private void adicionarListeners(javax.swing.JButton botao) {
         }
     });
 
-    
     botao.addActionListener(e -> {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
-
     });
 }
     /**
