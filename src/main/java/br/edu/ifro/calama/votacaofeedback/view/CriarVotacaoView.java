@@ -38,9 +38,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         
         PlaceHolderUtil.setPlaceholder(txtTitulo, "Digite o título da votação");
         PlaceHolderUtil.setPlaceholder(txtDescricao, "Descreva aqui os detalhes da sua votação...");
-        PlaceHolderUtil.setPlaceholder(txtDataInicial, "dd/mm/aaaa");
-        PlaceHolderUtil.setPlaceholder(txtDataFinal, "dd/mm/aaaa");
-        PlaceHolderUtil.setPlaceholder(txtDataDivulgacao, "dd/mm/aaaa");
+        txtDataInicial.setDateFormatString("dd/MM/yyyy");
+        txtDataFinal.setDateFormatString("dd/MM/yyyy");
+        txtDataDivulgacao.setDateFormatString("dd/MM/yyyy");
+        txtDataInicial.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
         
         java.awt.event.MouseAdapter focusRemoverListener = new java.awt.event.MouseAdapter() {
             @Override
@@ -130,13 +131,13 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         TituloDesc = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextArea();
         TituloDateI = new javax.swing.JLabel();
-        txtDataInicial = new javax.swing.JFormattedTextField();
+        txtDataInicial = new com.toedter.calendar.JDateChooser();
         TituloDateF = new javax.swing.JLabel();
-        txtDataFinal = new javax.swing.JFormattedTextField();
+        txtDataFinal = new com.toedter.calendar.JDateChooser();
         TituloParticipante = new javax.swing.JLabel();
         comboParticipantes = new javax.swing.JComboBox<>();
         tituloDivulga = new javax.swing.JLabel();
-        txtDataDivulgacao = new javax.swing.JFormattedTextField();
+        txtDataDivulgacao = new com.toedter.calendar.JDateChooser();
         jPanelBotoesInferiores = new javax.swing.JPanel();
         btnCancelar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()
         ;
@@ -300,13 +301,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 5);
         jPanel1.add(TituloDateI, gridBagConstraints);
-
-        txtDataInicial.setText("jFormattedTextField1");
-        txtDataInicial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataInicialActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -324,8 +318,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
         jPanel1.add(TituloDateF, gridBagConstraints);
-
-        txtDataFinal.setText("jFormattedTextField1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -360,8 +352,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 2, 10);
         jPanel1.add(tituloDivulga, gridBagConstraints);
-
-        txtDataDivulgacao.setText("jFormattedTextField1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
@@ -459,20 +449,33 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTituloActionPerformed
 
-    private void txtDataInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataInicialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataInicialActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
-    CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado);
-
-    telaDeCriacao.setLocationRelativeTo(null);
-    telaDeCriacao.setVisible(true);
-    this.dispose();
+        java.util.Date dataInicial = txtDataInicial.getDate();
+        java.util.Date dataFinal = txtDataFinal.getDate();
+        java.util.Date dataDivulgacao = txtDataDivulgacao.getDate();
+        if (dataInicial == null || dataFinal == null || dataDivulgacao == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, preencha todas as datas.", "Campos Obrigatórios", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; 
+        }
+        if (dataFinal.before(dataInicial)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "A data final não pode ser anterior à data inicial.", "Erro de Validação", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+          System.out.println("--- Dados da Votação ---");
+        System.out.println("Data Inicial: " + dataInicial);
+        System.out.println("Data Final: " + dataFinal);
+        System.out.println("Data Divulgação: " + dataDivulgacao);
+    
+        CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado);
+        
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAvancarActionPerformed
     private void inicializarMenuLateral() {
          java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
@@ -559,9 +562,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private javax.swing.JPanel painelSidebar;
     private javax.swing.JButton participarVotacao;
     private javax.swing.JLabel tituloDivulga;
-    private javax.swing.JFormattedTextField txtDataDivulgacao;
-    private javax.swing.JFormattedTextField txtDataFinal;
-    private javax.swing.JFormattedTextField txtDataInicial;
+    private com.toedter.calendar.JDateChooser txtDataDivulgacao;
+    private com.toedter.calendar.JDateChooser txtDataFinal;
+    private com.toedter.calendar.JDateChooser txtDataInicial;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtTitulo;
     private javax.swing.JButton votoArquivado;
