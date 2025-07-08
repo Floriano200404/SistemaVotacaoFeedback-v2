@@ -20,7 +20,7 @@ public class Votacao {
     }
 
     
- // Adicione este construtor à sua classe Votacao.java
+ 
 public Votacao(String titulo, Date dataInicio, Date dataFim, Date dataResultado) {
     this.titulo = titulo;
     this.dataInicio = dataInicio;

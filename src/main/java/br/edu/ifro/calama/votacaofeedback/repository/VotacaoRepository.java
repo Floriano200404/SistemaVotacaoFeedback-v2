@@ -20,7 +20,7 @@ public class VotacaoRepository {
     
 
     public int criar(Votacao votacao) throws SQLException, Exception {
-        // SQL correspondente à sua tabela
+        
         String sql = "INSERT INTO Votacao (titulo, descricao, data_inicio, data_fim, data_Resultado, id_grupo_destino, id_Criador, status, pergunta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         int idGerado = -1;
@@ -62,8 +62,7 @@ public java.util.List<Votacao> buscarPendentes() throws Exception {
 
         while (rs.next()) {
             Votacao votacao = new Votacao();
-            // Pega os dados de cada coluna e coloca no objeto votacao
-            // Os nomes das colunas devem ser idênticos aos da sua tabela
+           
             votacao.setIdVotacao(rs.getInt("id_Votacao"));
             votacao.setTitulo(rs.getString("titulo"));
             votacao.setDescricao(rs.getString("descricao"));

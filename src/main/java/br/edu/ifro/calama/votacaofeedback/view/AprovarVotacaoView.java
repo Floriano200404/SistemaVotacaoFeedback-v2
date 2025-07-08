@@ -23,32 +23,32 @@ public final class AprovarVotacaoView extends javax.swing.JPanel {
         initComponents();
         carregarVotacoes();
     }
-// Esta é a NOVA versão do método DENTRO da AprovarVotacaoView.java
+
 public void carregarVotacoes() {
-    // 1. Cria uma instância do nosso repositório
+   
     VotacaoRepository votacaoRepo = new VotacaoRepository();
 
     try {
-        // 2. CHAMA O MÉTODO DO REPOSITÓRIO PARA BUSCAR OS DADOS REAIS
+       
         List<Votacao> votacoesDoBanco = votacaoRepo.buscarPendentes();
 
-        // 3. Limpa a grade antes de adicionar os novos cards
+        
         painelDaGrade.removeAll();
 
-        // 4. Para cada votação que veio do banco, cria e adiciona um card
+        
         for (Votacao votacao : votacoesDoBanco) {
             CardView card = new CardView();
-            // Usa o método "setter" que você já tem no seu CardView
+            
             card.setDados(votacao); 
             painelDaGrade.add(card);
         }
 
-        // 5. Atualiza a tela para mostrar os novos cards
+       
         painelDaGrade.revalidate();
         painelDaGrade.repaint();
 
     } catch (Exception e) {
-        // Em caso de erro na conexão com o banco, mostra uma mensagem
+       
         e.printStackTrace();
         javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar votações do banco de dados.", "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
@@ -71,21 +71,21 @@ public void carregarVotacoes() {
     }// </editor-fold>//GEN-END:initComponents
 
 public void carregarVotacoesParaAprovacao() {
-    // 1. Simula a busca no banco
+   
     List<Votacao> votacoes = new ArrayList<>();
    
 
-    // 2. Limpa a grade antes de adicionar
+    
     painelDaGrade.removeAll();
 
-    // 3. Para cada votação, cria, preenche e adiciona o card
+    
     for (Votacao votacao : votacoes) {
         CardView card = new CardView();
-        card.setDados(votacao); // <-- NOME DO MÉTODO CORRIGIDO
-        painelDaGrade.add(card); // <-- AGORA VAI ACHAR O PAINEL
+        card.setDados(votacao);
+        painelDaGrade.add(card); 
     }
 
-    // 4. Atualiza a interface
+    
     painelDaGrade.revalidate();
     painelDaGrade.repaint();
 }

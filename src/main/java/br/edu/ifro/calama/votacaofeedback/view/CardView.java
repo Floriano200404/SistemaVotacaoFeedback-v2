@@ -15,18 +15,18 @@ public class CardView extends javax.swing.JPanel {
     public CardView() {
         initComponents();
     }
-// Este método vai DENTRO da classe CardView.java
+
 public void setDados(Votacao votacao) {
-      // Guarda a votação atual neste card para uso futuro
+      
     this.votacaoAtual = votacao; 
 
-    // Define o título
+   
     lblTituloVotacao.setText(votacao.getTitulo());
 
-    // Cria um formatador para deixar a data bonita (dd/MM/yyyy)
+   
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
-    // Preenche as datas, verificando se elas não são nulas
+    
     if (votacao.getDataInicio() != null) {
         returdadosdt.setText(sdf.format(votacao.getDataInicio()));
     } else {
@@ -107,24 +107,20 @@ public void setDados(Votacao votacao) {
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
                                               
-    // 1. Encontra a janela "mãe" (o JFrame principal) para o pop-up
-    //    saber onde aparecer e a quem ele pertence.
+    
     java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
-    // 2. Cria o nosso novo diálogo de detalhes.
+   
     DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true);
 
-    // 3. A LINHA MÁGICA: Pega a votação que está guardada neste card
-    //    (a variável 'votacaoAtual' que criamos na Missão 2) e a passa
-    //    para o método "setter" do diálogo que criamos na Missão 3.
+    
     dialog.setDados(this.votacaoAtual); 
 
-    // 4. Centraliza o pop-up na tela e, finalmente, o torna visível.
+    
     dialog.setLocationRelativeTo(parentWindow);
     dialog.setVisible(true);
 
     }//GEN-LAST:event_btnVerVotacaoActionPerformed
-// Este método vai DENTRO da classe CardView.java
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Local;

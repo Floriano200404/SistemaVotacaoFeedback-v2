@@ -12,7 +12,7 @@ public class Grupo {
     private int idGrupo;
     private String nome;
 
-    // Construtores, Getters e Setters
+    
     public int getIdGrupo() {
         return idGrupo;
     }
@@ -26,10 +26,7 @@ public class Grupo {
         this.nome = nome;
     }
     
-    /**
-     * Este método é o "truque" para o JComboBox funcionar facilmente.
-     * Ele garante que o nome do grupo seja exibido na lista.
-     */
+   
     @Override
     public String toString() {
         return this.nome;

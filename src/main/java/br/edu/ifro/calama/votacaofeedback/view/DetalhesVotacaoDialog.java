@@ -4,7 +4,9 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import java.text.SimpleDateFormat;
 /**
  *
@@ -217,18 +219,14 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    // Este método recebe o objeto Votacao e preenche a tela do diálogo
+   
 public void setDados(Votacao votacao) {
-    this.votacaoAtual = votacao; // Guarda o objeto para uso futuro
+    this.votacaoAtual = votacao; 
 
-    // Formata as datas para exibição no formato "dd/MM/yyyy"
+   
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
-    // --- PREENCHENDO OS COMPONENTES VISUAIS ---
-    // IMPORTANTE: Verifique se os nomes das suas variáveis são os mesmos!
-
-    // Exemplo de como preencher os campos:
-    // Supondo que você tenha JLabels com estes nomes de variável no seu Design
+   
 
     lblTituloPrincipal.setText(votacao.getTitulo());
     txtAreaDescricao.setText(votacao.getDescricao());
@@ -243,15 +241,33 @@ public void setDados(Votacao votacao) {
         lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
     }
 
-    // --- AS DUAS NOVAS INFORMAÇÕES QUE VOCÊ PEDIU ---
-
-    // 1. Preenche a Pergunta Principal
+   
     lblPerguntaPrincipal.setText(votacao.getPergunta());
 
-    // 2. Preenche os Participantes
-    // Por enquanto, vamos colocar um texto de exemplo.
-    // No futuro, a lógica do seu back-end irá buscar o nome do grupo usando o votacao.getIdGrupoDestino()
-    lblParticipantes.setText("Todos os Alunos do ADS"); 
+  
+    try {
+        
+        GrupoRepository grupoRepo = new GrupoRepository();
+
+        
+        int idDoGrupo = votacao.getIdGrupoDestino();
+
+        
+        Grupo grupo = grupoRepo.buscarPorId(idDoGrupo);
+
+        
+        if (grupo != null) {
+            
+            lblParticipantes.setText(grupo.getNome()); 
+        } else {
+            
+            lblParticipantes.setText("Grupo não encontrado");
+        }
+    } catch (Exception e) {
+       
+        lblParticipantes.setText("Erro ao buscar dados");
+        e.printStackTrace();
+    }
 }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
