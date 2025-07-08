@@ -53,10 +53,19 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             }
         };
 
+        jScrollPane.setPreferredSize(new java.awt.Dimension(212, 84)); 
+        jScrollPane.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        
+        jScrollPane.setOpaque(false);
+        jScrollPane.getViewport().setOpaque(false);
+        jScrollPane.setBorder(null);
+        
         painelHeader.addMouseListener(focusRemoverListener);
         painelSidebar.addMouseListener(focusRemoverListener);
         painelConteudo.addMouseListener(focusRemoverListener);
-
+        
+        this.revalidate();
+        this.repaint();
         this.getContentPane().addMouseListener(focusRemoverListener);
 
     }
@@ -65,14 +74,13 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         final int ALTURA_PADRAO = 35;
         JComponent[] campos = {
             txtTitulo, 
-            txtDescricao, 
             txtDataInicial, 
             txtDataFinal, 
             txtDataDivulgacao, 
             comboParticipantes,
         };
         Border bordaArredondadaPreta = (Border) new RoundedVotacoesUtil(15, Color.BLACK);
-
+        
         for (JComponent componente : campos) {
             componente.setBackground(Color.WHITE); 
             componente.setForeground(Color.BLACK);
@@ -83,6 +91,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 textField.setMargin(new Insets(2, 10, 2, 10)); 
             }
         }
+        
+        txtDescricao.setBackground(Color.WHITE);
+        txtDescricao.setBorder(bordaArredondadaPreta);  
         Border bordaBotao = (Border) new RoundedVotacoesUtil(15, new Color(0x6A6A6A)); 
 
         btnCancelar.setText("CANCELAR");
@@ -104,6 +115,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         btnAvancar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
         btnAvancar.setBorder(bordaBotaoAvancar);
         btnAvancar.setFocusPainted(false);
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -131,6 +143,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         TituloVotacao = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         TituloDesc = new javax.swing.JLabel();
+        jScrollPane = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
         TituloDateI = new javax.swing.JLabel();
         txtDataInicial = new com.toedter.calendar.JDateChooser();
@@ -284,16 +297,18 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         txtDescricao.setColumns(20);
         txtDescricao.setRows(5);
+        jScrollPane.setViewportView(txtDescricao);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 219;
+        gridBagConstraints.ipadx = 279;
         gridBagConstraints.ipady = 64;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 20, 10);
-        jPanel1.add(txtDescricao, gridBagConstraints);
+        jPanel1.add(jScrollPane, gridBagConstraints);
 
         TituloDateI.setText("Data Inicial da Votação");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -552,6 +567,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBotoesInferiores;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JLabel labelIconePerfil;
     private javax.swing.JLabel labelLogo;
