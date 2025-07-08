@@ -208,7 +208,6 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtTitulo" min="-2" max="-2" attributes="0"/>
                               <Component id="TituloVotacao" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
@@ -216,11 +215,12 @@
                                       <Component id="txtDescricao" min="-2" max="-2" attributes="0"/>
                                       <Component id="TituloDesc" min="-2" max="-2" attributes="0"/>
                                       <Component id="TituloDateI" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtDataInicial" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="TituloDateF" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtDataInicial" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="txtDataFinal" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTitulo" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
+                              <Component id="txtDataFinal" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -229,7 +229,6 @@
                               <Component id="comboParticipantes" min="-2" max="-2" attributes="0"/>
                               <Component id="TituloParticipante" min="-2" max="-2" attributes="0"/>
                               <Component id="tituloDivulga" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtDataDivulgacao" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -237,6 +236,10 @@
                           <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="btnAvancar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtDataDivulgacao" min="-2" pref="143" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="1006" max="32767" attributes="0"/>
@@ -315,9 +318,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtDataInicial">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDataInicialActionPerformed"/>
           </Events>
@@ -328,9 +328,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtDataFinal">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="TituloParticipante">
           <Properties>
@@ -340,16 +337,11 @@
         <Component class="javax.swing.JComboBox" name="comboParticipantes">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Grupo&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="tituloDivulga">
@@ -358,9 +350,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="txtDataDivulgacao">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelar">
           <Properties>

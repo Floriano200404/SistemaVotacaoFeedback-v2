@@ -5,6 +5,7 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 
 /**
@@ -19,6 +20,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
      */
    
     private Usuario usuariologado;
+    private Votacao votacaoEmAndamento;
     
    public MenuPrincipalView(Usuario usuario) {
     initComponents();
@@ -281,7 +283,7 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado);
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, votacaoEmAndamento);
 
         telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);

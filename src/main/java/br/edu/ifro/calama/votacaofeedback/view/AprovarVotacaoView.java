@@ -5,6 +5,10 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,25 +23,35 @@ public final class AprovarVotacaoView extends javax.swing.JPanel {
         initComponents();
         carregarVotacoes();
     }
+
 public void carregarVotacoes() {
-    // Simula a busca no banco de dados
-    java.util.List<Votacao> votacoesDeTeste = new java.util.ArrayList<>();
-    votacoesDeTeste.add(new Votacao("VOTAÇÃO PARA DIREÇÃO-GERAL", "Início: 01/08/2025"));
-    votacoesDeTeste.add(new Votacao("ENQUETE DO LANCHE", "Início: 02/08/2025"));
-    votacoesDeTeste.add(new Votacao("FEEDBACK DA DISCIPLINA", "Início: 03/08/2025"));
+   
+    VotacaoRepository votacaoRepo = new VotacaoRepository();
 
-    // Limpa o painel antes de adicionar novos cards
-    this.removeAll();
+    try {
+       
+        List<Votacao> votacoesDoBanco = votacaoRepo.buscarPendentes();
 
-    // Para cada votação na lista, cria um card, o preenche, e o adiciona na tela
-    for (Votacao votacao : votacoesDeTeste) {
-        CardView card = new CardView();
-        card.setDados(votacao);
-        this.add(card);
+        
+        painelDaGrade.removeAll();
+
+        
+        for (Votacao votacao : votacoesDoBanco) {
+            CardView card = new CardView();
+            
+            card.setDados(votacao); 
+            painelDaGrade.add(card);
+        }
+
+       
+        painelDaGrade.revalidate();
+        painelDaGrade.repaint();
+
+    } catch (Exception e) {
+       
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar votações do banco de dados.", "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-
-    this.revalidate();
-    this.repaint();
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,14 +62,36 @@ public void carregarVotacoes() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setLayout(new java.awt.GridLayout());
+        painelDaGrade = new javax.swing.JPanel();
+
+        setLayout(new java.awt.BorderLayout());
+
+        painelDaGrade.setLayout(new java.awt.GridLayout());
+        add(painelDaGrade, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void carregarVotacoesParaAprovacao() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+public void carregarVotacoesParaAprovacao() {
+   
+    List<Votacao> votacoes = new ArrayList<>();
+   
+
+    
+    painelDaGrade.removeAll();
+
+    
+    for (Votacao votacao : votacoes) {
+        CardView card = new CardView();
+        card.setDados(votacao);
+        painelDaGrade.add(card); 
     }
+
+    
+    painelDaGrade.revalidate();
+    painelDaGrade.repaint();
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel painelDaGrade;
     // End of variables declaration//GEN-END:variables
 }

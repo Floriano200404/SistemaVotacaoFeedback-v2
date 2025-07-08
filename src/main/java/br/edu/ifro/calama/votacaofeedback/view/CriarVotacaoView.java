@@ -4,7 +4,16 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.controller.VotacaoController;
+import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -14,22 +23,75 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
     private Usuario usuarioLogado;
+    private Votacao votacaoEmAndamento;
 
-    /**
-     * Creates new form CriarVotacaoView
-     */
-    public CriarVotacaoView(Usuario usuario) {
+    
+    public CriarVotacaoView(Usuario usuario, Votacao votacao) {
         initComponents();
         this.usuarioLogado = usuario;
+        this.votacaoEmAndamento = votacao;
+        
         
         if (this.usuarioLogado != null) {
-            // Supondo que o JLabel que mostra o nome do usuário se chame 'labelNomeUsuario'
-            // Você precisa dar um nome de variável para ele no modo Design do NetBeans
+           
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
         
     inicializarMenuLateral();
+    carregarGrupos();
     }
+    
+    private void carregarGrupos() {
+        try {
+            GrupoRepository grupoRepository = new GrupoRepository();
+            List<Grupo> grupos = grupoRepository.buscarTodos();
+            
+            
+            comboParticipantes.removeAllItems();
+            
+            
+            for (Grupo grupo : grupos) {
+                comboParticipantes.addItem(grupo);
+            }
+            
+        } catch (Exception e) {
+            exibirMensagem("Erro ao carregar grupos: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public javax.swing.JTextField getTxtTitulo() {
+        return txtTitulo;
+    }
+    public javax.swing.JTextArea getTxtDescricao() {
+        return txtDescricao;
+    }
+    public javax.swing.JFormattedTextField getTxtDataInicial() {
+        return txtDataInicial;
+    }
+    public javax.swing.JFormattedTextField getTxtDataFinal() {
+        return txtDataFinal;
+    }
+    public javax.swing.JFormattedTextField getTxtDataDivulgacao() {
+        return txtDataDivulgacao;
+    }
+    public javax.swing.JComboBox getComboParticipantes() {
+        return comboParticipantes;
+    }
+
+    public void exibirMensagem(String mensagem) {
+
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_CENTER);
+        toast.display();
+    }
+    
+    public void exibirMensagemDeSucesso(String mensagem) {
+    
+    ToastUtil toast = new ToastUtil(
+        this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.BOTTOM_RIGHT
+    );
+    toast.display();
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -176,7 +238,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         TituloDateI.setText("Data Inicial da Votação");
 
-        txtDataInicial.setText("jFormattedTextField1");
         txtDataInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataInicialActionPerformed(evt);
@@ -185,15 +246,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         TituloDateF.setText("Data Final da Votação");
 
-        txtDataFinal.setText("jFormattedTextField1");
-
         TituloParticipante.setText("Participantes");
 
-        comboParticipantes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         tituloDivulga.setText("Data De Divulgação dos Resultados");
-
-        txtDataDivulgacao.setText("jFormattedTextField1");
 
         btnCancelar.setText("X Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,7 +277,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                     .addGroup(painelConteudoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TituloVotacao)
                             .addGroup(painelConteudoLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -230,21 +284,24 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(TituloDesc)
                                     .addComponent(TituloDateI)
-                                    .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TituloDateF)))
-                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(TituloDateF)
+                                    .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(painelConteudoLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(comboParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TituloParticipante)
-                            .addComponent(tituloDivulga)
-                            .addComponent(txtDataDivulgacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(tituloDivulga)))
                     .addGroup(painelConteudoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnCancelar)
                         .addGap(45, 45, 45)
-                        .addComponent(btnAvancar)))
+                        .addComponent(btnAvancar))
+                    .addGroup(painelConteudoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtDataDivulgacao, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(1006, Short.MAX_VALUE))
         );
         painelConteudoLayout.setVerticalGroup(
@@ -289,7 +346,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -357,15 +414,60 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
-    CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado);
+   
+    try {
+        // --- COLETANDO DADOS DA TELA 1 ---
+        String titulo = getTxtTitulo().getText();
+        String descricao = getTxtDescricao().getText();
+        String dataInicialStr = getTxtDataInicial().getText();
+        String dataFinalStr = getTxtDataFinal().getText();
+        String dataDivulgacaoStr = getTxtDataDivulgacao().getText();
+        Object itemSelecionado = getComboParticipantes().getSelectedItem();
+        
+        Grupo grupoSelecionado = (Grupo) itemSelecionado;
+        // Pega o ID daquele objeto
+        int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
+        
+        // Validação simples
+        if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
+            exibirMensagem("Título e datas são obrigatórios para avançar.");
+            return;
+        }
 
-    telaDeCriacao.setLocationRelativeTo(null);
-    telaDeCriacao.setVisible(true);
+        // Converte as datas
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataInicio = formatador.parse(dataInicialStr);
+        Date dataFim = formatador.parse(dataFinalStr);
+        Date dataDivulgacao = formatador.parse(dataDivulgacaoStr);
+
+        // --- EMPACOTANDO OS DADOS EM UM OBJETO VOTACAO ---
+        Votacao votacaoEmAndamento = new Votacao();
+        votacaoEmAndamento.setTitulo(titulo);
+        votacaoEmAndamento.setDescricao(descricao);
+        votacaoEmAndamento.setDataInicio(dataInicio);
+        votacaoEmAndamento.setDataFim(dataFim);
+        votacaoEmAndamento.setDataResultado(dataDivulgacao);
+        votacaoEmAndamento.setIdGrupoDestino(idGrupoSelecionado);
+        votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
+        votacaoEmAndamento.setStatus("Em criação"); // Um status temporário
+
+        // --- NAVEGANDO PARA A PRÓXIMA TELA E LEVANDO OS DADOS ---
+        // Estamos passando tanto o usuário logado quanto a votação que estamos criando
+        CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
+
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
 
     // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();        // TODO add your handling code here:
+        this.dispose();
+
+    } catch (Exception e) {
+        exibirMensagem("Erro nos dados: " + e.getMessage());
+        e.printStackTrace();
+    }
+// TODO add your handling code here:
     }//GEN-LAST:event_btnAvancarActionPerformed
-private void inicializarMenuLateral() {
+    private void inicializarMenuLateral() {
     // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
@@ -384,24 +486,26 @@ private void inicializarMenuLateral() {
 
    
 }
+    
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
+
+
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
+    
    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
-    // Alinhamento e cursor
+    
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     
-    // Espaçamentos internos e entre ícone/texto
+    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
 
-    // Fonte
+    
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    // Tenta carregar o ícone
+   
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -410,23 +514,19 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
 }
 
 
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
 
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
-// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    // Define as cores que vamos usar
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
+   
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); 
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); 
 
-    // Adiciona os eventos de mouse para o efeito de HOVER
+    
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Quando o mouse entra, o fundo do botão fica azul claro
+           
             botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
+            botao.setOpaque(true); 
         }
 
         @Override
@@ -459,7 +559,7 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JButton aprovarVotacao;
     private javax.swing.JButton btnAvancar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<String> comboParticipantes;
+    private javax.swing.JComboBox<Grupo> comboParticipantes;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
@@ -482,4 +582,5 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JTextField txtTitulo;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -4,7 +4,15 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
+import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoView;
+import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
+import javax.swing.Timer;
 
 /**
  *
@@ -14,14 +22,16 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
     private Usuario usuarioLogado;
+    private Votacao votacaoEmAndamento;
 
     /**
      * Creates new form CriarVotacaoOpcoesView
      */
-    public CriarVotacaoOpcoesView(Usuario usuario) {
+    public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) {
         initComponents();
         
         this.usuarioLogado = usuario;
+        this.votacaoEmAndamento = votacao;
         
         if (this.usuarioLogado != null) {
             // No modo Design, dê um nome de variável para o JLabel que mostra o nome
@@ -30,6 +40,18 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         }
         
         inicializarMenuLateral();
+    }
+    
+    public void exibirMensagem(String mensagem) {
+
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_CENTER);
+        toast.display();
+    }
+
+    public void exibirMensagemDeSucesso(String mensagem) {
+
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.BOTTOM_RIGHT);
+        toast.display();
     }
 
     /**
@@ -159,15 +181,21 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         TituloP.setText("Pergunta");
 
-        txtPergunta.setText("jTextField1");
+        txtPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPerguntaActionPerformed(evt);
+            }
+        });
 
         TituloO1.setText("Opção 1");
 
-        txtOpcao1.setText("jTextField2");
-
         TituloO2.setText("Opção 2");
 
-        txtOpcao2.setText("jTextField3");
+        txtOpcao2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOpcao2ActionPerformed(evt);
+            }
+        });
 
         btnAdicionarOpcao.setText("Adicionar Opção.");
         btnAdicionarOpcao.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +212,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         });
 
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelConteudoLayout = new javax.swing.GroupLayout(PainelConteudo);
         PainelConteudo.setLayout(PainelConteudoLayout);
@@ -202,14 +235,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 .addGap(0, 938, Short.MAX_VALUE))
             .addGroup(PainelConteudoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TituloP)
-                    .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TituloO1)
-                    .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TituloO2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(TituloO2)
+                    .addComponent(txtPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(txtOpcao1)
+                    .addComponent(txtOpcao2))
+                .addContainerGap(1089, Short.MAX_VALUE))
         );
         PainelConteudoLayout.setVerticalGroup(
             PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,14 +275,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
+               
                 if (painelSidebar.getWidth() > 0) {
                     try {
-                        // Animação para fechar, começando da largura atual
+                        
                         for (int i = painelSidebar.getWidth(); i >= 0; i--) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -303,7 +336,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         
-        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado);
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, votacaoEmAndamento);
         
         telaCriarVotacao.setLocationRelativeTo(null);
         telaCriarVotacao.setVisible(true);
@@ -311,19 +344,93 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.dispose();
                 
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {     
+            
+            String pergunta = txtPergunta.getText();
+        
+       
+            if (pergunta.trim().isEmpty()) {
+                exibirMensagem("O campo 'Pergunta' é obrigatório para finalizar.");
+                return;
+        }
+
+       
+        this.votacaoEmAndamento.setPergunta(pergunta);
+        this.votacaoEmAndamento.setStatus("PENDENTE"); // Definimos o status final
+            
+            VotacaoRepository votacaoRepository = new VotacaoRepository();
+    
+    int idNovaVotacao = 0;
+            try {
+                idNovaVotacao = votacaoRepository.criar(this.votacaoEmAndamento);
+            } catch (Exception ex) {
+                System.getLogger(CriarVotacaoOpcoesView.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+
+    
+    if (idNovaVotacao > 0) {
+        
+        OpcaoVotoRepository opcaoRepository = new OpcaoVotoRepository();
+
+        
+        String textoOpcao1 = txtOpcao1.getText().trim();
+        if (!textoOpcao1.isEmpty()) {
+            OpcaoVoto opcao1 = new OpcaoVoto();
+            opcao1.setDescricao(textoOpcao1);
+            opcao1.setIdVotacao(idNovaVotacao); // Usa o ID para fazer a ligação
+            opcaoRepository.criar(opcao1);
+        }
+
+        
+        String textoOpcao2 = txtOpcao2.getText().trim();
+        if (!textoOpcao2.isEmpty()) {
+            OpcaoVoto opcao2 = new OpcaoVoto();
+            opcao2.setDescricao(textoOpcao2);
+            opcao2.setIdVotacao(idNovaVotacao); // Usa o ID para fazer a ligação
+            opcaoRepository.criar(opcao2);
+        }
+
+        exibirMensagemDeSucesso("Votação criada com sucesso!");
+        Timer timer = new Timer(1500, e -> {
+            new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+            this.dispose();
+        });
+        timer.setRepeats(false);
+        timer.start();
+        
+        } else {
+        
+            exibirMensagem("Falha ao salvar os dados principais da votação.");
+        }
+
+        } catch (Exception e) {
+            exibirMensagem("Erro ao finalizar a votação: " + e.getMessage());
+                e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPerguntaActionPerformed
+
+    private void txtOpcao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcao2ActionPerformed
 private void inicializarMenuLateral() {
-    // Coloca todos os botões em uma lista para fácil acesso
+    
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
     );
-    // 1. Aplica o estilo visual INICIAL a cada botão
+    
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
 
-    // 2. Adiciona os eventos de mouse e clique a todos os botões
+    
     for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
@@ -331,23 +438,23 @@ private void inicializarMenuLateral() {
    
 }
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
+
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
+   
    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
-    // Alinhamento e cursor
+    
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     
-    // Espaçamentos internos e entre ícone/texto
+    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
 
-    // Fonte
+    
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    // Tenta carregar o ícone
+    
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -356,38 +463,34 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
 }
 
 
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
 
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
-// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    // Define as cores que vamos usar
+   
     final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
     final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
 
-    // Adiciona os eventos de mouse para o efeito de HOVER
+    
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Quando o mouse entra, o fundo do botão fica azul claro
+            
             botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
+            botao.setOpaque(true); 
         }
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            // Quando o mouse sai, o fundo volta a ser transparente
+            
             botao.setOpaque(false);
-            // A linha abaixo é opcional, mas garante a cor certa
+           
             botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
-    // Adiciona a AÇÃO DE CLIQUE (que agora não faz nenhuma mudança visual)
+    
     botao.addActionListener(e -> {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
-        // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
+
     });
 }
     /**
