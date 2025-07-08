@@ -43,7 +43,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         }
         
     inicializarMenuLateral();
-    carregarGrupos();
+    javax.swing.SwingUtilities.invokeLater(() -> {
+        carregarGrupos();
+    });
     }
     
    private void carregarGrupos() {
@@ -51,37 +53,12 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         // 1. Cria uma lista vazia para montar todas as opções
         List<Grupo> gruposParaExibir = new ArrayList<>();
 
-        // 2. Adiciona os grupos virtuais que planejamos
-        
-        // Grupo Virtual: Todos (Servidores e Alunos)
-        Grupo grupoTodos = new Grupo();
-        grupoTodos.setIdGrupo(-3); // ID negativo para identificar como virtual
-        grupoTodos.setNome("TODOS OS ALUNOS");
-        gruposParaExibir.add(grupoTodos);
-
-        // Grupo Virtual: Todos os Alunos
-        Grupo grupoAlunos = new Grupo();
-        grupoAlunos.setIdGrupo(-2); // ID negativo diferente
-        grupoAlunos.setNome("TODOS OS SERVIDORES");
-        gruposParaExibir.add(grupoAlunos);
-        
-        // Grupo Virtual: Todos os Servidores
-        Grupo grupoServidores = new Grupo();
-        grupoServidores.setIdGrupo(-1); // ID negativo diferente
-        grupoServidores.setNome("SERVIDORES E ALUNOS");
-        gruposParaExibir.add(grupoServidores);
-
         // 3. Busca e adiciona os grupos reais do banco (cursos, etc.)
         GrupoRepository grupoRepository = new GrupoRepository();
         gruposParaExibir.addAll(grupoRepository.buscarTodos());
         
-        // 4. Popula o ComboBox com o modelo de dados completo
         comboParticipantes.setModel(new javax.swing.DefaultComboBoxModel(gruposParaExibir.toArray()));
-        
-        // 5. Aplica o renderizador para mostrar o placeholder
         comboParticipantes.setRenderer(new GrupoComboBoxRendererUtil("Selecionar Participantes"));
-
-        // 6. Define o estado inicial como "nada selecionado" para que o placeholder apareça
         comboParticipantes.setSelectedIndex(-1);
         
     } catch (Exception e) {
@@ -268,6 +245,11 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         TituloDateI.setText("Data Inicial da Votação");
 
+        try {
+            txtDataInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtDataInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataInicialActionPerformed(evt);
@@ -275,6 +257,12 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         });
 
         TituloDateF.setText("Data Final da Votação");
+
+        try {
+            txtDataFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         TituloParticipante.setText("Participantes");
 
@@ -285,6 +273,12 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         });
 
         tituloDivulga.setText("Data De Divulgação dos Resultados");
+
+        try {
+            txtDataDivulgacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         btnCancelar.setText("X Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -460,13 +454,17 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         String dataDivulgacaoStr = getTxtDataDivulgacao().getText();
         Object itemSelecionado = getComboParticipantes().getSelectedItem();
         
-        if (itemSelecionado == null) {
-            exibirMensagem("Por favor, selecione um grupo de participantes.");
+
+        // Validação para garantir que um grupo válido foi selecionado
+        if (itemSelecionado == null || ((Grupo) itemSelecionado).getIdGrupo() == 0) {
+            exibirMensagem("Por favor, selecione um grupo de participantes válido.");
             return;
         }
 
+        // Pega o objeto Grupo inteiro e depois o seu ID
         Grupo grupoSelecionado = (Grupo) itemSelecionado;
         int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
+        // --- FIM DA PARTE CRÍTICA ---
         
         // Validação simples
         if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
@@ -479,7 +477,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         Date dataInicio = formatador.parse(dataInicialStr);
         Date dataFim = formatador.parse(dataFinalStr);
         Date dataDivulgacao = formatador.parse(dataDivulgacaoStr);
-
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "ID do Grupo Selecionado: " + idGrupoSelecionado);
+        
         // --- EMPACOTANDO OS DADOS EM UM OBJETO VOTACAO ---
         Votacao votacaoEmAndamento = new Votacao();
         votacaoEmAndamento.setTitulo(titulo);
@@ -489,7 +489,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         votacaoEmAndamento.setDataResultado(dataDivulgacao);
         votacaoEmAndamento.setIdGrupoDestino(idGrupoSelecionado);
         votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
-        votacaoEmAndamento.setStatus("Em criação"); // Um status temporário
+        votacaoEmAndamento.setStatus("PENDENTE"); // Um status temporário
 
         // --- NAVEGANDO PARA A PRÓXIMA TELA E LEVANDO OS DADOS ---
         // Estamos passando tanto o usuário logado quanto a votação que estamos criando
