@@ -42,6 +42,8 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         txtDataFinal.setDateFormatString("dd/MM/yyyy");
         txtDataDivulgacao.setDateFormatString("dd/MM/yyyy");
         txtDataInicial.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
+        txtDataFinal.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
+        txtDataDivulgacao.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
         
         java.awt.event.MouseAdapter focusRemoverListener = new java.awt.event.MouseAdapter() {
             @Override
@@ -466,7 +468,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             return;
         }
         
-          System.out.println("--- Dados da Votação ---");
+        System.out.println("--- Dados da Votação ---");
         System.out.println("Data Inicial: " + dataInicial);
         System.out.println("Data Final: " + dataFinal);
         System.out.println("Data Divulgação: " + dataDivulgacao);
