@@ -65,6 +65,7 @@ CREATE TABLE `grupos` (
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
+INSERT INTO `grupos` VALUES (5,'ANÁLISE E DESENVOLVIMENTO DE SISTEMAS','CURSO'),(6,'ENGENHARIA CIVIL','CURSO'),(7,'ENGENHARIA DE CONTROLE E AUTOMAÇÃO','CURSO'),(8,'ENGENHARIA QUÍMICA','CURSO'),(9,'FÍSICA','CURSO'),(10,'PROFESSOR','CURSO'),(11,'SERVIDOR','CURSO'),(12,'TODOS OS ALUNOS','VIRTUAL'),(13,'TODOS OS SERVIDORES','VIRTUAL'),(14,'SERVIDORES E ALUNOS','VIRTUAL');
 /*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +84,7 @@ CREATE TABLE `opcao_voto` (
   UNIQUE KEY `id_opcao_UNIQUE` (`id_opcao`),
   KEY `id_votacao_idx` (`id_votacao`),
   CONSTRAINT `FKid_votacao` FOREIGN KEY (`id_votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,6 +93,7 @@ CREATE TABLE `opcao_voto` (
 
 LOCK TABLES `opcao_voto` WRITE;
 /*!40000 ALTER TABLE `opcao_voto` DISABLE KEYS */;
+INSERT INTO `opcao_voto` VALUES (29,2,'adada'),(30,2,'adadadad'),(31,2,'dadad'),(32,2,'dadada'),(33,2,'dadadad');
 /*!40000 ALTER TABLE `opcao_voto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +147,7 @@ CREATE TABLE `usuario_grupos` (
   KEY `fk_usuariogrupo_grupo_idx` (`id_grupo`),
   CONSTRAINT `fk_usuariogrupo_grupo` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_Grupos`),
   CONSTRAINT `fk_usuariogrupo_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,7 +172,7 @@ CREATE TABLE `usuarios` (
   `CPF` varchar(45) NOT NULL,
   `matricula` varchar(20) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `senha` varchar(45) NOT NULL,
+  `senha` char(64) NOT NULL,
   `Tipo_usuario` varchar(45) NOT NULL,
   `Token` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
@@ -179,7 +181,7 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `CPF_UNIQUE` (`CPF`),
   UNIQUE KEY `Matricula_UNIQUE` (`matricula`),
   UNIQUE KEY `UN_email_usuario` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,6 +190,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +218,7 @@ CREATE TABLE `votacao` (
   KEY `id_grupo_destino_idx` (`id_grupo_destino`),
   CONSTRAINT `FK_idCriador` FOREIGN KEY (`id_Criador`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idGrupoDestino` FOREIGN KEY (`id_grupo_destino`) REFERENCES `grupos` (`id_Grupos`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -224,6 +227,7 @@ CREATE TABLE `votacao` (
 
 LOCK TABLES `votacao` WRITE;
 /*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
+INSERT INTO `votacao` VALUES (2,1,5,'1314-01-13','adadaddad','dadadad','1314-01-13','3133-07-31','PENDENTE','adada');
 /*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-08 18:54:19
+-- Dump completed on 2025-07-08 19:36:44

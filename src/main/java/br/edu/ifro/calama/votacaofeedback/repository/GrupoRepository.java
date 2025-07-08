@@ -21,7 +21,7 @@ public class GrupoRepository {
 
 
     public List<Grupo> buscarTodos() throws SQLException, Exception {
-    String sql = "SELECT id_Grupos, nome, tipo_grupo FROM grupos WHERE UPPER(nome) NOT IN ('PROFESSORES', 'SERVIDORES') ORDER BY nome";
+    String sql = "SELECT id_Grupos, nome, tipo_grupo FROM grupos WHERE UPPER(nome) NOT IN ('PROFESSOR', 'SERVIDOR') ORDER BY nome";
     
     List<Grupo> grupos = new ArrayList<>();
 
