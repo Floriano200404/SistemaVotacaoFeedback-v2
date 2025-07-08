@@ -49,8 +49,8 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
         
-        todosOsLabelsDeOpcao = Arrays.asList(TituloO1, TituloO2, TituloO3, TituloO4, TituloO5, TituloO6, TituloO7, TituloO8);
-        todosOsCamposDeOpcao = Arrays.asList(txtOpcao1, txtOpcao2, txtOpcao3, txtOpcao4, txtOpcao5, txtOpcao6, txtOpcao7, txtOpcao8);
+        todosOsLabelsDeOpcao = Arrays.asList(TituloO1, TituloO2, TituloO3, TituloO4, TituloO5);
+        todosOsCamposDeOpcao = Arrays.asList(txtOpcao1, txtOpcao2, txtOpcao3, txtOpcao4, txtOpcao5);
         
         for (int i = 2; i < todosOsLabelsDeOpcao.size(); i++) {
         todosOsLabelsDeOpcao.get(i).setVisible(false);
@@ -105,17 +105,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         TituloO3 = new javax.swing.JLabel();
         TituloO4 = new javax.swing.JLabel();
         TituloO5 = new javax.swing.JLabel();
-        TituloO6 = new javax.swing.JLabel();
-        TituloO7 = new javax.swing.JLabel();
-        TituloO8 = new javax.swing.JLabel();
         txtOpcao1 = new javax.swing.JTextField();
         txtOpcao2 = new javax.swing.JTextField();
         txtOpcao3 = new javax.swing.JTextField();
         txtOpcao4 = new javax.swing.JTextField();
         txtOpcao5 = new javax.swing.JTextField();
-        txtOpcao6 = new javax.swing.JTextField();
-        txtOpcao7 = new javax.swing.JTextField();
-        txtOpcao8 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -245,27 +239,9 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         TituloO5.setText("Opção 5");
 
-        TituloO6.setText("Opção 6");
-
-        TituloO7.setText("Opção 7");
-
-        TituloO8.setText("Opção 8");
-
         txtOpcao3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtOpcao3ActionPerformed(evt);
-            }
-        });
-
-        txtOpcao6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOpcao6ActionPerformed(evt);
-            }
-        });
-
-        txtOpcao7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtOpcao7ActionPerformed(evt);
             }
         });
 
@@ -280,34 +256,26 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                         .addComponent(TituloPrincipal))
                     .addGroup(PainelConteudoLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TituloO1)
-                            .addComponent(TituloP)
-                            .addComponent(TituloO7)
-                            .addComponent(TituloO6)
-                            .addComponent(txtPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(TituloO5)
-                            .addComponent(TituloO4)
-                            .addComponent(TituloO3)
-                            .addComponent(TituloO2)
-                            .addComponent(TituloO8)
-                            .addComponent(txtOpcao1)
-                            .addComponent(txtOpcao2)
-                            .addComponent(txtOpcao3)
-                            .addComponent(txtOpcao8)
-                            .addComponent(txtOpcao7)
-                            .addComponent(txtOpcao6)
-                            .addComponent(txtOpcao5)
-                            .addComponent(txtOpcao4))
                         .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PainelConteudoLayout.createSequentialGroup()
-                                .addGap(187, 187, 187)
-                                .addComponent(btnVoltar)
-                                .addGap(36, 36, 36)
-                                .addComponent(btnFinalizar))
-                            .addGroup(PainelConteudoLayout.createSequentialGroup()
-                                .addGap(221, 221, 221)
-                                .addComponent(btnAdicionarOpcao)))))
+                            .addComponent(btnAdicionarOpcao)
+                            .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(TituloO1)
+                                .addComponent(TituloP)
+                                .addComponent(txtPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(TituloO5)
+                                .addComponent(TituloO4)
+                                .addComponent(TituloO3)
+                                .addComponent(TituloO2)
+                                .addComponent(txtOpcao1)
+                                .addComponent(txtOpcao2)
+                                .addComponent(txtOpcao3)
+                                .addComponent(txtOpcao5)
+                                .addComponent(txtOpcao4))))
+                    .addGroup(PainelConteudoLayout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(btnVoltar)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnFinalizar)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         PainelConteudoLayout.setVerticalGroup(
@@ -333,34 +301,19 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 .addComponent(txtOpcao3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TituloO4)
-                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtOpcao4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TituloO5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtOpcao5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TituloO6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtOpcao6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TituloO7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtOpcao7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TituloO8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtOpcao8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(btnAdicionarOpcao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnVoltar)
-                            .addComponent(btnFinalizar))))
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloO5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAdicionarOpcao)
+                .addGap(18, 18, 18)
+                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVoltar)
+                    .addComponent(btnFinalizar))
+                .addContainerGap(292, Short.MAX_VALUE))
         );
 
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
@@ -423,12 +376,38 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
+    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcao3ActionPerformed
+
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         try {
+            if (todosOsCamposDeOpcao.size() < 2) {
+                exibirMensagem("Erro inesperado: campos de opção não encontrados.");
+                return;
+            }
+
+            String textoOpcao1 = todosOsCamposDeOpcao.get(0).getText().trim();
+            String textoOpcao2 = todosOsCamposDeOpcao.get(1).getText().trim();
+
+            if (textoOpcao1.isEmpty() || textoOpcao2.isEmpty()) {
+                exibirMensagem("Opções de voto são obrigatórias.");
+                return;
+            }
+
+            for (int i = 2; i < todosOsCamposDeOpcao.size(); i++) {
+                JTextField campoExtra = todosOsCamposDeOpcao.get(i);
+
+                if (campoExtra.isVisible() && campoExtra.getText().trim().isEmpty()) {
+                    exibirMensagem("Opções de voto são obrigatórias.");
+                    return;
+                }
+            }
+
             String pergunta = txtPergunta.getText();
 
             if (pergunta.trim().isEmpty()) {
-                exibirMensagem("O campo 'Pergunta' é obrigatório para finalizar.");
+                exibirMensagem("O campo 'Pergunta' é obrigatório.");
                 return;
             }
 
@@ -483,7 +462,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         telaCriarVotacao.setVisible(true);
 
         this.dispose();
-
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
@@ -501,18 +479,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPerguntaActionPerformed
-
-    private void txtOpcao7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtOpcao7ActionPerformed
-
-    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtOpcao3ActionPerformed
-
-    private void txtOpcao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtOpcao6ActionPerformed
 private void inicializarMenuLateral() {
     
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
@@ -532,7 +498,6 @@ private void inicializarMenuLateral() {
   
 }
 
-
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
    
     botao.putClientProperty("JButton.buttonType", "toolBarButton");
@@ -548,8 +513,6 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
         System.out.println("ERRO ao carregar ícone: " + nomeIcone);
     }
 }
-
-
 
 private void adicionarListeners(javax.swing.JButton botao) {
    
@@ -589,9 +552,6 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JLabel TituloO3;
     private javax.swing.JLabel TituloO4;
     private javax.swing.JLabel TituloO5;
-    private javax.swing.JLabel TituloO6;
-    private javax.swing.JLabel TituloO7;
-    private javax.swing.JLabel TituloO8;
     private javax.swing.JLabel TituloP;
     private javax.swing.JLabel TituloPrincipal;
     private javax.swing.JButton aprovarVotacao;
@@ -616,9 +576,6 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JTextField txtOpcao3;
     private javax.swing.JTextField txtOpcao4;
     private javax.swing.JTextField txtOpcao5;
-    private javax.swing.JTextField txtOpcao6;
-    private javax.swing.JTextField txtOpcao7;
-    private javax.swing.JTextField txtOpcao8;
     private javax.swing.JTextField txtPergunta;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables

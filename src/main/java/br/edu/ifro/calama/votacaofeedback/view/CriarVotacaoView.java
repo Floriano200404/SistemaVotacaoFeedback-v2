@@ -448,7 +448,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         
 
         if (itemSelecionado == null || ((Grupo) itemSelecionado).getIdGrupo() == 0) {
-            exibirMensagem("Por favor, selecione um grupo de participantes válido.");
+            exibirMensagem("Selecione um grupo de participantes.");
             return;
         }
 
@@ -456,7 +456,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
         
         if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
-            exibirMensagem("Título e datas são obrigatórios para avançar.");
+            exibirMensagem("Preencha os campos obrigatórios.");
             return;
         }
 

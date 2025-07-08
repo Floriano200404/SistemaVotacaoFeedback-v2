@@ -206,38 +206,29 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="TituloO1" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloP" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO7" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO6" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPergunta" alignment="0" pref="180" max="32767" attributes="0"/>
-                              <Component id="TituloO5" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="TituloO8" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtOpcao1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao2" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao8" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao7" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao6" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao5" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtOpcao4" alignment="0" max="32767" attributes="0"/>
-                          </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-                                  <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                  <Component id="btnFinalizar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                                  <Component id="btnAdicionarOpcao" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAdicionarOpcao" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="TituloO1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TituloP" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtPergunta" alignment="0" pref="180" max="32767" attributes="0"/>
+                                  <Component id="TituloO5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TituloO4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TituloO3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TituloO2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtOpcao1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtOpcao2" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtOpcao3" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtOpcao5" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtOpcao4" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="btnFinalizar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="22" max="32767" attributes="0"/>
@@ -267,38 +258,20 @@
                   <Component id="txtOpcao3" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="TituloO4" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtOpcao4" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="TituloO5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtOpcao5" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="TituloO6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtOpcao6" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="TituloO7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtOpcao7" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="TituloO8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtOpcao8" min="-2" pref="25" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                          <Component id="btnAdicionarOpcao" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnFinalizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtOpcao4" min="-2" pref="25" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="TituloO5" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtOpcao5" min="-2" pref="25" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnAdicionarOpcao" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnFinalizar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="191" max="32767" attributes="0"/>
+                  <EmptySpace pref="292" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -368,21 +341,6 @@
             <Property name="text" type="java.lang.String" value="Op&#xe7;&#xe3;o 5"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="TituloO6">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Op&#xe7;&#xe3;o 6"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="TituloO7">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Op&#xe7;&#xe3;o 7"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="TituloO8">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Op&#xe7;&#xe3;o 8"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="txtOpcao1">
         </Component>
         <Component class="javax.swing.JTextField" name="txtOpcao2">
@@ -395,18 +353,6 @@
         <Component class="javax.swing.JTextField" name="txtOpcao4">
         </Component>
         <Component class="javax.swing.JTextField" name="txtOpcao5">
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtOpcao6">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOpcao6ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtOpcao7">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOpcao7ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtOpcao8">
         </Component>
       </SubComponents>
     </Container>
