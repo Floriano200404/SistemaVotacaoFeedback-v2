@@ -16,7 +16,7 @@ import javax.swing.border.Border;
 
 /**
  *
- * @author floriano
+ * @author esten
  */
 public class CriarVotacaoView extends javax.swing.JFrame {
     
