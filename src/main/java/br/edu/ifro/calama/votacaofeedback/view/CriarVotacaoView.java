@@ -27,9 +27,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private Usuario usuarioLogado;
     private Votacao votacaoEmAndamento;
 
-    /**
-     * Creates new form CriarVotacaoView
-     */
+    
     public CriarVotacaoView(Usuario usuario, Votacao votacao) {
         initComponents();
         this.usuarioLogado = usuario;
@@ -37,8 +35,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         
         
         if (this.usuarioLogado != null) {
-            // Supondo que o JLabel que mostra o nome do usuário se chame 'labelNomeUsuario'
-            // Você precisa dar um nome de variável para ele no modo Design do NetBeans
+           
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
         
@@ -376,7 +373,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -530,24 +527,26 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
    
 }
+    
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
+
+
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
+    
    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
-    // Alinhamento e cursor
+    
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     
-    // Espaçamentos internos e entre ícone/texto
+    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
 
-    // Fonte
+    
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    // Tenta carregar o ícone
+   
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -556,23 +555,19 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
 }
 
 
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
 
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
-// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    // Define as cores que vamos usar
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
+   
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); 
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); 
 
-    // Adiciona os eventos de mouse para o efeito de HOVER
+    
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Quando o mouse entra, o fundo do botão fica azul claro
+           
             botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
+            botao.setOpaque(true); 
         }
 
         @Override

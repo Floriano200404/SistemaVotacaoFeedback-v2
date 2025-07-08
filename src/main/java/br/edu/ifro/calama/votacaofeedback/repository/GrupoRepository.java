@@ -19,10 +19,7 @@ import java.util.List;
  */
 public class GrupoRepository {
 
-    /**
-     * Busca todos os grupos cadastrados no banco de dados.
-     * @return Uma lista de objetos do tipo Grupo.
-     */
+
     public List<Grupo> buscarTodos() throws SQLException, Exception {
     // Agora o SELECT também busca a nova coluna
     String sql = "SELECT id_Grupos, nome, tipo_grupo FROM grupos WHERE UPPER(nome) NOT IN ('PROFESSORES', 'SERVIDORES') ORDER BY nome";
@@ -44,5 +41,30 @@ public class GrupoRepository {
         }
     }
         return grupos;
+    }
+
+
+    public Grupo buscarPorId(int id) throws Exception {
+    
+    String sql = "SELECT * FROM grupos WHERE id_Grupos = ?";
+
+    
+    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setInt(1, id);
+
+        try (java.sql.ResultSet rs = ps.executeQuery()) {
+            
+            if (rs.next()) {
+             
+                Grupo grupo = new Grupo();
+                grupo.setIdGrupo(rs.getInt("id_Grupos")); 
+                grupo.setNome(rs.getString("nome"));
+                return grupo; 
+            }
+        }
+    }
+    return null; 
     }
 }

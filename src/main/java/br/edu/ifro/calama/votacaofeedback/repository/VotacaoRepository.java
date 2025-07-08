@@ -17,9 +17,10 @@ import java.sql.Statement;
  * @author Athos
  */
 public class VotacaoRepository {
+    
 
     public int criar(Votacao votacao) throws SQLException, Exception {
-        // SQL correspondente à sua tabela
+        
         String sql = "INSERT INTO Votacao (titulo, descricao, data_inicio, data_fim, data_Resultado, id_grupo_destino, id_Criador, status, pergunta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         int idGerado = -1;
@@ -49,4 +50,33 @@ public class VotacaoRepository {
         return idGerado;
 
     }
+   
+
+public java.util.List<Votacao> buscarPendentes() throws Exception {
+    String sql = "SELECT * FROM votacao WHERE status = 'PENDENTE'";
+    java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
+
+    try (java.sql.Connection conexao = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conexao.prepareStatement(sql);
+         java.sql.ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Votacao votacao = new Votacao();
+           
+            votacao.setIdVotacao(rs.getInt("id_Votacao"));
+            votacao.setTitulo(rs.getString("titulo"));
+            votacao.setDescricao(rs.getString("descricao"));
+            votacao.setDataInicio(rs.getDate("data_inicio"));
+            votacao.setDataFim(rs.getDate("data_fim"));
+            votacao.setDataResultado(rs.getDate("data_Resultado"));
+            votacao.setStatus(rs.getString("status"));
+            votacao.setPergunta(rs.getString("pergunta"));
+            votacao.setIdCriador(rs.getInt("id_Criador"));
+            votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
+
+            votacoes.add(votacao);
+        }
+    }
+    return votacoes;
+}
 }

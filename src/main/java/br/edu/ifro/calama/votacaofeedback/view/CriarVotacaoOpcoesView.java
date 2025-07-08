@@ -374,14 +374,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
+               
                 if (painelSidebar.getWidth() > 0) {
                     try {
-                        // Animação para fechar, começando da largura atual
+                        
                         for (int i = painelSidebar.getWidth(); i >= 0; i--) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -531,41 +531,41 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtOpcao6ActionPerformed
 private void inicializarMenuLateral() {
-    // Coloca todos os botões em uma lista para fácil acesso
+    
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
     );
-    // 1. Aplica o estilo visual INICIAL a cada botão
+    
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
 
-    // 2. Adiciona os eventos de mouse e clique a todos os botões
+    
     for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
   
 }
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
+
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
+   
    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
-    // Alinhamento e cursor
+    
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     
-    // Espaçamentos internos e entre ícone/texto
+    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
 
-    // Fonte
+    
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    // Tenta carregar o ícone
+    
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -574,38 +574,34 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
 }
 
 
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
 
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
-// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    // Define as cores que vamos usar
+   
     final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
     final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
 
-    // Adiciona os eventos de mouse para o efeito de HOVER
+    
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Quando o mouse entra, o fundo do botão fica azul claro
+            
             botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
+            botao.setOpaque(true); 
         }
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            // Quando o mouse sai, o fundo volta a ser transparente
+            
             botao.setOpaque(false);
-            // A linha abaixo é opcional, mas garante a cor certa
+           
             botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
-    // Adiciona a AÇÃO DE CLIQUE (que agora não faz nenhuma mudança visual)
+    
     botao.addActionListener(e -> {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
-        // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
+
     });
 }
     /**
