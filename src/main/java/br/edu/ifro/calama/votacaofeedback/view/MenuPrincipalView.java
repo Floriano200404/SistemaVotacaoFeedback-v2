@@ -7,6 +7,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -162,6 +163,11 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         painelHeaderDireita.add(labelNomeUsuario);
 
         labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseClicked(evt);
+            }
+        });
         painelHeaderDireita.add(labelIconePerfil);
 
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
@@ -318,6 +324,26 @@ cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
     private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
                // TODO add your handling code here:
     }//GEN-LAST:event_criarVotacaoMouseClicked
+
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
+        ActionListener acaoDeLogout = e -> {
+        new LoginView().setVisible(true);
+        this.dispose();
+        System.out.println("Logout realizado. Janela principal fechada.");
+    };
+
+    // 2. Criar a instância de PerfilView, agora com os parâmetros corretos
+    PerfilView perfil = new PerfilView(
+        this,                     // 'this' se refere à própria janela MenuPrincipalView (que é um JFrame)
+        this.usuariologado.getNome(),   // Pega os dados do usuário que armazenamos na classe
+        this.usuariologado.getEmail(),
+        this.usuariologado.getCpf(),
+        this.usuariologado.getMatricula(),
+        this.usuariologado.getTipo_usuario(),
+        acaoDeLogout              // Passa a ação que acabamos de criar
+    );
+    perfil.setVisible(true);
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     // O card continua sendo um JPanel
