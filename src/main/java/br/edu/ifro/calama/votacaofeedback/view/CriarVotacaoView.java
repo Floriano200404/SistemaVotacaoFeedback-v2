@@ -12,6 +12,7 @@ import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.util.GrupoComboBoxRendererUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -175,6 +176,11 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         painelHeaderDireita.add(labelNomeUsuario);
 
         labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseClicked(evt);
+            }
+        });
         painelHeaderDireita.add(labelIconePerfil);
 
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
@@ -492,6 +498,25 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private void comboParticipantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboParticipantesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboParticipantesActionPerformed
+
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
+        ActionListener acaoDeLogout = e -> {
+        new LoginView().setVisible(true);
+        this.dispose();
+        System.out.println("Logout realizado. Janela principal fechada.");
+    };
+
+    PerfilView perfil = new PerfilView(
+        this,
+        this.usuarioLogado.getNome(),
+        this.usuarioLogado.getEmail(),
+        this.usuarioLogado.getCpf(),
+        this.usuarioLogado.getMatricula(),
+        this.usuarioLogado.getTipo_usuario(),
+        acaoDeLogout
+    );
+    perfil.setVisible(true);
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
     private void inicializarMenuLateral() {
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
