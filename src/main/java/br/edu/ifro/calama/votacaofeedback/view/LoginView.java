@@ -501,6 +501,15 @@ public class LoginView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLabLoginMouseClicked
 
+    private void btnEsqueciSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueciSenhaActionPerformed
+        RecuperacaoDeSenhaView telaRecuperacao = new RecuperacaoDeSenhaView();
+        
+        telaRecuperacao.setVisible(true);
+        
+        this.dispose();
+        
+    }//GEN-LAST:event_btnEsqueciSenhaActionPerformed
+
     /**
      * @param args the command line arguments
      */

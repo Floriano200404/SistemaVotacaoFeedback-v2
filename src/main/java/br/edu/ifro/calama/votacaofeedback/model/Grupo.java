@@ -11,6 +11,7 @@ package br.edu.ifro.calama.votacaofeedback.model;
 public class Grupo {
     private int idGrupo;
     private String nome;
+    private String tipo_grupo;
 
     
     public int getIdGrupo() {
@@ -25,8 +26,13 @@ public class Grupo {
     public void setNome(String nome) {
         this.nome = nome;
     }
+        public String getTipo_grupo() {
+        return tipo_grupo;
+    }
+    public void setTipo_grupo(String tipo) {
+        this.tipo_grupo = tipo;
+    }
     
-   
     @Override
     public String toString() {
         return this.nome;

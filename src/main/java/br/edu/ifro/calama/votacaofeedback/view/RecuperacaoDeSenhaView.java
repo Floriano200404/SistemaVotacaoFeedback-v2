@@ -125,6 +125,11 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         bntVoltar.setForeground(new java.awt.Color(255, 255, 255));
         bntVoltar.setText("VOLTAR");
         bntVoltar.setBorder(null);
+        bntVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntVoltarActionPerformed(evt);
+            }
+        });
 
         jLabOrientacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ori-Photoroom.png"))); // NOI18N
 
@@ -225,7 +230,11 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     }//GEN-LAST:event_bntEnviarEmailActionPerformed
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
-        // Funcionalidade do Botão Voltar: fecha esta janela
+        
+        LoginView telaLogin = new LoginView();
+        
+        telaLogin.setVisible(true);
+        
         this.dispose();
     }//GEN-LAST:event_bntVoltarActionPerformed
     

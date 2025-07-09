@@ -28,10 +28,10 @@ import javax.swing.Timer;
 public class ToastUtil extends JDialog {
 
     public enum ToastPosition {
-        TOP_RIGHT,      // Canto superior direito
-        BOTTOM_RIGHT,   // Canto inferior direito
-        TOP_CENTER,     // Topo e centralizado
-        BOTTOM_CENTER   // Embaixo e centralizado
+        TOP_RIGHT,
+        BOTTOM_RIGHT,
+        TOP_CENTER,
+        BOTTOM_CENTER
     }
     
     public enum ToastType {

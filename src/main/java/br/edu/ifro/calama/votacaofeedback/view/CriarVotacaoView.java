@@ -9,9 +9,11 @@ import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
+import br.edu.ifro.calama.votacaofeedback.util.GrupoComboBoxRendererUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
  *
  * @author floriano
  */
+
 public class CriarVotacaoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
@@ -38,27 +41,27 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         }
         
     inicializarMenuLateral();
-    carregarGrupos();
+    javax.swing.SwingUtilities.invokeLater(() -> {
+        carregarGrupos();
+    });
     }
     
-    private void carregarGrupos() {
-        try {
-            GrupoRepository grupoRepository = new GrupoRepository();
-            List<Grupo> grupos = grupoRepository.buscarTodos();
-            
-            
-            comboParticipantes.removeAllItems();
-            
-            
-            for (Grupo grupo : grupos) {
-                comboParticipantes.addItem(grupo);
-            }
-            
-        } catch (Exception e) {
-            exibirMensagem("Erro ao carregar grupos: " + e.getMessage());
-            e.printStackTrace();
-        }
+   private void carregarGrupos() {
+    try {
+        List<Grupo> gruposParaExibir = new ArrayList<>();
+
+        GrupoRepository grupoRepository = new GrupoRepository();
+        gruposParaExibir.addAll(grupoRepository.buscarTodos());
+        
+        comboParticipantes.setModel(new javax.swing.DefaultComboBoxModel(gruposParaExibir.toArray()));
+        comboParticipantes.setRenderer(new GrupoComboBoxRendererUtil("Selecionar Participantes"));
+        comboParticipantes.setSelectedIndex(-1);
+        
+    } catch (Exception e) {
+        exibirMensagem("Erro ao carregar grupos: " + e.getMessage());
+        e.printStackTrace();
     }
+}
     
     public javax.swing.JTextField getTxtTitulo() {
         return txtTitulo;
@@ -81,14 +84,14 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
     public void exibirMensagem(String mensagem) {
 
-        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_CENTER);
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
         toast.display();
     }
     
     public void exibirMensagemDeSucesso(String mensagem) {
     
     ToastUtil toast = new ToastUtil(
-        this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.BOTTOM_RIGHT
+        this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
     );
     toast.display();
 }
@@ -238,6 +241,11 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         TituloDateI.setText("Data Inicial da Votação");
 
+        try {
+            txtDataInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         txtDataInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataInicialActionPerformed(evt);
@@ -246,9 +254,27 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         TituloDateF.setText("Data Final da Votação");
 
+        try {
+            txtDataFinal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         TituloParticipante.setText("Participantes");
 
+        comboParticipantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboParticipantesActionPerformed(evt);
+            }
+        });
+
         tituloDivulga.setText("Data De Divulgação dos Resultados");
+
+        try {
+            txtDataDivulgacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         btnCancelar.setText("X Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -350,10 +376,8 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
                 if (painelSidebar.getWidth() > 0) {
                     try {
-                        // Animação para fechar, começando da largura atual
                         for (int i = painelSidebar.getWidth(); i >= 0; i--) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -363,7 +387,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                     }
                 } else {
                     try {
-                        // Animação para abrir, de 0 até a largura desejada (210)
                         for (int i = 0; i <= 210; i++) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -416,7 +439,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
    
     try {
-        // --- COLETANDO DADOS DA TELA 1 ---
         String titulo = getTxtTitulo().getText();
         String descricao = getTxtDescricao().getText();
         String dataInicialStr = getTxtDataInicial().getText();
@@ -424,23 +446,25 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         String dataDivulgacaoStr = getTxtDataDivulgacao().getText();
         Object itemSelecionado = getComboParticipantes().getSelectedItem();
         
-        Grupo grupoSelecionado = (Grupo) itemSelecionado;
-        // Pega o ID daquele objeto
-        int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
-        
-        // Validação simples
-        if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
-            exibirMensagem("Título e datas são obrigatórios para avançar.");
+
+        if (itemSelecionado == null || ((Grupo) itemSelecionado).getIdGrupo() == 0) {
+            exibirMensagem("Selecione um grupo de participantes.");
             return;
         }
 
-        // Converte as datas
+        Grupo grupoSelecionado = (Grupo) itemSelecionado;
+        int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
+        
+        if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
+            exibirMensagem("Preencha os campos obrigatórios.");
+            return;
+        }
+
         SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
         Date dataInicio = formatador.parse(dataInicialStr);
         Date dataFim = formatador.parse(dataFinalStr);
         Date dataDivulgacao = formatador.parse(dataDivulgacaoStr);
-
-        // --- EMPACOTANDO OS DADOS EM UM OBJETO VOTACAO ---
+                
         Votacao votacaoEmAndamento = new Votacao();
         votacaoEmAndamento.setTitulo(titulo);
         votacaoEmAndamento.setDescricao(descricao);
@@ -449,16 +473,13 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         votacaoEmAndamento.setDataResultado(dataDivulgacao);
         votacaoEmAndamento.setIdGrupoDestino(idGrupoSelecionado);
         votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
-        votacaoEmAndamento.setStatus("Em criação"); // Um status temporário
+        votacaoEmAndamento.setStatus("PENDENTE");
 
-        // --- NAVEGANDO PARA A PRÓXIMA TELA E LEVANDO OS DADOS ---
-        // Estamos passando tanto o usuário logado quanto a votação que estamos criando
         CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
 
         telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
         this.dispose();
 
     } catch (Exception e) {
@@ -467,42 +488,33 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }
 // TODO add your handling code here:
     }//GEN-LAST:event_btnAvancarActionPerformed
+
+    private void comboParticipantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboParticipantesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboParticipantesActionPerformed
     private void inicializarMenuLateral() {
-    // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
     );
-    // 1. Aplica o estilo visual INICIAL a cada botão
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
 
-    // 2. Adiciona os eventos de mouse e clique a todos os botões
     for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
-
-   
 }
     
-
-
-
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
     
-   botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    
+    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    
-    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
-    botao.setIconTextGap(15);
-
-    
+    botao.setIconTextGap(15); 
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
    
@@ -512,8 +524,6 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
         System.out.println("ERRO ao carregar ícone: " + nomeIcone);
     }
 }
-
-
 
 private void adicionarListeners(javax.swing.JButton botao) {
    
@@ -531,17 +541,13 @@ private void adicionarListeners(javax.swing.JButton botao) {
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            // Quando o mouse sai, o fundo volta a ser transparente
             botao.setOpaque(false);
-            // A linha abaixo é opcional, mas garante a cor certa
             botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
-    // Adiciona a AÇÃO DE CLIQUE (que agora não faz nenhuma mudança visual)
     botao.addActionListener(e -> {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
-        // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
     });
 }
     /**
