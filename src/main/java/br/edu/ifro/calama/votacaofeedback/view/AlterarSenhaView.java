@@ -26,27 +26,218 @@ public class AlterarSenhaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelFundoPrincipal = new GradientPanel();
+        jPanelCaixaTexto = new javax.swing.JPanel();
+        jLabelAlterarSenha = new javax.swing.JLabel();
+        jLabelSenha = new javax.swing.JLabel();
+        jLabelConfirmarSenha = new javax.swing.JLabel();
+        bntCadastrarNovaSenha = new javax.swing.JButton();
+        bntVoltar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        pwdNovaSenha = new javax.swing.JPasswordField();
+        jLabEyeSenha = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        pwdConfirmarSenha = new javax.swing.JPasswordField();
+        jLabEyeConfirmarSenha = new javax.swing.JLabel();
+        jLabLogo = new javax.swing.JLabel();
+        jLabIF = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jPanelCaixaTexto.setBackground(new java.awt.Color(11, 41, 81));
+
+        jLabelAlterarSenha.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabelAlterarSenha.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelAlterarSenha.setText("ALTERAR SENHA");
+
+        jLabelSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelSenha.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSenha.setText("Senha:");
+
+        jLabelConfirmarSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelConfirmarSenha.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelConfirmarSenha.setText("Confirmar Senha:");
+
+        bntCadastrarNovaSenha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bntCadastrarNovaSenha.setForeground(new java.awt.Color(255, 255, 255));
+        bntCadastrarNovaSenha.setText("CADASTRAR NOVA SENHA");
+        bntCadastrarNovaSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntCadastrarNovaSenhaActionPerformed(evt);
+            }
+        });
+
+        bntVoltar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bntVoltar.setForeground(new java.awt.Color(255, 255, 255));
+        bntVoltar.setText("VOLTAR");
+        bntVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntVoltarActionPerformed(evt);
+            }
+        });
+
+        pwdNovaSenha.setForeground(new java.awt.Color(255, 255, 255));
+        pwdNovaSenha.setText("jPasswordField1");
+
+        jLabEyeSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pwdNovaSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabEyeSenha)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(pwdNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabEyeSenha)
         );
+
+        pwdConfirmarSenha.setForeground(new java.awt.Color(255, 255, 255));
+        pwdConfirmarSenha.setText("jPasswordField1");
+
+        jLabEyeConfirmarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabEyeConfirmarSenha)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabEyeConfirmarSenha)
+        );
+
+        javax.swing.GroupLayout jPanelCaixaTextoLayout = new javax.swing.GroupLayout(jPanelCaixaTexto);
+        jPanelCaixaTexto.setLayout(jPanelCaixaTextoLayout);
+        jPanelCaixaTextoLayout.setHorizontalGroup(
+            jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabelSenha)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabelConfirmarSenha)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bntCadastrarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(jLabelAlterarSenha)))
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+        jPanelCaixaTextoLayout.setVerticalGroup(
+            jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabelAlterarSenha)
+                .addGap(43, 43, 43)
+                .addComponent(jLabelSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jLabelConfirmarSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(bntCadastrarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
+        );
+
+        jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
+
+        jLabIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/img-Photoroom.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanelFundoPrincipalLayout = new javax.swing.GroupLayout(jPanelFundoPrincipal);
+        jPanelFundoPrincipal.setLayout(jPanelFundoPrincipalLayout);
+        jPanelFundoPrincipalLayout.setHorizontalGroup(
+            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                .addContainerGap(82, Short.MAX_VALUE)
+                .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabLogo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabIF))
+                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1)))
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+        jPanelFundoPrincipalLayout.setVerticalGroup(
+            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                        .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                                .addGap(114, 114, 114)
+                                .addComponent(jLabLogo))
+                            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                                .addGap(175, 175, 175)
+                                .addComponent(jLabIF)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(174, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanelFundoPrincipal, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bntCadastrarNovaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarNovaSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bntCadastrarNovaSenhaActionPerformed
+
+    private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bntVoltarActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+       try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -78,5 +269,21 @@ public class AlterarSenhaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntCadastrarNovaSenha;
+    private javax.swing.JButton bntVoltar;
+    private javax.swing.JLabel jLabEyeConfirmarSenha;
+    private javax.swing.JLabel jLabEyeSenha;
+    private javax.swing.JLabel jLabIF;
+    private javax.swing.JLabel jLabLogo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelAlterarSenha;
+    private javax.swing.JLabel jLabelConfirmarSenha;
+    private javax.swing.JLabel jLabelSenha;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelCaixaTexto;
+    private javax.swing.JPanel jPanelFundoPrincipal;
+    private javax.swing.JPasswordField pwdConfirmarSenha;
+    private javax.swing.JPasswordField pwdNovaSenha;
     // End of variables declaration//GEN-END:variables
 }
