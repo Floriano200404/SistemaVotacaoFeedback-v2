@@ -21,7 +21,7 @@ public final class AprovarVotacaoView extends javax.swing.JPanel {
      */
     public AprovarVotacaoView() {
         initComponents();
-        carregarVotacoes();
+        carregarVotacoesParaAprovacao();
     }
 
 public void carregarVotacoes() {
@@ -72,22 +72,27 @@ public void carregarVotacoes() {
 
 public void carregarVotacoesParaAprovacao() {
    
-    List<Votacao> votacoes = new ArrayList<>();
    
+    VotacaoService votacaoService = new VotacaoService();
+    List<Votacao> votacoesDoBanco = votacaoService.getVotacoesParaAprovar();
 
     
-    painelDaGrade.removeAll();
+    this.removeAll();
 
     
-    for (Votacao votacao : votacoes) {
+    for (Votacao votacao : votacoesDoBanco) {
         CardView card = new CardView();
-        card.setDados(votacao);
-        painelDaGrade.add(card); 
+
+        
+        card.setDados(votacao); 
+
+        
+        this.add(card);
     }
 
     
-    painelDaGrade.revalidate();
-    painelDaGrade.repaint();
+    this.revalidate();
+    this.repaint();
 }
 
 
