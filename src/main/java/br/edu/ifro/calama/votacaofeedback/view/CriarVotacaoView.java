@@ -422,11 +422,14 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 2, 5);
         jPanel1.add(TituloParticipante, gridBagConstraints);
 
-        comboParticipantes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboParticipantesActionPerformed(evt);
-            }
-        });
+        comboParticipantes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 15, 5);
+        jPanel1.add(comboParticipantes, gridBagConstraints);
 
         tituloDivulga.setText("Data De Divulgação dos Resultados");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -470,81 +473,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         jPanel1.add(jPanelBotoesInferiores, gridBagConstraints);
 
         painelConteudo.add(jPanel1, new java.awt.GridBagConstraints());
-        javax.swing.GroupLayout painelConteudoLayout = new javax.swing.GroupLayout(painelConteudo);
-        painelConteudo.setLayout(painelConteudoLayout);
-        painelConteudoLayout.setHorizontalGroup(
-            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelConteudoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TituloPrincipal)
-                .addGap(87, 87, 87))
-            .addGroup(painelConteudoLayout.createSequentialGroup()
-                .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelConteudoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TituloVotacao)
-                            .addGroup(painelConteudoLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TituloDesc)
-                                    .addComponent(TituloDateI)
-                                    .addComponent(TituloDateF)
-                                    .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(painelConteudoLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TituloParticipante)
-                            .addComponent(tituloDivulga)))
-                    .addGroup(painelConteudoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnCancelar)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnAvancar))
-                    .addGroup(painelConteudoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtDataDivulgacao, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(1006, Short.MAX_VALUE))
-        );
-        painelConteudoLayout.setVerticalGroup(
-            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelConteudoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(TituloPrincipal)
-                .addGap(18, 18, 18)
-                .addComponent(TituloVotacao, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TituloDesc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TituloDateI)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TituloDateF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TituloParticipante)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboParticipantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tituloDivulga)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtDataDivulgacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAvancar))
-                .addContainerGap(288, Short.MAX_VALUE))
-        );
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -691,12 +619,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         System.out.println("Data Inicial: " + dataInicial);
         System.out.println("Data Final: " + dataFinal);
         System.out.println("Data Divulgação: " + dataDivulgacao);
-    
-        CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
-        
-        telaDeCriacao.setLocationRelativeTo(null);
-        telaDeCriacao.setVisible(true);
-        this.dispose();
     }                                          
     private void inicializarMenuLateral() {
          java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
@@ -771,7 +693,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private javax.swing.JButton aprovarVotacao;
     private javax.swing.JButton btnAvancar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox<Grupo> comboParticipantes;
+    private javax.swing.JComboBox<String> comboParticipantes;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
