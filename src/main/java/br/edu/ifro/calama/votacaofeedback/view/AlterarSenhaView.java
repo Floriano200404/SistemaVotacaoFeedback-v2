@@ -19,12 +19,48 @@ import javax.swing.JPanel;
  */
 public class AlterarSenhaView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AlterarSenhaView
-     */
+    private boolean senhaVisivel = false;
+    private boolean confirmarSenhaVisivel = false;
+    
+    private final javax.swing.ImageIcon eyeOpenIcon = new javax.swing.ImageIcon(getClass().getResource("/icons/eye_open.png"));
+    private final javax.swing.ImageIcon eyeClosedIcon = new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"));
+    
+
     public AlterarSenhaView() {
         initComponents();
+        jLabEyeSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                senhaVisivel = !senhaVisivel; // Inverte o estado
+                if (senhaVisivel) {
+                    pwdNovaSenha.setEchoChar((char) 0); // Mostra a senha
+                    jLabEyeSenha.setIcon(eyeOpenIcon); // Muda para o ícone de olho aberto
+                } else {
+                    pwdNovaSenha.setEchoChar('●'); // Oculta a senha
+                    jLabEyeSenha.setIcon(eyeClosedIcon); // Muda para o ícone de olho fechado
+                }
+            }
+        });
+
+        // Adiciona o listener para o ícone do campo "Confirmar Senha"
+        jLabEyeConfirmarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmarSenhaVisivel = !confirmarSenhaVisivel; // Inverte o estado
+                if (confirmarSenhaVisivel) {
+                    pwdConfirmarSenha.setEchoChar((char) 0); // Mostra a senha
+                    jLabEyeConfirmarSenha.setIcon(eyeOpenIcon); // Muda para o ícone de olho aberto
+                } else {
+                    pwdConfirmarSenha.setEchoChar('●'); // Oculta a senha
+                    jLabEyeConfirmarSenha.setIcon(eyeClosedIcon); // Muda para o ícone de olho fechado
+                }
+            }
+        });
+        
+        // Inicia os campos de senha com o caractere de eco padrão
+        pwdNovaSenha.setEchoChar('●');
+        pwdConfirmarSenha.setEchoChar('●');
+        // --- FIM DO CÓDIGO A ADICIONAR ---
     }
+   
 
     class RoundedButton extends JButton {
         public RoundedButton(String text) {
@@ -296,7 +332,46 @@ public class AlterarSenhaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntCadastrarNovaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarNovaSenhaActionPerformed
-        // TODO add your handling code here:
+       String novaSenha = new String(pwdNovaSenha.getPassword());
+        String confirmarSenha = new String(pwdConfirmarSenha.getPassword());
+
+        // 1. Verifica se os campos estão vazios
+        if (novaSenha.isEmpty() || confirmarSenha.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                "Por favor, preencha ambos os campos de senha.", 
+                "Erro de Validação", 
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            return; // Para a execução do método aqui
+        }
+
+        // 2. Verifica se as senhas são iguais
+        if (novaSenha.equals(confirmarSenha)) {
+            // Se forem iguais, mostra uma mensagem de sucesso
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                "Senha alterada com sucesso!", 
+                "Confirmação", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+            // TODO: Adicionar aqui a lógica para salvar a nova senha no banco de dados ou no usuário.
+            // Ex: usuarioLogado.setSenha(novaSenha);
+            //     usuarioDAO.atualizar(usuarioLogado);
+            
+            // Opcional: Limpar os campos após o sucesso
+            pwdNovaSenha.setText("");
+            pwdConfirmarSenha.setText("");
+            
+        } else {
+            // Se forem diferentes, mostra uma mensagem de erro
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                "As senhas não coincidem. Por favor, tente novamente.", 
+                "Erro de Validação", 
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_bntCadastrarNovaSenhaActionPerformed
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
