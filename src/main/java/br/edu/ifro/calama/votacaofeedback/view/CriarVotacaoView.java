@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JButton;
 
 /**
  *
@@ -45,6 +46,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         this.votacaoEmAndamento = votacao;
         
+        estilizarDateChooser(txtDataInicial);
+        estilizarDateChooser(txtDataFinal);
+        estilizarDateChooser(txtDataDivulgacao);
         
         if (this.usuarioLogado != null) {
 
@@ -134,12 +138,25 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     
     public void exibirMensagemDeSucesso(String mensagem) {
     
-    ToastUtil toast = new ToastUtil(
-        this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
-    );
-    toast.display();
-}
-
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
+        );
+        toast.display();
+    }
+    
+    private void estilizarDateChooser(com.toedter.calendar.JDateChooser dateChooser) {
+        JTextField editor = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        editor.setBorder(null);
+        editor.setBackground(java.awt.Color.WHITE);
+        editor.setHorizontalAlignment(JTextField.CENTER);
+        
+        JButton calendarButton = dateChooser.getCalendarButton();
+        calendarButton.setBorder(null);
+        calendarButton.setContentAreaFilled(false);
+        calendarButton.setFocusPainted(false);
+    }
+    
+    
     private void aplicarEstilos() {
         final int ALTURA_PADRAO = 35;
         JComponent[] campos = {
