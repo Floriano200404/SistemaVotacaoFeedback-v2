@@ -350,10 +350,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
+                
                 if (painelSidebar.getWidth() > 0) {
                     try {
-                        // Animação para fechar, começando da largura atual
+                        
                         for (int i = painelSidebar.getWidth(); i >= 0; i--) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -363,7 +363,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                     }
                 } else {
                     try {
-                        // Animação para abrir, de 0 até a largura desejada (210)
+                        
                         for (int i = 0; i <= 210; i++) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -425,22 +425,22 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         Object itemSelecionado = getComboParticipantes().getSelectedItem();
         
         Grupo grupoSelecionado = (Grupo) itemSelecionado;
-        // Pega o ID daquele objeto
+       
         int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
         
-        // Validação simples
+       
         if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
             exibirMensagem("Título e datas são obrigatórios para avançar.");
             return;
         }
 
-        // Converte as datas
+        
         SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
         Date dataInicio = formatador.parse(dataInicialStr);
         Date dataFim = formatador.parse(dataFinalStr);
         Date dataDivulgacao = formatador.parse(dataDivulgacaoStr);
 
-        // --- EMPACOTANDO OS DADOS EM UM OBJETO VOTACAO ---
+        
         Votacao votacaoEmAndamento = new Votacao();
         votacaoEmAndamento.setTitulo(titulo);
         votacaoEmAndamento.setDescricao(descricao);
@@ -451,14 +451,13 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
         votacaoEmAndamento.setStatus("Em criação"); // Um status temporário
 
-        // --- NAVEGANDO PARA A PRÓXIMA TELA E LEVANDO OS DADOS ---
-        // Estamos passando tanto o usuário logado quanto a votação que estamos criando
+      
         CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
 
         telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
+   
         this.dispose();
 
     } catch (Exception e) {
