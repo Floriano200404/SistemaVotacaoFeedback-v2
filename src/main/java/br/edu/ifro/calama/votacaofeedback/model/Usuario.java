@@ -8,6 +8,7 @@ public class Usuario {
     private String tipo_usuario;
     private String cpf;
     private String matricula;
+    private String curso;
 
     public Usuario() {}
 
@@ -25,5 +26,7 @@ public class Usuario {
     public void setCpf(String cpf) { this.cpf = cpf; }
     public String getMatricula() { return matricula; }
     public void setMatricula(String matricula) { this.matricula = matricula; }
+    public String getCurso() { return curso; }
+    public void setCurso(String curso) { this.curso = curso; }
 
 }
