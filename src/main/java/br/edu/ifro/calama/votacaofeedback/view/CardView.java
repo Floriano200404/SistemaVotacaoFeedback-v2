@@ -27,14 +27,14 @@ public void setDados(Votacao votacao) {
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
     
-    if (votacao.getDataInicio() != null) {
-        returdadosdt.setText(sdf.format(votacao.getDataInicio()));
+    if (votacao.getDataInicial() != null) {
+        returdadosdt.setText(sdf.format(votacao.getDataInicial()));
     } else {
         returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
     }
 
-    if (votacao.getDataFim() != null) {
-        returdadosdt2.setText(sdf.format(votacao.getDataFim()));
+    if (votacao.getDataFinal() != null) {
+        returdadosdt2.setText(sdf.format(votacao.getDataFinal()));
     } else {
         returdadosdt2.setText("N/A");
     }

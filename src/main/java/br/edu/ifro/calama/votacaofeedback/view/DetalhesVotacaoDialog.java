@@ -231,11 +231,11 @@ public void setDados(Votacao votacao) {
     lblTituloPrincipal.setText(votacao.getTitulo());
     txtAreaDescricao.setText(votacao.getDescricao());
 
-    if (votacao.getDataInicio() != null) {
-        lblDataInicial.setText(sdf.format(votacao.getDataInicio()));
+    if (votacao.getDataInicial() != null) {
+        lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
     }
-    if (votacao.getDataFim() != null) {
-        lblDataFinal.setText(sdf.format(votacao.getDataFim()));
+    if (votacao.getDataFinal() != null) {
+        lblDataFinal.setText(sdf.format(votacao.getDataFinal()));
     }
     if (votacao.getDataResultado() != null) {
         lblDataResultado.setText(sdf.format(votacao.getDataResultado()));

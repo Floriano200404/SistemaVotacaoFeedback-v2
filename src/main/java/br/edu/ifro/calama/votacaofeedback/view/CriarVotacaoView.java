@@ -646,12 +646,22 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             Votacao votacaoEmAndamento = new Votacao();
             votacaoEmAndamento.setTitulo(titulo);
             votacaoEmAndamento.setDescricao(descricao);
-            votacaoEmAndamento.setDataInicio(dataInicial);
-            votacaoEmAndamento.setDataFim(dataFinal);
+            votacaoEmAndamento.setDataInicial(dataInicial);
+            votacaoEmAndamento.setDataFinal(dataFinal);
             votacaoEmAndamento.setDataResultado(dataDivulgacao);
             votacaoEmAndamento.setIdGrupoDestino(idGrupoSelecionado);
             votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
             votacaoEmAndamento.setStatus("PENDENTE");
+            
+             // --- DEBUG ANTES DE ENVIAR ---
+            if (votacaoEmAndamento == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "ERRO: O objeto Votacao está NULO antes de ser enviado!");
+                return;
+            } else {
+                // Esta caixa de diálogo deve aparecer!
+                javax.swing.JOptionPane.showMessageDialog(this, "TELA 1 ESTÁ ENVIANDO a votação com título: '" + votacaoEmAndamento.getTitulo() + "'");
+            }
+            // --- FIM DO DEBUG ---
 
             CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
 

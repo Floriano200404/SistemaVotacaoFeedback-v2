@@ -51,8 +51,8 @@ public class VotacaoController {
             Votacao novaVotacao = new Votacao();
             novaVotacao.setTitulo(titulo);
             novaVotacao.setDescricao(descricao);
-            novaVotacao.setDataInicio(dataInicial);
-            novaVotacao.setDataFim(dataFinal);
+            novaVotacao.setDataInicial(dataInicial);
+            novaVotacao.setDataFinal(dataFinal);
             novaVotacao.setDataResultado(dataDivulgacao);
             novaVotacao.setIdCriador(this.usuarioLogado.getId());
             novaVotacao.setIdGrupoDestino(1);
