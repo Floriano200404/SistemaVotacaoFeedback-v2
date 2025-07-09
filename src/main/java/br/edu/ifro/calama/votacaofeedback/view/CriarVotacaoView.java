@@ -512,7 +512,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         this.usuarioLogado.getEmail(),
         this.usuarioLogado.getCpf(),
         this.usuarioLogado.getMatricula(),
-        this.usuarioLogado.getTipo_usuario(),
+        this.usuarioLogado.getCurso(),
         acaoDeLogout
     );
     perfil.setVisible(true);

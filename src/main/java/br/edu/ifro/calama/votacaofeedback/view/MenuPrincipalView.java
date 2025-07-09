@@ -315,7 +315,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         this.usuariologado.getEmail(),
         this.usuariologado.getCpf(),
         this.usuariologado.getMatricula(),
-        this.usuariologado.getTipo_usuario(),
+        this.usuariologado.getCurso(),
         acaoDeLogout
     );
     perfil.setVisible(true);
