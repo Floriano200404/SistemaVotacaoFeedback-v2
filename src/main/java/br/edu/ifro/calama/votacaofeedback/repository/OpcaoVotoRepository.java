@@ -32,37 +32,38 @@ public class OpcaoVotoRepository {
         }
     }
   
-    public List<OpcaoVoto> buscarPorIdVotacao(int idVotacao) {
-    List<OpcaoVoto> opcoes = new ArrayList<>();
-    String sql = "SELECT * FROM opcao_voto WHERE id_votacao = ?";
+    public List<OpcaoVoto> buscarPorIdVotacao(int idVotacao) throws Exception {
+        List<OpcaoVoto> opcoes = new ArrayList<>();
+        String sql = "SELECT id_opcao, descricao, id_votacao FROM opcao_voto WHERE id_votacao = ?";
 
-    try (Connection conn = DatabaseUtil.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        stmt.setInt(1, idVotacao);
-        try (ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                OpcaoVoto opcao = new OpcaoVoto();
-                opcao.setIdOpcaoVoto(rs.getInt("id_opcao_voto"));
-                opcao.setDescricao(rs.getString("descricao"));
-                opcao.setIdVotacao(rs.getInt("id_votacao"));
-                opcoes.add(opcao);
+            stmt.setInt(1, idVotacao);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    OpcaoVoto opcao = new OpcaoVoto();
+                    opcao.setIdOpcaoVoto(rs.getInt("id_opcao"));
+                    opcao.setDescricao(rs.getString("descricao"));
+                    opcao.setIdVotacao(rs.getInt("id_votacao"));
+                    opcoes.add(opcao);
+                }
             }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar opções de voto: " + e.getMessage());
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return opcoes;
     }
-    return opcoes;
-}
  
-    public void deletarPorIdVotacao(int idVotacao) {
-    String sql = "DELETE FROM opcao_voto WHERE id_votacao = ?";
-    try (Connection conn = DatabaseUtil.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, idVotacao);
-        stmt.executeUpdate();
-    } catch (Exception e) {
-        e.printStackTrace();
+    public void deletarPorIdVotacao(int idVotacao) throws Exception {
+        String sql = "DELETE FROM opcao_voto WHERE id_votacao = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idVotacao);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar opções de voto: " + e.getMessage());
+        }
     }
-    } 
-}
+} 
+

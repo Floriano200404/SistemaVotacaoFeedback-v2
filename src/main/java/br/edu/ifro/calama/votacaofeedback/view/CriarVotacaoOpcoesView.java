@@ -33,7 +33,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private int opcoesVisiveis = 0;
     private boolean isEditMode = false;
 
-    public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) {
+    public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) throws Exception {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.usuarioLogado = usuario;
@@ -51,7 +51,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         configurarTela();
     }
 
-    private void configurarTela() {
+    private void configurarTela() throws Exception {
         if (votacao != null && votacao.getIdVotacao() > 0) {
             this.isEditMode = true;
         }
@@ -68,12 +68,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         }
     }
 
-    private void preencherDadosExistentes() {
+    private void preencherDadosExistentes() throws Exception {
         txtPergunta.setText(votacao.getPergunta());
 
         OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
         List<OpcaoVoto> opcoesExistentes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
 
+        System.out.println("[DEBUG] Buscando opções para Votação ID " + votacao.getIdVotacao() + ". Encontradas: " + opcoesExistentes.size() + " opções.");
+        
         opcoesVisiveis = 0;
         for (int i = 0; i < opcoesExistentes.size(); i++) {
             if (i < todosOsCamposDeOpcao.size()) {
