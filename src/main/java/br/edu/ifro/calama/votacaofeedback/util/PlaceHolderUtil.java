@@ -15,6 +15,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 public class PlaceHolderUtil {
     
@@ -69,6 +70,28 @@ public class PlaceHolderUtil {
                     passwordField.setEchoChar((char) 0);
                     passwordField.setForeground(Color.GRAY);
                     passwordField.setText(placeholder);
+                }
+            }
+        });
+    }
+    public static void setPlaceholder(final JTextArea textArea, final String placeholder) {
+        textArea.setText(placeholder);
+        textArea.setForeground(Color.GRAY);
+
+        textArea.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textArea.getText().equals(placeholder)) {
+                    textArea.setText("");
+                    textArea.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textArea.getText().isEmpty()) {
+                    textArea.setForeground(Color.GRAY);
+                    textArea.setText(placeholder);
                 }
             }
         });
