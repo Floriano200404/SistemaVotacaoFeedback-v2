@@ -41,26 +41,15 @@ public class MenuPrincipalView extends javax.swing.JFrame {
    
     }
     inicializarMenuLateral();
-
-    AprovarVotacaoView telaDeAprovacao = new AprovarVotacaoView();
-
- 
-    painelConteudo.add(telaDeAprovacao, "cardAprovar");
    
     javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-
-            
-    
-
     linhaDeCima.setOpaque(false);
 
     javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
     linhaDeBaixo.setOpaque(false);
-
     linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
     linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
     linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-
     linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
     linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
 
@@ -282,12 +271,26 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_participarVotacaoActionPerformed
 
     private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
-        // TODO add your handling code here:
+        GerenciarVotacaoView painelGerenciar = new GerenciarVotacaoView(this.usuariologado);
+    
+    // Adiciona o painel ao CardLayout com um novo identificador.
+        painelConteudo.add(painelGerenciar, "cardGerenciar");
+    
+    // Mostra o painel de gerenciamento.
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardGerenciar");
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
+        AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
+    
+    // Adiciona o painel ao CardLayout (se ainda não existir, ele adiciona; se já existir, ele substitui).
+    // O nome "cardAprovar" é um identificador único para este painel.
+        painelConteudo.add(painelAprovar, "cardAprovar");
+    
+    // Mostra o painel de aprovação.
         java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
+        cl.show(painelConteudo, "cardAprovar");
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked

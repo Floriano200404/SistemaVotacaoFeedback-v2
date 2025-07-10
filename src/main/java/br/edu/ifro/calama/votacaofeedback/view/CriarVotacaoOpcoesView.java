@@ -16,7 +16,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.List;  
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,10 +31,10 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
-    private Usuario usuarioLogado;
-    private Votacao votacaoEmAndamento;
-    private List<JLabel> todosOsLabelsDeOpcao;
-    private List<JTextField> todosOsCamposDeOpcao;
+    private final Usuario usuarioLogado;
+    private final Votacao votacaoEmAndamento;
+    private final List<JLabel> todosOsLabelsDeOpcao;
+    private final List<JTextField> todosOsCamposDeOpcao;
     private int opcoesVisiveis = 2;
 
     /**
@@ -42,6 +42,15 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
      */
     public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) {
         initComponents();
+        
+        // --- DEBUG AO RECEBER ---
+        if (votacao == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ERRO GRAVE: A Tela 2 recebeu uma Votacao NULA!");
+        } else {
+            // Esta caixa de diálogo deve aparecer logo depois da primeira!
+            javax.swing.JOptionPane.showMessageDialog(this, "TELA 2 RECEBEU a votação com título: '" + votacao.getTitulo() + "'");
+        }
+        // --- FIM DO DEBUG ---
         
         this.usuarioLogado = usuario;
         this.votacaoEmAndamento = votacao;

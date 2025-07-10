@@ -6,12 +6,9 @@ package br.edu.ifro.calama.votacaofeedback.controller;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
-import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
 import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoView;
-import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.swing.Timer;
+import java.util.List;
 
 /**
  *
@@ -19,57 +16,39 @@ import javax.swing.Timer;
  */
 public class VotacaoController {
 
-    private final CriarVotacaoView view;
-    private final Usuario usuarioLogado;
-
-    public VotacaoController(CriarVotacaoView view, Usuario usuario) {
-        this.view = view;
-        this.usuarioLogado = usuario;
+    private final VotacaoService votacaoService;
+    
+    public VotacaoController() {
+        this.votacaoService = new VotacaoService();
     }
 
-    public void salvarVotacao() {
+    public void atualizarVotacao(Votacao votacao) {
         try {
-            String titulo = view.getTxtTitulo().getText();
-            String descricao = view.getTxtDescricao().getText();
-            String dataInicialStr = view.getTxtDataInicial().getText();
-            String dataFinalStr = view.getTxtDataFinal().getText();
-            String dataDivulgacaoStr = view.getTxtDataDivulgacao().getText();
-            
-            if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
-                view.exibirMensagem("Título e datas são obrigatórios.");
-                return;
-            }
-
-            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataInicio = formatador.parse(dataInicialStr);
-            Date dataFim = formatador.parse(dataFinalStr);
-            Date dataDivulgacao = formatador.parse(dataDivulgacaoStr);
-
-            Votacao novaVotacao = new Votacao();
-            novaVotacao.setTitulo(titulo);
-            novaVotacao.setDescricao(descricao);
-            novaVotacao.setDataInicio(dataInicio);
-            novaVotacao.setDataFim(dataFim);
-            novaVotacao.setDataResultado(dataDivulgacao);
-            novaVotacao.setIdCriador(this.usuarioLogado.getId());
-            novaVotacao.setIdGrupoDestino(1);
-            novaVotacao.setStatus("PENDENTE");
-
-            VotacaoRepository repository = new VotacaoRepository();
-            repository.criar(novaVotacao);
-            
-            view.exibirMensagemDeSucesso("Votação criada com sucesso!");
-            Timer timer = new Timer(1500, e -> {
-                new MenuPrincipalView(this.usuarioLogado).setVisible(true);
-                view.dispose();
-                
-            });
-            timer.setRepeats(false);
-            timer.start();
-
+            votacaoService.atualizar(votacao);
         } catch (Exception e) {
-            view.exibirMensagem("Erro ao criar votação: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Erro no controller ao atualizar votação: " + e.getMessage());
+            // Aqui você poderia, por exemplo, retornar um booleano ou lançar uma exceção
+            // para a View saber que deu erro.
         }
     }
+
+    /**
+     * Pede ao serviço as votações criadas por um usuário específico.
+     * Chamado pela GerenciarVotacaoView.
+     * @param idCriador O ID do usuário.
+     * @return Uma lista de votações.
+     */
+    public List<Votacao> buscarVotacoesPorCriador(int idCriador) {
+        return votacaoService.buscarPorIdCriador(idCriador);
+    }
+    
+    /**
+     * Pede ao serviço as votações que estão pendentes de aprovação.
+     * Chamado pela AprovarVotacaoView.
+     * @return Uma lista de votações pendentes.
+     */
+    public List<Votacao> buscarVotacoesPendentes() {
+        return votacaoService.getVotacoesParaAprovar();
+    }
+    
 }

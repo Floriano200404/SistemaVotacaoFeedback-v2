@@ -3,50 +3,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import java.text.SimpleDateFormat;
 /**
  *
  * @author floriano
  */
-public class CardView extends javax.swing.JPanel {
-    private Votacao votacaoAtual;
-   
-    public CardView() {
-        initComponents();
-    }
+    public class CardView extends javax.swing.JPanel {
+        private Votacao votacaoAtual;
+        private DetalhesVotacaoDialog.ModoDialogo modo;
+        private Usuario usuarioLogado;
 
-public void setDados(Votacao votacao) {
-      
-    this.votacaoAtual = votacao; 
+        public CardView() {
+            initComponents();
+            this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
+        }
 
-   
-    lblTituloVotacao.setText(votacao.getTitulo());
+        public void setModo(DetalhesVotacaoDialog.ModoDialogo modo) {
+            this.modo = modo;
+        }
 
-   
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        public void setUsuario(Usuario usuario) {
+            this.usuarioLogado = usuario;
+        }
 
-    
-    if (votacao.getDataInicio() != null) {
-        returdadosdt.setText(sdf.format(votacao.getDataInicio()));
-    } else {
-        returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
-    }
+        public void setDados(Votacao votacao) {
 
-    if (votacao.getDataFim() != null) {
-        returdadosdt2.setText(sdf.format(votacao.getDataFim()));
-    } else {
-        returdadosdt2.setText("N/A");
-    }
+            this.votacaoAtual = votacao; 
 
-    if (votacao.getDataResultado() != null) {
-        returdadosdt3.setText(sdf.format(votacao.getDataResultado()));
-    } else {
-        returdadosdt3.setText("N/A");
-    }
+            lblTituloVotacao.setText(votacao.getTitulo());
 
-   
-}
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+
+            if (votacao.getDataInicial() != null) {
+                returdadosdt.setText(sdf.format(votacao.getDataInicial()));
+            } else {
+                returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
+            }
+
+            if (votacao.getDataFinal() != null) {
+                returdadosdt2.setText(sdf.format(votacao.getDataFinal()));
+            } else {
+                returdadosdt2.setText("N/A");
+            }
+
+            if (votacao.getDataResultado() != null) {
+                returdadosdt3.setText(sdf.format(votacao.getDataResultado()));
+            } else {
+                returdadosdt3.setText("N/A");
+            }  
+        }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -106,19 +113,14 @@ public void setDados(Votacao votacao) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
-                                              
-    
-    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
-   
-    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true);
-
-    
-    dialog.setDados(this.votacaoAtual); 
-
-    
-    dialog.setLocationRelativeTo(parentWindow);
-    dialog.setVisible(true);
+        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+        DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, this.usuarioLogado);
+        
+        dialog.setDados(this.votacaoAtual);
+        dialog.setModo(this.modo);
+        dialog.setLocationRelativeTo(parentWindow);
+        dialog.setVisible(true);
 
     }//GEN-LAST:event_btnVerVotacaoActionPerformed
 

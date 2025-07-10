@@ -9,8 +9,8 @@ public class Votacao {
     private String descricao;
     private String pergunta;
     private String status; 
-    private Date dataInicio;
-    private Date dataFim;
+    private Date dataInicial;
+    private Date dataFinal;
     private Date dataResultado;
     private int idCriador;
     private int idGrupoDestino;
@@ -21,10 +21,10 @@ public class Votacao {
 
     
  
-public Votacao(String titulo, Date dataInicio, Date dataFim, Date dataResultado) {
+public Votacao(String titulo, Date dataInicial, Date dataFinal, Date dataResultado) {
     this.titulo = titulo;
-    this.dataInicio = dataInicio;
-    this.dataFim = dataFim;
+    this.dataInicial = dataInicial;
+    this.dataFinal = dataFinal;
     this.dataResultado = dataResultado;
 }
 
@@ -43,11 +43,11 @@ public Votacao(String titulo, Date dataInicio, Date dataFim, Date dataResultado)
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public Date getDataInicio() { return dataInicio; }
-    public void setDataInicio(Date dataInicio) { this.dataInicio = dataInicio; }
+    public Date getDataInicial() { return dataInicial; }
+    public void setDataInicial(Date dataInicial) { this.dataInicial = dataInicial; }
 
-    public Date getDataFim() { return dataFim; }
-    public void setDataFim(Date dataFim) { this.dataFim = dataFim; }
+    public Date getDataFinal() { return dataFinal; }
+    public void setDataFinal(Date dataFinal) { this.dataFinal = dataFinal; }
 
     public Date getDataResultado() { return dataResultado; }
     public void setDataResultado(Date dataResultado) { this.dataResultado = dataResultado; }
