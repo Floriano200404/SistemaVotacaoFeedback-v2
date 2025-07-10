@@ -8,7 +8,10 @@ import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,4 +31,38 @@ public class OpcaoVotoRepository {
             ps.executeUpdate();
         }
     }
+  
+    public List<OpcaoVoto> buscarPorIdVotacao(int idVotacao) {
+    List<OpcaoVoto> opcoes = new ArrayList<>();
+    String sql = "SELECT * FROM opcao_voto WHERE id_votacao = ?";
+
+    try (Connection conn = DatabaseUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idVotacao);
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                OpcaoVoto opcao = new OpcaoVoto();
+                opcao.setIdOpcaoVoto(rs.getInt("id_opcao_voto"));
+                opcao.setDescricao(rs.getString("descricao"));
+                opcao.setIdVotacao(rs.getInt("id_votacao"));
+                opcoes.add(opcao);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return opcoes;
+}
+ 
+    public void deletarPorIdVotacao(int idVotacao) {
+    String sql = "DELETE FROM opcao_voto WHERE id_votacao = ?";
+    try (Connection conn = DatabaseUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idVotacao);
+        stmt.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    } 
 }
