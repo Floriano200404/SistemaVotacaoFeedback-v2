@@ -156,7 +156,15 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         calendarButton.setContentAreaFilled(false);
         calendarButton.setFocusPainted(false);
     }
-    
+    private java.util.Date removerHoras(java.util.Date data) {
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTime(data);
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        cal.set(java.util.Calendar.MINUTE, 0);
+        cal.set(java.util.Calendar.SECOND, 0);
+        cal.set(java.util.Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
     
     private void aplicarEstilos() {
         final int ALTURA_PADRAO = 35;
@@ -573,6 +581,14 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             Date dataDivulgacao = getTxtDataDivulgacao().getDate();
             Object itemSelecionado = getComboParticipantes().getSelectedItem();
 
+            
+            java.util.Date hoje = removerHoras(new java.util.Date()); // Pega a data de hoje sem horas
+            java.util.Date dataInicialSemHoras = removerHoras(dataInicial);
+
+            if (dataInicialSemHoras.before(hoje)) {
+                exibirMensagem("A data inicial não pode ser anterior ao dia de hoje.");
+                return;
+            }
 
             if (titulo.trim().isEmpty()) {
                 exibirMensagem("O campo Título é obrigatório.");
