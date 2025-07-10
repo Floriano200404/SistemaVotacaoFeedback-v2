@@ -29,7 +29,12 @@ public class VotacaoService {
         }
     }
     
+    public int criar(Votacao votacao) throws Exception {
+        return this.votacaoRepository.criar(votacao);
+    }
+    
     public void atualizar(Votacao votacao) throws Exception {
+    // Validações de negócio aqui...
         votacaoRepository.atualizar(votacao);
     }
     

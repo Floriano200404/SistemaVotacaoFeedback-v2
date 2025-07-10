@@ -113,34 +113,34 @@ public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
         return votacoes;
     }
 
-    public void atualizar(Votacao votacao) throws Exception {
-        String sql = "UPDATE votacao SET titulo = ?, descricao = ?, data_inicio = ?, " +
-                     "data_final = ?, data_resultado = ?, id_grupo_destino = ?, status = ? " +
-                     "WHERE id_votacao = ?";
+    public void atualizar(Votacao votacao) throws SQLException, Exception {
+    String sql = "UPDATE votacao SET " +
+                 "titulo = ?, descricao = ?, data_inicio = ?, " +
+                 "data_fim = ?, data_Resultado = ?, id_grupo_destino = ?, " +
+                 "status = ?, pergunta = ? " +
+                 "WHERE id_votacao = ?";
 
-        try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    // O try-catch foi removido daqui. O erro será tratado por quem chamou este método.
+    Connection conn = DatabaseUtil.getConnection();
+    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        // Preenchendo os 9 parâmetros
+        stmt.setString(1, votacao.getTitulo());
+        stmt.setString(2, votacao.getDescricao());
+        stmt.setTimestamp(3, new java.sql.Timestamp(votacao.getDataInicial().getTime()));
+        stmt.setTimestamp(4, new java.sql.Timestamp(votacao.getDataFinal().getTime()));
+        stmt.setTimestamp(5, new java.sql.Timestamp(votacao.getDataResultado().getTime()));
+        stmt.setInt(6, votacao.getIdGrupoDestino());
+        stmt.setString(7, votacao.getStatus());
+        stmt.setString(8, votacao.getPergunta());
+        stmt.setInt(9, votacao.getIdVotacao());
 
-            stmt.setString(1, votacao.getTitulo());
-            stmt.setString(2, votacao.getDescricao());
-            stmt.setTimestamp(3, new java.sql.Timestamp(votacao.getDataInicial().getTime()));
-            stmt.setTimestamp(4, new java.sql.Timestamp(votacao.getDataFinal().getTime()));
-            stmt.setTimestamp(5, new java.sql.Timestamp(votacao.getDataResultado().getTime()));
-            stmt.setInt(6, votacao.getIdGrupoDestino());
-            stmt.setString(7, votacao.getStatus());
-            stmt.setInt(8, votacao.getIdVotacao());
-
-            int linhasAfetadas = stmt.executeUpdate();
-            if (linhasAfetadas > 0) {
-                 System.out.println("Votação com ID " + votacao.getIdVotacao() + " atualizada com sucesso.");
-            } else {
-                 System.out.println("Nenhuma votação encontrada com o ID " + votacao.getIdVotacao() + " para atualizar.");
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar a votação: " + e.getMessage());
-            e.printStackTrace();
+        stmt.executeUpdate();
+    } finally {
+        // Garante que a conexão seja fechada mesmo se houver um erro
+        if (conn != null) {
+            conn.close();
         }
     }
+}
 
 }

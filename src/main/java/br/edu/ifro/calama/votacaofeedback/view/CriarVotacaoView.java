@@ -45,6 +45,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
     public CriarVotacaoView(Usuario usuario, Votacao votacao) {
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.usuarioLogado = usuario;
         this.votacaoParaEditar = votacao;
         
@@ -104,7 +105,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         if (votacaoParaEditar != null) {
             // MODO EDIÇÃO
             TituloPrincipal.setText("EDITAR VOTAÇÃO");
-            btnAvancar.setText("SALVAR ALTERAÇÕES");
+            btnAvancar.setText("Avançar");
             preencherFormulario();
         } else {
             // MODO CRIAÇÃO (comportamento padrão)
@@ -618,46 +619,37 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             }
             
             Grupo grupoSelecionado = (Grupo) itemSelecionado;
-            int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
+        
+        // 2. Prepara o objeto Votacao para ser enviado para a próxima tela
+            Votacao votacaoParaEnviar;
+            if (votacaoParaEditar != null) {
+                // MODO EDIÇÃO: atualiza o objeto existente
+                votacaoParaEditar.setTitulo(titulo);
+                votacaoParaEditar.setDescricao(descricao);
+                votacaoParaEditar.setDataInicial(dataInicial);
+                votacaoParaEditar.setDataFinal(dataFinal);
+                votacaoParaEditar.setDataResultado(dataDivulgacao);
+                votacaoParaEditar.setIdGrupoDestino(grupoSelecionado.getIdGrupo());
+                votacaoParaEnviar = votacaoParaEditar;
+            } else {
+                // MODO CRIAÇÃO: cria um novo objeto
+                Votacao novaVotacao = new Votacao();
+                novaVotacao.setTitulo(titulo);
+                novaVotacao.setDescricao(descricao);
+                novaVotacao.setDataInicial(dataInicial);
+                novaVotacao.setDataFinal(dataFinal);
+                novaVotacao.setDataResultado(dataDivulgacao);
+                novaVotacao.setIdGrupoDestino(grupoSelecionado.getIdGrupo());
+                novaVotacao.setIdCriador(this.usuarioLogado.getId());
+                novaVotacao.setStatus("PENDENTE");
+                votacaoParaEnviar = novaVotacao;
+            }
 
-            if (this.votacaoParaEditar != null) {
-            System.out.println("MODO EDIÇÃO: Atualizando votação existente...");
-
-            this.votacaoParaEditar.setTitulo(titulo);
-            this.votacaoParaEditar.setDescricao(descricao);
-            this.votacaoParaEditar.setDataInicial(dataInicial);
-            this.votacaoParaEditar.setDataFinal(dataFinal);
-            this.votacaoParaEditar.setDataResultado(dataDivulgacao);
-            this.votacaoParaEditar.setIdGrupoDestino(idGrupoSelecionado);
-            this.votacaoParaEditar.setStatus("PENDENTE");
-
-            VotacaoController votacaoController = new VotacaoController();
-            votacaoController.atualizarVotacao(this.votacaoParaEditar);
-
-            
-            exibirMensagemDeSucesso("Votação atualizada com sucesso!");
-
+            // 3. Navega para a tela de opções, passando o objeto preparado
+            CriarVotacaoOpcoesView telaDeOpcoes = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoParaEnviar);
+            telaDeOpcoes.setLocationRelativeTo(null);
+            telaDeOpcoes.setVisible(true);
             this.dispose();
-
-        } else {
-            System.out.println("MODO CRIAÇÃO: Criando nova votação...");
-            
-            Votacao novaVotacao = new Votacao();
-            novaVotacao.setTitulo(titulo);
-            novaVotacao.setDescricao(descricao);
-            novaVotacao.setDataInicial(dataInicial);
-            novaVotacao.setDataFinal(dataFinal);
-            novaVotacao.setDataResultado(dataDivulgacao);
-            novaVotacao.setIdGrupoDestino(idGrupoSelecionado);
-            novaVotacao.setIdCriador(this.usuarioLogado.getId());
-            novaVotacao.setStatus("PENDENTE");
-            
-            CriarVotacaoOpcoesView telaDeCriacaoOpcoes = new CriarVotacaoOpcoesView(this.usuarioLogado, novaVotacao);
-            telaDeCriacaoOpcoes.setLocationRelativeTo(null);
-            telaDeCriacaoOpcoes.setVisible(true);
-
-            this.dispose();
-        }
 
         } catch (Exception e) {
             exibirMensagem("Ocorreu um erro: " + e.getMessage());
