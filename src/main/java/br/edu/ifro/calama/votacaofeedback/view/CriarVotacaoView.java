@@ -572,34 +572,39 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
-
         try {
+            String tituloPlaceholder = "Digite o título da votação";
             String titulo = getTxtTitulo().getText();
+
+            String descricaoPlaceholder = "Descreva aqui os detalhes da sua votação...";
             String descricao = getTxtDescricao().getText();
-            Date dataInicial = getTxtDataInicial().getDate();
-            Date dataFinal = getTxtDataFinal().getDate();
-            Date dataDivulgacao = getTxtDataDivulgacao().getDate();
-            Object itemSelecionado = getComboParticipantes().getSelectedItem();
 
-            
-            java.util.Date hoje = removerHoras(new java.util.Date()); // Pega a data de hoje sem horas
-            java.util.Date dataInicialSemHoras = removerHoras(dataInicial);
-
-            if (dataInicialSemHoras.before(hoje)) {
-                exibirMensagem("A data inicial não pode ser anterior ao dia de hoje.");
-                return;
-            }
-
-            if (titulo.trim().isEmpty()) {
+            if (titulo.trim().isEmpty() || titulo.equals(tituloPlaceholder)) {
                 exibirMensagem("O campo Título é obrigatório.");
                 return;
             }
+
+            if (descricao.equals(descricaoPlaceholder)) {
+                descricao = "";
+            }
+
+            java.util.Date dataInicial = getTxtDataInicial().getDate();
+            java.util.Date dataFinal = getTxtDataFinal().getDate();
+            java.util.Date dataDivulgacao = getTxtDataDivulgacao().getDate();
+            Object itemSelecionado = getComboParticipantes().getSelectedItem();
+
             if (dataInicial == null || dataFinal == null || dataDivulgacao == null) {
                 exibirMensagem("Todos os campos de data devem ser preenchidos.");
                 return;
             }
             if (itemSelecionado == null) {
                 exibirMensagem("Por favor, selecione um grupo de participantes.");
+                return;
+            }
+
+            java.util.Date hoje = removerHoras(new java.util.Date());
+            if (removerHoras(dataInicial).before(hoje)) {
+                exibirMensagem("A data inicial não pode ser anterior ao dia de hoje.");
                 return;
             }
             if (dataFinal.before(dataInicial)) {
@@ -610,35 +615,27 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             Grupo grupoSelecionado = (Grupo) itemSelecionado;
             int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
 
+            java.sql.Date sqlDateInicio = new java.sql.Date(dataInicial.getTime());
+            java.sql.Date sqlDateFim = new java.sql.Date(dataFinal.getTime());
+            java.sql.Date sqlDateDivulgacao = new java.sql.Date(dataDivulgacao.getTime());
+
             Votacao votacaoEmAndamento = new Votacao();
             votacaoEmAndamento.setTitulo(titulo);
-            votacaoEmAndamento.setDescricao(descricao);
-            votacaoEmAndamento.setDataInicial(dataInicial);
-            votacaoEmAndamento.setDataFinal(dataFinal);
-            votacaoEmAndamento.setDataResultado(dataDivulgacao);
+            votacaoEmAndamento.setDescricao(descricao); // envia a descriç~ao se não for preenchido
+            votacaoEmAndamento.setDataInicial(sqlDateInicio);
+            votacaoEmAndamento.setDataFinal(sqlDateFim);
+            votacaoEmAndamento.setDataResultado(sqlDateDivulgacao);
             votacaoEmAndamento.setIdGrupoDestino(idGrupoSelecionado);
             votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
             votacaoEmAndamento.setStatus("PENDENTE");
-            
-             // --- DEBUG ANTES DE ENVIAR ---
-            if (votacaoEmAndamento == null) {
-                javax.swing.JOptionPane.showMessageDialog(this, "ERRO: O objeto Votacao está NULO antes de ser enviado!");
-                return;
-            } else {
-                // Esta caixa de diálogo deve aparecer!
-                javax.swing.JOptionPane.showMessageDialog(this, "TELA 1 ESTÁ ENVIANDO a votação com título: '" + votacaoEmAndamento.getTitulo() + "'");
-            }
-            // --- FIM DO DEBUG ---
 
             CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
-
             telaDeCriacao.setLocationRelativeTo(null);
             telaDeCriacao.setVisible(true);
-
             this.dispose();
 
         } catch (Exception e) {
-            exibirMensagem("Erro nos dados: " + e.getMessage());
+            exibirMensagem("Erro inesperado: " + e.getMessage());
             e.printStackTrace();
         }
 
