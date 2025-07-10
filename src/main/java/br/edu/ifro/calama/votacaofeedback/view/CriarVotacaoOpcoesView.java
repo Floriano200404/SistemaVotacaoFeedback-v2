@@ -423,72 +423,69 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         String pergunta = txtPergunta.getText().trim();
-    if (pergunta.isEmpty()) {
-        exibirMensagem("O campo 'Pergunta' é obrigatório.");
-        return;
-    }
-
-    List<String> novasOpcoes = new ArrayList<>();
-    for (JTextField campo : todosOsCamposDeOpcao) {
-        if (campo.isVisible() && !campo.getText().trim().isEmpty()) {
-            novasOpcoes.add(campo.getText().trim());
+        if (pergunta.isEmpty()) {
+            exibirMensagem("O campo 'Pergunta' é obrigatório.");
+            return;
         }
-    }
-    if (novasOpcoes.size() < 2) {
-        exibirMensagem("A votação deve ter pelo menos 2 opções.");
-        return;
-    }
-
-    VotacaoController controller = new VotacaoController();
-    OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
-    
-    this.votacao.setPergunta(pergunta);
-    
-    if (isEditMode) {
-        try {
-            controller.atualizarVotacao(this.votacao);
-            
-            opcaoRepo.deletarPorIdVotacao(this.votacao.getIdVotacao());
-            
-            for (String descricaoOpcao : novasOpcoes) {
-                OpcaoVoto op = new OpcaoVoto();
-                op.setDescricao(descricaoOpcao);
-                op.setIdVotacao(this.votacao.getIdVotacao());
-                opcaoRepo.criar(op);
-            }
-            
-            exibirMensagemDeSucesso("Votação atualizada com sucesso!");
-            navegarParaMenuPrincipal();
-
-        } catch (Exception e) {
-            exibirMensagem("Erro ao atualizar a votação: " + e.getMessage());
-            e.printStackTrace();
-        }
+        this.votacao.setPergunta(pergunta);
         
-    } else {
-        try {
-            int novoId = controller.criarVotacao(this.votacao);
-            
-            if (novoId > 0) {
+        for (JTextField campo : todosOsCamposDeOpcao) {
+            if (campo.isVisible() && campo.getText().trim().isEmpty()) {
+                exibirMensagem("Preencha os campos em branco.");
+                return;
+            }
+        }
+
+        List<String> novasOpcoes = new ArrayList<>();
+        for (JTextField campo : todosOsCamposDeOpcao) {
+            if (campo.isVisible() && !campo.getText().trim().isEmpty()) {
+                novasOpcoes.add(campo.getText().trim());
+            }
+        }
+        if (novasOpcoes.size() < 2) {
+            exibirMensagem("A votação deve ter pelo menos 2 opções.");
+            return;
+        }
+
+        VotacaoController controller = new VotacaoController();
+        OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
+
+        if (isEditMode) {
+            try {
+                controller.atualizarVotacao(this.votacao);
+                opcaoRepo.deletarPorIdVotacao(this.votacao.getIdVotacao());
                 for (String descricaoOpcao : novasOpcoes) {
                     OpcaoVoto op = new OpcaoVoto();
                     op.setDescricao(descricaoOpcao);
-                    op.setIdVotacao(novoId);
+                    op.setIdVotacao(this.votacao.getIdVotacao());
                     opcaoRepo.criar(op);
                 }
-                
-                exibirMensagemDeSucesso("Votação criada com sucesso!");
+                exibirMensagemDeSucesso("Votação atualizada com sucesso!");
                 navegarParaMenuPrincipal();
-
-            } else {
-                exibirMensagem("Falha ao salvar os dados principais da votação.");
+            } catch (Exception e) {
+                exibirMensagem("Erro ao atualizar a votação: " + e.getMessage());
+                e.printStackTrace();
             }
-
-        } catch (Exception e) {
-            exibirMensagem("Erro ao criar a votação: " + e.getMessage());
-            e.printStackTrace();
+        } else {
+            try {
+                int novoId = controller.criarVotacao(this.votacao);
+                if (novoId > 0) {
+                    for (String descricaoOpcao : novasOpcoes) {
+                        OpcaoVoto op = new OpcaoVoto();
+                        op.setDescricao(descricaoOpcao);
+                        op.setIdVotacao(novoId);
+                        opcaoRepo.criar(op);
+                    }
+                    exibirMensagemDeSucesso("Votação criada com sucesso!");
+                    navegarParaMenuPrincipal();
+                } else {
+                    exibirMensagem("Falha ao salvar os dados principais da votação.");
+                }
+            } catch (Exception e) {
+                exibirMensagem("Erro ao criar a votação: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
-    }
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
