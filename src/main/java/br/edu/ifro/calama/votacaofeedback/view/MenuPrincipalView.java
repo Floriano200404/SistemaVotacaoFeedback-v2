@@ -7,18 +7,14 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import java.awt.event.ActionListener;
 
 /**
  *
  * @author Aluno
  */
 public class MenuPrincipalView extends javax.swing.JFrame {
-//private java.util.List<javax.swing.JButton> botoesDoMenu;
-//    private javax.swing.JButton botaoAtivo;
-    /**
-     * Creates new form MenuPrincipalView
-     */
-   
+
     private Usuario usuariologado;
     private Votacao votacaoEmAndamento;
     
@@ -56,38 +52,25 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             
     
 
-linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
+    linhaDeCima.setOpaque(false);
 
-javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-linhaDeBaixo.setOpaque(false);
+    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+    linhaDeBaixo.setOpaque(false);
 
-// 2. Adiciona os 3 cards de cima na primeira prateleira
-linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
 
-// 3. Adiciona os 2 cards de baixo na segunda prateleira
-linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
 
-// Garante que o painel principal dos cards vai empilhar na VERTICAL
-painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-
-// 1. Adiciona um "calço" de 20 pixels no topo para criar uma margem.
-painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
-
-// 2. Adiciona a fileira de cima.
-painelDosCards.add(linhaDeCima);
-
-// 3. Adiciona um "calço" de 15 pixels ENTRE as fileiras.
-painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
-
-// 4. Adiciona a fileira de baixo.
-painelDosCards.add(linhaDeBaixo);
-
-// 5. Adiciona a "mola" no final para empurrar tudo para cima e ocupar o espaço vazio.
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-}
+    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+    painelDosCards.add(linhaDeCima);
+    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+    painelDosCards.add(linhaDeBaixo);
+    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+    }
     
 
     /**
@@ -162,6 +145,11 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         painelHeaderDireita.add(labelNomeUsuario);
 
         labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseClicked(evt);
+            }
+        });
         painelHeaderDireita.add(labelIconePerfil);
 
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
@@ -252,34 +240,31 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
-        if (painelSidebar.getWidth() > 0) {
-            try {
-                // Animação para fechar, começando da largura atual
-                for (int i = painelSidebar.getWidth(); i >= 0; i--) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight()); 
-                    Thread.sleep(1); 
+
+        new Thread(new Runnable() {
+        @Override
+        public void run() {
+            if (painelSidebar.getWidth() > 0) {
+                try {
+                    for (int i = painelSidebar.getWidth(); i >= 0; i--) {
+                        painelSidebar.setSize(i, painelSidebar.getHeight()); 
+                        Thread.sleep(1); 
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
-            }
-        } else {
-            try {
-                // Animação para abrir, de 0 até a largura desejada (210)
-                for (int i = 0; i <= 210; i++) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight());
-                    Thread.sleep(1);
+            } else {
+                try {
+                    for (int i = 0; i <= 210; i++) {
+                        painelSidebar.setSize(i, painelSidebar.getHeight());
+                        Thread.sleep(1);
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
             }
         }
-    }
-}).start();
+    }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
@@ -301,23 +286,40 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-    java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-       MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
+        telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
                // TODO add your handling code here:
     }//GEN-LAST:event_criarVotacaoMouseClicked
+
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
+        ActionListener acaoDeLogout = e -> {
+        new LoginView().setVisible(true);
+        this.dispose();
+        System.out.println("Logout realizado. Janela principal fechada.");
+    };
+
+    PerfilView perfil = new PerfilView(
+        this,
+        this.usuariologado.getNome(),
+        this.usuariologado.getEmail(),
+        this.usuariologado.getCpf(),
+        this.usuariologado.getMatricula(),
+        this.usuariologado.getCurso(),
+        acaoDeLogout
+    );
+    perfil.setVisible(true);
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     // O card continua sendo um JPanel

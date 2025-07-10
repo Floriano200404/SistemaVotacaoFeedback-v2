@@ -21,23 +21,26 @@ public class GrupoRepository {
 
 
     public List<Grupo> buscarTodos() throws SQLException, Exception {
-      
-        String sql = "SELECT id_Grupos, nome FROM grupos ORDER BY nome";
-        List<Grupo> grupos = new ArrayList<>();
+    String sql = "SELECT id_Grupos, nome, tipo_grupo FROM grupos WHERE UPPER(nome) NOT IN ('PROFESSOR', 'SERVIDOR') ORDER BY nome";
+    
+    List<Grupo> grupos = new ArrayList<>();
 
-        try (Connection conexao = DatabaseUtil.getConnection();
-             PreparedStatement ps = conexao.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            
-            while (rs.next()) {
-                Grupo grupo = new Grupo();
-                grupo.setIdGrupo(rs.getInt("id_Grupos"));
-                grupo.setNome(rs.getString("nome"));
-                grupos.add(grupo);
-            }
+    try (Connection conexao = DatabaseUtil.getConnection();
+         PreparedStatement ps = conexao.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        
+        while (rs.next()) {
+            Grupo grupo = new Grupo();
+            grupo.setIdGrupo(rs.getInt("id_Grupos"));
+            grupo.setNome(rs.getString("nome"));
+            grupo.setTipo_grupo(rs.getString("tipo_grupo"));
+            grupos.add(grupo);
         }
+    }
         return grupos;
     }
+
+
     public Grupo buscarPorId(int id) throws Exception {
     
     String sql = "SELECT * FROM grupos WHERE id_Grupos = ?";
@@ -46,10 +49,8 @@ public class GrupoRepository {
     try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
          java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        
         ps.setInt(1, id);
 
-        
         try (java.sql.ResultSet rs = ps.executeQuery()) {
             
             if (rs.next()) {
@@ -62,5 +63,5 @@ public class GrupoRepository {
         }
     }
     return null; 
-}
+    }
 }

@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class OpcaoVotoRepository {
 
     public void criar(OpcaoVoto opcao) throws SQLException, Exception {
-        // Adapte o nome da tabela e colunas se forem diferentes no seu banco
         String sql = "INSERT INTO opcao_voto (descricao, id_votacao) VALUES (?, ?)";
 
         try (Connection conexao = DatabaseUtil.getConnection();

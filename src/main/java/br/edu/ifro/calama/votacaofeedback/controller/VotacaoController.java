@@ -29,45 +29,43 @@ public class VotacaoController {
 
     public void salvarVotacao() {
         try {
-            // 1. Coleta dados da View usando os nomes do seu Navigator
             String titulo = view.getTxtTitulo().getText();
             String descricao = view.getTxtDescricao().getText();
-            String dataInicialStr = view.getTxtDataInicial().getText();
-            String dataFinalStr = view.getTxtDataFinal().getText();
-            String dataDivulgacaoStr = view.getTxtDataDivulgacao().getText();
+            Date dataInicial = view.getTxtDataInicial().getDate();
+            Date dataFinal = view.getTxtDataFinal().getDate();
+            Date dataDivulgacao = view.getTxtDataDivulgacao().getDate();
             
-            // 2. Validação simples
-            if (titulo.trim().isEmpty() || dataInicialStr.trim().length() < 10) {
-                view.exibirMensagem("Título e datas são obrigatórios.");
+            if (titulo.trim().isEmpty()) {
+            view.exibirMensagem("O campo Título é obrigatório.");
+            return;
+            }
+            if (dataInicial == null || dataFinal == null || dataDivulgacao == null) {
+                view.exibirMensagem("Todos os campos de data devem ser preenchidos.");
+                return;
+            }
+            if (dataFinal.before(dataInicial)) {
+                view.exibirMensagem("A data final não pode ser anterior à data inicial.");
                 return;
             }
 
-            // 3. Converte as datas
-            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataInicio = formatador.parse(dataInicialStr);
-            Date dataFim = formatador.parse(dataFinalStr);
-            Date dataDivulgacao = formatador.parse(dataDivulgacaoStr);
-
-            // 4. Monta o objeto Votacao
             Votacao novaVotacao = new Votacao();
             novaVotacao.setTitulo(titulo);
             novaVotacao.setDescricao(descricao);
-            novaVotacao.setDataInicio(dataInicio);
-            novaVotacao.setDataFim(dataFim);
+            novaVotacao.setDataInicial(dataInicial);
+            novaVotacao.setDataFinal(dataFinal);
             novaVotacao.setDataResultado(dataDivulgacao);
             novaVotacao.setIdCriador(this.usuarioLogado.getId());
-            novaVotacao.setIdGrupoDestino(1); // Simulado por enquanto
-            novaVotacao.setStatus("Aberta"); // Status inicial padrão
+            novaVotacao.setIdGrupoDestino(1);
+            novaVotacao.setStatus("PENDENTE");
 
-            // 5. Manda para o Repositório salvar
             VotacaoRepository repository = new VotacaoRepository();
             repository.criar(novaVotacao);
             
-            // 6. Feedback e navegação
             view.exibirMensagemDeSucesso("Votação criada com sucesso!");
             Timer timer = new Timer(1500, e -> {
                 new MenuPrincipalView(this.usuarioLogado).setVisible(true);
                 view.dispose();
+                
             });
             timer.setRepeats(false);
             timer.start();
