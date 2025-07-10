@@ -492,7 +492,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, this.votacao);
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, this.votacao, this.isEditMode);
         telaCriarVotacao.setLocationRelativeTo(null);
         telaCriarVotacao.setVisible(true);
         this.dispose();

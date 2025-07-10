@@ -34,14 +34,17 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
     private Usuario usuarioLogado;
     private Votacao votacaoParaEditar;
+    private boolean isEditando;
 
     
 
-    public CriarVotacaoView(Usuario usuario, Votacao votacao) {
+    public CriarVotacaoView(Usuario usuario, Votacao votacao, boolean isEditando) {
+        System.out.println("[DEBUG CriarVotacaoView] Recebeu isEditando = " + isEditando);
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.usuarioLogado = usuario;
         this.votacaoParaEditar = votacao;
+        this.isEditando = isEditando;
         
         if (this.votacaoParaEditar != null) {
             System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar foi definido com o título: " + this.votacaoParaEditar.getTitulo());
@@ -58,12 +61,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         inicializarMenuLateral();
         txtDescricao.setLineWrap(true);
         txtDescricao.setWrapStyleWord(true);
-        
-        PlaceHolderUtil.setPlaceholder(txtTitulo, "Digite o título da votação");
-        PlaceHolderUtil.setPlaceholder(txtDescricao, "Descreva aqui os detalhes da sua votação...");
-        txtDataInicial.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
-        txtDataFinal.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
-        txtDataDivulgacao.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
         
         java.awt.event.MouseAdapter focusRemoverListener = new java.awt.event.MouseAdapter() {
             @Override
@@ -88,7 +85,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         this.repaint();
         this.getContentPane().addMouseListener(focusRemoverListener);
 
-        inicializarMenuLateral();
         javax.swing.SwingUtilities.invokeLater(() -> {
             carregarGrupos();
             configurarModoTela();
@@ -96,13 +92,21 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }
     
     private void configurarModoTela() {
-        if (votacaoParaEditar != null) {
+        if (this.isEditando) {
             TituloPrincipal.setText("EDITAR VOTAÇÃO");
-            btnAvancar.setText("Avançar");
-            preencherFormulario();
+            btnAvancar.setText("AVANÇAR");
+            if (votacaoParaEditar != null){
+                preencherFormulario();
+            }
         } else {
             TituloPrincipal.setText("CRIAR VOTAÇÃO");
             btnAvancar.setText("AVANÇAR");
+            
+            PlaceHolderUtil.setPlaceholder(txtTitulo, "Digite o título da votação");
+            PlaceHolderUtil.setPlaceholder(txtDescricao, "Descreva aqui os detalhes da sua votação...");
+            txtDataInicial.setDate(new java.util.Date());
+            txtDataFinal.setDate(new java.util.Date());
+            txtDataDivulgacao.setDate(new java.util.Date());
         }
     }
      

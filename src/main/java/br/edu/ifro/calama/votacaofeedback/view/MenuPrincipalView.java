@@ -257,7 +257,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, votacaoEmAndamento);
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, null, false);
 
         telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);

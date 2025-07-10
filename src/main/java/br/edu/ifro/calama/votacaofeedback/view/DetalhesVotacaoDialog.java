@@ -251,7 +251,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         }
         
         if (this.votacaoAtual != null && this.usuarioLogado != null) {
-            CriarVotacaoView telaDeEdicao = new CriarVotacaoView(this.usuarioLogado, this.votacaoAtual);
+            CriarVotacaoView telaDeEdicao = new CriarVotacaoView(this.usuarioLogado, this.votacaoAtual, true);
             telaDeEdicao.setLocationRelativeTo(null);
             telaDeEdicao.setVisible(true);
 
