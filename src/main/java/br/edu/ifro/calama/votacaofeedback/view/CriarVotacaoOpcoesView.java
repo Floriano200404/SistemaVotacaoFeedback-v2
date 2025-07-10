@@ -9,6 +9,7 @@ import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
+import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.event.ActionListener;
@@ -449,23 +450,19 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         VotacaoController controller = new VotacaoController();
         OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
+        VotacaoService service = new VotacaoService();
 
         if (isEditMode) {
-            try {
+                try {
                 controller.atualizarVotacao(this.votacao);
-                opcaoRepo.deletarPorIdVotacao(this.votacao.getIdVotacao());
-                for (String descricaoOpcao : novasOpcoes) {
-                    OpcaoVoto op = new OpcaoVoto();
-                    op.setDescricao(descricaoOpcao);
-                    op.setIdVotacao(this.votacao.getIdVotacao());
-                    opcaoRepo.criar(op);
-                }
+                service.sincronizarOpcoes(this.votacao.getIdVotacao(), novasOpcoes);
                 exibirMensagemDeSucesso("Votação atualizada com sucesso!");
                 navegarParaMenuPrincipal();
-            } catch (Exception e) {
-                exibirMensagem("Erro ao atualizar a votação: " + e.getMessage());
-                e.printStackTrace();
-            }
+
+        } catch (Exception e) {
+            exibirMensagem("Erro ao atualizar a votação: " + e.getMessage());
+            e.printStackTrace();
+        }
         } else {
             try {
                 int novoId = controller.criarVotacao(this.votacao);
