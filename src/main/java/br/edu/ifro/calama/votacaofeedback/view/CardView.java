@@ -31,7 +31,7 @@ public void setDados(Votacao votacao) {
     if (votacao.getDataInicio() != null) {
         returdadosdt.setText(sdf.format(votacao.getDataInicio()));
     } else {
-        returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
+        returdadosdt.setText("N/A"); 
     }
 
     if (votacao.getDataFim() != null) {

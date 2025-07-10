@@ -26,7 +26,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     public DetalhesVotacaoDialog(Frame parent, boolean modal, AprovarVotacaoView telaDeAprovacao) {
     super(parent, modal);
     initComponents();
-    this.telaDeOrigem = origem; // Agora ele sabe o que 'origem' significa
+    this.telaDeOrigem = origem; 
 }
 
     private DetalhesVotacaoDialog(JFrame jFrame, boolean b) {
