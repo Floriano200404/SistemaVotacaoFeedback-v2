@@ -3,66 +3,74 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Aluno
  */
 public class MenuPrincipalView extends javax.swing.JFrame {
-//private java.util.List<javax.swing.JButton> botoesDoMenu;
-//    private javax.swing.JButton botaoAtivo;
-    /**
-     * Creates new form MenuPrincipalView
-     */
-   
-   public MenuPrincipalView() {
+
+    private Usuario usuariologado;
+    private Votacao votacaoEmAndamento;
+    
+   public MenuPrincipalView(Usuario usuario) {
     initComponents();
     
+    this.usuariologado = usuario;
+    
+    if (this.usuariologado != null) {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
+    } else {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu um usuário NULO!");
+    }
+    
+    if (this.usuariologado != null) {
+
+        String nomeDoUsuario = this.usuariologado.getNome();
+        
+        labelNomeUsuario.setText(nomeDoUsuario);
+        
+        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+   
+    }
     inicializarMenuLateral();
-// 1. Cria os painéis para as duas linhas ("prateleiras")
-// Usamos FlowLayout.CENTER para centralizar os cards em cada linha.
-javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-linhaDeCima.setOpaque(false); // Deixa a prateleira transparente, mostrando o fundo cinza
 
-javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-linhaDeBaixo.setOpaque(false);
+    AprovarVotacaoView telaDeAprovacao = new AprovarVotacaoView();
 
-// 2. Adiciona os 3 cards de cima na primeira prateleira
-linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+ 
+    painelConteudo.add(telaDeAprovacao, "cardAprovar");
+   
+    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
 
-// 3. Adiciona os 2 cards de baixo na segunda prateleira
-linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+            
+    
 
-// 4. Adiciona as duas prateleiras ao painel principal dos cards, que as empilhará
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-  painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(linhaDeCima);
-painelDosCards.add(linhaDeBaixo);
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
- painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-painelDosCards.add(javax.swing.Box.createVerticalGlue());
-}
+    linhaDeCima.setOpaque(false);
+
+    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+    linhaDeBaixo.setOpaque(false);
+
+    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+
+    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+
+    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+    painelDosCards.add(linhaDeCima);
+    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+    painelDosCards.add(linhaDeBaixo);
+    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+    }
     
 
     /**
@@ -82,6 +90,7 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         labelNomeUsuario = new javax.swing.JLabel();
         labelIconePerfil = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
+        cardDashboard = new javax.swing.JPanel();
         painelTopoConteudo = new javax.swing.JPanel();
         txtbemVindo = new javax.swing.JLabel();
         textGuia = new javax.swing.JTextArea();
@@ -97,6 +106,8 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1480, 800));
+        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -134,13 +145,20 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         painelHeaderDireita.add(labelNomeUsuario);
 
         labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseClicked(evt);
+            }
+        });
         painelHeaderDireita.add(labelIconePerfil);
 
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
-        painelConteudo.setLayout(new java.awt.BorderLayout());
+        painelConteudo.setLayout(new java.awt.CardLayout());
+
+        cardDashboard.setLayout(new java.awt.BorderLayout());
 
         painelTopoConteudo.setLayout(new javax.swing.BoxLayout(painelTopoConteudo, javax.swing.BoxLayout.Y_AXIS));
 
@@ -160,11 +178,13 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
         textGuia.setOpaque(false);
         painelTopoConteudo.add(textGuia);
 
-        painelConteudo.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
+        cardDashboard.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
 
         painelDosCards.setOpaque(false);
         painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-        painelConteudo.add(painelDosCards, java.awt.BorderLayout.CENTER);
+        cardDashboard.add(painelDosCards, java.awt.BorderLayout.CENTER);
+
+        painelConteudo.add(cardDashboard, "card4");
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -220,45 +240,41 @@ painelDosCards.add(javax.swing.Box.createVerticalGlue());
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
-        if (painelSidebar.getWidth() > 0) {
-            try {
-                // Animação para fechar, começando da largura atual
-                for (int i = painelSidebar.getWidth(); i >= 0; i--) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight()); 
-                    Thread.sleep(1); 
+
+        new Thread(new Runnable() {
+        @Override
+        public void run() {
+            if (painelSidebar.getWidth() > 0) {
+                try {
+                    for (int i = painelSidebar.getWidth(); i >= 0; i--) {
+                        painelSidebar.setSize(i, painelSidebar.getHeight()); 
+                        Thread.sleep(1); 
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
-            }
-        } else {
-            try {
-                // Animação para abrir, de 0 até a largura desejada (210)
-                for (int i = 0; i <= 210; i++) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight());
-                    Thread.sleep(1);
+            } else {
+                try {
+                    for (int i = 0; i <= 210; i++) {
+                        painelSidebar.setSize(i, painelSidebar.getHeight());
+                        Thread.sleep(1);
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
             }
         }
-    }
-}).start();
+    }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-           CriarVotacaoView telaDeCriacao = new CriarVotacaoView();
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, votacaoEmAndamento);
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
- // TODO add your handling code here:
+        this.dispose();
+
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
@@ -270,22 +286,40 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        // TODO add your handling code here:
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardAprovar");   // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-       MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
 
-    // 2. Torna a nova janela visível.
-    telaDeCriacao.setVisible(true);
+        telaDeCriacao.setVisible(true);
 
-    // 3. Fecha a janela atual do menu principal de forma limpa.
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
                // TODO add your handling code here:
     }//GEN-LAST:event_criarVotacaoMouseClicked
+
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
+        ActionListener acaoDeLogout = e -> {
+        new LoginView().setVisible(true);
+        this.dispose();
+        System.out.println("Logout realizado. Janela principal fechada.");
+    };
+
+    PerfilView perfil = new PerfilView(
+        this,
+        this.usuariologado.getNome(),
+        this.usuariologado.getEmail(),
+        this.usuariologado.getCpf(),
+        this.usuariologado.getMatricula(),
+        this.usuariologado.getCurso(),
+        acaoDeLogout
+    );
+    perfil.setVisible(true);
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     // O card continua sendo um JPanel
@@ -416,26 +450,27 @@ private void adicionarListeners(javax.swing.JButton botao) {
 
 //     * @param args the command line arguments
 //     */
- public static void main(String args[]) {
+ //public static void main(String args[]) {
     /* Set the FlatLaf look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    try {
-        javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
-    } catch( Exception ex ) {
-        System.err.println( "Failed to initialize LaF" );
-    }
+    //try {
+       // javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
+    //} catch( Exception ex ) {
+       // System.err.println( "Failed to initialize LaF" );
+    //}
     //</editor-fold>
 
     /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new MenuPrincipalView().setVisible(true);
-        }
-    });
-}
+    //java.awt.EventQueue.invokeLater(new Runnable() {
+        //public void run() {
+            //new MenuPrincipalView().setVisible(true);
+        //}
+    //});
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JPanel cardDashboard;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;

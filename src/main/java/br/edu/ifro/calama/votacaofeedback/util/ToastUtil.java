@@ -27,13 +27,20 @@ import javax.swing.Timer;
 //para deixar a mensagem de erro ou sucesso em baixo dos botões
 public class ToastUtil extends JDialog {
 
+    public enum ToastPosition {
+        TOP_RIGHT,
+        BOTTOM_RIGHT,
+        TOP_CENTER,
+        BOTTOM_CENTER
+    }
+    
     public enum ToastType {
         SUCCESS, ERROR
     }
 
     public static final int DURATION = 2500; 
    
-    public ToastUtil(JFrame owner, String message, ToastType type) {
+    public ToastUtil(JFrame owner, String message, ToastType type, ToastPosition position) {
         super(owner);
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
@@ -80,21 +87,47 @@ public class ToastUtil extends JDialog {
         add(panel);
         pack();
 
-        if (owner != null) {
-            Point ownerLocation = owner.getLocationOnScreen();
-            int x = ownerLocation.x + owner.getWidth() - getWidth() - 15;
-            int y = ownerLocation.y + owner.getHeight() - getHeight() - 40;
-            setLocation(x, y);
-        } else {
-            Rectangle screenBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-            int x = screenBounds.width - getWidth() - 15;
-            int y = screenBounds.height - getHeight() - 15;
-            setLocation(x, y);
+        int x, y;
+    
+    // Calcula as coordenadas com base no JFrame "dono"
+    if (owner != null) {
+        Point ownerLocation = owner.getLocationOnScreen();
+        int ownerX = ownerLocation.x;
+        int ownerY = ownerLocation.y;
+        int ownerWidth = owner.getWidth();
+        int ownerHeight = owner.getHeight();
+
+        switch (position) {
+            case TOP_CENTER:
+                x = ownerX + (ownerWidth - getWidth()) / 2;
+                y = ownerY + 40;
+                break;
+            case BOTTOM_CENTER:
+                x = ownerX + (ownerWidth - getWidth()) / 2;
+                y = ownerY + ownerHeight - getHeight() - 40;
+                break;
+            case BOTTOM_RIGHT:
+                x = ownerX + ownerWidth - getWidth() - 15;
+                y = ownerY + ownerHeight - getHeight() - 40;
+                break;
+            case TOP_RIGHT:
+            default: // Posição padrão
+                x = ownerX + ownerWidth - getWidth() - 15;
+                y = ownerY + 40;
+                break;
         }
-    }
+        } else { // Calcula as coordenadas com base na tela inteira
+            Rectangle screenBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+            // Lógica similar para a tela inteira, se necessário (vamos focar no owner por enquanto)
+            x = screenBounds.width - getWidth() - 15;
+            y = screenBounds.height - getHeight() - 15;
+        }
+
+    setLocation(x, y);
+}
 
     public ToastUtil(JFrame owner, JComponent anchor, String message, ToastType type) {
-    this(owner, message, type);
+    this(owner, message, type, ToastPosition.TOP_RIGHT);
 
     if (anchor != null) {
         Point anchorLocation = anchor.getLocationOnScreen();
@@ -112,19 +145,30 @@ public class ToastUtil extends JDialog {
         this.setLocation(x, y);
     }
     }
-
+    
+    private void fadeOut() {
+    // Este Timer é específico para a ANIMAÇÃO de fade-out.
+    // Ele vai rodar a cada 50ms para diminuir a opacidade gradualmente.
+    Timer fadeTimer = new Timer(50, e -> {
+        // Pega a opacidade atual e a reduz um pouco
+        float novaOpacidade = getOpacity() - 0.1f;
+        
+        if (novaOpacidade <= 0) {
+            // Se ficou totalmente transparente, para o timer e fecha a janela
+            ((Timer) e.getSource()).stop();
+            dispose();
+        } else {
+            // Se ainda não, apenas atualiza a opacidade
+            setOpacity(novaOpacidade);
+        }
+    });
+    fadeTimer.setRepeats(true); // O timer da animação precisa repetir
+    fadeTimer.start();
+}
+    
     public void display() {
         Timer timer = new Timer(DURATION, e -> {
-            float opacity = 1.0f;
-            while (opacity > 0.0f) {
-                setOpacity(opacity);
-                opacity -= 0.1f;
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException ex) {
-                }
-            }
-            dispose();
+            fadeOut();
         });
         timer.setRepeats(false);
         timer.start();

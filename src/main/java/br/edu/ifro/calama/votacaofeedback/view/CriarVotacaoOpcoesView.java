@@ -4,6 +4,26 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
+import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoView;
+import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.Timer;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+
 /**
  *
  * @author floriano
@@ -11,13 +31,43 @@ package br.edu.ifro.calama.votacaofeedback.view;
 public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
+    private Usuario usuarioLogado;
+    private Votacao votacaoEmAndamento;
+    private List<JLabel> todosOsLabelsDeOpcao;
+    private List<JTextField> todosOsCamposDeOpcao;
+    private int opcoesVisiveis = 2;
 
     /**
-     * Creates new form CriarVotacaoOpcoesView
+     * autor Athos
      */
-    public CriarVotacaoOpcoesView() {
+    public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) {
         initComponents();
+        
+        this.usuarioLogado = usuario;
+        this.votacaoEmAndamento = votacao;
+        
+        if (this.usuarioLogado != null) {
+            labelNomeUsuario.setText(this.usuarioLogado.getNome());
+        }
+        
+        todosOsLabelsDeOpcao = Arrays.asList(TituloO1, TituloO2, TituloO3, TituloO4, TituloO5);
+        todosOsCamposDeOpcao = Arrays.asList(txtOpcao1, txtOpcao2, txtOpcao3, txtOpcao4, txtOpcao5);
+        
+        for (int i = 2; i < todosOsLabelsDeOpcao.size(); i++) {
+        todosOsLabelsDeOpcao.get(i).setVisible(false);
+        todosOsCamposDeOpcao.get(i).setVisible(false);
+    }
         inicializarMenuLateral();
+    }
+        
+    public void exibirMensagem(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
+
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
     }
 
     /**
@@ -48,13 +98,19 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         TituloPrincipal = new javax.swing.JLabel();
         TituloP = new javax.swing.JLabel();
         txtPergunta = new javax.swing.JTextField();
-        TituloO1 = new javax.swing.JLabel();
-        txtOpcao1 = new javax.swing.JTextField();
-        TituloO2 = new javax.swing.JLabel();
-        txtOpcao2 = new javax.swing.JTextField();
         btnAdicionarOpcao = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
+        TituloO1 = new javax.swing.JLabel();
+        TituloO2 = new javax.swing.JLabel();
+        TituloO3 = new javax.swing.JLabel();
+        TituloO4 = new javax.swing.JLabel();
+        TituloO5 = new javax.swing.JLabel();
+        txtOpcao1 = new javax.swing.JTextField();
+        txtOpcao2 = new javax.swing.JTextField();
+        txtOpcao3 = new javax.swing.JTextField();
+        txtOpcao4 = new javax.swing.JTextField();
+        txtOpcao5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,6 +150,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         painelHeaderDireita.add(labelNomeUsuario);
 
         labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseClicked(evt);
+            }
+        });
         painelHeaderDireita.add(labelIconePerfil);
 
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
@@ -147,15 +208,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         TituloP.setText("Pergunta");
 
-        txtPergunta.setText("jTextField1");
-
-        TituloO1.setText("Opção 1");
-
-        txtOpcao1.setText("jTextField2");
-
-        TituloO2.setText("Opção 2");
-
-        txtOpcao2.setText("jTextField3");
+        txtPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPerguntaActionPerformed(evt);
+            }
+        });
 
         btnAdicionarOpcao.setText("Adicionar Opção.");
         btnAdicionarOpcao.addActionListener(new java.awt.event.ActionListener() {
@@ -165,62 +222,104 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
+
+        TituloO1.setText("Opção 1");
+
+        TituloO2.setText("Opção 2");
+
+        TituloO3.setText("Opção 3");
+
+        TituloO4.setText("Opção 4");
+
+        TituloO5.setText("Opção 5");
+
+        txtOpcao3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtOpcao3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PainelConteudoLayout = new javax.swing.GroupLayout(PainelConteudo);
         PainelConteudo.setLayout(PainelConteudoLayout);
         PainelConteudoLayout.setHorizontalGroup(
             PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelConteudoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(TituloPrincipal)
-                .addGap(22, 22, 22))
             .addGroup(PainelConteudoLayout.createSequentialGroup()
-                .addComponent(btnAdicionarOpcao)
-                .addGap(27, 27, 27)
-                .addComponent(btnVoltar)
-                .addGap(18, 18, 18)
-                .addComponent(btnFinalizar)
-                .addGap(0, 44, Short.MAX_VALUE))
-            .addGroup(PainelConteudoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(1106, 1106, 1106)
+                        .addComponent(TituloPrincipal))
                     .addGroup(PainelConteudoLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TituloP)
-                            .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TituloO1)
-                            .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TituloO2))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnAdicionarOpcao)
+                            .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(TituloO1)
+                                .addComponent(TituloP)
+                                .addComponent(txtPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(TituloO5)
+                                .addComponent(TituloO4)
+                                .addComponent(TituloO3)
+                                .addComponent(TituloO2)
+                                .addComponent(txtOpcao1)
+                                .addComponent(txtOpcao2)
+                                .addComponent(txtOpcao3)
+                                .addComponent(txtOpcao5)
+                                .addComponent(txtOpcao4))))
+                    .addGroup(PainelConteudoLayout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(btnVoltar)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnFinalizar)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         PainelConteudoLayout.setVerticalGroup(
             PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PainelConteudoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(TituloPrincipal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(TituloP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TituloO1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TituloO2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtOpcao2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloO3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloO4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TituloO5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtOpcao5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAdicionarOpcao)
+                .addGap(18, 18, 18)
                 .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdicionarOpcao)
                     .addComponent(btnVoltar)
                     .addComponent(btnFinalizar))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(292, Short.MAX_VALUE))
         );
 
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
@@ -229,14 +328,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
-                // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
+               
                 if (painelSidebar.getWidth() > 0) {
                     try {
-                        // Animação para fechar, começando da largura atual
+                        
                         for (int i = painelSidebar.getWidth(); i >= 0; i--) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -246,7 +345,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                     }
                 } else {
                     try {
-                        // Animação para abrir, de 0 até a largura desejada (210)
                         for (int i = 0; i <= 210; i++) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -260,12 +358,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView();
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
 
-        // 2. Torna a nova janela visível.
+        telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
 
-        // 3. Fecha a janela atual do menu principal de forma limpa.
         this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
@@ -285,46 +382,156 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
-    private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
+    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao3ActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcao3ActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        try {
+            if (todosOsCamposDeOpcao.size() < 2) {
+                exibirMensagem("Erro inesperado: campos de opção não encontrados.");
+                return;
+            }
+
+            String textoOpcao1 = todosOsCamposDeOpcao.get(0).getText().trim();
+            String textoOpcao2 = todosOsCamposDeOpcao.get(1).getText().trim();
+
+            if (textoOpcao1.isEmpty() || textoOpcao2.isEmpty()) {
+                exibirMensagem("Opções de voto são obrigatórias.");
+                return;
+            }
+
+            for (int i = 2; i < todosOsCamposDeOpcao.size(); i++) {
+                JTextField campoExtra = todosOsCamposDeOpcao.get(i);
+
+                if (campoExtra.isVisible() && campoExtra.getText().trim().isEmpty()) {
+                    exibirMensagem("Opções de voto são obrigatórias.");
+                    return;
+                }
+            }
+
+            String pergunta = txtPergunta.getText();
+
+            if (pergunta.trim().isEmpty()) {
+                exibirMensagem("O campo 'Pergunta' é obrigatório.");
+                return;
+            }
+
+            this.votacaoEmAndamento.setPergunta(pergunta);
+            this.votacaoEmAndamento.setStatus("PENDENTE"); // Definimos o status final
+
+            VotacaoRepository votacaoRepository = new VotacaoRepository();
+            int idNovaVotacao = 0;
+            try {
+                idNovaVotacao = votacaoRepository.criar(this.votacaoEmAndamento);
+            } catch (Exception ex) {
+                System.getLogger(CriarVotacaoOpcoesView.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+
+            if (idNovaVotacao > 0) {
+
+                OpcaoVotoRepository opcaoRepository = new OpcaoVotoRepository();
+
+                for (JTextField campoOpcao : todosOsCamposDeOpcao) {
+                    if (campoOpcao.isVisible() && !campoOpcao.getText().trim().isEmpty()) {
+                        OpcaoVoto opcao = new OpcaoVoto();
+                        opcao.setDescricao(campoOpcao.getText().trim());
+                        opcao.setIdVotacao(idNovaVotacao);
+                        opcaoRepository.criar(opcao);
+                    }
+                }
+
+                exibirMensagemDeSucesso("Votação criada com sucesso!");
+                Timer timer = new Timer(1500, e -> {
+                    new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+                    this.dispose();
+                    this.setLocationRelativeTo(null);
+                });
+                timer.setRepeats(false);
+                timer.start();
+
+            } else {
+                exibirMensagem("Falha ao salvar os dados principais da votação.");
+            }
+
+        } catch (Exception e) {
+            exibirMensagem("Erro ao finalizar a votação: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, votacaoEmAndamento);
+
+        telaCriarVotacao.setLocationRelativeTo(null);
+        telaCriarVotacao.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
+
+        if (opcoesVisiveis < todosOsLabelsDeOpcao.size()) {
+            todosOsLabelsDeOpcao.get(opcoesVisiveis).setVisible(true);
+            todosOsCamposDeOpcao.get(opcoesVisiveis).setVisible(true);
+
+            opcoesVisiveis++;
+        } else {
+            exibirMensagem("Limite máximo de opções atingido.");
+        }
     }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
+
+    private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPerguntaActionPerformed
+
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
+        ActionListener acaoDeLogout = e -> {
+        new LoginView().setVisible(true);
+        this.dispose();
+        System.out.println("Logout realizado. Janela principal fechada.");
+    };
+
+    PerfilView perfil = new PerfilView(
+        this,
+        this.usuarioLogado.getNome(),
+        this.usuarioLogado.getEmail(),
+        this.usuarioLogado.getCpf(),
+        this.usuarioLogado.getMatricula(),
+        this.usuarioLogado.getCurso(),
+        acaoDeLogout
+    );
+    perfil.setVisible(true);
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
 private void inicializarMenuLateral() {
-    // Coloca todos os botões em uma lista para fácil acesso
+    
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
     );
-    // 1. Aplica o estilo visual INICIAL a cada botão
+    
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
 
-    // 2. Adiciona os eventos de mouse e clique a todos os botões
+    
     for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
-
-   
+  
 }
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
-   botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    
-    // Alinhamento e cursor
+   
+    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    
-    // Espaçamentos internos e entre ícone/texto
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
-
-    // Fonte
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    // Tenta carregar o ícone
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -332,70 +539,44 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
     }
 }
 
-
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
-
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
-// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    // Define as cores que vamos usar
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
+   
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
 
-    // Adiciona os eventos de mouse para o efeito de HOVER
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Quando o mouse entra, o fundo do botão fica azul claro
+            
             botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
+            botao.setOpaque(true); 
         }
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            // Quando o mouse sai, o fundo volta a ser transparente
+            
             botao.setOpaque(false);
-            // A linha abaixo é opcional, mas garante a cor certa
+           
             botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
-    // Adiciona a AÇÃO DE CLIQUE (que agora não faz nenhuma mudança visual)
     botao.addActionListener(e -> {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
-        // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
     });
 }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CriarVotacaoOpcoesView().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelConteudo;
     private javax.swing.JLabel TituloO1;
     private javax.swing.JLabel TituloO2;
+    private javax.swing.JLabel TituloO3;
+    private javax.swing.JLabel TituloO4;
+    private javax.swing.JLabel TituloO5;
     private javax.swing.JLabel TituloP;
     private javax.swing.JLabel TituloPrincipal;
     private javax.swing.JButton aprovarVotacao;
@@ -417,6 +598,9 @@ private void adicionarListeners(javax.swing.JButton botao) {
     private javax.swing.JButton participarVotacao;
     private javax.swing.JTextField txtOpcao1;
     private javax.swing.JTextField txtOpcao2;
+    private javax.swing.JTextField txtOpcao3;
+    private javax.swing.JTextField txtOpcao4;
+    private javax.swing.JTextField txtOpcao5;
     private javax.swing.JTextField txtPergunta;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
