@@ -23,14 +23,13 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         GERENCIAMENTO
     }
     
-    public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario) { // ALTERADO: Receber o usuário logado
+    public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario) {
         super(parent, modal);
-        this.usuarioLogado = usuario; // NOVO: Armazenar o usuário
+        this.usuarioLogado = usuario;
         initComponents();
-        // Por padrão, esconde todos os botões de ação até o modo ser definido
         btnAprovarDialog.setVisible(false);
         btnReprovarDialog.setVisible(false);
-        btnEditar.setVisible(false); // Supondo que você adicionou btnEditar no designer
+        btnEditar.setVisible(false);
     }
     
     public void setModo(ModoDialogo modo) {
@@ -227,10 +226,11 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                     .addComponent(btnVoltarDialog)
                     .addComponent(btnReprovarDialog))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPerguntaPrincipal)
-                    .addComponent(btnAprovarDialog)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPerguntaPrincipal)
+                        .addComponent(btnAprovarDialog)))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
@@ -244,13 +244,17 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnReprovarDialogActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (this.votacaoAtual != null) {
+            System.out.println("[DEBUG DetalhesVotacaoDialog] Enviando votação com título: '" + this.votacaoAtual.getTitulo() + "'");
+        } else {
+            System.out.println("[DEBUG DetalhesVotacaoDialog] ERRO: Tentando enviar uma votação NULA!");
+        }
+        
         if (this.votacaoAtual != null && this.usuarioLogado != null) {
-            // Abre a tela de criação/edição, passando os dados da votação para editar
             CriarVotacaoView telaDeEdicao = new CriarVotacaoView(this.usuarioLogado, this.votacaoAtual);
             telaDeEdicao.setLocationRelativeTo(null);
             telaDeEdicao.setVisible(true);
 
-            // Fecha a janela principal que está por trás (se houver) e o diálogo
             ((java.awt.Frame) getParent()).dispose();
             this.dispose();
         }

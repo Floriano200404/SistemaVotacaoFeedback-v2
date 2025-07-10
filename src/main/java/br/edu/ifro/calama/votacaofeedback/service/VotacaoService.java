@@ -30,9 +30,6 @@ public class VotacaoService {
     }
     
     public void atualizar(Votacao votacao) throws Exception {
-        // Validações de regra de negócio viriam aqui antes de chamar o repositório.
-        // Ex: if (votacao.getDataInicial().before(new Date())) { throw new Exception("..."); }
-        
         votacaoRepository.atualizar(votacao);
     }
     

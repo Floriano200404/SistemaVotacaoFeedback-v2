@@ -46,7 +46,13 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     public CriarVotacaoView(Usuario usuario, Votacao votacao) {
         initComponents();
         this.usuarioLogado = usuario;
-        this.votacaoParaEditar = votacaoParaEditar;
+        this.votacaoParaEditar = votacao;
+        
+        if (this.votacaoParaEditar != null) {
+            System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar foi definido com o título: " + this.votacaoParaEditar.getTitulo());
+        } else {
+            System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar continua nulo. Entrando em modo de criação.");
+        }
         
         
         if (this.usuarioLogado != null) {
@@ -87,10 +93,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         this.repaint();
         this.getContentPane().addMouseListener(focusRemoverListener);
 
-        configurarModoTela();
         inicializarMenuLateral();
         javax.swing.SwingUtilities.invokeLater(() -> {
             carregarGrupos();
+            configurarModoTela();
         });
     }
     
@@ -615,41 +621,27 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
 
             if (this.votacaoParaEditar != null) {
-            // --- MODO EDIÇÃO ---
             System.out.println("MODO EDIÇÃO: Atualizando votação existente...");
 
-            // Atualiza o objeto que já temos com os novos dados do formulário
             this.votacaoParaEditar.setTitulo(titulo);
             this.votacaoParaEditar.setDescricao(descricao);
             this.votacaoParaEditar.setDataInicial(dataInicial);
             this.votacaoParaEditar.setDataFinal(dataFinal);
             this.votacaoParaEditar.setDataResultado(dataDivulgacao);
             this.votacaoParaEditar.setIdGrupoDestino(idGrupoSelecionado);
-            // Geralmente, o status voltaria para PENDENTE para uma nova aprovação, se necessário.
             this.votacaoParaEditar.setStatus("PENDENTE");
 
-            // TODO: Chamar o Controller para persistir a atualização no banco de dados.
-            // Você precisará criar este método 'atualizar' no seu controller.
-            // Exemplo:
-            // VotacaoController votacaoController = new VotacaoController();
-            // votacaoController.atualizar(this.votacaoParaEditar);
             VotacaoController votacaoController = new VotacaoController();
             votacaoController.atualizarVotacao(this.votacaoParaEditar);
 
             
             exibirMensagemDeSucesso("Votação atualizada com sucesso!");
 
-            // Fecha a tela de edição e volta para a tela de gerenciamento
             this.dispose();
-            // TODO: Abrir a tela de Gerenciamento de Votações
-            // Exemplo:
-            // new GerenciarVotacaoView(this.usuarioLogado).setVisible(true);
 
         } else {
-            // --- MODO CRIAÇÃO (Sua lógica original, mas mais limpa) ---
             System.out.println("MODO CRIAÇÃO: Criando nova votação...");
             
-            // Cria um objeto Votacao totalmente novo
             Votacao novaVotacao = new Votacao();
             novaVotacao.setTitulo(titulo);
             novaVotacao.setDescricao(descricao);
@@ -660,12 +652,11 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             novaVotacao.setIdCriador(this.usuarioLogado.getId());
             novaVotacao.setStatus("PENDENTE");
             
-            // Navega para a próxima tela do processo de criação
             CriarVotacaoOpcoesView telaDeCriacaoOpcoes = new CriarVotacaoOpcoesView(this.usuarioLogado, novaVotacao);
             telaDeCriacaoOpcoes.setLocationRelativeTo(null);
             telaDeCriacaoOpcoes.setVisible(true);
 
-            this.dispose(); // Fecha a tela atual
+            this.dispose();
         }
 
         } catch (Exception e) {

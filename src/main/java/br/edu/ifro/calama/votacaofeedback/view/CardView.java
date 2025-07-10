@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat;
             if (votacao.getDataInicial() != null) {
                 returdadosdt.setText(sdf.format(votacao.getDataInicial()));
             } else {
-                returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
+                returdadosdt.setText("N/A");
             }
 
             if (votacao.getDataFinal() != null) {

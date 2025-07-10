@@ -83,7 +83,6 @@ public java.util.List<Votacao> buscarPendentes() throws Exception {
 
 public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
         List<Votacao> votacoes = new ArrayList<>();
-        // ATENÇÃO: Verifique se o nome da coluna 'id_criador' está correto no seu banco.
         String sql = "SELECT * FROM votacao WHERE id_criador = ?";
 
         try (Connection conn = DatabaseUtil.getConnection();
@@ -92,7 +91,6 @@ public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
             stmt.setInt(1, idCriador);
             
             try (ResultSet rs = stmt.executeQuery()) {
-                // Reutilizando a mesma lógica do seu método buscarPendentes
                 while (rs.next()) {
                     Votacao votacao = new Votacao();
                     votacao.setIdVotacao(rs.getInt("id_votacao"));
@@ -115,12 +113,7 @@ public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
         return votacoes;
     }
 
-    /**
-     * Atualiza os dados de uma votação existente no banco.
-     * @param votacao O objeto Votacao com os dados atualizados.
-     */
     public void atualizar(Votacao votacao) throws Exception {
-        // ATENÇÃO: Verifique se os nomes das colunas correspondem ao seu banco de dados.
         String sql = "UPDATE votacao SET titulo = ?, descricao = ?, data_inicio = ?, " +
                      "data_final = ?, data_resultado = ?, id_grupo_destino = ?, status = ? " +
                      "WHERE id_votacao = ?";
@@ -130,13 +123,12 @@ public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
 
             stmt.setString(1, votacao.getTitulo());
             stmt.setString(2, votacao.getDescricao());
-            // Usando setTimestamp para preservar a informação de hora, caso exista.
             stmt.setTimestamp(3, new java.sql.Timestamp(votacao.getDataInicial().getTime()));
             stmt.setTimestamp(4, new java.sql.Timestamp(votacao.getDataFinal().getTime()));
             stmt.setTimestamp(5, new java.sql.Timestamp(votacao.getDataResultado().getTime()));
             stmt.setInt(6, votacao.getIdGrupoDestino());
             stmt.setString(7, votacao.getStatus());
-            stmt.setInt(8, votacao.getIdVotacao()); // ID para a cláusula WHERE
+            stmt.setInt(8, votacao.getIdVotacao());
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {

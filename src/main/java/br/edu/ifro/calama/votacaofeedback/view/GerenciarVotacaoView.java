@@ -18,18 +18,12 @@ import java.util.List;
  */
 public final class GerenciarVotacaoView extends javax.swing.JPanel {
 
-    // NOVO: Campo para armazenar o usuário que está usando a tela
-    private Usuario usuarioLogado;
-
-    /**
-     * Creates new form GerenciarVotacaoView
-     * ALTERADO: O construtor agora recebe o usuário logado.
-     */
+    private final Usuario usuarioLogado;
+    
     public GerenciarVotacaoView(Usuario usuario) {
         initComponents();
         this.usuarioLogado = usuario;
 
-        // Verifica se o usuário não é nulo antes de carregar
         if (this.usuarioLogado == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro: Usuário não identificado.", "Erro de Sessão", javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
@@ -38,29 +32,20 @@ public final class GerenciarVotacaoView extends javax.swing.JPanel {
         carregarVotacoesDoUsuario();
     }
 
-    // ALTERADO: O nome do método para maior clareza
     public void carregarVotacoesDoUsuario() {
         VotacaoRepository votacaoRepo = new VotacaoRepository();
 
         try {
-            // ALTERADO: Lógica de busca. Em vez de buscar pendentes, busca as votações criadas pelo usuário logado.
-            // Você precisará criar o método 'buscarPorIdCriador' em seu VotacaoRepository.
             VotacaoController controller = new VotacaoController();
             List<Votacao> votacoesDoUsuario = controller.buscarVotacoesPorCriador(this.usuarioLogado.getId());
         
             painelDaGrade.removeAll();
             
-            // ALTERADO: O laço agora configura cada card para o modo de GERENCIAMENTO.
             for (Votacao votacao : votacoesDoUsuario) {
                 CardView card = new CardView();
                 card.setDados(votacao);
-                
-                // --- Ponto Chave da Lógica ---
-                // NOVO: Passa o usuário logado para o card.
                 card.setUsuario(this.usuarioLogado); 
-                // NOVO: Define o modo do card, para que ele saiba qual botão mostrar no diálogo.
                 card.setModo(DetalhesVotacaoDialog.ModoDialogo.GERENCIAMENTO);
-                // -----------------------------
 
                 painelDaGrade.add(card);
             }
