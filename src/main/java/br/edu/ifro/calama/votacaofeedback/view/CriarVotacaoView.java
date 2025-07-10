@@ -611,6 +611,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 exibirMensagem("A data final não pode ser anterior à data inicial.");
                 return;
             }
+            if (removerHoras(dataDivulgacao).before(removerHoras(dataFinal))) {
+                exibirMensagem("A data de divulgação não pode ser anterior à data final da votação.");
+                return;
+            }
 
             Grupo grupoSelecionado = (Grupo) itemSelecionado;
             int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
