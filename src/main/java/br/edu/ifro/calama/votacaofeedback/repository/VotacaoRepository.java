@@ -120,10 +120,8 @@ public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
                  "status = ?, pergunta = ? " +
                  "WHERE id_votacao = ?";
 
-    // O try-catch foi removido daqui. O erro será tratado por quem chamou este método.
     Connection conn = DatabaseUtil.getConnection();
     try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        // Preenchendo os 9 parâmetros
         stmt.setString(1, votacao.getTitulo());
         stmt.setString(2, votacao.getDescricao());
         stmt.setTimestamp(3, new java.sql.Timestamp(votacao.getDataInicial().getTime()));
@@ -136,7 +134,6 @@ public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
 
         stmt.executeUpdate();
     } finally {
-        // Garante que a conexão seja fechada mesmo se houver um erro
         if (conn != null) {
             conn.close();
         }

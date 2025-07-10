@@ -4,7 +4,6 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
-import br.edu.ifro.calama.votacaofeedback.controller.VotacaoController;
 import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
@@ -19,13 +18,8 @@ import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.util.GrupoComboBoxRendererUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
-import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionListener;
-import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import com.toedter.calendar.JDateChooser;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -103,12 +97,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     
     private void configurarModoTela() {
         if (votacaoParaEditar != null) {
-            // MODO EDIÇÃO
             TituloPrincipal.setText("EDITAR VOTAÇÃO");
             btnAvancar.setText("Avançar");
             preencherFormulario();
         } else {
-            // MODO CRIAÇÃO (comportamento padrão)
             TituloPrincipal.setText("CRIAR VOTAÇÃO");
             btnAvancar.setText("AVANÇAR");
         }
@@ -121,7 +113,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         txtDataFinal.setDate(votacaoParaEditar.getDataFinal());
         txtDataDivulgacao.setDate(votacaoParaEditar.getDataResultado());
 
-        // Lógica para selecionar o grupo correto no ComboBox
         javax.swing.DefaultComboBoxModel model = (javax.swing.DefaultComboBoxModel) comboParticipantes.getModel();
         for (int i = 0; i < model.getSize(); i++) {
             Grupo grupo = (Grupo) model.getElementAt(i);
@@ -620,10 +611,8 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             
             Grupo grupoSelecionado = (Grupo) itemSelecionado;
         
-        // 2. Prepara o objeto Votacao para ser enviado para a próxima tela
             Votacao votacaoParaEnviar;
             if (votacaoParaEditar != null) {
-                // MODO EDIÇÃO: atualiza o objeto existente
                 votacaoParaEditar.setTitulo(titulo);
                 votacaoParaEditar.setDescricao(descricao);
                 votacaoParaEditar.setDataInicial(dataInicial);
@@ -632,7 +621,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 votacaoParaEditar.setIdGrupoDestino(grupoSelecionado.getIdGrupo());
                 votacaoParaEnviar = votacaoParaEditar;
             } else {
-                // MODO CRIAÇÃO: cria um novo objeto
                 Votacao novaVotacao = new Votacao();
                 novaVotacao.setTitulo(titulo);
                 novaVotacao.setDescricao(descricao);
@@ -645,7 +633,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 votacaoParaEnviar = novaVotacao;
             }
 
-            // 3. Navega para a tela de opções, passando o objeto preparado
             CriarVotacaoOpcoesView telaDeOpcoes = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoParaEnviar);
             telaDeOpcoes.setLocationRelativeTo(null);
             telaDeOpcoes.setVisible(true);

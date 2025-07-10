@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.controller.VotacaoController;
@@ -6,17 +10,18 @@ import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.List;  
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
 /**
  *
- * @author floriano, Athos
+ * @author floriano, ATHOS
  */
 public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
@@ -92,116 +97,19 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }
     
     private void navegarParaMenuPrincipal() {
-    new Timer(1500, e -> {
-        new MenuPrincipalView(this.usuarioLogado).setVisible(true);
-        this.dispose();
-    }){{setRepeats(false);}}.start();
-}
-
-    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        String pergunta = txtPergunta.getText().trim();
-    if (pergunta.isEmpty()) {
-        exibirMensagem("O campo 'Pergunta' é obrigatório.");
-        return;
+        new Timer(1500, e -> {
+            new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+            this.dispose();
+        }){{setRepeats(false);}}.start();
     }
 
-    List<String> novasOpcoes = new ArrayList<>();
-    for (JTextField campo : todosOsCamposDeOpcao) {
-        if (campo.isVisible() && !campo.getText().trim().isEmpty()) {
-            novasOpcoes.add(campo.getText().trim());
-        }
-    }
-    if (novasOpcoes.size() < 2) {
-        exibirMensagem("A votação deve ter pelo menos 2 opções.");
-        return;
-    }
-
-    // 2. Prepara os objetos para interagir com o backend
-    VotacaoController controller = new VotacaoController();
-    OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
-    
-    // Atualiza o objeto votacao em memória com a pergunta da tela
-    this.votacao.setPergunta(pergunta);
-    
-    // 3. Executa a lógica de salvamento com tratamento de erro
-    if (isEditMode) {
-        // --- LÓGICA DE EDIÇÃO ---
-        try {
-            // PASSO 1: Atualiza os dados principais da votação (título, datas, etc.)
-            controller.atualizarVotacao(this.votacao);
-            
-            // PASSO 2: Limpa as opções antigas
-            opcaoRepo.deletarPorIdVotacao(this.votacao.getIdVotacao());
-            
-            // PASSO 3: Insere as novas opções
-            for (String descricaoOpcao : novasOpcoes) {
-                OpcaoVoto op = new OpcaoVoto();
-                op.setDescricao(descricaoOpcao);
-                op.setIdVotacao(this.votacao.getIdVotacao());
-                opcaoRepo.criar(op);
-            }
-            
-            // Se chegou até aqui, tudo deu certo!
-            exibirMensagemDeSucesso("Votação atualizada com sucesso!");
-            navegarParaMenuPrincipal();
-
-        } catch (Exception e) {
-            // Se qualquer um dos passos acima falhar, o código pula para cá
-            exibirMensagem("Erro ao atualizar a votação: " + e.getMessage());
-            e.printStackTrace();
-        }
-        
-    } else {
-        // --- LÓGICA DE CRIAÇÃO ---
-        try {
-            // PASSO 1: Cria a votação principal e pega o ID gerado
-            int novoId = controller.criarVotacao(this.votacao);
-            
-            if (novoId > 0) {
-                // PASSO 2: Cria as opções associadas ao novo ID
-                for (String descricaoOpcao : novasOpcoes) {
-                    OpcaoVoto op = new OpcaoVoto();
-                    op.setDescricao(descricaoOpcao);
-                    op.setIdVotacao(novoId);
-                    opcaoRepo.criar(op);
-                }
-                
-                // Se chegou até aqui, tudo deu certo!
-                exibirMensagemDeSucesso("Votação criada com sucesso!");
-                navegarParaMenuPrincipal();
-
-            } else {
-                exibirMensagem("Falha ao salvar os dados principais da votação.");
-            }
-
-        } catch (Exception e) {
-            // Se qualquer um dos passos acima falhar, o código pula para cá
-            exibirMensagem("Erro ao criar a votação: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-}                                            
-
-    private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {                                                  
-        if (opcoesVisiveis < todosOsLabelsDeOpcao.size()) {
-            todosOsLabelsDeOpcao.get(opcoesVisiveis).setVisible(true);
-            todosOsCamposDeOpcao.get(opcoesVisiveis).setVisible(true);
-            opcoesVisiveis++;
-        } else {
-            exibirMensagem("Limite máximo de opções atingido.");
-        }
-    }                                                 
-
-    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, this.votacao);
-        telaCriarVotacao.setLocationRelativeTo(null);
-        telaCriarVotacao.setVisible(true);
-        this.dispose();
-    }                                         
-
-    // O resto do seu código (métodos de menu, listeners, etc.) continua aqui...
-    //<editor-fold defaultstate="collapsed" desc="Código Gerado e Métodos do Menu (não precisa mexer)">
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         painelHeader = new javax.swing.JPanel();
@@ -450,14 +358,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {                                            
+    private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
+        
         new Thread(new Runnable() {
             @Override
             public void run() {
+               
                 if (painelSidebar.getWidth() > 0) {
                     try {
+                        
                         for (int i = painelSidebar.getWidth(); i >= 0; i--) {
                             painelSidebar.setSize(i, painelSidebar.getHeight());
                             Thread.sleep(1);
@@ -477,40 +388,130 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                 }
             }
         }).start();
-    }                                           
+    }//GEN-LAST:event_labelIconeMenuMouseClicked
 
-    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {                                       
+    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
         MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
+
         telaDeCriacao.setLocationRelativeTo(null);
         telaDeCriacao.setVisible(true);
+
         this.dispose();
-    }                                      
+    }//GEN-LAST:event_labelLogoMouseClicked
 
-    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
         // TODO add your handling code here:
-    }                                            
+    }//GEN-LAST:event_criarVotacaoActionPerformed
 
-    private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
         // TODO add your handling code here:
-    }                                                 
+    }//GEN-LAST:event_participarVotacaoActionPerformed
 
-    private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
         // TODO add your handling code here:
-    }                                               
+    }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
-    private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
         // TODO add your handling code here:
-    }                                              
+    }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
-    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao3ActionPerformed
         // TODO add your handling code here:
-    }                                         
+    }//GEN-LAST:event_txtOpcao3ActionPerformed
 
-    private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        String pergunta = txtPergunta.getText().trim();
+    if (pergunta.isEmpty()) {
+        exibirMensagem("O campo 'Pergunta' é obrigatório.");
+        return;
+    }
+
+    List<String> novasOpcoes = new ArrayList<>();
+    for (JTextField campo : todosOsCamposDeOpcao) {
+        if (campo.isVisible() && !campo.getText().trim().isEmpty()) {
+            novasOpcoes.add(campo.getText().trim());
+        }
+    }
+    if (novasOpcoes.size() < 2) {
+        exibirMensagem("A votação deve ter pelo menos 2 opções.");
+        return;
+    }
+
+    VotacaoController controller = new VotacaoController();
+    OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
+    
+    this.votacao.setPergunta(pergunta);
+    
+    if (isEditMode) {
+        try {
+            controller.atualizarVotacao(this.votacao);
+            
+            opcaoRepo.deletarPorIdVotacao(this.votacao.getIdVotacao());
+            
+            for (String descricaoOpcao : novasOpcoes) {
+                OpcaoVoto op = new OpcaoVoto();
+                op.setDescricao(descricaoOpcao);
+                op.setIdVotacao(this.votacao.getIdVotacao());
+                opcaoRepo.criar(op);
+            }
+            
+            exibirMensagemDeSucesso("Votação atualizada com sucesso!");
+            navegarParaMenuPrincipal();
+
+        } catch (Exception e) {
+            exibirMensagem("Erro ao atualizar a votação: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+    } else {
+        try {
+            int novoId = controller.criarVotacao(this.votacao);
+            
+            if (novoId > 0) {
+                for (String descricaoOpcao : novasOpcoes) {
+                    OpcaoVoto op = new OpcaoVoto();
+                    op.setDescricao(descricaoOpcao);
+                    op.setIdVotacao(novoId);
+                    opcaoRepo.criar(op);
+                }
+                
+                exibirMensagemDeSucesso("Votação criada com sucesso!");
+                navegarParaMenuPrincipal();
+
+            } else {
+                exibirMensagem("Falha ao salvar os dados principais da votação.");
+            }
+
+        } catch (Exception e) {
+            exibirMensagem("Erro ao criar a votação: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    }//GEN-LAST:event_btnFinalizarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, this.votacao);
+        telaCriarVotacao.setLocationRelativeTo(null);
+        telaCriarVotacao.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
+
+        if (opcoesVisiveis < todosOsLabelsDeOpcao.size()) {
+            todosOsLabelsDeOpcao.get(opcoesVisiveis).setVisible(true);
+            todosOsCamposDeOpcao.get(opcoesVisiveis).setVisible(true);
+            opcoesVisiveis++;
+        } else {
+            exibirMensagem("Limite máximo de opções atingido.");
+        }
+    }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
+
+    private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
         // TODO add your handling code here:
-    }                                           
+    }//GEN-LAST:event_txtPerguntaActionPerformed
 
-    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {                                              
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
         ActionListener acaoDeLogout = e -> {
         new LoginView().setVisible(true);
         this.dispose();
@@ -527,23 +528,28 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         acaoDeLogout
     );
     perfil.setVisible(true);
-    }                                             
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
     private void inicializarMenuLateral() {
-        java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
+
+         java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
             criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
         );
+
         configurarBotao(criarVotacao, "criarVoto.png");
         configurarBotao(participarVotacao, "peoplemais.png");
         configurarBotao(gerenciaVotacao, "configpast.png");
         configurarBotao(aprovarVotacao, "list_check.png");
         configurarBotao(votoArquivado, "arquivada.png");
 
+
         for (javax.swing.JButton botao : botoes) {
             adicionarListeners(botao);
         }
+
     }
 
     private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
+
         botao.putClientProperty("JButton.buttonType", "toolBarButton");
         botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -559,20 +565,22 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }
 
     private void adicionarListeners(javax.swing.JButton botao) {
+
         final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
         final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
 
         botao.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
+                
                 botao.setBackground(COR_HOVER_AZUL);
-                botao.setOpaque(true);
+                botao.setOpaque(true); 
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 botao.setOpaque(false);
-                botao.setBackground(COR_FUNDO_SIDEBAR);
+                botao.setBackground(COR_FUNDO_SIDEBAR); 
             }
         });
 
@@ -580,8 +588,12 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             System.out.println("Botão '" + botao.getText() + "' clicado!");
         });
     }
+    /**
+     * @param args the command line arguments
+     */
+    
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PainelConteudo;
     private javax.swing.JLabel TituloO1;
     private javax.swing.JLabel TituloO2;
@@ -614,5 +626,5 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private javax.swing.JTextField txtOpcao5;
     private javax.swing.JTextField txtPergunta;
     private javax.swing.JButton votoArquivado;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }

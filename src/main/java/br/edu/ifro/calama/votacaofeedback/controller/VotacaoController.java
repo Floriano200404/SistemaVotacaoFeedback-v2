@@ -36,12 +36,11 @@ public class VotacaoController {
     
     public int criarVotacao(Votacao votacao) {
         try {
-            // Chama o método 'criar' que acabamos de adicionar no Service
             return votacaoService.criar(votacao);
         } catch (Exception e) {
             System.err.println("Erro no controller ao criar votação: " + e.getMessage());
             e.printStackTrace();
-            return -1; // Retorna -1 para indicar que houve um erro
+            return -1;
         }
     }
     

@@ -273,10 +273,8 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
         GerenciarVotacaoView painelGerenciar = new GerenciarVotacaoView(this.usuariologado);
     
-    // Adiciona o painel ao CardLayout com um novo identificador.
         painelConteudo.add(painelGerenciar, "cardGerenciar");
     
-    // Mostra o painel de gerenciamento.
         java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
         cl.show(painelConteudo, "cardGerenciar");
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
@@ -284,11 +282,8 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
         AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
     
-    // Adiciona o painel ao CardLayout (se ainda não existir, ele adiciona; se já existir, ele substitui).
-    // O nome "cardAprovar" é um identificador único para este painel.
         painelConteudo.add(painelAprovar, "cardAprovar");
     
-    // Mostra o painel de aprovação.
         java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
         cl.show(painelConteudo, "cardAprovar");
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
@@ -325,35 +320,27 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
-    // O card continua sendo um JPanel
     javax.swing.JPanel card = new javax.swing.JPanel();
 
-    // --- MUDANÇA IMPORTANTE: Definindo um tamanho ---
-    // Define um tamanho preferido para o card, para que o GridLayout não o estique.
     card.setPreferredSize(new java.awt.Dimension(300, 65));
 
-    // --- MUDANÇAS DE ESTILO ---
-    // Cor azul mais vibrante, idêntica à do Figma
     card.setBackground(new java.awt.Color(48, 162, 218)); 
     card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
-    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Padding interno
+    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
     card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-    // Título e subtítulo com fontes e cores mais próximas do design
     javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
     labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
     labelTitulo.setForeground(java.awt.Color.WHITE);
 
     javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
     labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
-    labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255)); // Um branco levemente azulado
+    labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255));
 
-    // Adiciona os componentes ao card
     card.add(labelTitulo);
-    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8))); // Espaço entre textos
+    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
     card.add(labelSubtitulo);
 
-    // Efeito hover (não precisa mudar, já estava bom)
     card.addMouseListener(new java.awt.event.MouseAdapter() {
         final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
         final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
@@ -372,18 +359,15 @@ private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     return card;
 }
 private void inicializarMenuLateral() {
-    // Coloca todos os botões em uma lista para fácil acesso
      java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
         criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
     );
-    // 1. Aplica o estilo visual INICIAL a cada botão
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
 
-    // 2. Adiciona os eventos de mouse e clique a todos os botões
     for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
@@ -391,23 +375,17 @@ private void inicializarMenuLateral() {
    
 }
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     
-    // Alinhamento e cursor
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     
-    // Espaçamentos internos e entre ícone/texto
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
 
-    // Fonte
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
 
-    // Tenta carregar o ícone
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -415,39 +393,26 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
     }
 }
 
-
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
-
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
-// Este método agora só cuida do HOVER e do CLIQUE simples
 private void adicionarListeners(javax.swing.JButton botao) {
-    // Define as cores que vamos usar
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground(); // A cor de fundo da sidebar (branco)
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255); // O azul bem clarinho do Figma
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
 
-    // Adiciona os eventos de mouse para o efeito de HOVER
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            // Quando o mouse entra, o fundo do botão fica azul claro
             botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true); // Precisamos disso para a cor de fundo aparecer
+            botao.setOpaque(true);
         }
 
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            // Quando o mouse sai, o fundo volta a ser transparente
             botao.setOpaque(false);
-            // A linha abaixo é opcional, mas garante a cor certa
             botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
-    // Adiciona a AÇÃO DE CLIQUE (que agora não faz nenhuma mudança visual)
     botao.addActionListener(e -> {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
-        // Futuramente, aqui entrará a lógica do CardLayout para trocar a tela
     });
 }
 

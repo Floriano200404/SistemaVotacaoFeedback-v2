@@ -34,7 +34,6 @@ public class VotacaoService {
     }
     
     public void atualizar(Votacao votacao) throws Exception {
-    // Validações de negócio aqui...
         votacaoRepository.atualizar(votacao);
     }
     
@@ -44,7 +43,7 @@ public class VotacaoService {
         } catch (Exception e) {
             System.err.println("Erro na camada de serviço ao buscar por criador: " + e.getMessage());
             e.printStackTrace();
-            return new java.util.ArrayList<>(); // Retorna lista vazia em caso de erro
+            return new java.util.ArrayList<>();
         }
     }
     
