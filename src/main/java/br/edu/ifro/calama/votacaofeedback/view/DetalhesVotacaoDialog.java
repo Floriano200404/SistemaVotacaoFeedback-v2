@@ -7,18 +7,30 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
+import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
+import java.awt.Frame;
 import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
 /**
  *
  * @author floriano
  */
 public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     private Votacao votacaoAtual;
+    private final AprovarVotacaoView telaDeOrigem;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetalhesVotacaoDialog.class.getName());
+    private AprovarVotacaoView origem;
 
-        public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
+    public DetalhesVotacaoDialog(Frame parent, boolean modal, AprovarVotacaoView telaDeAprovacao) {
+    super(parent, modal);
+    initComponents();
+    this.telaDeOrigem = origem; 
+}
+
+    private DetalhesVotacaoDialog(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     
@@ -87,6 +99,11 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         lblPerguntaPrincipal.setText("escreva aqui");
 
         btnVoltarDialog.setText("X Voltar");
+        btnVoltarDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarDialogActionPerformed(evt);
+            }
+        });
 
         btnReprovarDialog.setText("X Reprovar");
         btnReprovarDialog.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +113,11 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         });
 
         btnAprovarDialog.setText("✓ Aprovar");
+        btnAprovarDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAprovarDialogActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,8 +144,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                         .addGap(114, 114, 114)
                         .addComponent(lblDataFinal)
                         .addGap(72, 72, 72)
-                        .addComponent(lblDataResultado)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(lblDataResultado))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -143,19 +164,16 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                                         .addComponent(btnVoltarDialog)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnReprovarDialog))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jLabel5)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(lblTipoVotacao))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
-                                .addComponent(btnAprovarDialog)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(btnAprovarDialog)))))
                 .addGap(132, 132, 132))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 51, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtAreaDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,8 +231,43 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprovarDialogActionPerformed
-        // TODO add your handling code here:
+   try {
+        VotacaoRepository votacaoRepo = new VotacaoRepository();
+        // Chama o método para REPROVAR
+        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
+        if (telaDeOrigem != null) {
+            telaDeOrigem.carregarVotacoesParaAprovacao();
+        }
+        this.dispose();
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao reprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnReprovarDialogActionPerformed
+
+    private void btnAprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprovarDialogActionPerformed
+        try {
+        VotacaoRepository votacaoRepo = new VotacaoRepository();
+        // Chama o método para APROVAR, usando o ID da votação que está sendo exibida
+        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
+
+        // Mostra uma mensagem de sucesso e fecha o pop-up
+        javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
+        if (telaDeOrigem != null) {
+            telaDeOrigem.carregarVotacoesParaAprovacao();
+        }
+        this.dispose(); 
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao aprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }    
+    }//GEN-LAST:event_btnAprovarDialogActionPerformed
+
+    private void btnVoltarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarDialogActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarDialogActionPerformed
 
     /**
      * @param args the command line arguments

@@ -260,6 +260,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="X Voltar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltarDialogActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnReprovarDialog">
           <Properties>
@@ -273,6 +276,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x2713; Aprovar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAprovarDialogActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

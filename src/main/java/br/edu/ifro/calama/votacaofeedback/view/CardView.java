@@ -5,6 +5,7 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
 /**
  *
  * @author floriano
@@ -30,7 +31,7 @@ public void setDados(Votacao votacao) {
     if (votacao.getDataInicial() != null) {
         returdadosdt.setText(sdf.format(votacao.getDataInicial()));
     } else {
-        returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
+        returdadosdt.setText("N/A"); 
     }
 
     if (votacao.getDataFinal() != null) {
@@ -108,12 +109,16 @@ public void setDados(Votacao votacao) {
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
                                               
     
+    
     java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
-   
-    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true);
+    
+    AprovarVotacaoView telaDeAprovacao = (AprovarVotacaoView) javax.swing.SwingUtilities.getAncestorOfClass(AprovarVotacaoView.class, this);
 
     
+    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, telaDeAprovacao);
+
+   
     dialog.setDados(this.votacaoAtual); 
 
     

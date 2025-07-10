@@ -79,4 +79,17 @@ public java.util.List<Votacao> buscarPendentes() throws Exception {
     }
     return votacoes;
 }
+public void atualizarStatus(int idVotacao, String novoStatus) throws Exception {
+    
+    String sql = "UPDATE votacao SET status = ? WHERE id_Votacao = ?";
+
+    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        ps.setString(1, novoStatus); 
+        ps.setInt(2, idVotacao);   
+
+        ps.executeUpdate(); // Executa o comando de atualização no banco
+    }
+}
 }
