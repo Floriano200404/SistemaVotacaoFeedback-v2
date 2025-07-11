@@ -18,11 +18,13 @@ import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.util.GrupoComboBoxRendererUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
-import java.awt.event.ActionListener;
+import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
+import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import javax.swing.JButton;
 
 /**
  *
@@ -52,6 +54,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar continua nulo. Entrando em modo de criação.");
         }
         
+        estilizarDateChooser(txtDataInicial);
+        estilizarDateChooser(txtDataFinal);
+        estilizarDateChooser(txtDataDivulgacao);
         
         if (this.usuarioLogado != null) {
 
@@ -171,12 +176,33 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     
     public void exibirMensagemDeSucesso(String mensagem) {
     
-    ToastUtil toast = new ToastUtil(
-        this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
-    );
-    toast.display();
-}
-
+        ToastUtil toast = new ToastUtil(
+            this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT
+        );
+        toast.display();
+    }
+    
+    private void estilizarDateChooser(com.toedter.calendar.JDateChooser dateChooser) {
+        JTextField editor = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        editor.setBorder(null);
+        editor.setBackground(java.awt.Color.WHITE);
+        editor.setHorizontalAlignment(JTextField.CENTER);
+        
+        JButton calendarButton = dateChooser.getCalendarButton();
+        calendarButton.setBorder(null);
+        calendarButton.setContentAreaFilled(false);
+        calendarButton.setFocusPainted(false);
+    }
+    private java.util.Date removerHoras(java.util.Date data) {
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTime(data);
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+        cal.set(java.util.Calendar.MINUTE, 0);
+        cal.set(java.util.Calendar.SECOND, 0);
+        cal.set(java.util.Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+    
     private void aplicarEstilos() {
         final int ALTURA_PADRAO = 35;
         JComponent[] campos = {
@@ -586,26 +612,39 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
-
         try {
+            String tituloPlaceholder = "Digite o título da votação";
             String titulo = getTxtTitulo().getText();
+
+            String descricaoPlaceholder = "Descreva aqui os detalhes da sua votação...";
             String descricao = getTxtDescricao().getText();
-            Date dataInicial = getTxtDataInicial().getDate();
-            Date dataFinal = getTxtDataFinal().getDate();
-            Date dataDivulgacao = getTxtDataDivulgacao().getDate();
-            Object itemSelecionado = getComboParticipantes().getSelectedItem();
 
-
-            if (titulo.trim().isEmpty()) {
+            if (titulo.trim().isEmpty() || titulo.equals(tituloPlaceholder)) {
                 exibirMensagem("O campo Título é obrigatório.");
                 return;
             }
+
+            if (descricao.equals(descricaoPlaceholder)) {
+                descricao = "";
+            }
+
+            java.util.Date dataInicial = getTxtDataInicial().getDate();
+            java.util.Date dataFinal = getTxtDataFinal().getDate();
+            java.util.Date dataDivulgacao = getTxtDataDivulgacao().getDate();
+            Object itemSelecionado = getComboParticipantes().getSelectedItem();
+
             if (dataInicial == null || dataFinal == null || dataDivulgacao == null) {
                 exibirMensagem("Todos os campos de data devem ser preenchidos.");
                 return;
             }
             if (itemSelecionado == null) {
                 exibirMensagem("Por favor, selecione um grupo de participantes.");
+                return;
+            }
+
+            java.util.Date hoje = removerHoras(new java.util.Date());
+            if (removerHoras(dataInicial).before(hoje)) {
+                exibirMensagem("A data inicial não pode ser anterior ao dia de hoje.");
                 return;
             }
             if (dataFinal.before(dataInicial)) {
@@ -720,7 +759,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private void comboParticipantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboParticipantesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboParticipantesActionPerformed
-
     private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
         ActionListener acaoDeLogout = e -> {
         new LoginView().setVisible(true);
@@ -739,7 +777,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     );
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
-
     private void labelIconePerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_labelIconePerfilMouseEntered

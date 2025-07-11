@@ -6,6 +6,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
 /**
  *
  * @author floriano
@@ -14,12 +15,17 @@ import java.text.SimpleDateFormat;
         private Votacao votacaoAtual;
         private DetalhesVotacaoDialog.ModoDialogo modo;
         private Usuario usuarioLogado;
+        private java.awt.Component telaDeOrigem;
 
         public CardView() {
             initComponents();
             this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
         }
 
+        public void setTelaDeOrigem(java.awt.Component tela) {
+            this.telaDeOrigem = tela;
+        }
+        
         public void setModo(DetalhesVotacaoDialog.ModoDialogo modo) {
             this.modo = modo;
         }
@@ -115,7 +121,7 @@ import java.text.SimpleDateFormat;
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
 
         java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
-        DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, this.usuarioLogado);
+        DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, this.usuarioLogado, this.telaDeOrigem);
         
         dialog.setDados(this.votacaoAtual);
         dialog.setModo(this.modo);

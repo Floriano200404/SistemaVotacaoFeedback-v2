@@ -8,13 +8,16 @@ import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
-import java.text.SimpleDateFormat;
+import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import java.awt.Component;
 /**
  *
  * @author floriano
  */
 public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     private Votacao votacaoAtual;
+    private final Component telaDeOrigem;
+    private AprovarVotacaoView origem;
     private Usuario usuarioLogado;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetalhesVotacaoDialog.class.getName());
     
@@ -23,10 +26,13 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         GERENCIAMENTO
     }
     
-    public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario) {
+    public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario, Component telaDeOrigem) {
         super(parent, modal);
         this.usuarioLogado = usuario;
+        this.telaDeOrigem = telaDeOrigem;
         initComponents();
+        
+        // Lógica para esconder os botões inicialmente
         btnAprovarDialog.setVisible(false);
         btnReprovarDialog.setVisible(false);
         btnEditar.setVisible(false);
@@ -42,6 +48,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             btnReprovarDialog.setVisible(false);
             btnEditar.setVisible(true);
         }
+
     }
 
     
@@ -111,6 +118,11 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         lblPerguntaPrincipal.setText("escreva aqui");
 
         btnVoltarDialog.setText("X Voltar");
+        btnVoltarDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarDialogActionPerformed(evt);
+            }
+        });
 
         btnReprovarDialog.setText("X Reprovar");
         btnReprovarDialog.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +132,11 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         });
 
         btnAprovarDialog.setText("✓ Aprovar");
+        btnAprovarDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAprovarDialogActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("✓ Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -240,7 +257,20 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprovarDialogActionPerformed
-        // TODO add your handling code here:
+   try {
+        VotacaoRepository votacaoRepo = new VotacaoRepository();
+        // Chama o método para REPROVAR
+        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
+        if (telaDeOrigem != null) {
+            ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
+        }
+        this.dispose();
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao reprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnReprovarDialogActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -259,6 +289,27 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnAprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprovarDialogActionPerformed
+        try {
+        VotacaoRepository votacaoRepo = new VotacaoRepository();
+        // Chama o método para APROVAR, usando o ID da votação que está sendo exibida
+        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
+
+        // Mostra uma mensagem de sucesso e fecha o pop-up
+        javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
+        if (telaDeOrigem != null) {
+            ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
+        }
+        this.dispose(); 
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao aprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }    
+    }//GEN-LAST:event_btnAprovarDialogActionPerformed
+
+    private void btnVoltarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarDialogActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarDialogActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,12 +317,9 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
    
 public void setDados(Votacao votacao) {
     this.votacaoAtual = votacao; 
-
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-
     lblTituloPrincipal.setText(votacao.getTitulo());
     txtAreaDescricao.setText(votacao.getDescricao());
-
     if (votacao.getDataInicial() != null) {
         lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
     }
@@ -281,27 +329,18 @@ public void setDados(Votacao votacao) {
     if (votacao.getDataResultado() != null) {
         lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
     }
-
     lblPerguntaPrincipal.setText(votacao.getPergunta());
-
-  
+    
     try {
-        
         GrupoRepository grupoRepo = new GrupoRepository();
- 
         int idDoGrupo = votacao.getIdGrupoDestino();
-   
         Grupo grupo = grupoRepo.buscarPorId(idDoGrupo);
-       
         if (grupo != null) {
-           
             lblParticipantes.setText(grupo.getNome()); 
         } else {
-            
             lblParticipantes.setText("Grupo não encontrado");
         }
     } catch (Exception e) {
-       
         lblParticipantes.setText("Erro ao buscar dados");
         e.printStackTrace();
     }
