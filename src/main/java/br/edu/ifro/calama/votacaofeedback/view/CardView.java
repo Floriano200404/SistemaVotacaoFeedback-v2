@@ -128,7 +128,7 @@ public void setDados(Votacao votacao) {
         lblTituloVotacao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTituloVotacao.setForeground(new java.awt.Color(0, 0, 0));
         lblTituloVotacao.setText("VOTAÇÃO PARA DIREÇÃO-GERAL ");
-        add(lblTituloVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 160, -1, -1));
+        add(lblTituloVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 160, -1, -1));
 
         dtinicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         dtinicio.setForeground(new java.awt.Color(153, 153, 153));
