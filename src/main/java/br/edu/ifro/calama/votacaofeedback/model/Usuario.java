@@ -1,5 +1,7 @@
 package br.edu.ifro.calama.votacaofeedback.model;
 
+import java.util.Date;
+
 public class Usuario {
     private int id;
     private String nome;
@@ -9,6 +11,8 @@ public class Usuario {
     private String cpf;
     private String matricula;
     private String curso;
+    private String token;
+    private Date tokenExpiracao;
 
     public Usuario() {}
 
@@ -28,5 +32,9 @@ public class Usuario {
     public void setMatricula(String matricula) { this.matricula = matricula; }
     public String getCurso() { return curso; }
     public void setCurso(String curso) { this.curso = curso; }
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
+    public Date getTokenExpiracao() { return tokenExpiracao; }
+    public void setTokenExpiracao(Date tokenExpiracao) { this.tokenExpiracao = tokenExpiracao; }
 
 }
