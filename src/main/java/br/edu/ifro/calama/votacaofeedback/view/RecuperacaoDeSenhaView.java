@@ -26,17 +26,11 @@ import javax.swing.JTextField;
  */
 public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RecuperacaoDeSenhaView
-     */
     public RecuperacaoDeSenhaView() {
         initComponents();
         setLocationRelativeTo(null);
     }
 
-        /**
-     * Inicia o processo de validação e envio de e-mail com feedback visual.
-     */
     private void enviarEmailRecuperacao() {
         String email = txtEmail.getText().trim();
 
@@ -59,11 +53,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         worker.execute();
     }
     
-    /**
-     * Simula a lógica de negócio de enviar um e-mail.
-     * @param email O e-mail para o qual tentar enviar.
-     * @return true se a simulação for bem-sucedida, false caso contrário.
-     */
+
     private boolean simularEnvioDeEmail(String email) {
         // Em uma aplicação real, aqui você chamaria sua API ou serviço de e-mail.
         // Simula uma falha para um e-mail específico para teste.
@@ -238,9 +228,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_bntVoltarActionPerformed
     
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -254,7 +242,6 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new RecuperacaoDeSenhaView().setVisible(true);
@@ -363,17 +350,14 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     }
 }
 
-/**
- * Classe customizada para um campo de texto com fundo e bordas arredondadas.
- */
 private class RoundedTextField extends JTextField {
     private Shape shape;
     private int cornerRadius = 15;
 
     public RoundedTextField(int size) {
         super(size);
-        setOpaque(false); // Essencial para que o fundo personalizado seja visível
-        setBorder(new RoundedBorder(cornerRadius)); // Define uma borda que adiciona espaçamento
+        setOpaque(false); 
+        setBorder(new RoundedBorder(cornerRadius)); 
     }
 
     @Override
@@ -381,11 +365,9 @@ private class RoundedTextField extends JTextField {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        // Pinta o fundo branco (ou a cor de fundo definida)
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, cornerRadius, cornerRadius);
 
-        // Deixa o método pai pintar o texto, o cursor, etc.
         super.paintComponent(g);
         g2.dispose();
     }
@@ -399,7 +381,6 @@ private class RoundedTextField extends JTextField {
         return shape.contains(x, y);
     }
     
-    // Uma borda customizada apenas para criar um espaçamento (padding) interno
     private class RoundedBorder extends AbstractBorder {
         private int radius;
 
@@ -409,16 +390,13 @@ private class RoundedTextField extends JTextField {
 
         @Override
         public Insets getBorderInsets(Component c) {
-            // Define o espaçamento: top, left, bottom, right
             return new Insets(4, 15, 4, 15);
         }
 
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            // Não desenhamos nada aqui, a borda é invisível, serve apenas para o padding.
         }
     }
-}
-  
+}  
 }
 
