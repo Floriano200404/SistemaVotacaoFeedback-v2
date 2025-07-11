@@ -4,6 +4,7 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.controller.RecuperacaoSenhaController;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -216,7 +217,55 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void bntEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEnviarEmailActionPerformed
-              enviarEmailRecuperacao();
+              String email = txtEmail.getText().trim();
+
+        if (email.isEmpty() || !email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            JOptionPane.showMessageDialog(this, "Por favor, insira um formato de e-mail válido.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Desabilita o botão e mostra "Enviando..."
+        bntEnviarEmail.setEnabled(false);
+        bntEnviarEmail.setText("ENVIANDO...");
+
+        // Usa o SwingWorker para não travar a tela durante a operação de banco e e-mail
+        new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                // Chama o controller para fazer todo o trabalho pesado
+                RecuperacaoSenhaController controller = new RecuperacaoSenhaController();
+                return controller.iniciarRecuperacao(email);
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean sucesso = get(); // Pega o resultado da operação
+                    if (sucesso) {
+                        JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this,
+                                "Se o e-mail estiver cadastrado, um código de recuperação foi enviado.",
+                                "Verifique seu E-mail", JOptionPane.INFORMATION_MESSAGE);
+                        
+                        // TODO: Navegar para a próxima tela (VerificarTokenView)
+                        // new VerificarTokenView(email).setVisible(true);
+                        // dispose();
+
+                    } else {
+                        // Mostra a mesma mensagem de sucesso para não confirmar se um e-mail existe ou não (segurança)
+                        JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this,
+                                "Se o e-mail estiver cadastrado, um código de recuperação foi enviado.",
+                                "Verifique seu E-mail", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this, "Ocorreu um erro inesperado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    // Reabilita o botão, independentemente do resultado
+                    bntEnviarEmail.setText("ENVIAR E-MAIL");
+                    bntEnviarEmail.setEnabled(true);
+                }
+            }
+        }.execute();
     }//GEN-LAST:event_bntEnviarEmailActionPerformed
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
