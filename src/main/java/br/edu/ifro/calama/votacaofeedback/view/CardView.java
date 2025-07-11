@@ -101,6 +101,11 @@ public void setDados(Votacao votacao) {
         returdadosdt3 = new javax.swing.JLabel();
         btnVerVotacao = new RoundedButton("Ver Votação");
         jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -123,34 +128,34 @@ public void setDados(Votacao votacao) {
         lblTituloVotacao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTituloVotacao.setForeground(new java.awt.Color(0, 0, 0));
         lblTituloVotacao.setText("VOTAÇÃO PARA DIREÇÃO-GERAL ");
-        add(lblTituloVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        add(lblTituloVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         dtinicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         dtinicio.setForeground(new java.awt.Color(153, 153, 153));
         dtinicio.setText("Data Início:");
-        add(dtinicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 166, -1, 20));
+        add(dtinicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 100, 20));
 
         returdadosdt.setForeground(new java.awt.Color(153, 153, 153));
         returdadosdt.setText("resultData");
-        add(returdadosdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, 10));
+        add(returdadosdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, 20));
 
         dtfim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         dtfim.setForeground(new java.awt.Color(153, 153, 153));
         dtfim.setText("Data Fim:");
-        add(dtfim, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+        add(dtfim, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, 10));
 
         returdadosdt2.setForeground(new java.awt.Color(153, 153, 153));
         returdadosdt2.setText("resultDataF");
-        add(returdadosdt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
+        add(returdadosdt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, 10));
 
         dtresult.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         dtresult.setForeground(new java.awt.Color(153, 153, 153));
         dtresult.setText("Data Resultado:");
-        add(dtresult, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 194, -1, -1));
+        add(dtresult, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
         returdadosdt3.setForeground(new java.awt.Color(153, 153, 153));
         returdadosdt3.setText("resultDataR");
-        add(returdadosdt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 196, -1, 10));
+        add(returdadosdt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
 
         btnVerVotacao.setBackground(new java.awt.Color(0, 153, 204));
         btnVerVotacao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -162,11 +167,31 @@ public void setDados(Votacao votacao) {
                 btnVerVotacaoActionPerformed(evt);
             }
         });
-        add(btnVerVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 290, 30));
+        add(btnVerVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 290, 30));
 
         jSeparator1.setForeground(new java.awt.Color(51, 153, 0));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 10, 130));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 10, 110));
+
+        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 10, 308, 10));
+
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 11, 20, 270));
+
+        jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 11, 10, 270));
+
+        jSeparator5.setForeground(new java.awt.Color(102, 102, 102));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 275, 10));
+
+        jSeparator6.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
+        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 280, 308, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
@@ -193,6 +218,11 @@ public void setDados(Votacao votacao) {
     private javax.swing.JLabel dtinicio;
     private javax.swing.JLabel dtresult;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel lblCampus;
     private javax.swing.JLabel lblInstituicao;
     private javax.swing.JLabel lblTituloVotacao;
