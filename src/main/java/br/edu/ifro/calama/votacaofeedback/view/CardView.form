@@ -26,7 +26,7 @@
     <Component class="javax.swing.JLabel" name="lblInstituicao">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/icons/Screenshot_2-Photoroom.png"/>
+          <Image iconType="3" name="/icons/WhatsApp Image 2025-07-10 at 00.50.52-Photoroom.png"/>
         </Property>
       </Properties>
       <Constraints>

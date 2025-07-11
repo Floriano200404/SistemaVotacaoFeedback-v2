@@ -105,7 +105,7 @@ public void setDados(Votacao votacao) {
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblInstituicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Screenshot_2-Photoroom.png"))); // NOI18N
+        lblInstituicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/WhatsApp Image 2025-07-10 at 00.50.52-Photoroom.png"))); // NOI18N
         add(lblInstituicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 100, 120));
 
         lblCampus.setBackground(new java.awt.Color(102, 102, 102));
