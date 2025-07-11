@@ -25,6 +25,8 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private JLabel labelContagemAtivas;
     private JLabel labelContagemAprovacao;
     private JLabel labelContagemArquivadas;
+    private JLabel labelContagemGerenciar;
+
     
    public MenuPrincipalView(Usuario usuario) throws Exception {
     initComponents();
@@ -53,6 +55,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         labelContagemAtivas = new JLabel("0 Votações");
         labelContagemAprovacao = new JLabel("0 Votações");
         labelContagemArquivadas = new JLabel("0 Votações");
+        labelContagemGerenciar = new JLabel("0 Votações");
 
         // Cria as duas linhas de cards
         JPanel linhaDeCima = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
@@ -64,8 +67,8 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", labelContagemAtivas, () -> navegarPara("participar")));
         linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", labelContagemAprovacao, () -> navegarPara("aprovar")));
         linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", labelContagemArquivadas, () -> navegarPara("arquivadas")));
-        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", new JLabel("Começar do zero"), () -> criarVotacao.doClick()));
-        linhaDeBaixo.add(criarCard("GERENCIAR VOTAÇÕES", new JLabel("Editar pendentes"), () -> gerenciaVotacao.doClick()));
+        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", new JLabel("Começar uma nova votação"), () -> criarVotacao.doClick()));
+        linhaDeBaixo.add(criarCard("GERENCIAR VOTAÇÕES", labelContagemGerenciar, () -> gerenciaVotacao.doClick()));
 
         // Adiciona as linhas ao painel principal do dashboard
         painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
@@ -77,13 +80,15 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }
     
     private void carregarDadosDashboard() throws Exception {
+        if (usuariologado == null) return;
         VotacaoController controller = new VotacaoController();
-        int[] stats = controller.getDashboardStats();
+        int[] stats = controller.getDashboardStats(this.usuariologado.getId());
         
         // Formata o texto para singular ou plural
         labelContagemAtivas.setText(stats[0] + (stats[0] == 1 ? " Votação" : " Votações"));
         labelContagemAprovacao.setText(stats[1] + (stats[1] == 1 ? " Votação" : " Votações"));
         labelContagemArquivadas.setText(stats[2] + (stats[2] == 1 ? " Votação" : " Votações"));
+        labelContagemGerenciar.setText(stats[3] + (stats[3] == 1 ? " Votação " : " Votações"));
     }
     
     private void navegarPara(String nomeDoPainel) {

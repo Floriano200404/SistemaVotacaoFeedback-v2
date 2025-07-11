@@ -115,11 +115,12 @@ public class VotacaoService {
     }
     
     //lógica para aparecer o contador em que busca as estatisticas para o dashboard
-    public int[] getDashboardStats() throws Exception {
-        int[] stats = new int[3];
+    public int[] getDashboardStats(int idCriador) throws Exception {
+        int[] stats = new int[4];
         stats[0] = this.votacaoRepository.countAtivas(); //votações que estão Ativas
         stats[1] = this.votacaoRepository.countByStatus("PENDENTE"); //aguardando Aprovação
         stats[2] = this.votacaoRepository.countByStatus("FINALIZADA"); //votações Arquivadas (exemplo)
+        stats[3] = this.votacaoRepository.countPendentesPorCriador(idCriador);
         return stats;
     }
     

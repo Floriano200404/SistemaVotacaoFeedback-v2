@@ -170,4 +170,20 @@ public class VotacaoRepository {
         return 0;
     }
     
+    public int countPendentesPorCriador(int idCriador) throws Exception {
+    String sql = "SELECT COUNT(*) FROM votacao WHERE status = 'PENDENTE' AND id_criador = ?";
+    try (Connection conn = DatabaseUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idCriador);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
+    
 }

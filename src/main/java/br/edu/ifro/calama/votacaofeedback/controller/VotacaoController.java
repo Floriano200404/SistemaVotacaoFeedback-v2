@@ -59,8 +59,8 @@ public class VotacaoController {
         }
     }
     
-    public int[] getDashboardStats() throws Exception {
-        return votacaoService.getDashboardStats();
+    public int[] getDashboardStats(int idCriador) throws Exception {
+        return votacaoService.getDashboardStats(idCriador);
     }
     
 }
