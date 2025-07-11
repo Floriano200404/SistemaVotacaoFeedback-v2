@@ -25,7 +25,7 @@ public class VotacaoService {
     public java.util.List<Votacao> getVotacoesParaAprovar() {
         try {
             VotacaoRepository votacaoRepo = new VotacaoRepository();
-            return votacaoRepo.buscarPendentes();
+            return votacaoRepo.buscarTodosPendentes();
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -41,14 +41,18 @@ public class VotacaoService {
         votacaoRepository.atualizar(votacao);
     }
     
-    public java.util.List<Votacao> buscarPorIdCriador(int idCriador) {
+    public java.util.List<Votacao> buscarPendentesPorCriador(int idCriador) {
         try {
-            return this.votacaoRepository.buscarPorIdCriador(idCriador);
+            return this.votacaoRepository.buscarPendentesPorCriador(idCriador);
         } catch (Exception e) {
             System.err.println("Erro na camada de serviço ao buscar por criador: " + e.getMessage());
             e.printStackTrace();
             return new java.util.ArrayList<>();
         }
+    }
+    
+    public List<Votacao> buscarPendentes() throws Exception{
+        return this.votacaoRepository.buscarTodosPendentes();
     }
     
     public void sincronizarOpcoes(int idVotacao, List<String> descricoesDaTela) throws Exception {
@@ -95,7 +99,6 @@ public class VotacaoService {
         }
     }
 
-
     public void reprovarVotacao(int idVotacao) {
         try {
             // Chama o mesmo método do repositório, mas com um status diferente
@@ -105,5 +108,9 @@ public class VotacaoService {
             System.err.println("ERRO NO SERVIÇO ao reprovar votação: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public List<Votacao> buscarTodosPendentes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

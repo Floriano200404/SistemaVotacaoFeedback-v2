@@ -367,25 +367,18 @@ private void inicializarMenuLateral() {
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
-
     for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
-
-   
 }
 
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-   botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    
+    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
-
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {

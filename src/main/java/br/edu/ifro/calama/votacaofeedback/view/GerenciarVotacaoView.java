@@ -33,27 +33,26 @@ public final class GerenciarVotacaoView extends javax.swing.JPanel {
     }
 
     public void carregarVotacoesDoUsuario() {
-        VotacaoRepository votacaoRepo = new VotacaoRepository();
-
         try {
-            VotacaoController controller = new VotacaoController();
-            List<Votacao> votacoesDoUsuario = controller.buscarVotacoesPorCriador(this.usuarioLogado.getId());
+        VotacaoController controller = new VotacaoController();
         
-            painelDaGrade.removeAll();
-            
-            for (Votacao votacao : votacoesDoUsuario) {
-                CardView card = new CardView();
-                card.setDados(votacao);
-                card.setUsuario(this.usuarioLogado); 
-                card.setModo(DetalhesVotacaoDialog.ModoDialogo.GERENCIAMENTO);
+        // ALTERADO: Chamando o novo método que busca apenas as pendentes do usuário
+        List<Votacao> votacoesDoUsuario = controller.buscarPendentesPorCriador(this.usuarioLogado.getId());
+        
+        painelDaGrade.removeAll();
+        for (Votacao votacao : votacoesDoUsuario) {
+            CardView card = new CardView();
+            card.setDados(votacao);
+            card.setUsuario(this.usuarioLogado);
+            card.setModo(DetalhesVotacaoDialog.ModoDialogo.GERENCIAMENTO);
+            card.setTelaDeOrigem(this); // Passa a própria tela para poder ser atualizada
+            painelDaGrade.add(card);
+        }
+        
+        painelDaGrade.revalidate();
+        painelDaGrade.repaint();
 
-                painelDaGrade.add(card);
-            }
-            
-            painelDaGrade.revalidate();
-            painelDaGrade.repaint();
-
-        } catch (Exception e) {
+    } catch (Exception e) {
             e.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(this, "Erro ao buscar suas votações.", "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
         }

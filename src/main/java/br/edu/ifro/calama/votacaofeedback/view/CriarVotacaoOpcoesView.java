@@ -526,18 +526,14 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
     private void inicializarMenuLateral() {
-
          java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
             criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
         );
-
         configurarBotao(criarVotacao, "criarVoto.png");
         configurarBotao(participarVotacao, "peoplemais.png");
         configurarBotao(gerenciaVotacao, "configpast.png");
         configurarBotao(aprovarVotacao, "list_check.png");
         configurarBotao(votoArquivado, "arquivada.png");
-
-
         for (javax.swing.JButton botao : botoes) {
             adicionarListeners(botao);
         }

@@ -53,65 +53,33 @@ public class VotacaoRepository {
     }
    
 
-    public java.util.List<Votacao> buscarPendentes() throws Exception {
+    public List<Votacao> buscarTodosPendentes() throws SQLException, Exception {
         String sql = "SELECT * FROM votacao WHERE status = 'PENDENTE'";
-        java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
-
-        try (java.sql.Connection conexao = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
-             java.sql.PreparedStatement ps = conexao.prepareStatement(sql);
-             java.sql.ResultSet rs = ps.executeQuery()) {
-
+        List<Votacao> votacoes = new ArrayList<>();
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Votacao votacao = new Votacao();
-
-                votacao.setIdVotacao(rs.getInt("id_Votacao"));
-                votacao.setTitulo(rs.getString("titulo"));
-                votacao.setDescricao(rs.getString("descricao"));
-                votacao.setDataInicial(rs.getDate("data_inicio"));
-                votacao.setDataFinal(rs.getDate("data_fim"));
-                votacao.setDataResultado(rs.getDate("data_Resultado"));
-                votacao.setStatus(rs.getString("status"));
-                votacao.setPergunta(rs.getString("pergunta"));
-                votacao.setIdCriador(rs.getInt("id_Criador"));
-                votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
-
-                votacoes.add(votacao);
+                votacoes.add(mapRowToVotacao(rs));
             }
         }
         return votacoes;
     }
 
-    public List<Votacao> buscarPorIdCriador(int idCriador) throws Exception {
-            List<Votacao> votacoes = new ArrayList<>();
-            String sql = "SELECT * FROM votacao WHERE id_criador = ?";
-
-            try (Connection conn = DatabaseUtil.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-                stmt.setInt(1, idCriador);
-
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        Votacao votacao = new Votacao();
-                        votacao.setIdVotacao(rs.getInt("id_votacao"));
-                        votacao.setTitulo(rs.getString("titulo"));
-                        votacao.setDescricao(rs.getString("descricao"));
-                        votacao.setPergunta(rs.getString("pergunta"));
-                        votacao.setStatus(rs.getString("status"));
-                        votacao.setDataInicial(rs.getTimestamp("data_inicio"));
-                        votacao.setDataFinal(rs.getTimestamp("data_fim"));
-                        votacao.setDataResultado(rs.getTimestamp("data_resultado"));
-                        votacao.setIdCriador(rs.getInt("id_criador"));
-                        votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
-                        votacoes.add(votacao);
-                    }
+    public List<Votacao> buscarPendentesPorCriador(int idCriador) throws SQLException, Exception {
+        List<Votacao> votacoes = new ArrayList<>();
+        String sql = "SELECT * FROM votacao WHERE id_criador = ? AND status = 'PENDENTE'";
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idCriador);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    votacoes.add(mapRowToVotacao(rs));
                 }
-            } catch (SQLException e) {
-                System.err.println("Erro ao buscar votações por criador: " + e.getMessage());
-                e.printStackTrace();
             }
-            return votacoes;
         }
+        return votacoes;
+    }
 
     public void atualizar(Votacao votacao) throws SQLException, Exception {
     String sql = "UPDATE votacao SET " +
@@ -153,4 +121,20 @@ public class VotacaoRepository {
             ps.executeUpdate();
         }
     }
+    
+    private Votacao mapRowToVotacao(ResultSet rs) throws SQLException {
+        Votacao votacao = new Votacao();
+        votacao.setIdVotacao(rs.getInt("id_votacao"));
+        votacao.setTitulo(rs.getString("titulo"));
+        votacao.setDescricao(rs.getString("descricao"));
+        votacao.setPergunta(rs.getString("pergunta"));
+        votacao.setStatus(rs.getString("status"));
+        votacao.setDataInicial(rs.getTimestamp("data_inicio"));
+        votacao.setDataFinal(rs.getTimestamp("data_fim"));
+        votacao.setDataResultado(rs.getTimestamp("data_resultado"));
+        votacao.setIdCriador(rs.getInt("id_criador"));
+        votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
+        return votacao;
+    }
+    
 }

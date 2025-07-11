@@ -8,6 +8,7 @@ import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
 import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoView;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +26,23 @@ public class VotacaoController {
     public void atualizarVotacao(Votacao votacao) throws Exception {
         votacaoService.atualizar(votacao);
     }
+    
+    public List<Votacao> buscarTodosPendentes() {
+        try {
+            return votacaoService.buscarTodosPendentes();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
-    public List<Votacao> buscarVotacoesPorCriador(int idCriador) {
-        return votacaoService.buscarPorIdCriador(idCriador);
+    public List<Votacao> buscarPendentesPorCriador(int idCriador) {
+        try {
+            return votacaoService.buscarPendentesPorCriador(idCriador);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
     
     public List<Votacao> buscarVotacoesPendentes() {
