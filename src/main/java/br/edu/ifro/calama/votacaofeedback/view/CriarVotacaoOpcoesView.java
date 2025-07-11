@@ -101,9 +101,18 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private void navegarParaMenuPrincipal() {
         new Timer(1500, e -> {
-            new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+            try {
+            MenuPrincipalView menuPrincipal = new MenuPrincipalView(this.usuarioLogado);
+            menuPrincipal.setLocationRelativeTo(null);
+            menuPrincipal.setVisible(true);
+
             this.dispose();
-        }){{setRepeats(false);}}.start();
+
+        } catch (Exception ex) {
+            exibirMensagem("Erro ao carregar o menu principal: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }){{setRepeats(false);}}.start();
     }
 
     /**
@@ -394,12 +403,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
-
-        telaDeCriacao.setLocationRelativeTo(null);
-        telaDeCriacao.setVisible(true);
-
+        try {
+        MenuPrincipalView telaPrincipal = new MenuPrincipalView(this.usuarioLogado);
+        telaPrincipal.setLocationRelativeTo(null);
+        telaPrincipal.setVisible(true);
+        
         this.dispose();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar o menu principal: " + e.getMessage(), "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed

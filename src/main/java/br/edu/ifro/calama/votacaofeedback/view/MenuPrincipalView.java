@@ -4,10 +4,16 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.controller.VotacaoController;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import java.awt.CardLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -16,49 +22,125 @@ import java.awt.event.ActionListener;
 public class MenuPrincipalView extends javax.swing.JFrame {
 
     private Usuario usuariologado;
-    private Votacao votacaoEmAndamento;
+    private JLabel labelContagemAtivas;
+    private JLabel labelContagemAprovacao;
+    private JLabel labelContagemArquivadas;
     
-   public MenuPrincipalView(Usuario usuario) {
+   public MenuPrincipalView(Usuario usuario) throws Exception {
     initComponents();
-    
     this.usuariologado = usuario;
     
-    if (this.usuariologado != null) {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
-    } else {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu um usuário NULO!");
-    }
+    //if (this.usuariologado != null) {
+        //System.out.println("--- DEBUG VIEW ---");
+        //System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
+    //} else {
+       // System.out.println("--- DEBUG VIEW ---");
+        //System.out.println("A Tela Principal recebeu um usuário NULO!");
+    //}
     
     if (this.usuariologado != null) {
-
-        String nomeDoUsuario = this.usuariologado.getNome();
-        
-        labelNomeUsuario.setText(nomeDoUsuario);
-        
-        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
-   
-    }
+            labelNomeUsuario.setText(this.usuariologado.getNome());
+            txtbemVindo.setText("Bem-Vindo(a), " + this.usuariologado.getNome() + "!");
+        }
     inicializarMenuLateral();
+    construirDashboard();
+    carregarDadosDashboard();
+    
+    }
    
-    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeCima.setOpaque(false);
+    private void construirDashboard() {
+        // Inicializa os JLabels que guardarão os números
+        labelContagemAtivas = new JLabel("0 Votações");
+        labelContagemAprovacao = new JLabel("0 Votações");
+        labelContagemArquivadas = new JLabel("0 Votações");
 
-    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeBaixo.setOpaque(false);
-    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+        // Cria as duas linhas de cards
+        JPanel linhaDeCima = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeCima.setOpaque(false);
+        JPanel linhaDeBaixo = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeBaixo.setOpaque(false);
 
-    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
-    painelDosCards.add(linhaDeCima);
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
-    painelDosCards.add(linhaDeBaixo);
-    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+        // Adiciona os cards às linhas, passando o título, o label do subtítulo e a AÇÃO DE CLIQUE
+        linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", labelContagemAtivas, () -> navegarPara("participar")));
+        linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", labelContagemAprovacao, () -> navegarPara("aprovar")));
+        linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", labelContagemArquivadas, () -> navegarPara("arquivadas")));
+        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", new JLabel("Começar do zero"), () -> criarVotacao.doClick()));
+        linhaDeBaixo.add(criarCard("GERENCIAR VOTAÇÕES", new JLabel("Editar pendentes"), () -> gerenciaVotacao.doClick()));
+
+        // Adiciona as linhas ao painel principal do dashboard
+        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+        painelDosCards.add(linhaDeCima);
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+        painelDosCards.add(linhaDeBaixo);
+        painelDosCards.add(javax.swing.Box.createVerticalGlue());
+    }
+    
+    private void carregarDadosDashboard() throws Exception {
+        VotacaoController controller = new VotacaoController();
+        int[] stats = controller.getDashboardStats();
+        
+        // Formata o texto para singular ou plural
+        labelContagemAtivas.setText(stats[0] + (stats[0] == 1 ? " Votação" : " Votações"));
+        labelContagemAprovacao.setText(stats[1] + (stats[1] == 1 ? " Votação" : " Votações"));
+        labelContagemArquivadas.setText(stats[2] + (stats[2] == 1 ? " Votação" : " Votações"));
+    }
+    
+    private void navegarPara(String nomeDoPainel) {
+        CardLayout cl = (CardLayout)(painelConteudo.getLayout());
+        
+        // Lógica para criar e adicionar os painéis dinamicamente
+        if (nomeDoPainel.equals("aprovar")) {
+            AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
+            painelConteudo.add(painelAprovar, "cardAprovar");
+            cl.show(painelConteudo, "cardAprovar");
+        } else if (nomeDoPainel.equals("gerenciar")) {
+            GerenciarVotacaoView painelGerenciar = new GerenciarVotacaoView(this.usuariologado);
+            painelConteudo.add(painelGerenciar, "cardGerenciar");
+            cl.show(painelConteudo, "cardGerenciar");
+        }
+        //aqui tem que adicionar outros if/else para as outras telas quando estiverem feitas
+    }
+    
+    private JPanel criarCard(String titulo, JLabel labelSubtitulo, Runnable acao) {
+        JPanel card = new JPanel();
+        card.setPreferredSize(new java.awt.Dimension(300, 65));
+        card.setBackground(new java.awt.Color(48, 162, 218));
+        card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
+        card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        JLabel labelTitulo = new JLabel(titulo);
+        labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        labelTitulo.setForeground(java.awt.Color.WHITE);
+
+        labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
+        labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255));
+
+        card.add(labelTitulo);
+        card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
+        card.add(labelSubtitulo);
+
+        card.addMouseListener(new MouseAdapter() {
+            final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
+            final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (acao != null) {
+                    acao.run(); // Executa a ação de clique
+                }
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt) {
+                card.setBackground(corHover);
+            }
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                card.setBackground(corOriginal);
+            }
+        });
+        return card;
     }
     
 
@@ -289,11 +371,17 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
-
-        telaDeCriacao.setVisible(true);
-
+        try {
+        MenuPrincipalView telaPrincipal = new MenuPrincipalView(this.usuariologado);
+        telaPrincipal.setLocationRelativeTo(null);
+        telaPrincipal.setVisible(true);
+        
         this.dispose();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar o menu principal: " + e.getMessage(), "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
@@ -408,26 +496,6 @@ private void adicionarListeners(javax.swing.JButton botao) {
         System.out.println("Botão '" + botao.getText() + "' clicado!");
     });
 }
-
-//     * @param args the command line arguments
-//     */
- //public static void main(String args[]) {
-    /* Set the FlatLaf look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    //try {
-       // javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
-    //} catch( Exception ex ) {
-       // System.err.println( "Failed to initialize LaF" );
-    //}
-    //</editor-fold>
-
-    /* Create and display the form */
-    //java.awt.EventQueue.invokeLater(new Runnable() {
-        //public void run() {
-            //new MenuPrincipalView().setVisible(true);
-        //}
-    //});
-//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;

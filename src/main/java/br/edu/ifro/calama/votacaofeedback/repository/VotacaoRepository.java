@@ -137,4 +137,37 @@ public class VotacaoRepository {
         return votacao;
     }
     
+    //contagem das votações pelo status, mais para pendente
+    public int countByStatus(String status) throws Exception {
+        String sql = "SELECT COUNT(*) FROM votacao WHERE status = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //contagem das votações ativas
+    public int countAtivas() throws Exception {
+        // NOW() é uma função do MySQL para pegar a data e hora atuais.
+        String sql = "SELECT COUNT(*) FROM votacao WHERE status = 'APROVADA' AND NOW() BETWEEN data_inicio AND data_fim";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
 }

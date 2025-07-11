@@ -113,4 +113,14 @@ public class VotacaoService {
     public List<Votacao> buscarTodosPendentes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    //lógica para aparecer o contador em que busca as estatisticas para o dashboard
+    public int[] getDashboardStats() throws Exception {
+        int[] stats = new int[3];
+        stats[0] = this.votacaoRepository.countAtivas(); //votações que estão Ativas
+        stats[1] = this.votacaoRepository.countByStatus("PENDENTE"); //aguardando Aprovação
+        stats[2] = this.votacaoRepository.countByStatus("FINALIZADA"); //votações Arquivadas (exemplo)
+        return stats;
+    }
+    
 }
