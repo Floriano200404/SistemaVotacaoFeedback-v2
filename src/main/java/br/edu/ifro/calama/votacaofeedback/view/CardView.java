@@ -12,11 +12,8 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.text.SimpleDateFormat;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
-/**
- *
- * @author floriano
- */
     
 public class CardView extends javax.swing.JPanel {
     private static class RoundedButton extends JButton {
@@ -37,7 +34,6 @@ public class CardView extends javax.swing.JPanel {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Define a cor de fundo com base no estado do botão
             if (getModel().isPressed()) {
                 g2.setColor(getBackground().darker());
             } else if (getModel().isRollover()) {
@@ -46,15 +42,12 @@ public class CardView extends javax.swing.JPanel {
                 g2.setColor(getBackground());
             }
 
-            // Desenha o retângulo arredondado que servirá como fundo
             g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight));
             g2.dispose();
 
-            // Pinta o texto ("Ver Votação") por cima do fundo que desenhamos
             super.paintComponent(g);
         }
     }
-    // --- Fim da Lógica do Botão Arredondado ---
     
     private Votacao votacaoAtual;
 
@@ -67,23 +60,27 @@ public void setDados(Votacao votacao) {
         lblTituloVotacao.setText(votacao.getTitulo());
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
-        if (votacao.getDataInicio() != null) {
-            returdadosdt.setText(sdf.format(votacao.getDataInicio()));
-        } else {
-            returdadosdt.setText("N/A"); // Mostra "N/A" se a data for nula
-        }
-        if (votacao.getDataFim() != null) {
-            returdadosdt2.setText(sdf.format(votacao.getDataFim()));
-        } else {
-            returdadosdt2.setText("N/A");
-        }
-        if (votacao.getDataResultado() != null) {
-            returdadosdt3.setText(sdf.format(votacao.getDataResultado()));
-        } else {
-            returdadosdt3.setText("N/A");
-        }
+    
+    if (votacao.getDataInicial() != null) {
+        returdadosdt.setText(sdf.format(votacao.getDataInicial()));
+    } else {
+        returdadosdt.setText("N/A"); 
     }
 
+    if (votacao.getDataFinal() != null) {
+        returdadosdt2.setText(sdf.format(votacao.getDataFinal()));
+    } else {
+        returdadosdt2.setText("N/A");
+    }
+
+    if (votacao.getDataResultado() != null) {
+        returdadosdt3.setText(sdf.format(votacao.getDataResultado()));
+    } else {
+        returdadosdt3.setText("N/A");
+    }
+
+   
+}
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -198,12 +195,16 @@ public void setDados(Votacao votacao) {
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
                                               
     
+    
     java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
-   
-    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true);
+    
+    AprovarVotacaoView telaDeAprovacao = (AprovarVotacaoView) javax.swing.SwingUtilities.getAncestorOfClass(AprovarVotacaoView.class, this);
 
     
+    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, telaDeAprovacao);
+
+   
     dialog.setDados(this.votacaoAtual); 
 
     
