@@ -3,22 +3,63 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author Aluno
  */
 public class MenuPrincipalView extends javax.swing.JFrame {
-private java.util.List<javax.swing.JButton> botoesDoMenu;
-    private javax.swing.JButton botaoAtivo;
-    /**
-     * Creates new form MenuPrincipalView
-     */
-   
-   public MenuPrincipalView() {
-    initComponents();
-    inicializarMenuLateral();
 
-}
+    private Usuario usuariologado;
+    private Votacao votacaoEmAndamento;
+    
+   public MenuPrincipalView(Usuario usuario) {
+    initComponents();
+    
+    this.usuariologado = usuario;
+    
+    if (this.usuariologado != null) {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
+    } else {
+        System.out.println("--- DEBUG VIEW ---");
+        System.out.println("A Tela Principal recebeu um usuário NULO!");
+    }
+    
+    if (this.usuariologado != null) {
+
+        String nomeDoUsuario = this.usuariologado.getNome();
+        
+        labelNomeUsuario.setText(nomeDoUsuario);
+        
+        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+   
+    }
+    inicializarMenuLateral();
+   
+    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+    linhaDeCima.setOpaque(false);
+
+    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+    linhaDeBaixo.setOpaque(false);
+    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+
+    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+    painelDosCards.add(linhaDeCima);
+    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+    painelDosCards.add(linhaDeBaixo);
+    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+    }
     
 
     /**
@@ -31,8 +72,18 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
     private void initComponents() {
 
         painelHeader = new javax.swing.JPanel();
+        painelHeaderEsquerda = new javax.swing.JPanel();
         labelIconeMenu = new javax.swing.JLabel();
+        labelLogo = new javax.swing.JLabel();
+        painelHeaderDireita = new javax.swing.JPanel();
+        labelNomeUsuario = new javax.swing.JLabel();
+        labelIconePerfil = new javax.swing.JLabel();
         painelConteudo = new javax.swing.JPanel();
+        cardDashboard = new javax.swing.JPanel();
+        painelTopoConteudo = new javax.swing.JPanel();
+        txtbemVindo = new javax.swing.JLabel();
+        textGuia = new javax.swing.JTextArea();
+        painelDosCards = new javax.swing.JPanel();
         painelSidebar = new javax.swing.JPanel();
         menutxt = new javax.swing.JLabel();
         criarVotacao = new javax.swing.JButton();
@@ -44,9 +95,15 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1480, 800));
+        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
+        painelHeader.setLayout(new java.awt.BorderLayout());
+
+        painelHeaderEsquerda.setOpaque(false);
+        painelHeaderEsquerda.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 5));
 
         labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu.png"))); // NOI18N
         labelIconeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -54,36 +111,69 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
                 labelIconeMenuMouseClicked(evt);
             }
         });
+        painelHeaderEsquerda.add(labelIconeMenu);
 
-        javax.swing.GroupLayout painelHeaderLayout = new javax.swing.GroupLayout(painelHeader);
-        painelHeader.setLayout(painelHeaderLayout);
-        painelHeaderLayout.setHorizontalGroup(
-            painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelHeaderLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(labelIconeMenu)
-                .addContainerGap(677, Short.MAX_VALUE))
-        );
-        painelHeaderLayout.setVerticalGroup(
-            painelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelIconeMenu)
-                .addGap(15, 15, 15))
-        );
+        labelLogo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        labelLogo.setForeground(new java.awt.Color(255, 255, 255));
+        labelLogo.setText("OCTACORE");
+        labelLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelLogoMouseClicked(evt);
+            }
+        });
+        painelHeaderEsquerda.add(labelLogo);
+
+        painelHeader.add(painelHeaderEsquerda, java.awt.BorderLayout.LINE_START);
+
+        painelHeaderDireita.setOpaque(false);
+        painelHeaderDireita.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 20, 5));
+
+        labelNomeUsuario.setFont(new java.awt.Font("Silom", 0, 14)); // NOI18N
+        labelNomeUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelNomeUsuario.setText("Nome Usuario");
+        painelHeaderDireita.add(labelNomeUsuario);
+
+        labelIconePerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user.png"))); // NOI18N
+        labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseClicked(evt);
+            }
+        });
+        painelHeaderDireita.add(labelIconePerfil);
+
+        painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout painelConteudoLayout = new javax.swing.GroupLayout(painelConteudo);
-        painelConteudo.setLayout(painelConteudoLayout);
-        painelConteudoLayout.setHorizontalGroup(
-            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
-        );
-        painelConteudoLayout.setVerticalGroup(
-            painelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
-        );
+        painelConteudo.setLayout(new java.awt.CardLayout());
+
+        cardDashboard.setLayout(new java.awt.BorderLayout());
+
+        painelTopoConteudo.setLayout(new javax.swing.BoxLayout(painelTopoConteudo, javax.swing.BoxLayout.Y_AXIS));
+
+        txtbemVindo.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        txtbemVindo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtbemVindo.setText("Bem-Vindo, Nome do Usuário!");
+        txtbemVindo.setAlignmentX(0.5F);
+        painelTopoConteudo.add(txtbemVindo);
+
+        textGuia.setEditable(false);
+        textGuia.setColumns(20);
+        textGuia.setLineWrap(true);
+        textGuia.setRows(5);
+        textGuia.setText("Bem-vindo(a) de volta!\n\nEste é o seu painel de controle para o Sistema de Votação. Acompanhe as votações ativas, gerencie propostas pendentes de aprovação e acesse os resultados arquivados.\n\nPara começar, selecione uma das opções no menu de navegação à sua esquerda ou utilize um dos atalhos nos cartões abaixo para acesso rápido às principais funções.");
+        textGuia.setWrapStyleWord(true);
+        textGuia.setBorder(null);
+        textGuia.setOpaque(false);
+        painelTopoConteudo.add(textGuia);
+
+        cardDashboard.add(painelTopoConteudo, java.awt.BorderLayout.PAGE_START);
+
+        painelDosCards.setOpaque(false);
+        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+        cardDashboard.add(painelDosCards, java.awt.BorderLayout.CENTER);
+
+        painelConteudo.add(cardDashboard, "card4");
 
         getContentPane().add(painelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -93,6 +183,11 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
         painelSidebar.add(menutxt);
 
         criarVotacao.setText("Criar Votação");
+        criarVotacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                criarVotacaoMouseClicked(evt);
+            }
+        });
         criarVotacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 criarVotacaoActionPerformed(evt);
@@ -134,38 +229,41 @@ private java.util.List<javax.swing.JButton> botoesDoMenu;
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-        // Animação da sidebar em uma nova Thread para não travar a interface
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        // Lógica robusta: se a largura for maior que 0, ele fecha. Senão, abre.
-        if (painelSidebar.getWidth() > 0) {
-            try {
-                // Animação para fechar, começando da largura atual
-                for (int i = painelSidebar.getWidth(); i >= 0; i--) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight()); 
-                    Thread.sleep(1); 
+
+        new Thread(new Runnable() {
+        @Override
+        public void run() {
+            if (painelSidebar.getWidth() > 0) {
+                try {
+                    for (int i = painelSidebar.getWidth(); i >= 0; i--) {
+                        painelSidebar.setSize(i, painelSidebar.getHeight()); 
+                        Thread.sleep(1); 
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
-            }
-        } else {
-            try {
-                // Animação para abrir, de 0 até a largura desejada (210)
-                for (int i = 0; i <= 210; i++) {
-                    painelSidebar.setSize(i, painelSidebar.getHeight());
-                    Thread.sleep(1);
+            } else {
+                try {
+                    for (int i = 0; i <= 210; i++) {
+                        painelSidebar.setSize(i, painelSidebar.getHeight());
+                        Thread.sleep(1);
+                    }
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
                 }
-            } catch (InterruptedException ex) {
-                System.out.println(ex);
             }
         }
-    }
-}).start();
+    }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        // TODO add your handling code here:
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, null, false);
+
+        telaDeCriacao.setLocationRelativeTo(null);
+        telaDeCriacao.setVisible(true);
+
+        this.dispose();
+
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
@@ -173,60 +271,114 @@ new Thread(new Runnable() {
     }//GEN-LAST:event_participarVotacaoActionPerformed
 
     private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
-        // TODO add your handling code here:
+        GerenciarVotacaoView painelGerenciar = new GerenciarVotacaoView(this.usuariologado);
+    
+        painelConteudo.add(painelGerenciar, "cardGerenciar");
+    
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardGerenciar");
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        // TODO add your handling code here:
+        AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
+    
+        painelConteudo.add(painelAprovar, "cardAprovar");
+    
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardAprovar");
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
-    
-   // ===================================================================
-//  INÍCIO DA NOVA LÓGICA DO MENU LATERAL (COPIE TUDO ABAIXO)
-// ===================================================================
+    private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
+        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuariologado);
 
-// MÉTODO PRINCIPAL QUE ORGANIZA TUDO
+        telaDeCriacao.setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_labelLogoMouseClicked
+
+    private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
+               // TODO add your handling code here:
+    }//GEN-LAST:event_criarVotacaoMouseClicked
+
+    private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
+        ActionListener acaoDeLogout = e -> {
+        new LoginView().setVisible(true);
+        this.dispose();
+        System.out.println("Logout realizado. Janela principal fechada.");
+    };
+
+    PerfilView perfil = new PerfilView(
+        this,
+        this.usuariologado.getNome(),
+        this.usuariologado.getEmail(),
+        this.usuariologado.getCpf(),
+        this.usuariologado.getMatricula(),
+        this.usuariologado.getCurso(),
+        acaoDeLogout
+    );
+    perfil.setVisible(true);
+    }//GEN-LAST:event_labelIconePerfilMouseClicked
+
+private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
+    javax.swing.JPanel card = new javax.swing.JPanel();
+
+    card.setPreferredSize(new java.awt.Dimension(300, 65));
+
+    card.setBackground(new java.awt.Color(48, 162, 218)); 
+    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
+    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
+    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
+    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+    labelTitulo.setForeground(java.awt.Color.WHITE);
+
+    javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
+    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
+    labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255));
+
+    card.add(labelTitulo);
+    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
+    card.add(labelSubtitulo);
+
+    card.addMouseListener(new java.awt.event.MouseAdapter() {
+        final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
+        final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
+
+        @Override
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            card.setBackground(corHover);
+        }
+
+        @Override
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            card.setBackground(corOriginal);
+        }
+    });
+
+    return card;
+}
 private void inicializarMenuLateral() {
-    // Coloca todos os botões em uma lista para fácil acesso
-    botoesDoMenu = java.util.Arrays.asList(criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado);
-
-    // 1. Aplica o estilo visual INICIAL a cada botão
+     java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
+        criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
+    );
     configurarBotao(criarVotacao, "criarVoto.png");
     configurarBotao(participarVotacao, "peoplemais.png");
     configurarBotao(gerenciaVotacao, "configpast.png");
     configurarBotao(aprovarVotacao, "list_check.png");
     configurarBotao(votoArquivado, "arquivada.png");
-
-    // 2. Adiciona os eventos de mouse e clique a todos os botões
-    for (javax.swing.JButton botao : botoesDoMenu) {
+    for (javax.swing.JButton botao : botoes) {
         adicionarListeners(botao);
     }
-
-    // 3. Define o estado inicial (primeiro botão como ativo)
-    botaoAtivo = criarVotacao;
-    atualizarAparenciaBotoes();
 }
 
-// MÉTODO que aplica a APARÊNCIA BASE (ícones, fonte, bordas, etc.)
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    // Estilo visual "flat"
-    botao.setOpaque(false);
-    botao.setContentAreaFilled(false);
-    botao.setBorderPainted(false);
-    botao.setFocusPainted(false);
-    
-    // Alinhamento e cursor
+    botao.putClientProperty("JButton.buttonType", "toolBarButton");
     botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
     botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    
-    // Espaçamentos internos e entre ícone/texto
     botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
     botao.setIconTextGap(15);
-
-    // Fonte
     botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-
-    // Tenta carregar o ícone
     try {
         botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
     } catch (Exception e) {
@@ -234,85 +386,70 @@ private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
     }
 }
 
-// MÉTODO "GERENTE" que atualiza as CORES (ativo/inativo)
-private void atualizarAparenciaBotoes() {
-    final java.awt.Color COR_TEXTO_ATIVO = java.awt.Color.WHITE;
-    final java.awt.Color COR_TEXTO_INATIVO = new java.awt.Color(50, 50, 50);
-    final java.awt.Color COR_FUNDO_ATIVO = new java.awt.Color(88, 101, 242); // Azul
-
-    for (javax.swing.JButton botao : botoesDoMenu) {
-        if (botao == botaoAtivo) {
-            // Estilo do botão ATIVO
-            botao.setOpaque(true);
-            botao.setBackground(COR_FUNDO_ATIVO);
-            botao.setForeground(COR_TEXTO_ATIVO);
-        } else {
-            // Estilo do botão INATIVO
-            botao.setOpaque(false);
-            botao.setBackground(getBackground()); 
-            botao.setForeground(COR_TEXTO_INATIVO);
-        }
-    }
-}
-
-// MÉTODO que adiciona a INTERATIVIDADE (mouse e clique)
 private void adicionarListeners(javax.swing.JButton botao) {
-    final java.awt.Color COR_HOVER = new java.awt.Color(225, 225, 225);
+    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
 
     botao.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseEntered(java.awt.event.MouseEvent evt) {
-            if (botao != botaoAtivo) {
-                botao.setBackground(COR_HOVER);
-                botao.setOpaque(true);
-            }
+            botao.setBackground(COR_HOVER_AZUL);
+            botao.setOpaque(true);
         }
+
         @Override
         public void mouseExited(java.awt.event.MouseEvent evt) {
-            atualizarAparenciaBotoes();
+            botao.setOpaque(false);
+            botao.setBackground(COR_FUNDO_SIDEBAR); 
         }
     });
 
     botao.addActionListener(e -> {
-        botaoAtivo = botao;
-        atualizarAparenciaBotoes();
+        System.out.println("Botão '" + botao.getText() + "' clicado!");
     });
 }
-// ===================================================================
-//  FIM DA NOVA LÓGICA
-// ===================================================================
 
 //     * @param args the command line arguments
 //     */
- public static void main(String args[]) {
+ //public static void main(String args[]) {
     /* Set the FlatLaf look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    try {
-        javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
-    } catch( Exception ex ) {
-        System.err.println( "Failed to initialize LaF" );
-    }
+    //try {
+       // javax.swing.UIManager.setLookAndFeel( new com.formdev.flatlaf.FlatLightLaf() );
+    //} catch( Exception ex ) {
+       // System.err.println( "Failed to initialize LaF" );
+    //}
     //</editor-fold>
 
     /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new MenuPrincipalView().setVisible(true);
-        }
-    });
-}
+    //java.awt.EventQueue.invokeLater(new Runnable() {
+        //public void run() {
+            //new MenuPrincipalView().setVisible(true);
+        //}
+    //});
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JPanel cardDashboard;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JLabel labelIconeMenu;
+    private javax.swing.JLabel labelIconePerfil;
+    private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelNomeUsuario;
     private javax.swing.JLabel menutxt;
     private javax.swing.JPanel painelConteudo;
+    private javax.swing.JPanel painelDosCards;
     private javax.swing.JPanel painelHeader;
+    private javax.swing.JPanel painelHeaderDireita;
+    private javax.swing.JPanel painelHeaderEsquerda;
     private javax.swing.JPanel painelSidebar;
+    private javax.swing.JPanel painelTopoConteudo;
     private javax.swing.JButton participarVotacao;
+    private javax.swing.JTextArea textGuia;
+    private javax.swing.JLabel txtbemVindo;
     private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
 
