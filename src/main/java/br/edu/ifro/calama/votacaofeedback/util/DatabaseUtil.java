@@ -15,7 +15,7 @@ public class DatabaseUtil {
     public static Connection getConnection() throws Exception {
         String url = "jdbc:mysql://localhost:3306/mydb";
         String user = "root";
-        String password = "PHNGC785d";
+        String password = "";
         return DriverManager.getConnection(url, user, password);
     }
 }
