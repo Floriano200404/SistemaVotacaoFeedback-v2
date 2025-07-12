@@ -250,7 +250,7 @@ public class TelaDeVotoView extends javax.swing.JPanel {
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("x");
         jPanel3.add(jButton1);
 
         jButton2.setText("jButton2");
