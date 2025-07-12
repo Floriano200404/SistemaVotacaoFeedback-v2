@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -48,48 +50,91 @@ public class VotacaoRepository {
             
         }
         return idGerado;
-
     }
    
 
-public java.util.List<Votacao> buscarPendentes() throws Exception {
-    String sql = "SELECT * FROM votacao WHERE status = 'PENDENTE'";
-    java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
+    public List<Votacao> buscarTodosPendentes() throws SQLException, Exception {
+        String sql = "SELECT * FROM votacao WHERE status = 'PENDENTE'";
+        List<Votacao> votacoes = new ArrayList<>();
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement ps = conexao.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                votacoes.add(mapRowToVotacao(rs));
+            }
+        }
+        return votacoes;
+    }
 
-    try (java.sql.Connection conexao = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
-         java.sql.PreparedStatement ps = conexao.prepareStatement(sql);
-         java.sql.ResultSet rs = ps.executeQuery()) {
+    public List<Votacao> buscarPendentesPorCriador(int idCriador) throws SQLException, Exception {
+        List<Votacao> votacoes = new ArrayList<>();
+        String sql = "SELECT * FROM votacao WHERE id_criador = ? AND status = 'PENDENTE'";
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idCriador);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    votacoes.add(mapRowToVotacao(rs));
+                }
+            }
+        }
+        return votacoes;
+    }
 
-        while (rs.next()) {
-            Votacao votacao = new Votacao();
-           
-            votacao.setIdVotacao(rs.getInt("id_Votacao"));
-            votacao.setTitulo(rs.getString("titulo"));
-            votacao.setDescricao(rs.getString("descricao"));
-            votacao.setDataInicial(rs.getDate("data_inicio"));
-            votacao.setDataFinal(rs.getDate("data_fim"));
-            votacao.setDataResultado(rs.getDate("data_Resultado"));
-            votacao.setStatus(rs.getString("status"));
-            votacao.setPergunta(rs.getString("pergunta"));
-            votacao.setIdCriador(rs.getInt("id_Criador"));
-            votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
+    public void atualizar(Votacao votacao) throws SQLException, Exception {
+    String sql = "UPDATE votacao SET " +
+                 "titulo = ?, descricao = ?, data_inicio = ?, " +
+                 "data_fim = ?, data_Resultado = ?, id_grupo_destino = ?, " +
+                 "status = ?, pergunta = ? " +
+                 "WHERE id_votacao = ?";
 
-            votacoes.add(votacao);
+    Connection conn = DatabaseUtil.getConnection();
+    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, votacao.getTitulo());
+        stmt.setString(2, votacao.getDescricao());
+        stmt.setTimestamp(3, new java.sql.Timestamp(votacao.getDataInicial().getTime()));
+        stmt.setTimestamp(4, new java.sql.Timestamp(votacao.getDataFinal().getTime()));
+        stmt.setTimestamp(5, new java.sql.Timestamp(votacao.getDataResultado().getTime()));
+        stmt.setInt(6, votacao.getIdGrupoDestino());
+        stmt.setString(7, votacao.getStatus());
+        stmt.setString(8, votacao.getPergunta());
+        stmt.setInt(9, votacao.getIdVotacao());
+
+        stmt.executeUpdate();
+    } finally {
+        if (conn != null) {
+            conn.close();
         }
     }
-    return votacoes;
 }
-public void atualizarStatus(int idVotacao, String novoStatus) throws Exception {
-    
-    String sql = "UPDATE votacao SET status = ? WHERE id_Votacao = ?";
 
-    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
-         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+    public void atualizarStatus(int idVotacao, String novoStatus) throws Exception {
 
-        ps.setString(1, novoStatus); 
-        ps.setInt(2, idVotacao);   
+        String sql = "UPDATE votacao SET status = ? WHERE id_Votacao = ?";
 
-        ps.executeUpdate(); // Executa o comando de atualização no banco
+        try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+             java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, novoStatus); 
+            ps.setInt(2, idVotacao);   
+
+            ps.executeUpdate();
+        }
     }
-}
+    
+    private Votacao mapRowToVotacao(ResultSet rs) throws SQLException {
+        Votacao votacao = new Votacao();
+        votacao.setIdVotacao(rs.getInt("id_votacao"));
+        votacao.setTitulo(rs.getString("titulo"));
+        votacao.setDescricao(rs.getString("descricao"));
+        votacao.setPergunta(rs.getString("pergunta"));
+        votacao.setStatus(rs.getString("status"));
+        votacao.setDataInicial(rs.getTimestamp("data_inicio"));
+        votacao.setDataFinal(rs.getTimestamp("data_fim"));
+        votacao.setDataResultado(rs.getTimestamp("data_resultado"));
+        votacao.setIdCriador(rs.getInt("id_criador"));
+        votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
+        return votacao;
+    }
+    
 }

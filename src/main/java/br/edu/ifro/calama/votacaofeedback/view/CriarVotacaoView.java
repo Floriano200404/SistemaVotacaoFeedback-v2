@@ -4,7 +4,6 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
-import br.edu.ifro.calama.votacaofeedback.controller.VotacaoController;
 import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
@@ -23,9 +22,7 @@ import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoOpcoesView;
 import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 
@@ -38,14 +35,24 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoView.class.getName());
     private Usuario usuarioLogado;
-    private Votacao votacaoEmAndamento;
+    private Votacao votacaoParaEditar;
+    private boolean isEditando;
 
     
 
-    public CriarVotacaoView(Usuario usuario, Votacao votacao) {
+    public CriarVotacaoView(Usuario usuario, Votacao votacao, boolean isEditando) {
+        System.out.println("[DEBUG CriarVotacaoView] Recebeu isEditando = " + isEditando);
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.usuarioLogado = usuario;
-        this.votacaoEmAndamento = votacao;
+        this.votacaoParaEditar = votacao;
+        this.isEditando = isEditando;
+        
+        if (this.votacaoParaEditar != null) {
+            System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar foi definido com o título: " + this.votacaoParaEditar.getTitulo());
+        } else {
+            System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar continua nulo. Entrando em modo de criação.");
+        }
         
         estilizarDateChooser(txtDataInicial);
         estilizarDateChooser(txtDataFinal);
@@ -59,12 +66,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         inicializarMenuLateral();
         txtDescricao.setLineWrap(true);
         txtDescricao.setWrapStyleWord(true);
-        
-        PlaceHolderUtil.setPlaceholder(txtTitulo, "Digite o título da votação");
-        PlaceHolderUtil.setPlaceholder(txtDescricao, "Descreva aqui os detalhes da sua votação...");
-        txtDataInicial.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
-        txtDataFinal.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
-        txtDataDivulgacao.setDate(new java.util.Date()); // data inicial da classe ja vem com o dia atual
         
         java.awt.event.MouseAdapter focusRemoverListener = new java.awt.event.MouseAdapter() {
             @Override
@@ -89,13 +90,49 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         this.repaint();
         this.getContentPane().addMouseListener(focusRemoverListener);
 
-    inicializarMenuLateral();
-    javax.swing.SwingUtilities.invokeLater(() -> {
-        carregarGrupos();
-    });
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            carregarGrupos();
+            configurarModoTela();
+        });
     }
     
-   private void carregarGrupos() {
+    private void configurarModoTela() {
+        if (this.isEditando) {
+            TituloPrincipal.setText("EDITAR VOTAÇÃO");
+            btnAvancar.setText("AVANÇAR");
+            if (votacaoParaEditar != null){
+                preencherFormulario();
+            }
+        } else {
+            TituloPrincipal.setText("CRIAR VOTAÇÃO");
+            btnAvancar.setText("AVANÇAR");
+            
+            PlaceHolderUtil.setPlaceholder(txtTitulo, "Digite o título da votação");
+            PlaceHolderUtil.setPlaceholder(txtDescricao, "Descreva aqui os detalhes da sua votação...");
+            txtDataInicial.setDate(new java.util.Date());
+            txtDataFinal.setDate(new java.util.Date());
+            txtDataDivulgacao.setDate(new java.util.Date());
+        }
+    }
+     
+    private void preencherFormulario() {
+        txtTitulo.setText(votacaoParaEditar.getTitulo());
+        txtDescricao.setText(votacaoParaEditar.getDescricao());
+        txtDataInicial.setDate(votacaoParaEditar.getDataInicial());
+        txtDataFinal.setDate(votacaoParaEditar.getDataFinal());
+        txtDataDivulgacao.setDate(votacaoParaEditar.getDataResultado());
+
+        javax.swing.DefaultComboBoxModel model = (javax.swing.DefaultComboBoxModel) comboParticipantes.getModel();
+        for (int i = 0; i < model.getSize(); i++) {
+            Grupo grupo = (Grupo) model.getElementAt(i);
+            if (grupo.getIdGrupo() == votacaoParaEditar.getIdGrupoDestino()) {
+                comboParticipantes.setSelectedIndex(i);
+                break;
+            }
+        }
+    } 
+    
+    private void carregarGrupos() {
     try {
         List<Grupo> gruposParaExibir = new ArrayList<>();
 
@@ -296,6 +333,9 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         labelIconePerfil.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelIconePerfilMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelIconePerfilMouseEntered(evt);
             }
         });
         painelHeaderDireita.add(labelIconePerfil);
@@ -611,35 +651,38 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 exibirMensagem("A data final não pode ser anterior à data inicial.");
                 return;
             }
-            if (removerHoras(dataDivulgacao).before(removerHoras(dataFinal))) {
-                exibirMensagem("A data de divulgação não pode ser anterior à data final da votação.");
-                return;
+            
+            Grupo grupoSelecionado = (Grupo) itemSelecionado;
+        
+            Votacao votacaoParaEnviar;
+            if (votacaoParaEditar != null) {
+                votacaoParaEditar.setTitulo(titulo);
+                votacaoParaEditar.setDescricao(descricao);
+                votacaoParaEditar.setDataInicial(dataInicial);
+                votacaoParaEditar.setDataFinal(dataFinal);
+                votacaoParaEditar.setDataResultado(dataDivulgacao);
+                votacaoParaEditar.setIdGrupoDestino(grupoSelecionado.getIdGrupo());
+                votacaoParaEnviar = votacaoParaEditar;
+            } else {
+                Votacao novaVotacao = new Votacao();
+                novaVotacao.setTitulo(titulo);
+                novaVotacao.setDescricao(descricao);
+                novaVotacao.setDataInicial(dataInicial);
+                novaVotacao.setDataFinal(dataFinal);
+                novaVotacao.setDataResultado(dataDivulgacao);
+                novaVotacao.setIdGrupoDestino(grupoSelecionado.getIdGrupo());
+                novaVotacao.setIdCriador(this.usuarioLogado.getId());
+                novaVotacao.setStatus("PENDENTE");
+                votacaoParaEnviar = novaVotacao;
             }
 
-            Grupo grupoSelecionado = (Grupo) itemSelecionado;
-            int idGrupoSelecionado = grupoSelecionado.getIdGrupo();
-
-            java.sql.Date sqlDateInicio = new java.sql.Date(dataInicial.getTime());
-            java.sql.Date sqlDateFim = new java.sql.Date(dataFinal.getTime());
-            java.sql.Date sqlDateDivulgacao = new java.sql.Date(dataDivulgacao.getTime());
-
-            Votacao votacaoEmAndamento = new Votacao();
-            votacaoEmAndamento.setTitulo(titulo);
-            votacaoEmAndamento.setDescricao(descricao); // envia a descriç~ao se não for preenchido
-            votacaoEmAndamento.setDataInicial(sqlDateInicio);
-            votacaoEmAndamento.setDataFinal(sqlDateFim);
-            votacaoEmAndamento.setDataResultado(sqlDateDivulgacao);
-            votacaoEmAndamento.setIdGrupoDestino(idGrupoSelecionado);
-            votacaoEmAndamento.setIdCriador(this.usuarioLogado.getId());
-            votacaoEmAndamento.setStatus("PENDENTE");
-
-            CriarVotacaoOpcoesView telaDeCriacao = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoEmAndamento);
-            telaDeCriacao.setLocationRelativeTo(null);
-            telaDeCriacao.setVisible(true);
+            CriarVotacaoOpcoesView telaDeOpcoes = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoParaEnviar);
+            telaDeOpcoes.setLocationRelativeTo(null);
+            telaDeOpcoes.setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
-            exibirMensagem("Erro inesperado: " + e.getMessage());
+            exibirMensagem("Ocorreu um erro: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -673,7 +716,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         for (javax.swing.JButton botao : botoes) {
             adicionarListeners(botao);
         }
-
 
     }
     private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
@@ -717,8 +759,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private void comboParticipantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboParticipantesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboParticipantesActionPerformed
-
-
     private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
         ActionListener acaoDeLogout = e -> {
         new LoginView().setVisible(true);
@@ -737,7 +777,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     );
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
-    
+    private void labelIconePerfilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_labelIconePerfilMouseEntered
+
 
     /**
      * @param args the command line arguments
