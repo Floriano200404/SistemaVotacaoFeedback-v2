@@ -259,7 +259,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     private void btnReprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprovarDialogActionPerformed
    try {
         VotacaoRepository votacaoRepo = new VotacaoRepository();
-        // Chama o método para REPROVAR
         votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
 
         javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
