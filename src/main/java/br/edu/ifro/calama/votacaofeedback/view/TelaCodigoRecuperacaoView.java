@@ -4,11 +4,15 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+
 /**
  *
  * @author manoe
  */
-public class TelaCodigoRecuperacaoView extends javax.swing.JPanel {
+public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCodigoRecuperacaoView
@@ -42,7 +46,8 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(11, 41, 81));
         jPanel1.setPreferredSize(new java.awt.Dimension(436, 489));
 
-        jTextField1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(0, 0, 0, 0));
         jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("CÓDIGO DE RECUPERAÇÃO");
@@ -62,6 +67,11 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("ENVIAR CÓDIGO");
         jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         botão.setBackground(new java.awt.Color(87, 87, 87));
         botão.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -108,7 +118,8 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JPanel {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
 
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(0, 0, 0, 0));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,8 +128,8 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JPanel {
         jTextArea1.setOpaque(false);
         jScrollPane1.setViewportView(jTextArea1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -158,8 +169,63 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void botãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botãoActionPerformed
-        // TODO add your handling code here:
+    // Cria uma nova instância da tela para a qual você quer voltar
+    // Substitua 'TelaRelembrarSenhaView' pelo nome real da sua classe.
+    LoginView telaLogin = new LoginView();
+    telaLogin.setVisible(true);
+    // Fecha a tela atual de recuperação de código
+    this.dispose();
     }//GEN-LAST:event_botãoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+
+// ... dentro do método actionPerformed do botão "ENVIAR CÓDIGO" ...
+
+// 1. Pegue o texto que o usuário digitou
+// Substitua 'campoCodigo' pelo nome da variável do seu JTextField
+String codigoDigitado = jTextField2.getText();
+
+// 2. Lógica de verificação (aqui você chamaria seu Controller/Service)
+// Para este exemplo, vamos simular o resultado com uma variável.
+// Mude para 'false' para testar o caminho do erro.
+boolean codigoEhValido = false; 
+
+// 3. Decidir o que fazer com base no resultado
+if (codigoEhValido) {
+    // Se o código for válido, abre a próxima tela
+    // Substitua 'TelaAlterarSenhaView' pelo nome real da sua classe.
+   // TelaAlterarSenhaView telaAlterar = new TelaAlterarSenhaView();
+   // telaAlterar.setVisible(true);
+
+    // Fecha a tela atual
+    this.dispose();
+} else {
+    // Se o código for inválido, mostra o popup de erro customizado
+
+    // --- Início do código do Popup Customizado ---
+
+    // Guarda as cores padrão do sistema para restaurar depois
+    Color oldBg = UIManager.getColor("OptionPane.background");
+    Color oldFg = UIManager.getColor("Panel.background");
+    Color oldMsgFg = UIManager.getColor("OptionPane.messageForeground");
+
+    // Define as novas cores para o popup
+    UIManager.put("OptionPane.background", new Color(220, 53, 69)); // Um tom de vermelho
+    UIManager.put("Panel.background", new Color(220, 53, 69)); // Fundo do painel interno
+    UIManager.put("OptionPane.messageForeground", Color.WHITE); // Cor da letra
+
+    // Mostra o JOptionPane, que agora usará as cores customizadas
+    JOptionPane.showMessageDialog(this, "Não é possível realizar o Cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
+
+    // Restaura as cores padrão para não afetar outros popups no seu sistema
+    UIManager.put("OptionPane.background", oldBg);
+    UIManager.put("Panel.background", oldFg);
+    UIManager.put("OptionPane.messageForeground", oldMsgFg);
+
+    // --- Fim do código do Popup Customizado ---
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
