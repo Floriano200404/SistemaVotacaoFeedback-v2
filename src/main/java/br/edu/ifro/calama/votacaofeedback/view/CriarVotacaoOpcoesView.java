@@ -67,10 +67,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private void aplicarEstilosPersonalizados() {
         final int ALTURA_PADRAO = 35;
-
-        // --- Estilo para o campo de Pergunta ---
-        // Assumindo que RoundedVotacoesUtil é uma classe que implementa a interface Border
-        // e que você a tem no seu projeto.
         javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
 
         txtPergunta.setBackground(Color.WHITE);
@@ -79,18 +75,25 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         txtPergunta.setBorder(bordaArredondadaPreta);
         txtPergunta.setMargin(new java.awt.Insets(2, 10, 2, 10));
 
-        // --- Estilo para o botão "Voltar" (similar ao "Cancelar") ---
         javax.swing.border.Border bordaBotaoVoltar = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, new Color(0x6A6A6A));
         btnVoltar.setText("VOLTAR");
-        // O cast para RoundedButtonUtil é necessário se os métodos de cor não estão na interface JButton
+        
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnVoltar).setColor(new Color(0x6A6A6A));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnVoltar).setColorOver(new Color(0x8A8A8A));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnVoltar).setColorClick(new Color(0x5A5A5A));
+        
         btnVoltar.setForeground(Color.WHITE);
         btnVoltar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
         btnVoltar.setBorder(bordaBotaoVoltar);
         btnVoltar.setFocusPainted(false);
 
-        // --- Estilo para o botão "Finalizar" (similar ao "Avançar") ---
         javax.swing.border.Border bordaBotaoFinalizar = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, new Color(0x0095FF));
         btnFinalizar.setText("FINALIZAR");
+        
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnFinalizar).setColor(new Color(0x0095FF));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnFinalizar).setColorOver(new Color(0x33ADFF));
+        ((br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnFinalizar).setColorClick(new Color(0x0078CC));
+        
         btnFinalizar.setForeground(Color.WHITE);
         btnFinalizar.setBackground(new Color(0x0095FF));
         btnFinalizar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
@@ -124,11 +127,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         if (isEditMode) {
             TituloPrincipal.setText("EDITAR OPÇÕES DA VOTAÇÃO");
-            btnFinalizar.setText("Salvar Alterações");
+            btnFinalizar.setText("SALVAR ALTERAÇÕES");
             preencherDadosExistentes();
         } else {
             TituloPrincipal.setText("CRIAR VOTAÇÃO - OPÇÕES");
-            btnFinalizar.setText("Finalizar");
+            btnFinalizar.setText("FINALIZAR");
             adicionarNovaOpcao(false, "");
             adicionarNovaOpcao(false, "");
         }
@@ -474,7 +477,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         });
         botoesInferiores.add(btnVoltar);
 
-        btnFinalizar.setText("Finalizar");
+        btnFinalizar.setText("FINALIZAR");
         btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFinalizarActionPerformed(evt);
