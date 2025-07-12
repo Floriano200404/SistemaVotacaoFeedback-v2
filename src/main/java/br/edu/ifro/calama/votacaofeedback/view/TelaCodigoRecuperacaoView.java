@@ -7,6 +7,14 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -19,6 +27,8 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
      */
     public TelaCodigoRecuperacaoView() {
         initComponents();
+        
+        
     }
 
     /**
@@ -30,40 +40,35 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabIF1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         botão = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jPanelFundoPrincipal = new GradientPanel();
+        jLabIF = new javax.swing.JLabel();
+        jLabInfo = new javax.swing.JLabel();
+        jLabIF2 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(16, 24, 40));
+        jLabIF1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabIF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        jLabIF1.setMaximumSize(new java.awt.Dimension(100, 160));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setBackground(new java.awt.Color(9, 32, 63));
 
         jPanel1.setBackground(new java.awt.Color(11, 41, 81));
         jPanel1.setPreferredSize(new java.awt.Dimension(436, 489));
-
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(0, 0, 0, 0));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("CÓDIGO DE RECUPERAÇÃO");
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Código");
         jLabel1.setToolTipText("");
 
-        jButton1.setBackground(new java.awt.Color(56, 176, 221));
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("ENVIAR CÓDIGO");
         jButton1.setBorderPainted(false);
@@ -73,7 +78,7 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
             }
         });
 
-        botão.setBackground(new java.awt.Color(87, 87, 87));
+        botão.setBackground(new java.awt.Color(153, 153, 153));
         botão.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         botão.setText("VOLTAR");
         botão.setBorderPainted(false);
@@ -83,27 +88,32 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("CÓDIGO DE RECUPERAÇÃO");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addComponent(jTextField1)
-                        .addComponent(jTextField2))
-                    .addComponent(botão, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(botão, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel3)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addGap(88, 88, 88)
+                .addComponent(jLabel3)
+                .addGap(42, 42, 42)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,17 +126,30 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        jPanelFundoPrincipal.setBackground(new java.awt.Color(9, 32, 63));
+        jPanelFundoPrincipal.setPreferredSize(new java.awt.Dimension(1507, 720));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0, 0));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Acreditamos que a participação democrática é fundamental para o fortalecimento da\nnossa comunidade acadêmica, seja na eleição de representantes, na escolha de datas para\neventos, em decisões coletivas ou consultas internas. Por isso, criamos um sistema de\nvotação que combina segurança, transparência e acessibilidade, de forma simples e\nconfiável.\n\nEleições seguras, privadas e verificáveis.  Sua voz importa. Sua escolha é protegida.");
-        jTextArea1.setOpaque(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        javax.swing.GroupLayout jPanelFundoPrincipalLayout = new javax.swing.GroupLayout(jPanelFundoPrincipal);
+        jPanelFundoPrincipal.setLayout(jPanelFundoPrincipalLayout);
+        jPanelFundoPrincipalLayout.setHorizontalGroup(
+            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1507, Short.MAX_VALUE)
+        );
+        jPanelFundoPrincipalLayout.setVerticalGroup(
+            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 720, Short.MAX_VALUE)
+        );
+
+        jLabIF.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        jLabIF.setMaximumSize(new java.awt.Dimension(100, 160));
+
+        jLabInfo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/img-Photoroom.png"))); // NOI18N
+
+        jLabIF2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabIF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        jLabIF2.setMaximumSize(new java.awt.Dimension(100, 160));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,38 +158,46 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addComponent(jLabIF2, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanelFundoPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(115, 115, 115)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabIF2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(39, 39, 39)))
+                        .addComponent(jLabInfo)))
+                .addContainerGap(116, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanelFundoPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void botãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botãoActionPerformed
     // Cria uma nova instância da tela para a qual você quer voltar
@@ -195,8 +226,8 @@ boolean codigoEhValido = false;
 if (codigoEhValido) {
     // Se o código for válido, abre a próxima tela
     // Substitua 'TelaAlterarSenhaView' pelo nome real da sua classe.
-   // TelaAlterarSenhaView telaAlterar = new TelaAlterarSenhaView();
-   // telaAlterar.setVisible(true);
+    //TelaAlterarSenhaView telaAlterar = new TelaAlterarSenhaView();
+    //telaAlterar.setVisible(true);
 
     // Fecha a tela atual
     this.dispose();
@@ -231,13 +262,76 @@ if (codigoEhValido) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botão;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabIF;
+    private javax.swing.JLabel jLabIF1;
+    private javax.swing.JLabel jLabIF2;
+    private javax.swing.JLabel jLabInfo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jPanelFundoPrincipal;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+// COLE ESTE BLOCO DE CÓDIGO AQUI, ANTES DA ÚLTIMA '}' DO SEU ARQUIVO
+
+    private class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            int width = getWidth();
+            int height = getHeight();
+            Color color1 = new Color(9, 32, 63);
+            Color color2 = new Color(21, 52, 98);
+            GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, width, height);
+        }
+    }
+
+    private class RoundedButton extends JButton {
+        public RoundedButton(String text) {
+            super(text);
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            if (getModel().isPressed()) {
+                g2.setColor(getBackground().darker());
+            } else if (getModel().isRollover()) {
+                g2.setColor(getBackground().brighter());
+            } else {
+                g2.setColor(getBackground());
+            }
+            g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+            super.paintComponent(g);
+            g2.dispose();
+        }
+    }
+
+    private class RoundedTextField extends JTextField {
+        public RoundedTextField() {
+            setOpaque(false);
+            setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Padding interno
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(getBackground());
+            g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
+            super.paintComponent(g);
+            g2.dispose();
+        }
+    }
+
+// A ÚLTIMA CHAVE '}' DA SUA CLASSE FICA DEPOIS DESTE BLOCO
+
 }
