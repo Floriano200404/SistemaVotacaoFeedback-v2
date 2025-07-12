@@ -1,6 +1,7 @@
 package br.edu.ifro.calama.votacaofeedback.service;
 
 // Imports necessários
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
 import java.util.ArrayList;
@@ -43,6 +44,12 @@ public class VotacaoService {
             e.printStackTrace();
         }
     }
+    
+
+    public List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
+    
+    return votacaoRepository.buscarAtivasPorUsuario(usuario);
+}
 
    
     public List<Votacao> getVotacoesParaAprovar() {

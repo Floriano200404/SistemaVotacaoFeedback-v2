@@ -4,6 +4,7 @@
  */
 package br.edu.ifro.calama.votacaofeedback.repository;
 
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil;
 import java.sql.Connection;
@@ -91,5 +92,51 @@ public void atualizarStatus(int idVotacao, String novoStatus) throws Exception {
 
         ps.executeUpdate(); // Executa o comando de atualização no banco
     }
+}
+public java.util.List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
+    String sql;
+    java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
+
+    
+    if ("ADMIN".equals(usuario.getTipo_usuario())) {
+       
+        sql = "SELECT * FROM votacao WHERE status = 'APROVADA'"; 
+    } else {
+        
+        sql = "SELECT v.* FROM votacao v " +
+              "INNER JOIN usuario_grupos ug ON v.id_grupo_destino = ug.id_grupo " +
+              "WHERE ug.id_usuario = ? AND v.status = 'APROVADA'";
+    }
+
+    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        
+        if (!"ADMIN".equals(usuario.getTipo_usuario())) {
+            
+            ps.setInt(1, usuario.getId()); 
+        }
+
+        try (java.sql.ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                Votacao votacao = new Votacao();
+                
+                votacao.setIdVotacao(rs.getInt("id_Votacao"));
+                votacao.setTitulo(rs.getString("titulo"));
+                votacao.setDescricao(rs.getString("descricao"));
+                votacao.setDataInicial(rs.getDate("data_inicio"));
+                votacao.setDataFinal(rs.getDate("data_fim"));
+                votacao.setDataResultado(rs.getDate("data_Resultado"));
+                votacao.setStatus(rs.getString("status"));
+                votacao.setPergunta(rs.getString("pergunta"));
+                votacao.setIdCriador(rs.getInt("id_Criador"));
+                votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
+
+                votacoes.add(votacao);
+            }
+        }
+    }
+    return votacoes; 
 }
 }
