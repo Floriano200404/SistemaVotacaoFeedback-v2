@@ -66,29 +66,56 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }
     
     private void aplicarEstilosPersonalizados() {
+        final int ALTURA_PADRAO = 35;
 
-        // Estilo especial para o botão "Adicionar Opção"
+        // --- Estilo para o campo de Pergunta ---
+        // Assumindo que RoundedVotacoesUtil é uma classe que implementa a interface Border
+        // e que você a tem no seu projeto.
+        javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
+
+        txtPergunta.setBackground(Color.WHITE);
+        txtPergunta.setForeground(Color.BLACK);
+        txtPergunta.setPreferredSize(new Dimension(txtPergunta.getPreferredSize().width, ALTURA_PADRAO));
+        txtPergunta.setBorder(bordaArredondadaPreta);
+        txtPergunta.setMargin(new java.awt.Insets(2, 10, 2, 10));
+
+        // --- Estilo para o botão "Voltar" (similar ao "Cancelar") ---
+        javax.swing.border.Border bordaBotaoVoltar = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, new Color(0x6A6A6A));
+        btnVoltar.setText("VOLTAR");
+        // O cast para RoundedButtonUtil é necessário se os métodos de cor não estão na interface JButton
+        btnVoltar.setForeground(Color.WHITE);
+        btnVoltar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
+        btnVoltar.setBorder(bordaBotaoVoltar);
+        btnVoltar.setFocusPainted(false);
+
+        // --- Estilo para o botão "Finalizar" (similar ao "Avançar") ---
+        javax.swing.border.Border bordaBotaoFinalizar = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, new Color(0x0095FF));
+        btnFinalizar.setText("FINALIZAR");
+        btnFinalizar.setForeground(Color.WHITE);
+        btnFinalizar.setBackground(new Color(0x0095FF));
+        btnFinalizar.setPreferredSize(new Dimension(120, ALTURA_PADRAO));
+        btnFinalizar.setBorder(bordaBotaoFinalizar);
+        btnFinalizar.setFocusPainted(false);
+
+        // --- Estilo especial para o botão "Adicionar Opção" ---
+        btnAdicionarOpcao.setText("Adicionar mais uma opção");
         btnAdicionarOpcao.setForeground(Color.GRAY);
         btnAdicionarOpcao.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnAdicionarOpcao.setOpaque(false);
         btnAdicionarOpcao.setContentAreaFilled(false);
         btnAdicionarOpcao.setBorderPainted(false);
         btnAdicionarOpcao.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnAdicionarOpcao.setText("Adicionar mais uma opção");
 
         btnAdicionarOpcao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAdicionarOpcao.setForeground(new Color(0, 102, 204));
                 btnAdicionarOpcao.setText("<html><u>Adicionar mais uma opção</u></html>");
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnAdicionarOpcao.setForeground(Color.GRAY);
                 btnAdicionarOpcao.setText("Adicionar mais uma opção");
             }
         });
-
-        botoesInferiores.setOpaque(false);
     }
     private void configurarTela() throws Exception {
         if (votacao != null && votacao.getIdVotacao() > 0) {
@@ -132,6 +159,16 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         JTextField textField = new JTextField(textoInicial);
         textField.setName("txtOpcao" + novoIndice);
 
+        // --- ADICIONE ESTE BLOCO DE ESTILO AQUI ---
+        final int ALTURA_PADRAO = 35;
+        javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
+        textField.setBackground(Color.WHITE);
+        textField.setForeground(Color.BLACK);
+        textField.setPreferredSize(new Dimension(textField.getPreferredSize().width, ALTURA_PADRAO));
+        textField.setBorder(bordaArredondadaPreta);
+        textField.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        // --- FIM DO BLOCO DE ESTILO ---
+
         painelLinha.add(label, BorderLayout.WEST);
         painelLinha.add(textField, BorderLayout.CENTER);
 
@@ -152,7 +189,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         }
 
         paineisDeOpcao.add(painelLinha);
-        // Assumindo que você nomeou o painel no modo Design como 'painelOpcoesContainer'
         painelOpcoesContainer.add(painelLinha);
 
         atualizarLayoutConteudo();
@@ -243,8 +279,8 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         txtOpcao5 = new javax.swing.JTextField();
         btnAdicionarOpcao = new javax.swing.JButton();
         botoesInferiores = new javax.swing.JPanel();
-        btnVoltar = new javax.swing.JButton();
-        btnFinalizar = new javax.swing.JButton();
+        btnVoltar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()  ;
+        btnFinalizar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()  ;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -377,6 +413,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
         formCardPanel.add(txtPergunta, gridBagConstraints);
 
+        painelOpcoesContainer1.setBackground(new java.awt.Color(255, 255, 255));
         painelOpcoesContainer1.setLayout(new javax.swing.BoxLayout(painelOpcoesContainer1, javax.swing.BoxLayout.Y_AXIS));
 
         TituloO1.setText("Opção 1");
