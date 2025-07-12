@@ -108,18 +108,28 @@ public void setDados(Votacao votacao) {
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
                                               
-    
-    
-    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+     java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
     
     AprovarVotacaoView telaDeAprovacao = (AprovarVotacaoView) javax.swing.SwingUtilities.getAncestorOfClass(AprovarVotacaoView.class, this);
 
     
+    VotacoesAtivasView telaDeVotacoesAtivas = (VotacoesAtivasView) javax.swing.SwingUtilities.getAncestorOfClass(VotacoesAtivasView.class, this);
+
+    
     DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, telaDeAprovacao);
 
-   
+    
     dialog.setDados(this.votacaoAtual); 
+
+   
+    if (telaDeAprovacao != null) {
+        dialog.configurarParaAprovacao();
+    } 
+    
+    else if (telaDeVotacoesAtivas != null) {
+        dialog.configurarParaParticipacao();
+    }
 
     
     dialog.setLocationRelativeTo(parentWindow);
