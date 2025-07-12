@@ -47,6 +47,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) throws Exception {
         initComponents();
         this.painelOpcoesContainer = this.painelOpcoesContainer1;
+        painelOpcoesContainer1.removeAll();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         this.usuarioLogado = usuario;
         this.votacao = votacao;
@@ -381,9 +382,9 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAdicionarOpcao)
-                            .addComponent(TituloP)
                             .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(painelOpcoesContainer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(painelOpcoesContainer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TituloP, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PainelConteudoLayout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addComponent(btnVoltar)
