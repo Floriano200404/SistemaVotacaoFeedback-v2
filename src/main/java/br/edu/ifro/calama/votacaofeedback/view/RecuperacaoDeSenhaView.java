@@ -44,28 +44,6 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         toast.display();
     }
     
-    private void enviarEmailRecuperacao() {
-        String email = txtEmail.getText().trim();
-
-        // 1. Validações do e-mail
-        if (email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, insira seu endereço de e-mail.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-            JOptionPane.showMessageDialog(this, "Formato de e-mail inválido. Por favor, verifique.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // 2. Prepara a interface para o envio
-        bntEnviarEmail.setEnabled(false);
-        bntEnviarEmail.setText("ENVIANDO...");
-
-        // 3. Executa a tarefa demorada em segundo plano
-        EmailSenderWorker worker = new EmailSenderWorker(email);
-        worker.execute();
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -217,8 +195,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-                enviarEmailRecuperacao();
-                                            
+        bntEnviarEmail.doClick();                                       
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void bntEnviarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEnviarEmailActionPerformed
@@ -245,10 +222,9 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             protected void done() {
                 try {
                     boolean sucesso = get();
-                    exibirMensagemDeSucesso("Se o e-mail estiver cadastrado, um código foi enviado.");
+                    exibirMensagemDeSucesso("Um código de recuperação de senha foi enviado.");
 
                     if (sucesso) {
-                        // aqui vai a logica para ir para a tela de alterar a senha se o token for o correto
                     }
                 } catch (Exception e) {
                     exibirMensagem("Erro ao tentar enviar o e-mail.");
@@ -271,7 +247,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) { // Usar um L&F mais moderno
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -333,7 +309,28 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             return null;
         };
 
-        
+        @Override
+        protected void done() {
+            try {
+                boolean emailEnviadoComSucesso = get();
+                if (emailEnviadoComSucesso) {
+                    JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this,
+                            "Um e-mail com as instruções de recuperação foi enviado para:\n" + email,
+                            "E-mail Enviado!", JOptionPane.INFORMATION_MESSAGE);
+                    txtEmail.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this,
+                            "Não foi possível enviar o e-mail de recuperação.",
+                            "Erro ao Enviar E-mail", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this, "Ocorreu um erro inesperado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                bntEnviarEmail.setText("ENVIAR E-MAIL");
+                bntEnviarEmail.setEnabled(true);
+            }
+        }
+    }
   private class RoundedButton extends JButton {
     private int cornerRadius = 15; // Raio dos cantos
 
@@ -416,6 +413,5 @@ private class RoundedTextField extends JTextField {
         }
     }
 }  
-}
 }
 
