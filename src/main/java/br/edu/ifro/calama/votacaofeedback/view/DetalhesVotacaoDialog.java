@@ -58,6 +58,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         btnVoltarDialog = new javax.swing.JButton();
         btnReprovarDialog = new javax.swing.JButton();
         btnAprovarDialog = new javax.swing.JButton();
+        btnParticipar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -119,6 +120,13 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             }
         });
 
+        btnParticipar.setText("Participar");
+        btnParticipar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParticiparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,10 +163,9 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(lblPerguntaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
+                                .addGap(27, 27, 27)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(btnVoltarDialog)
@@ -169,8 +176,12 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                                         .addGap(6, 6, 6)
                                         .addComponent(lblTipoVotacao))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(btnAprovarDialog)))))
+                                .addGap(172, 172, 172)
+                                .addComponent(btnAprovarDialog))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnParticipar)
+                                .addGap(159, 159, 159)))))
                 .addGap(132, 132, 132))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -222,7 +233,9 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPerguntaPrincipal)
                     .addComponent(btnAprovarDialog))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnParticipar)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 390));
@@ -268,6 +281,10 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     private void btnVoltarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarDialogActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarDialogActionPerformed
+
+    private void btnParticiparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParticiparActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnParticiparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,6 +339,19 @@ public void setDados(Votacao votacao) {
         e.printStackTrace();
     }
 }
+// Este método prepara o diálogo para o fluxo de APROVAÇÃO
+public void configurarParaAprovacao() {
+    btnAprovarDialog.setVisible(true);
+    btnReprovarDialog.setVisible(true);
+    btnParticipar.setVisible(false); // Esconde o botão de participar
+}
+
+// Este método prepara o diálogo para o fluxo de PARTICIPAÇÃO
+public void configurarParaParticipacao() {
+    btnAprovarDialog.setVisible(false); // Esconde o botão de aprovar
+    btnReprovarDialog.setVisible(false); // Esconde o botão de reprovar
+    btnParticipar.setVisible(true);
+}
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -358,6 +388,7 @@ public void setDados(Votacao votacao) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAprovarDialog;
+    private javax.swing.JToggleButton btnParticipar;
     private javax.swing.JButton btnReprovarDialog;
     private javax.swing.JButton btnVoltarDialog;
     private javax.swing.JLabel jLabel1;
