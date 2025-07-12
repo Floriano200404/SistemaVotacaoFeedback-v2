@@ -55,7 +55,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         if (this.usuarioLogado != null) {
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
-        
+        aplicarEstilosPersonalizados(); 
         
         inicializarMenuLateral();
         configurarTela();
@@ -65,6 +65,31 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    private void aplicarEstilosPersonalizados() {
+
+        // Estilo especial para o botão "Adicionar Opção"
+        btnAdicionarOpcao.setForeground(Color.GRAY);
+        btnAdicionarOpcao.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btnAdicionarOpcao.setOpaque(false);
+        btnAdicionarOpcao.setContentAreaFilled(false);
+        btnAdicionarOpcao.setBorderPainted(false);
+        btnAdicionarOpcao.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAdicionarOpcao.setText("Adicionar mais uma opção");
+
+        btnAdicionarOpcao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAdicionarOpcao.setForeground(new Color(0, 102, 204));
+                btnAdicionarOpcao.setText("<html><u>Adicionar mais uma opção</u></html>");
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAdicionarOpcao.setForeground(Color.GRAY);
+                btnAdicionarOpcao.setText("Adicionar mais uma opção");
+            }
+        });
+
+        botoesInferiores.setOpaque(false);
+    }
     private void configurarTela() throws Exception {
         if (votacao != null && votacao.getIdVotacao() > 0) {
             this.isEditMode = true;
@@ -183,6 +208,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         painelHeader = new javax.swing.JPanel();
         painelHeaderEsquerda = new javax.swing.JPanel();
@@ -200,12 +226,10 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         votoArquivado = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         PainelConteudo = new javax.swing.JPanel();
+        formCardPanel = new javax.swing.JPanel();
         TituloPrincipal = new javax.swing.JLabel();
         TituloP = new javax.swing.JLabel();
         txtPergunta = new javax.swing.JTextField();
-        btnAdicionarOpcao = new javax.swing.JButton();
-        btnVoltar = new javax.swing.JButton();
-        btnFinalizar = new javax.swing.JButton();
         painelOpcoesContainer1 = new javax.swing.JPanel();
         TituloO1 = new javax.swing.JLabel();
         txtOpcao1 = new javax.swing.JTextField();
@@ -217,6 +241,10 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         txtOpcao4 = new javax.swing.JTextField();
         TituloO5 = new javax.swing.JLabel();
         txtOpcao5 = new javax.swing.JTextField();
+        btnAdicionarOpcao = new javax.swing.JButton();
+        botoesInferiores = new javax.swing.JPanel();
+        btnVoltar = new javax.swing.JButton();
+        btnFinalizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -310,36 +338,44 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
+        PainelConteudo.setLayout(new java.awt.GridBagLayout());
+
+        formCardPanel.setBackground(new java.awt.Color(255, 255, 255));
+        formCardPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        formCardPanel.setLayout(new java.awt.GridBagLayout());
+
         TituloPrincipal.setText("CRIAR VOTAÇÃO - OPÇÕES");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
+        formCardPanel.add(TituloPrincipal, gridBagConstraints);
 
         TituloP.setText("Pergunta");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
+        formCardPanel.add(TituloP, gridBagConstraints);
 
         txtPergunta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPerguntaActionPerformed(evt);
             }
         });
-
-        btnAdicionarOpcao.setText("Adicionar Opção.");
-        btnAdicionarOpcao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarOpcaoActionPerformed(evt);
-            }
-        });
-
-        btnVoltar.setText("Voltar");
-        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoltarActionPerformed(evt);
-            }
-        });
-
-        btnFinalizar.setText("Finalizar");
-        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinalizarActionPerformed(evt);
-            }
-        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        formCardPanel.add(txtPergunta, gridBagConstraints);
 
         painelOpcoesContainer1.setLayout(new javax.swing.BoxLayout(painelOpcoesContainer1, javax.swing.BoxLayout.Y_AXIS));
 
@@ -369,48 +405,56 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         painelOpcoesContainer1.add(TituloO5);
         painelOpcoesContainer1.add(txtOpcao5);
 
-        javax.swing.GroupLayout PainelConteudoLayout = new javax.swing.GroupLayout(PainelConteudo);
-        PainelConteudo.setLayout(PainelConteudoLayout);
-        PainelConteudoLayout.setHorizontalGroup(
-            PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PainelConteudoLayout.createSequentialGroup()
-                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addGap(1106, 1106, 1106)
-                        .addComponent(TituloPrincipal))
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAdicionarOpcao)
-                            .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(painelOpcoesContainer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TituloP, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(PainelConteudoLayout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(btnVoltar)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnFinalizar)))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        PainelConteudoLayout.setVerticalGroup(
-            PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PainelConteudoLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(TituloPrincipal)
-                .addGap(18, 18, 18)
-                .addComponent(TituloP)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(painelOpcoesContainer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(213, 213, 213)
-                .addComponent(btnAdicionarOpcao)
-                .addGap(18, 18, 18)
-                .addGroup(PainelConteudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVoltar)
-                    .addComponent(btnFinalizar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 21, 0, 0);
+        formCardPanel.add(painelOpcoesContainer1, gridBagConstraints);
+
+        btnAdicionarOpcao.setText("Adicionar Opção.");
+        btnAdicionarOpcao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarOpcaoActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 20, 0);
+        formCardPanel.add(btnAdicionarOpcao, gridBagConstraints);
+
+        botoesInferiores.setOpaque(false);
+        botoesInferiores.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+        botoesInferiores.add(btnVoltar);
+
+        btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
+        botoesInferiores.add(btnFinalizar);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        formCardPanel.add(botoesInferiores, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        PainelConteudo.add(formCardPanel, gridBagConstraints);
 
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -574,7 +618,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         } else {
             exibirMensagem("Limite máximo de 5 opções atingido.");
         }
-        
+
     }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
 
     private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
@@ -650,11 +694,13 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private javax.swing.JLabel TituloP;
     private javax.swing.JLabel TituloPrincipal;
     private javax.swing.JButton aprovarVotacao;
+    private javax.swing.JPanel botoesInferiores;
     private javax.swing.JButton btnAdicionarOpcao;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JButton criarVotacao;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.JPanel formCardPanel;
     private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JLabel labelIconePerfil;
