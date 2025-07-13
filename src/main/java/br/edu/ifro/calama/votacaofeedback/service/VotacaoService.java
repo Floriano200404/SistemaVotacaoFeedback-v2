@@ -1,8 +1,9 @@
 package br.edu.ifro.calama.votacaofeedback.service;
 
-// Imports necessários
-import br.edu.ifro.calama.votacaofeedback.model.Usuario;
+
+import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,78 @@ import java.util.List;
 public class VotacaoService {
 
     private VotacaoRepository votacaoRepository;
-
-
-    public VotacaoService() {
+    private OpcaoVotoRepository opcaoVotoRepository;
+    
+    public VotacaoService(){
         this.votacaoRepository = new VotacaoRepository();
+        this.opcaoVotoRepository = new OpcaoVotoRepository();
     }
-
    
+    public java.util.List<Votacao> getVotacoesParaAprovar() {
+        try {
+            VotacaoRepository votacaoRepo = new VotacaoRepository();
+            return votacaoRepo.buscarTodosPendentes();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return new java.util.ArrayList<>();
+        }
+    }
+    
+    public int criar(Votacao votacao) throws Exception {
+        return this.votacaoRepository.criar(votacao);
+    }
+    
+    public void atualizar(Votacao votacao) throws Exception {
+        votacaoRepository.atualizar(votacao);
+    }
+    
+    public java.util.List<Votacao> buscarPendentesPorCriador(int idCriador) {
+        try {
+            return this.votacaoRepository.buscarPendentesPorCriador(idCriador);
+        } catch (Exception e) {
+            System.err.println("Erro na camada de serviço ao buscar por criador: " + e.getMessage());
+            e.printStackTrace();
+            return new java.util.ArrayList<>();
+        }
+    }
+    
+    public List<Votacao> buscarPendentes() throws Exception{
+        return this.votacaoRepository.buscarTodosPendentes();
+    }
+    
+    public void sincronizarOpcoes(int idVotacao, List<String> descricoesDaTela) throws Exception {
+        List<OpcaoVoto> opcoesDoBanco = this.opcaoVotoRepository.buscarPorIdVotacao(idVotacao);
+        int tamanhoDaTela = descricoesDaTela.size();
+        int tamanhoDoBanco = opcoesDoBanco.size();
+
+        int limiteParaUpdate = Math.min(tamanhoDaTela, tamanhoDoBanco);
+        for (int i = 0; i < limiteParaUpdate; i++) {
+            OpcaoVoto opcaoDoBanco = opcoesDoBanco.get(i);
+            String novaDescricao = descricoesDaTela.get(i);
+            if (!opcaoDoBanco.getDescricao().equals(novaDescricao)) {
+                opcaoDoBanco.setDescricao(novaDescricao);
+                this.opcaoVotoRepository.atualizar(opcaoDoBanco);
+            }
+        }
+
+        if (tamanhoDaTela > tamanhoDoBanco) {
+            for (int i = tamanhoDoBanco; i < tamanhoDaTela; i++) {
+                OpcaoVoto novaOpcao = new OpcaoVoto();
+                novaOpcao.setDescricao(descricoesDaTela.get(i));
+                novaOpcao.setIdVotacao(idVotacao);
+                this.opcaoVotoRepository.criar(novaOpcao);
+            }
+        }
+
+        if (tamanhoDoBanco > tamanhoDaTela) {
+            for (int i = tamanhoDaTela; i < tamanhoDoBanco; i++) {
+                this.opcaoVotoRepository.deletar(opcoesDoBanco.get(i).getIdOpcaoVoto());
+            }
+        }
+    }
+    
+  
     public void aprovarVotacao(int idVotacao) {
         try {
             // Chama o método do repositório para fazer o UPDATE no banco
@@ -33,7 +99,6 @@ public class VotacaoService {
         }
     }
 
-
     public void reprovarVotacao(int idVotacao) {
         try {
             // Chama o mesmo método do repositório, mas com um status diferente
@@ -44,21 +109,8 @@ public class VotacaoService {
             e.printStackTrace();
         }
     }
-    
 
-    public List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
-    
-    return votacaoRepository.buscarAtivasPorUsuario(usuario);
-}
-
-   
-    public List<Votacao> getVotacoesParaAprovar() {
-        try {
-            return votacaoRepository.buscarPendentes();
-        } catch (Exception e) {
-            System.err.println("ERRO NO SERVIÇO ao buscar votações pendentes: " + e.getMessage());
-            e.printStackTrace();
-            return new ArrayList<>(); // Retorna uma lista vazia em caso de erro
-        }
+    public List<Votacao> buscarTodosPendentes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

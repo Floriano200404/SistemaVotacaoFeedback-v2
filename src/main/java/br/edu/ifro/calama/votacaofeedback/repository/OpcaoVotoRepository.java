@@ -8,7 +8,10 @@ import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,14 +21,61 @@ public class OpcaoVotoRepository {
 
     public void criar(OpcaoVoto opcao) throws SQLException, Exception {
         String sql = "INSERT INTO opcao_voto (descricao, id_votacao) VALUES (?, ?)";
-
         try (Connection conexao = DatabaseUtil.getConnection();
              PreparedStatement ps = conexao.prepareStatement(sql)) {
-
             ps.setString(1, opcao.getDescricao());
             ps.setInt(2, opcao.getIdVotacao());
-
             ps.executeUpdate();
         }
     }
-}
+  
+    public List<OpcaoVoto> buscarPorIdVotacao(int idVotacao) throws Exception {
+        List<OpcaoVoto> opcoes = new ArrayList<>();
+        String sql = "SELECT id_opcao, descricao, id_votacao FROM opcao_voto WHERE id_votacao = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idVotacao);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    OpcaoVoto opcao = new OpcaoVoto();
+                    opcao.setIdOpcaoVoto(rs.getInt("id_opcao"));
+                    opcao.setDescricao(rs.getString("descricao"));
+                    opcao.setIdVotacao(rs.getInt("id_votacao"));
+                    opcoes.add(opcao);
+                }
+            }
+        }
+        return opcoes;
+    }
+ 
+    public void deletarPorIdVotacao(int idVotacao) throws Exception {
+        String sql = "DELETE FROM opcao_voto WHERE id_votacao = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idVotacao);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar opções de voto: " + e.getMessage());
+        }
+    }
+    
+    public void atualizar(OpcaoVoto opcao) throws SQLException, Exception {
+        String sql = "UPDATE opcao_voto SET descricao = ? WHERE id_opcao = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, opcao.getDescricao());
+            stmt.setInt(2, opcao.getIdOpcaoVoto());
+            stmt.executeUpdate();
+        }
+    }
+    
+    public void deletar(int idOpcaoVoto) throws SQLException, Exception {
+        String sql = "DELETE FROM opcao_voto WHERE id_opcao = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idOpcaoVoto);
+            stmt.executeUpdate();
+        }
+    }   
+} 
+
