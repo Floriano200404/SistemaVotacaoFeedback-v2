@@ -24,7 +24,7 @@ import javax.swing.JFrame;
         private DetalhesVotacaoDialog.ModoDialogo modo;
         private Usuario usuarioLogado;
         private java.awt.Component telaDeOrigem;
-
+     
         public CardView() {
             initComponents();
             this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
@@ -74,6 +74,7 @@ import javax.swing.JFrame;
             super.paintComponent(g);
         }
     }
+   
 
         public void setDados(Votacao votacao) {
 
@@ -214,13 +215,18 @@ import javax.swing.JFrame;
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
 
-        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
-        DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, this.usuarioLogado, this.telaDeOrigem);
+    MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+
+    if (menuPrincipal != null) {
+
+    
+        menuPrincipal.navegarParaTelaDeVoto(this.votacaoAtual);
+
+    } else {
         
-        dialog.setDados(this.votacaoAtual);
-        dialog.setModo(this.modo);
-        dialog.setLocationRelativeTo(parentWindow);
-        dialog.setVisible(true);
+        System.err.println("ERRO CRÍTICO: O CardView não conseguiu encontrar a janela MenuPrincipalView!");
+    }
 
     }//GEN-LAST:event_btnVerVotacaoActionPerformed
 
