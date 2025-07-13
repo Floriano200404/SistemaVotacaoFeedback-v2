@@ -609,6 +609,11 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
+        MenuPrincipalView menu = new MenuPrincipalView(this.usuarioLogado);
+
+        menu.setVisible(true);
+
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed
