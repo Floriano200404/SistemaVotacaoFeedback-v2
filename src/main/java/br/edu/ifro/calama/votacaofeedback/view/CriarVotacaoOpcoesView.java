@@ -10,6 +10,7 @@ import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
+import br.edu.ifro.calama.votacaofeedback.util.PlaceHolderUtil;
 import br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.BorderLayout;
@@ -58,8 +59,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         if (this.usuarioLogado != null) {
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
-        
-        
+        java.awt.event.MouseAdapter focusListener = new java.awt.event.MouseAdapter() {
+        @Override
+        public void mousePressed(java.awt.event.MouseEvent e) {
+                formCardPanel.requestFocusInWindow();
+            }
+        };
+        this.PainelConteudo.addMouseListener(focusListener);
+        this.formCardPanel.addMouseListener(focusListener);
+        this.painelSidebar.addMouseListener(focusListener);
+        this.painelOpcoesContainer.addMouseListener(focusListener);
+        this.painelHeader.addMouseListener(focusListener);
         inicializarMenuLateral();
         configurarTela();
         
@@ -75,6 +85,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         txtPergunta.setPreferredSize(new Dimension(txtPergunta.getPreferredSize().width, ALTURA_PADRAO));
         txtPergunta.setBorder(bordaArredondadaPreta);
         txtPergunta.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        PlaceHolderUtil.setPlaceholder(txtPergunta, "Escreva a pergunta da votação.");
 
         javax.swing.border.Border bordaBotaoVoltar = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, new Color(0x6A6A6A));
         btnVoltar.setText("VOLTAR");
@@ -97,7 +108,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         btnFinalizar.setBorder(bordaBotaoFinalizar);
         btnFinalizar.setFocusPainted(false);
 
-        // --- Estilo especial para o botão "Adicionar Opção" ---
         btnAdicionarOpcao.setText("Adicionar mais uma opção");
         btnAdicionarOpcao.setForeground(Color.GRAY);
         btnAdicionarOpcao.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -147,45 +157,34 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void adicionarNovaOpcao(boolean removivel, String textoInicial) {
         if (paineisDeOpcao.size() >= MAX_OPCOES) return;
-
-        // --- PAINEL PRINCIPAL DA OPÇÃO (VERTICAL) ---
         JPanel painelOpcao = new JPanel();
         painelOpcao.setLayout(new javax.swing.BoxLayout(painelOpcao, javax.swing.BoxLayout.Y_AXIS));
         painelOpcao.setOpaque(false);
         painelOpcao.setBorder(new EmptyBorder(5, 0, 5, 0));
 
         int novoIndice = paineisDeOpcao.size() + 1;
-
-        // --- LABEL DA OPÇÃO ---
         JLabel label = new JLabel("Opção " + novoIndice + ":");
         label.setFont(new Font("Segoe UI", Font.BOLD, 12));
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        // --- PAINEL SECUNDÁRIO PARA ALINHAR CAMPO DE TEXTO E BOTÃO "X" (HORIZONTAL) ---
         JPanel painelCampoEBotao = new JPanel(new BorderLayout(10, 0));
         painelCampoEBotao.setOpaque(false);
-
-        // --- CAMPO DE TEXTO (TEXTFIELD) ---
         JTextField textField = new JTextField(textoInicial);
         textField.setName("txtOpcao" + novoIndice);
+        PlaceHolderUtil.setPlaceholder(textField, "Digite o texto da opção");
 
-        // 1. SOLUÇÃO ALTURA: Forçando a altura para ser exatamente 35px
         final int ALTURA_PADRAO = 35;
         textField.setMinimumSize(new Dimension(10, ALTURA_PADRAO));
         textField.setPreferredSize(new Dimension(10, ALTURA_PADRAO));
         textField.setMaximumSize(new Dimension(Integer.MAX_VALUE, ALTURA_PADRAO));
 
-        // Aplicando seus estilos
         javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
         textField.setBackground(Color.WHITE);
         textField.setForeground(Color.BLACK);
         textField.setBorder(bordaArredondadaPreta);
         textField.setMargin(new java.awt.Insets(2, 10, 2, 10));
 
-        // Adiciona o campo de texto ao centro do painel horizontal
         painelCampoEBotao.add(textField, BorderLayout.CENTER);
 
-        // 2. SOLUÇÃO BOTÃO "X": Adicionando o botão e alinhando
         if (removivel) {
             RoundedButtonUtil btnClose = new RoundedButtonUtil();
             btnClose.setText("X");
@@ -199,21 +198,16 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             btnClose.setBorderColor(Color.WHITE);
             btnClose.setPreferredSize(new Dimension(30, 30));
 
-            // Ação de remover aponta para o painel principal da opção
             btnClose.addActionListener(e -> removerOpcao(painelOpcao));
 
-            // Adiciona o botão "X" à direita do campo de texto, alinhando-o perfeitamente
             painelCampoEBotao.add(btnClose, BorderLayout.EAST);
         }
 
         painelCampoEBotao.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        // Adiciona a label e o painel (campo + botão) ao painel principal da opção
         painelOpcao.add(label);
         painelOpcao.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 4)));
         painelOpcao.add(painelCampoEBotao);
 
-        // Adiciona o painel da opção à lista e ao container
         paineisDeOpcao.add(painelOpcao);
         painelOpcoesContainer.add(painelOpcao);
 
@@ -225,14 +219,12 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         painelOpcoesContainer.remove(painelOpcao);
         paineisDeOpcao.remove(painelOpcao);
 
-        // Renumera as opções restantes
         for (int i = 0; i < paineisDeOpcao.size(); i++) {
             JPanel panel = paineisDeOpcao.get(i);
-            // Lógica robusta para encontrar a label dentro do painel
             for (Component comp : panel.getComponents()) {
                 if (comp instanceof JLabel) {
                     ((JLabel) comp).setText("Opção " + (i + 1) + ":");
-                    break; // Encontrou a label, pode parar de procurar
+                    break;
                 }
             }
         }
@@ -621,7 +613,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.votacao.setPergunta(pergunta);
 
         List<String> novasOpcoes = new ArrayList<>();
-        // MODIFICADO: Itera sobre os painéis para pegar os textos
         for (JPanel painelOpcao : paineisDeOpcao) {
             for (Component comp : painelOpcao.getComponents()) {
                 if (comp instanceof JTextField) {
@@ -640,7 +631,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             return;
         }
 
-        // A lógica de salvar permanece a mesma
         VotacaoController controller = new VotacaoController();
         OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
         VotacaoService service = new VotacaoService();
