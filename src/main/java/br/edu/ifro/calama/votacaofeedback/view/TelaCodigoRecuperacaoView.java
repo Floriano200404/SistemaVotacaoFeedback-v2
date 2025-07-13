@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import br.edu.ifro.calama.votacaofeedback.controller.RecuperacaoSenhaController; 
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 
@@ -27,8 +28,8 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
     
     public TelaCodigoRecuperacaoView(String email) {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
         this.email = email;
     }
     

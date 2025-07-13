@@ -26,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -45,7 +46,7 @@ public class CadastroView extends javax.swing.JFrame {
 
     public CadastroView() throws java.text.ParseException {
     initComponents();
-    
+    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     javax.swing.border.Border padding = BorderFactory.createEmptyBorder(5, 10, 5, 10);
 
     txtNome.setBorder(padding);
@@ -55,7 +56,6 @@ public class CadastroView extends javax.swing.JFrame {
     pwdSenha.setBorder(padding);
     pwdConfirmarSenha.setBorder(padding);
     
-    this.setLocationRelativeTo(null); 
 
     jPanelDegrade.setFocusable(true);
     jPanelPrincipal.setFocusable(true);

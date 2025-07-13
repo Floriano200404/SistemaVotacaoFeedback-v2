@@ -133,8 +133,8 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         }
 
         if (isEditMode) {
-            TituloPrincipal.setText("EDITAR OPÇÕES DA VOTAÇÃO");
-            btnFinalizar.setText("SALVAR ALTERAÇÕES");
+            TituloPrincipal.setText("EDITAR VOTAÇÃO - OPÇÕES");
+            btnFinalizar.setText("SALVAR");
             preencherDadosExistentes();
         } else {
             TituloPrincipal.setText("CRIAR VOTAÇÃO - OPÇÕES");
@@ -147,6 +147,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void preencherDadosExistentes() throws Exception {
         txtPergunta.setText(votacao.getPergunta());
+        txtPergunta.setForeground(Color.BLACK);
         OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
         List<OpcaoVoto> opcoesExistentes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
         for (int i = 0; i < opcoesExistentes.size(); i++) {
@@ -157,21 +158,30 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void adicionarNovaOpcao(boolean removivel, String textoInicial) {
         if (paineisDeOpcao.size() >= MAX_OPCOES) return;
+
+        // --- ESTRUTURA DE PAINÉIS (NÃO MUDA) ---
         JPanel painelOpcao = new JPanel();
         painelOpcao.setLayout(new javax.swing.BoxLayout(painelOpcao, javax.swing.BoxLayout.Y_AXIS));
         painelOpcao.setOpaque(false);
         painelOpcao.setBorder(new EmptyBorder(5, 0, 5, 0));
 
         int novoIndice = paineisDeOpcao.size() + 1;
+
         JLabel label = new JLabel("Opção " + novoIndice + ":");
         label.setFont(new Font("Segoe UI", Font.BOLD, 12));
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         JPanel painelCampoEBotao = new JPanel(new BorderLayout(10, 0));
         painelCampoEBotao.setOpaque(false);
-        JTextField textField = new JTextField(textoInicial);
-        textField.setName("txtOpcao" + novoIndice);
-        PlaceHolderUtil.setPlaceholder(textField, "Digite o texto da opção");
 
+        // ================= INÍCIO DA LÓGICA CORRIGIDA =================
+
+        // 1. CRIA O CAMPO DE TEXTO INICIALMENTE VAZIO.
+        //    O texto de edição (textoInicial) será adicionado depois.
+        JTextField textField = new JTextField(); 
+        textField.setName("txtOpcao" + novoIndice);
+
+        // 2. APLICA TODOS OS ESTILOS VISUAIS PRIMEIRO (BORDA, TAMANHO, ETC).
         final int ALTURA_PADRAO = 35;
         textField.setMinimumSize(new Dimension(10, ALTURA_PADRAO));
         textField.setPreferredSize(new Dimension(10, ALTURA_PADRAO));
@@ -179,13 +189,27 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
         textField.setBackground(Color.WHITE);
-        textField.setForeground(Color.BLACK);
         textField.setBorder(bordaArredondadaPreta);
         textField.setMargin(new java.awt.Insets(2, 10, 2, 10));
 
+        // 3. APLICA O PLACEHOLDER NO CAMPO AINDA VAZIO.
+        //    Isso garante que ele se configure corretamente com o texto cinza.
+        PlaceHolderUtil.setPlaceholder(textField, "Digite o texto da opção");
+
+        // 4. AGORA, SE FOR MODO DE EDIÇÃO, SOBRESCREVEMOS O PLACEHOLDER
+        //    COM OS DADOS REAIS E A COR CORRETA.
+        if (!textoInicial.trim().isEmpty()) {
+            textField.setText(textoInicial);
+            textField.setForeground(Color.BLACK);
+        }
+
+        // ================== FIM DA LÓGICA CORRIGIDA ===================
+
+        // --- MONTAGEM FINAL DOS PAINÉIS (NÃO MUDA) ---
         painelCampoEBotao.add(textField, BorderLayout.CENTER);
 
         if (removivel) {
+            // ... (seu código do botão "X" não muda)
             RoundedButtonUtil btnClose = new RoundedButtonUtil();
             btnClose.setText("X");
             btnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -197,13 +221,12 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             btnClose.setRadius(999);
             btnClose.setBorderColor(Color.WHITE);
             btnClose.setPreferredSize(new Dimension(30, 30));
-
             btnClose.addActionListener(e -> removerOpcao(painelOpcao));
-
             painelCampoEBotao.add(btnClose, BorderLayout.EAST);
         }
 
         painelCampoEBotao.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         painelOpcao.add(label);
         painelOpcao.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 4)));
         painelOpcao.add(painelCampoEBotao);
@@ -258,6 +281,21 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             new MenuPrincipalView(this.usuarioLogado).setVisible(true);
             this.dispose();
         }){{setRepeats(false);}}.start();
+    }
+    
+    private JTextField findTextFieldInPanel(JPanel container) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JTextField) {
+                return (JTextField) c;
+            }
+            if (c instanceof JPanel) {
+                JTextField found = findTextFieldInPanel((JPanel) c);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -606,28 +644,30 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         String pergunta = txtPergunta.getText().trim();
-        if (pergunta.isEmpty()) {
+        String placeholderPergunta = "Escreva a pergunta da votação.";
+        if (pergunta.isEmpty() || pergunta.equals(placeholderPergunta)) {
             exibirMensagem("O campo 'Pergunta' é obrigatório.");
             return;
         }
         this.votacao.setPergunta(pergunta);
 
-        List<String> novasOpcoes = new ArrayList<>();
+        List<String> opcoesValidas = new ArrayList<>();
+        String placeholderOpcao = "Digite o texto da opção";
+
         for (JPanel painelOpcao : paineisDeOpcao) {
-            for (Component comp : painelOpcao.getComponents()) {
-                if (comp instanceof JTextField) {
-                    String textoOpcao = ((JTextField) comp).getText().trim();
-                    if (textoOpcao.isEmpty()) {
-                        exibirMensagem("Preencha todos os campos de opção em branco.");
-                        return;
-                    }
-                    novasOpcoes.add(textoOpcao);
+            JTextField textFieldDaOpcao = findTextFieldInPanel(painelOpcao);
+
+            if (textFieldDaOpcao != null) {
+                String textoOpcao = textFieldDaOpcao.getText().trim();
+
+                if (!textoOpcao.isEmpty() && !textoOpcao.equals(placeholderOpcao)) {
+                    opcoesValidas.add(textoOpcao);
                 }
             }
         }
 
-        if (novasOpcoes.size() < 2) {
-            exibirMensagem("A votação deve ter pelo menos 2 opções.");
+        if (opcoesValidas.size() < 2) {
+            exibirMensagem("Preencha pelo menos as 2 primeiras opções.");
             return;
         }
 
@@ -638,7 +678,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         if (isEditMode) {
             try {
                 controller.atualizarVotacao(this.votacao);
-                service.sincronizarOpcoes(this.votacao.getIdVotacao(), novasOpcoes);
+                service.sincronizarOpcoes(this.votacao.getIdVotacao(), opcoesValidas);
                 exibirMensagemDeSucesso("Votação atualizada com sucesso!");
                 navegarParaMenuPrincipal();
 
@@ -650,7 +690,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             try {
                 int novoId = controller.criarVotacao(this.votacao);
                 if (novoId > 0) {
-                    for (String descricaoOpcao : novasOpcoes) {
+                    for (String descricaoOpcao : opcoesValidas) {
                         OpcaoVoto op = new OpcaoVoto();
                         op.setDescricao(descricaoOpcao);
                         op.setIdVotacao(novoId);
@@ -677,7 +717,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed
         if (paineisDeOpcao.size() < MAX_OPCOES) {
-            adicionarNovaOpcao(true, ""); // Todas as opções adicionadas pelo botão são removíveis
+            adicionarNovaOpcao(true, "");
         } else {
             exibirMensagem("Limite máximo de 5 opções atingido.");
         }
