@@ -5,8 +5,6 @@
 package br.edu.ifro.calama.votacaofeedback.view;
 
 import java.awt.Color;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,6 +12,8 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import br.edu.ifro.calama.votacaofeedback.controller.RecuperacaoSenhaController; 
+import javax.swing.JOptionPane;
 
 
 /**
@@ -21,14 +21,14 @@ import javax.swing.JTextField;
  * @author manoe
  */
 public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaCodigoRecuperacaoView
-     */
-    public TelaCodigoRecuperacaoView() {
+    
+     private String email;
+    
+    public TelaCodigoRecuperacaoView(String email) {
         initComponents();
-        
-        
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.email = email;
     }
 
     /**
@@ -200,62 +200,32 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botãoActionPerformed
-    // Cria uma nova instância da tela para a qual você quer voltar
-    // Substitua 'TelaRelembrarSenhaView' pelo nome real da sua classe.
-    LoginView telaLogin = new LoginView();
-    telaLogin.setVisible(true);
-    // Fecha a tela atual de recuperação de código
-    this.dispose();
+        new LoginView().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_botãoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String codigoDigitado = jTextField2.getText().trim();
+        if (codigoDigitado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, digite o código de verificação.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            RecuperacaoSenhaController controller = new RecuperacaoSenhaController();
+            boolean codigoEhValido = controller.verificarToken(this.email, codigoDigitado);
 
-
-// ... dentro do método actionPerformed do botão "ENVIAR CÓDIGO" ...
-
-// 1. Pegue o texto que o usuário digitou
-// Substitua 'campoCodigo' pelo nome da variável do seu JTextField
-String codigoDigitado = jTextField2.getText();
-
-// 2. Lógica de verificação (aqui você chamaria seu Controller/Service)
-// Para este exemplo, vamos simular o resultado com uma variável.
-// Mude para 'false' para testar o caminho do erro.
-boolean codigoEhValido = false; 
-
-// 3. Decidir o que fazer com base no resultado
-if (codigoEhValido) {
-    // Se o código for válido, abre a próxima tela
-    // Substitua 'TelaAlterarSenhaView' pelo nome real da sua classe.
-    //TelaAlterarSenhaView telaAlterar = new TelaAlterarSenhaView();
-    //telaAlterar.setVisible(true);
-
-    // Fecha a tela atual
-    this.dispose();
-} else {
-    // Se o código for inválido, mostra o popup de erro customizado
-
-    // --- Início do código do Popup Customizado ---
-
-    // Guarda as cores padrão do sistema para restaurar depois
-    Color oldBg = UIManager.getColor("OptionPane.background");
-    Color oldFg = UIManager.getColor("Panel.background");
-    Color oldMsgFg = UIManager.getColor("OptionPane.messageForeground");
-
-    // Define as novas cores para o popup
-    UIManager.put("OptionPane.background", new Color(220, 53, 69)); // Um tom de vermelho
-    UIManager.put("Panel.background", new Color(220, 53, 69)); // Fundo do painel interno
-    UIManager.put("OptionPane.messageForeground", Color.WHITE); // Cor da letra
-
-    // Mostra o JOptionPane, que agora usará as cores customizadas
-    JOptionPane.showMessageDialog(this, "Não é possível realizar o Cadastro!", "Erro", JOptionPane.ERROR_MESSAGE);
-
-    // Restaura as cores padrão para não afetar outros popups no seu sistema
-    UIManager.put("OptionPane.background", oldBg);
-    UIManager.put("Panel.background", oldFg);
-    UIManager.put("OptionPane.messageForeground", oldMsgFg);
-
-    // --- Fim do código do Popup Customizado ---
-}        // TODO add your handling code here:
+            if (codigoEhValido) {
+                // Se o código for válido, abre a tela de alterar senha, passando o e-mail
+                new AlterarSenhaView(this.email).setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Código inválido ou expirado. Tente novamente.", "Erro de Verificação", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro ao verificar o código.", "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

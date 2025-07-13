@@ -122,6 +122,8 @@ public class UsuarioRepository {
                     usuarioEncontrado.setId(rs.getInt("id_usuario"));
                     usuarioEncontrado.setNome(rs.getString("nome"));
                     usuarioEncontrado.setEmail(rs.getString("email"));
+                    usuarioEncontrado.setToken(rs.getString("token"));
+                    usuarioEncontrado.setTokenExpiracao(rs.getTimestamp("token_expiracao"));
                     // Carregue outros campos se necessário
                 }
             }
@@ -140,4 +142,17 @@ public class UsuarioRepository {
             ps.executeUpdate();
         }
     }
+    
+    public void atualizarSenha(int usuarioId, String novaSenha) throws SQLException, Exception {
+    String sql = "UPDATE Usuarios SET senha = SHA2(?, 256), token = NULL, token_expiracao = NULL WHERE id_usuario = ?";
+    
+    try (Connection conexao = DatabaseUtil.getConnection();
+         PreparedStatement ps = conexao.prepareStatement(sql)) {
+        
+        ps.setString(1, novaSenha);
+        ps.setInt(2, usuarioId);
+        ps.executeUpdate();
+    }
+}
+    
 }

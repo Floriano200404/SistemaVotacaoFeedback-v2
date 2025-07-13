@@ -28,10 +28,13 @@ import javax.swing.JTextField;
  */
 public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
 
+    private String email;
+    
     public RecuperacaoDeSenhaView() {
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); 
         setLocationRelativeTo(null);
+        this.email = email;
     }
 
     public void exibirMensagem(String mensagem) {
@@ -225,6 +228,8 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
                     exibirMensagemDeSucesso("Um código de recuperação de senha foi enviado.");
 
                     if (sucesso) {
+                        new TelaCodigoRecuperacaoView(email).setVisible(true);
+                        dispose();
                     }
                 } catch (Exception e) {
                     exibirMensagem("Erro ao tentar enviar o e-mail.");
@@ -244,25 +249,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     }//GEN-LAST:event_bntVoltarActionPerformed
     
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(RecuperacaoDeSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RecuperacaoDeSenhaView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntEnviarEmail;

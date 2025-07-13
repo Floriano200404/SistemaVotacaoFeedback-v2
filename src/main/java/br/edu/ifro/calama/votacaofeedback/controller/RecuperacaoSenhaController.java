@@ -20,26 +20,66 @@ public class RecuperacaoSenhaController {
         UsuarioRepository usuarioRepo = new UsuarioRepository();
         Usuario usuario = usuarioRepo.buscarPorEmail(email);
 
-        // Se o usuário não existir, a operação falha.
         if (usuario == null) {
             return false;
         }
 
-        // Gera um token numérico de 6 dígitos
         String token = String.format("%06d", new Random().nextInt(999999));
         
-        // Define a expiração para 15 minutos a partir de agora
-        long tempoExpiracao = System.currentTimeMillis() + (15 * 60 * 1000); // 15 min
+        long tempoExpiracao = System.currentTimeMillis() + (15 * 60 * 1000);
         Date dataExpiracao = new Date(tempoExpiracao);
 
-        // Salva o token e a data de expiração no banco
         usuarioRepo.salvarToken(usuario.getId(), token, dataExpiracao);
         
-        // "Envia" o e-mail
         EmailService emailService = new EmailService();
         emailService.enviarEmailDeRecuperacao(usuario.getEmail(), token);
         
-        // Se chegou até aqui, a operação foi um sucesso.
+        return true;
+    }
+    
+    public boolean verificarToken(String email, String tokenDigitado) throws Exception {
+    UsuarioRepository usuarioRepo = new UsuarioRepository();
+    Usuario usuario = usuarioRepo.buscarPorEmail(email);
+
+    System.out.println("\n--- INICIANDO DEBUG DA VERIFICAÇÃO DE TOKEN ---");
+
+    if (usuario == null || usuario.getToken() == null || usuario.getTokenExpiracao() == null) {
+        System.out.println("[DEBUG] Falha: Usuário ou token no banco é nulo.");
+        return false;
+    }
+
+    // 1. Comparando os tokens
+    String tokenDoBanco = usuario.getToken();
+    System.out.println("[DEBUG] Token Digitado: '" + tokenDigitado + "'");
+    System.out.println("[DEBUG] Token do Banco:  '" + tokenDoBanco + "'");
+    boolean tokensCoincidem = tokenDigitado.equals(tokenDoBanco);
+    System.out.println("[DEBUG] >> Os tokens coincidem? " + tokensCoincidem);
+
+    // 2. Comparando as datas
+    Date agora = new Date();
+    Date dataDeExpiracao = usuario.getTokenExpiracao();
+    System.out.println("[DEBUG] Hora Atual:      " + agora);
+    System.out.println("[DEBUG] Expira Em:       " + dataDeExpiracao);
+    boolean naoExpirou = agora.before(dataDeExpiracao);
+    System.out.println("[DEBUG] >> O token não expirou? " + naoExpirou);
+
+    boolean resultadoFinal = tokensCoincidem && naoExpirou;
+    System.out.println("[DEBUG] >> RESULTADO FINAL DA VALIDAÇÃO: " + resultadoFinal);
+    System.out.println("------------------------------------------------\n");
+    
+    return resultadoFinal;
+}
+
+    public boolean redefinirSenha(String email, String novaSenha) throws Exception {
+        UsuarioRepository usuarioRepo = new UsuarioRepository();
+        Usuario usuario = usuarioRepo.buscarPorEmail(email);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        usuarioRepo.atualizarSenha(usuario.getId(), novaSenha);
         return true;
     }
 }
+
