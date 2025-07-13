@@ -22,37 +22,38 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 /**
  *
  * @author floriano, ATHOS
  */
-public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
+public class CriarVotacaoOpcoesView extends javax.swing.JPanel {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CriarVotacaoOpcoesView.class.getName());
     private final Usuario usuarioLogado;
     private final Votacao votacao;
     private boolean isEditMode = false;
+    private final MenuPrincipalView menuPrincipal;
     
 
     private final List<JPanel> paineisDeOpcao = new ArrayList<>();
     private final int MAX_OPCOES = 5;
     private javax.swing.JPanel painelOpcoesContainer;
 
-    public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) throws Exception {
+    public CriarVotacaoOpcoesView(MenuPrincipalView menuPrincipal, Usuario usuario, Votacao votacao) throws Exception {
         initComponents();
         aplicarEstilosPersonalizados();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.painelOpcoesContainer = this.painelOpcoesContainer1;
+        this.menuPrincipal = menuPrincipal;
         painelOpcoesContainer1.removeAll();
-        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setLayout(new java.awt.BorderLayout());
+        this.add(PainelConteudo, java.awt.BorderLayout.CENTER);
         this.usuarioLogado = usuario;
         this.votacao = votacao;
         painelOpcoesContainer1.setLayout(new javax.swing.BoxLayout(painelOpcoesContainer1, javax.swing.BoxLayout.Y_AXIS));
@@ -244,20 +245,19 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     
     public void exibirMensagem(String mensagem) {
-        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        javax.swing.JFrame framePai = (javax.swing.JFrame) SwingUtilities.getWindowAncestor(this);
+        ToastUtil toast = new ToastUtil(framePai, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
         toast.display();
     }
-
+    
     public void exibirMensagemDeSucesso(String mensagem) {
-        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
+        javax.swing.JFrame framePai = (javax.swing.JFrame) SwingUtilities.getWindowAncestor(this);
+        ToastUtil toast = new ToastUtil(framePai, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
         toast.display();
     }
     
     private void navegarParaMenuPrincipal() {
-        new Timer(1500, e -> {
-            new MenuPrincipalView(this.usuarioLogado).setVisible(true);
-            this.dispose();
-        }){{setRepeats(false);}}.start();
+        this.menuPrincipal.navegarParaDashboard();
     }
 
     /**
@@ -307,7 +307,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         btnVoltar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()  ;
         btnFinalizar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil()  ;
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new java.awt.BorderLayout());
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -354,7 +354,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
 
-        getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
+        add(painelHeader, java.awt.BorderLayout.PAGE_START);
 
         painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
         painelSidebar.setPreferredSize(new java.awt.Dimension(230, 0));
@@ -397,7 +397,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         painelSidebar.add(votoArquivado);
         painelSidebar.add(filler1);
 
-        getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
+        add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
         PainelConteudo.setLayout(new java.awt.GridBagLayout());
 
@@ -525,9 +525,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         PainelConteudo.add(jScrollPane1, new java.awt.GridBagConstraints());
 
-        getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
-
-        pack();
+        add(PainelConteudo, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
@@ -562,11 +560,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
         MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
-
-        telaDeCriacao.setLocationRelativeTo(null);
-        telaDeCriacao.setVisible(true);
-
-        this.dispose();
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
@@ -588,12 +581,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
         ActionListener acaoDeLogout = e -> {
         new LoginView().setVisible(true);
-        this.dispose();
-        System.out.println("Logout realizado. Janela principal fechada.");
+        this.menuPrincipal.dispose();
     };
 
     PerfilView perfil = new PerfilView(
-        this,
+        (JFrame) SwingUtilities.getWindowAncestor(this),
         this.usuarioLogado.getNome(),
         this.usuarioLogado.getEmail(),
         this.usuarioLogado.getCpf(),
@@ -601,6 +593,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         this.usuarioLogado.getCurso(),
         acaoDeLogout
     );
+    
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
@@ -657,7 +650,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
                         opcaoRepo.criar(op);
                     }
                     exibirMensagemDeSucesso("Votação criada com sucesso!");
-                    navegarParaMenuPrincipal();
+                    this.menuPrincipal.navegarParaDashboard();
                 } else {
                     exibirMensagem("Falha ao salvar os dados principais da votação.");
                 }
@@ -669,10 +662,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        CriarVotacaoView telaCriarVotacao = new CriarVotacaoView(this.usuarioLogado, this.votacao, this.isEditMode);
-        telaCriarVotacao.setLocationRelativeTo(null);
-        telaCriarVotacao.setVisible(true);
-        this.dispose();
+        this.menuPrincipal.navegarParaTelaDeCriacao(this.votacao, this.isEditMode);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnAdicionarOpcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarOpcaoActionPerformed

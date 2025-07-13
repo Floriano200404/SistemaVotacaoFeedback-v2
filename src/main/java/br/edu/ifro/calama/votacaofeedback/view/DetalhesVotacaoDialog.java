@@ -10,6 +10,8 @@ import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
 import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 /**
  *
  * @author floriano
@@ -291,19 +293,14 @@ public void configurarParaParticipacao() {
     }//GEN-LAST:event_btnReprovarDialogActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (this.votacaoAtual != null) {
-            System.out.println("[DEBUG DetalhesVotacaoDialog] Enviando votação com título: '" + this.votacaoAtual.getTitulo() + "'");
-        } else {
-            System.out.println("[DEBUG DetalhesVotacaoDialog] ERRO: Tentando enviar uma votação NULA!");
-        }
-        
-        if (this.votacaoAtual != null && this.usuarioLogado != null) {
-            CriarVotacaoView telaDeEdicao = new CriarVotacaoView(this.usuarioLogado, this.votacaoAtual, true);
-            telaDeEdicao.setLocationRelativeTo(null);
-            telaDeEdicao.setVisible(true);
+        java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
 
-            ((java.awt.Frame) getParent()).dispose();
+        if (parentWindow instanceof MenuPrincipalView) {
+            MenuPrincipalView menu = (MenuPrincipalView) parentWindow;
+            menu.navegarParaTelaDeCriacao(this.votacaoAtual, true);
             this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro: Não foi possível encontrar a janela principal para navegar.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
     private void btnAprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprovarDialogActionPerformed

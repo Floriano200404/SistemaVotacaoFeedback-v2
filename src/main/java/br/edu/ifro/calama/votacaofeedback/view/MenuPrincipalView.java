@@ -7,6 +7,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
+import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 
 /**
@@ -16,56 +17,55 @@ import java.awt.event.ActionListener;
 public class MenuPrincipalView extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
-    private Votacao votacaoEmAndamento;
     private final VotacoesAtivasView telaVotacoesAtivas;
     private final TelaDeVotoView telaDeVoto;
-   public MenuPrincipalView(Usuario usuario) {
-    initComponents();
     
-    this.usuarioLogado = usuario;
-    
-    this.telaVotacoesAtivas = new VotacoesAtivasView();
-    painelConteudo.add(this.telaVotacoesAtivas, "cardVotacoesAtivas");
+    public MenuPrincipalView(Usuario usuario) {
+        initComponents();
 
-    // 3. Tela para Votar
-    this.telaDeVoto = new TelaDeVotoView();
-    painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
-    if (this.usuarioLogado != null) {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu o usuário: " + this.usuarioLogado.getNome());
-    } else {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu um usuário NULO!");
-    }
-    
-    if (this.usuarioLogado != null) {
+        this.usuarioLogado = usuario;
 
-        String nomeDoUsuario = this.usuarioLogado.getNome();
-        
-        labelNomeUsuario.setText(nomeDoUsuario);
-        
-        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
-   
-    }
-    inicializarMenuLateral();
-   
-    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeCima.setOpaque(false);
+        this.telaVotacoesAtivas = new VotacoesAtivasView();
+        painelConteudo.add(this.telaVotacoesAtivas, "cardVotacoesAtivas");
 
-    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeBaixo.setOpaque(false);
-    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+        this.telaDeVoto = new TelaDeVotoView();
+        painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
+        if (this.usuarioLogado != null) {
+            System.out.println("--- DEBUG VIEW ---");
+            System.out.println("A Tela Principal recebeu o usuário: " + this.usuarioLogado.getNome());
+        } else {
+            System.out.println("--- DEBUG VIEW ---");
+            System.out.println("A Tela Principal recebeu um usuário NULO!");
+        }
 
-    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
-    painelDosCards.add(linhaDeCima);
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
-    painelDosCards.add(linhaDeBaixo);
-    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+        if (this.usuarioLogado != null) {
+
+            String nomeDoUsuario = this.usuarioLogado.getNome();
+
+            labelNomeUsuario.setText(nomeDoUsuario);
+
+            txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+
+        }
+        inicializarMenuLateral();
+
+        javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeCima.setOpaque(false);
+
+        javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeBaixo.setOpaque(false);
+        linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+        linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+        linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+        linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+
+        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+        painelDosCards.add(linhaDeCima);
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+        painelDosCards.add(linhaDeBaixo);
+        painelDosCards.add(javax.swing.Box.createVerticalGlue());
     }
     
 
@@ -262,34 +262,25 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         }
     }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
-public void navegarParaVotacoesAtivas() {
-    
-    if (telaVotacoesAtivas != null && this.usuarioLogado != null) {
-       
-        telaVotacoesAtivas.carregarVotacoes(this.usuarioLogado);
+    public void navegarParaVotacoesAtivas() {
+
+        if (telaVotacoesAtivas != null && this.usuarioLogado != null) {
+
+            telaVotacoesAtivas.carregarVotacoes(this.usuarioLogado);
+        }
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardVotacoesAtivas");
     }
-
-    
-    java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-    cl.show(painelConteudo, "cardVotacoesAtivas");
-}
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuarioLogado, null, false);
-
-        telaDeCriacao.setLocationRelativeTo(null);
-        telaDeCriacao.setVisible(true);
-
-        this.dispose();
-
+        navegarParaTelaDeCriacao(null, false);
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
-if (this.usuarioLogado != null) {
-    telaVotacoesAtivas.carregarVotacoes(this.usuarioLogado);
-}
-java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-cl.show(painelConteudo, "cardVotacoesAtivas");
-        // TODO add your handling code here:
+        if (this.usuarioLogado != null) {
+            telaVotacoesAtivas.carregarVotacoes(this.usuarioLogado);
+        }
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardVotacoesAtivas");
     }//GEN-LAST:event_participarVotacaoActionPerformed
 
     private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
@@ -311,15 +302,11 @@ cl.show(painelConteudo, "cardVotacoesAtivas");
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
-
-        telaDeCriacao.setVisible(true);
-
-        this.dispose();
+        navegarParaDashboard();
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_criarVotacaoMouseClicked
-               // TODO add your handling code here:
+        navegarParaTelaDeCriacao(null, false);
     }//GEN-LAST:event_criarVotacaoMouseClicked
 
     private void labelIconePerfilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconePerfilMouseClicked
@@ -341,107 +328,129 @@ cl.show(painelConteudo, "cardVotacoesAtivas");
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
-private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
-    javax.swing.JPanel card = new javax.swing.JPanel();
+    private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
+        javax.swing.JPanel card = new javax.swing.JPanel();
 
-    card.setPreferredSize(new java.awt.Dimension(300, 65));
+        card.setPreferredSize(new java.awt.Dimension(300, 65));
 
-    card.setBackground(new java.awt.Color(48, 162, 218)); 
-    card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
-    card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
-    card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        card.setBackground(new java.awt.Color(48, 162, 218)); 
+        card.setLayout(new javax.swing.BoxLayout(card, javax.swing.BoxLayout.Y_AXIS));
+        card.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        card.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-    javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
-    labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-    labelTitulo.setForeground(java.awt.Color.WHITE);
+        javax.swing.JLabel labelTitulo = new javax.swing.JLabel(titulo);
+        labelTitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        labelTitulo.setForeground(java.awt.Color.WHITE);
 
-    javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
-    labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
-    labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255));
+        javax.swing.JLabel labelSubtitulo = new javax.swing.JLabel(subtitulo);
+        labelSubtitulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 10));
+        labelSubtitulo.setForeground(new java.awt.Color(220, 240, 255));
 
-    card.add(labelTitulo);
-    card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
-    card.add(labelSubtitulo);
+        card.add(labelTitulo);
+        card.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 8)));
+        card.add(labelSubtitulo);
 
-    card.addMouseListener(new java.awt.event.MouseAdapter() {
-        final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
-        final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
+        card.addMouseListener(new java.awt.event.MouseAdapter() {
+            final java.awt.Color corOriginal = new java.awt.Color(48, 162, 218);
+            final java.awt.Color corHover = new java.awt.Color(68, 182, 238);
 
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            card.setBackground(corHover);
-        }
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                card.setBackground(corHover);
+            }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            card.setBackground(corOriginal);
-        }
-    });
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                card.setBackground(corOriginal);
+            }
+        });
 
-    return card;
-}
-private void inicializarMenuLateral() {
-     java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
-        criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
-    );
-    configurarBotao(criarVotacao, "criarVoto.png");
-    configurarBotao(participarVotacao, "peoplemais.png");
-    configurarBotao(gerenciaVotacao, "configpast.png");
-    configurarBotao(aprovarVotacao, "list_check.png");
-    configurarBotao(votoArquivado, "arquivada.png");
-    for (javax.swing.JButton botao : botoes) {
-        adicionarListeners(botao);
+        return card;
     }
-}
-
-private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
-    botao.setIconTextGap(15);
-    botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-    try {
-        botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
-    } catch (Exception e) {
-        System.out.println("ERRO ao carregar ícone: " + nomeIcone);
+    private void inicializarMenuLateral() {
+         java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
+            criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
+        );
+        configurarBotao(criarVotacao, "criarVoto.png");
+        configurarBotao(participarVotacao, "peoplemais.png");
+        configurarBotao(gerenciaVotacao, "configpast.png");
+        configurarBotao(aprovarVotacao, "list_check.png");
+        configurarBotao(votoArquivado, "arquivada.png");
+        for (javax.swing.JButton botao : botoes) {
+            adicionarListeners(botao);
+        }
     }
-}
 
-private void adicionarListeners(javax.swing.JButton botao) {
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
-
-    botao.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true);
+    private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
+        botao.putClientProperty("JButton.buttonType", "toolBarButton");
+        botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        botao.setIconTextGap(15);
+        botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        try {
+            botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
+        } catch (Exception e) {
+            System.out.println("ERRO ao carregar ícone: " + nomeIcone);
         }
+    }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            botao.setOpaque(false);
-            botao.setBackground(COR_FUNDO_SIDEBAR); 
+    private void adicionarListeners(javax.swing.JButton botao) {
+        final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+        final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
+
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botao.setBackground(COR_HOVER_AZUL);
+                botao.setOpaque(true);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botao.setOpaque(false);
+                botao.setBackground(COR_FUNDO_SIDEBAR); 
+            }
+        });
+
+        botao.addActionListener(e -> {
+            System.out.println("Botão '" + botao.getText() + "' clicado!");
+        });
+    }
+
+    public void navegarParaTelaDeVoto(Votacao votacao) {
+
+        if (telaDeVoto != null) { 
+
+            telaDeVoto.carregarDadosVotacao(votacao, this.usuarioLogado);
+
+
+            java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+            cl.show(painelConteudo, "cardTelaDeVoto"); // Use o nome do card que você definiu
         }
-    });
-
-    botao.addActionListener(e -> {
-        System.out.println("Botão '" + botao.getText() + "' clicado!");
-    });
-}
-
-public void navegarParaTelaDeVoto(Votacao votacao) {
+    }
     
-    if (telaDeVoto != null) { 
-        
-        telaDeVoto.carregarDadosVotacao(votacao, this.usuarioLogado);
-
-       
-        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardTelaDeVoto"); // Use o nome do card que você definiu
+    public void navegarParaDashboard() {
+        CardLayout cl = (CardLayout) (painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardDashboard");
     }
-}
+
+    public void navegarParaTelaDeCriacao(Votacao votacao, boolean isEditando) {
+        CriarVotacaoView painelCriar = new CriarVotacaoView(this, this.usuarioLogado, votacao, isEditando);
+        painelConteudo.add(painelCriar, "cardCriarVotacao");
+        
+        CardLayout cl = (CardLayout) (painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardCriarVotacao");
+    }
+
+    public void navegarParaTelaDeOpcoes(Votacao votacao, boolean isEditando) throws Exception {
+        CriarVotacaoOpcoesView painelOpcoes = new CriarVotacaoOpcoesView(this, this.usuarioLogado, votacao);
+        painelConteudo.add(painelOpcoes, "cardOpcoes");
+        
+        CardLayout cl = (CardLayout) (painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardOpcoes");
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;
