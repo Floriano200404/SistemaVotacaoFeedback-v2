@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -47,6 +48,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     public CriarVotacaoOpcoesView(Usuario usuario, Votacao votacao) throws Exception {
         initComponents();
         aplicarEstilosPersonalizados();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.painelOpcoesContainer = this.painelOpcoesContainer1;
         painelOpcoesContainer1.removeAll();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -61,7 +63,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         inicializarMenuLateral();
         configurarTela();
         
-        this.setLocationRelativeTo(null);
     }
     
     private void aplicarEstilosPersonalizados() {
@@ -147,28 +148,44 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private void adicionarNovaOpcao(boolean removivel, String textoInicial) {
         if (paineisDeOpcao.size() >= MAX_OPCOES) return;
 
-        int novoIndice = paineisDeOpcao.size() + 1;
-        JPanel painelLinha = new JPanel(new BorderLayout(10, 0));
-        painelLinha.setOpaque(false);
-        painelLinha.setBorder(new EmptyBorder(5, 0, 5, 0));
+        // --- PAINEL PRINCIPAL DA OPÇÃO (VERTICAL) ---
+        JPanel painelOpcao = new JPanel();
+        painelOpcao.setLayout(new javax.swing.BoxLayout(painelOpcao, javax.swing.BoxLayout.Y_AXIS));
+        painelOpcao.setOpaque(false);
+        painelOpcao.setBorder(new EmptyBorder(5, 0, 5, 0));
 
+        int novoIndice = paineisDeOpcao.size() + 1;
+
+        // --- LABEL DA OPÇÃO ---
         JLabel label = new JLabel("Opção " + novoIndice + ":");
         label.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        // --- PAINEL SECUNDÁRIO PARA ALINHAR CAMPO DE TEXTO E BOTÃO "X" (HORIZONTAL) ---
+        JPanel painelCampoEBotao = new JPanel(new BorderLayout(10, 0));
+        painelCampoEBotao.setOpaque(false);
+
+        // --- CAMPO DE TEXTO (TEXTFIELD) ---
         JTextField textField = new JTextField(textoInicial);
         textField.setName("txtOpcao" + novoIndice);
 
+        // 1. SOLUÇÃO ALTURA: Forçando a altura para ser exatamente 35px
         final int ALTURA_PADRAO = 35;
+        textField.setMinimumSize(new Dimension(10, ALTURA_PADRAO));
+        textField.setPreferredSize(new Dimension(10, ALTURA_PADRAO));
+        textField.setMaximumSize(new Dimension(Integer.MAX_VALUE, ALTURA_PADRAO));
+
+        // Aplicando seus estilos
         javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
         textField.setBackground(Color.WHITE);
         textField.setForeground(Color.BLACK);
-        textField.setPreferredSize(new Dimension(textField.getPreferredSize().width, ALTURA_PADRAO));
         textField.setBorder(bordaArredondadaPreta);
         textField.setMargin(new java.awt.Insets(2, 10, 2, 10));
 
-        painelLinha.add(label, BorderLayout.WEST);
-        painelLinha.add(textField, BorderLayout.CENTER);
+        // Adiciona o campo de texto ao centro do painel horizontal
+        painelCampoEBotao.add(textField, BorderLayout.CENTER);
 
+        // 2. SOLUÇÃO BOTÃO "X": Adicionando o botão e alinhando
         if (removivel) {
             RoundedButtonUtil btnClose = new RoundedButtonUtil();
             btnClose.setText("X");
@@ -181,12 +198,24 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             btnClose.setRadius(999);
             btnClose.setBorderColor(Color.WHITE);
             btnClose.setPreferredSize(new Dimension(30, 30));
-            btnClose.addActionListener(e -> removerOpcao(painelLinha));
-            painelLinha.add(btnClose, BorderLayout.EAST);
+
+            // Ação de remover aponta para o painel principal da opção
+            btnClose.addActionListener(e -> removerOpcao(painelOpcao));
+
+            // Adiciona o botão "X" à direita do campo de texto, alinhando-o perfeitamente
+            painelCampoEBotao.add(btnClose, BorderLayout.EAST);
         }
 
-        paineisDeOpcao.add(painelLinha);
-        painelOpcoesContainer.add(painelLinha);
+        painelCampoEBotao.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Adiciona a label e o painel (campo + botão) ao painel principal da opção
+        painelOpcao.add(label);
+        painelOpcao.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 4)));
+        painelOpcao.add(painelCampoEBotao);
+
+        // Adiciona o painel da opção à lista e ao container
+        paineisDeOpcao.add(painelOpcao);
+        painelOpcoesContainer.add(painelOpcao);
 
         atualizarLayoutConteudo();
         atualizarVisibilidadeBotaoAdicionar();
@@ -196,10 +225,16 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         painelOpcoesContainer.remove(painelOpcao);
         paineisDeOpcao.remove(painelOpcao);
 
+        // Renumera as opções restantes
         for (int i = 0; i < paineisDeOpcao.size(); i++) {
             JPanel panel = paineisDeOpcao.get(i);
-            JLabel label = (JLabel) panel.getComponent(0);
-            label.setText("Opção " + (i + 1) + ":");
+            // Lógica robusta para encontrar a label dentro do painel
+            for (Component comp : panel.getComponents()) {
+                if (comp instanceof JLabel) {
+                    ((JLabel) comp).setText("Opção " + (i + 1) + ":");
+                    break; // Encontrou a label, pode parar de procurar
+                }
+            }
         }
 
         atualizarLayoutConteudo();
@@ -259,6 +294,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         votoArquivado = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         PainelConteudo = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         formCardPanel = new javax.swing.JPanel();
         TituloPrincipal = new javax.swing.JLabel();
         TituloP = new javax.swing.JLabel();
@@ -375,8 +411,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         formCardPanel.setBackground(new java.awt.Color(255, 255, 255));
         formCardPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        formCardPanel.setMinimumSize(new java.awt.Dimension(500, 593));
-        formCardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+        formCardPanel.setMinimumSize(new java.awt.Dimension(0, 0));
         formCardPanel.setLayout(new java.awt.GridBagLayout());
 
         TituloPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -390,6 +425,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         formCardPanel.add(TituloPrincipal, gridBagConstraints);
 
+        TituloP.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         TituloP.setText("Pergunta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -450,6 +486,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(12, 0, 15, 0);
         formCardPanel.add(painelOpcoesContainer1, gridBagConstraints);
 
@@ -469,8 +506,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         botoesInferiores.setOpaque(false);
         botoesInferiores.setLayout(new java.awt.GridLayout(1, 2, 30, 0));
 
-        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnVoltar.setText("Voltar");
+        btnVoltar.setText("VOLTAR");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
@@ -493,10 +529,9 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 50);
         formCardPanel.add(botoesInferiores, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        PainelConteudo.add(formCardPanel, gridBagConstraints);
+        jScrollPane1.setViewportView(formCardPanel);
+
+        PainelConteudo.add(jScrollPane1, new java.awt.GridBagConstraints());
 
         getContentPane().add(PainelConteudo, java.awt.BorderLayout.CENTER);
 
@@ -577,10 +612,6 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
-    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtOpcao3ActionPerformed
-
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         String pergunta = txtPergunta.getText().trim();
         if (pergunta.isEmpty()) {
@@ -660,8 +691,11 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         } else {
             exibirMensagem("Limite máximo de 5 opções atingido.");
         }
-
     }//GEN-LAST:event_btnAdicionarOpcaoActionPerformed
+
+    private void txtOpcao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOpcao3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtOpcao3ActionPerformed
 
     private void txtPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPerguntaActionPerformed
         // TODO add your handling code here:
@@ -744,6 +778,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel formCardPanel;
     private javax.swing.JButton gerenciaVotacao;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JLabel labelIconePerfil;
     private javax.swing.JLabel labelLogo;
