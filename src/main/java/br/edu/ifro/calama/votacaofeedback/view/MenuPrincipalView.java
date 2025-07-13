@@ -96,7 +96,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1480, 800));
-        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));

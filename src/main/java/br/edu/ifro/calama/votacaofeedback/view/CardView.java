@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package br.edu.ifro.calama.votacaofeedback.view;
+
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
-import java.text.SimpleDateFormat;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,7 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.text.SimpleDateFormat;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -24,23 +24,9 @@ import javax.swing.JFrame;
         private DetalhesVotacaoDialog.ModoDialogo modo;
         private Usuario usuarioLogado;
         private java.awt.Component telaDeOrigem;
+        private javax.swing.JTextArea tituloTextArea;
 
-        public CardView() {
-            initComponents();
-            this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
-        }
-
-        public void setTelaDeOrigem(java.awt.Component tela) {
-            this.telaDeOrigem = tela;
-        }
-        
-        public void setModo(DetalhesVotacaoDialog.ModoDialogo modo) {
-            this.modo = modo;
-        }
-
-        public void setUsuario(Usuario usuario) {
-            this.usuarioLogado = usuario;
-        }
+     
 
     private static class RoundedButton extends JButton {
 
@@ -54,8 +40,8 @@ import javax.swing.JFrame;
             setBorderPainted(false);
             setFocusPainted(false);
         }
-
-        @Override
+        
+    @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -70,16 +56,90 @@ import javax.swing.JFrame;
 
             g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight));
             g2.dispose();
-
             super.paintComponent(g);
         }
     }
+    
+    class ShadowPanel extends JPanel {
+        private int shadowSize = 5;
+        private float shadowOpacity = 0.4f;
+        private int arc = 20;
+
+        public ShadowPanel() {
+            super();
+            setOpaque(false);
+        }
+        
+        @Override
+        protected void paintComponent(Graphics g) {
+            // Desenha os componentes filhos (labels, etc.) por baixo
+            super.paintComponent(g); 
+            
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            int width = getWidth();
+            int height = getHeight();
+
+            // Desenha a sombra
+            for (int i = 0; i < shadowSize; i++) {
+                g2.setColor(new Color(180, 180, 180, (int) (shadowOpacity * 255 * (1.0f - (float) i / shadowSize))));
+                g2.fillRoundRect(i, i, width - i * 2, height - i * 2, arc, arc);
+            }
+
+            // Desenha o painel principal
+            g2.setColor(getBackground());
+            g2.fillRoundRect(shadowSize, shadowSize, width - shadowSize * 2, height - shadowSize * 2, arc, arc);
+
+            g2.dispose();
+        }
+
+        @Override
+        public java.awt.Insets getInsets() {
+            return new java.awt.Insets(shadowSize, shadowSize, shadowSize, shadowSize);
+        }
+    }
+        
+    public CardView() {
+    initComponents();
+    this.setOpaque(false);
+    this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
+    }
+    
+    public void setTelaDeOrigem(java.awt.Component tela) { this.telaDeOrigem = tela; }
+    public void setModo(DetalhesVotacaoDialog.ModoDialogo modo) { this.modo = modo; }
+    public void setUsuario(Usuario usuario) { this.usuarioLogado = usuario; }
+    
+    private void inicializarTituloCustomizado() {
+        java.awt.Rectangle bounds = lblTituloVotacao.getBounds();
+        java.awt.Font fonte = lblTituloVotacao.getFont();
+        java.awt.Color corTexto = lblTituloVotacao.getForeground();
+        java.awt.Container pai = lblTituloVotacao.getParent();
+
+        lblTituloVotacao.setVisible(false);
+
+        tituloTextArea = new javax.swing.JTextArea();
+        tituloTextArea.setFont(fonte);
+        tituloTextArea.setForeground(corTexto);
+        tituloTextArea.setEditable(false);
+        tituloTextArea.setFocusable(false);
+        tituloTextArea.setOpaque(false);
+        tituloTextArea.setBorder(null);
+        tituloTextArea.setLineWrap(true);
+        tituloTextArea.setWrapStyleWord(true);
+
+        if (pai != null) {
+            pai.add(tituloTextArea);
+            tituloTextArea.setBounds(bounds);
+        }
+    }
+
 
         public void setDados(Votacao votacao) {
 
             this.votacaoAtual = votacao; 
 
-            lblTituloVotacao.setText(votacao.getTitulo());
+           lblTituloVotacao.setText(votacao.getTitulo());
 
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 
@@ -106,73 +166,33 @@ import javax.swing.JFrame;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblInstituicao = new javax.swing.JLabel();
-        lblCampus = new javax.swing.JLabel();
-        Local = new javax.swing.JLabel();
-        lblTituloVotacao = new javax.swing.JLabel();
+        jPanel1 = new ShadowPanel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnVerVotacao = new RoundedButton("Ver Votação");
+        returdadosdt3 = new javax.swing.JLabel();
+        dtresult = new javax.swing.JLabel();
+        returdadosdt2 = new javax.swing.JLabel();
+        dtfim = new javax.swing.JLabel();
         dtinicio = new javax.swing.JLabel();
         returdadosdt = new javax.swing.JLabel();
-        dtfim = new javax.swing.JLabel();
-        returdadosdt2 = new javax.swing.JLabel();
-        dtresult = new javax.swing.JLabel();
-        returdadosdt3 = new javax.swing.JLabel();
-        btnVerVotacao = new RoundedButton("Ver Votação");
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
+        Local = new javax.swing.JLabel();
+        lblCampus = new javax.swing.JLabel();
+        lblInstituicao = new javax.swing.JLabel();
+        lblTituloVotacao = new javax.swing.JTextArea();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblInstituicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/WhatsApp Image 2025-07-10 at 00.50.52-Photoroom.png"))); // NOI18N
-        add(lblInstituicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 100, 120));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblCampus.setBackground(new java.awt.Color(102, 102, 102));
-        lblCampus.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        lblCampus.setForeground(new java.awt.Color(102, 102, 102));
-        lblCampus.setText("Campus");
-        add(lblCampus, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, 20));
+        jSeparator5.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 275, 10));
 
-        Local.setBackground(new java.awt.Color(153, 153, 153));
-        Local.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Local.setForeground(new java.awt.Color(102, 102, 102));
-        Local.setText("Porto Velho Calama");
-        add(Local, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
-
-        lblTituloVotacao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTituloVotacao.setForeground(new java.awt.Color(0, 0, 0));
-        lblTituloVotacao.setText("VOTAÇÃO PARA DIREÇÃO-GERAL ");
-        add(lblTituloVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 160, -1, -1));
-
-        dtinicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        dtinicio.setForeground(new java.awt.Color(153, 153, 153));
-        dtinicio.setText("Data Início:");
-        add(dtinicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 100, 20));
-
-        returdadosdt.setForeground(new java.awt.Color(153, 153, 153));
-        returdadosdt.setText("resultData");
-        add(returdadosdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, -1, 20));
-
-        dtfim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        dtfim.setForeground(new java.awt.Color(153, 153, 153));
-        dtfim.setText("Data Fim:");
-        add(dtfim, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 10));
-
-        returdadosdt2.setForeground(new java.awt.Color(153, 153, 153));
-        returdadosdt2.setText("resultDataF");
-        add(returdadosdt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, -1, 10));
-
-        dtresult.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        dtresult.setForeground(new java.awt.Color(153, 153, 153));
-        dtresult.setText("Data Resultado:");
-        add(dtresult, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
-
-        returdadosdt3.setForeground(new java.awt.Color(153, 153, 153));
-        returdadosdt3.setText("resultDataR");
-        add(returdadosdt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, -1, -1));
+        jSeparator1.setForeground(new java.awt.Color(51, 153, 0));
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 10, 100));
 
         btnVerVotacao.setBackground(new java.awt.Color(0, 153, 204));
         btnVerVotacao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -184,32 +204,63 @@ import javax.swing.JFrame;
                 btnVerVotacaoActionPerformed(evt);
             }
         });
-        add(btnVerVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 290, 30));
+        jPanel1.add(btnVerVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 290, 30));
 
-        jSeparator1.setForeground(new java.awt.Color(51, 153, 0));
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 10, 110));
+        returdadosdt3.setForeground(new java.awt.Color(153, 153, 153));
+        returdadosdt3.setText("resultDataR");
+        jPanel1.add(returdadosdt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
 
-        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 10, 308, 10));
+        dtresult.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        dtresult.setForeground(new java.awt.Color(153, 153, 153));
+        dtresult.setText("Data Resultado:");
+        jPanel1.add(dtresult, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
-        jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 11, 10, 270));
+        returdadosdt2.setForeground(new java.awt.Color(153, 153, 153));
+        returdadosdt2.setText("resultDataF");
+        jPanel1.add(returdadosdt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, 10));
 
-        jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 11, 10, 270));
+        dtfim.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        dtfim.setForeground(new java.awt.Color(153, 153, 153));
+        dtfim.setText("Data Fim:");
+        jPanel1.add(dtfim, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 10));
 
-        jSeparator5.setForeground(new java.awt.Color(102, 102, 102));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 275, 10));
+        dtinicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        dtinicio.setForeground(new java.awt.Color(153, 153, 153));
+        dtinicio.setText("Data Início:");
+        jPanel1.add(dtinicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 100, 20));
 
-        jSeparator6.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 280, 308, 20));
+        returdadosdt.setForeground(new java.awt.Color(153, 153, 153));
+        returdadosdt.setText("resultData");
+        jPanel1.add(returdadosdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, 20));
+
+        Local.setBackground(new java.awt.Color(153, 153, 153));
+        Local.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Local.setForeground(new java.awt.Color(102, 102, 102));
+        Local.setText("Porto Velho Calama");
+        jPanel1.add(Local, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
+
+        lblCampus.setBackground(new java.awt.Color(102, 102, 102));
+        lblCampus.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        lblCampus.setForeground(new java.awt.Color(102, 102, 102));
+        lblCampus.setText("Campus");
+        jPanel1.add(lblCampus, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, 20));
+
+        lblInstituicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/WhatsApp Image 2025-07-10 at 00.50.52-Photoroom.png"))); // NOI18N
+        jPanel1.add(lblInstituicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 100, 120));
+
+        lblTituloVotacao.setEditable(false);
+        lblTituloVotacao.setColumns(20);
+        lblTituloVotacao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTituloVotacao.setForeground(new java.awt.Color(0, 0, 0));
+        lblTituloVotacao.setLineWrap(true);
+        lblTituloVotacao.setRows(5);
+        lblTituloVotacao.setWrapStyleWord(true);
+        lblTituloVotacao.setBorder(null);
+        lblTituloVotacao.setFocusable(false);
+        lblTituloVotacao.setOpaque(false);
+        jPanel1.add(lblTituloVotacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 280, 50));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 2, 310, 280));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
@@ -230,18 +281,16 @@ import javax.swing.JFrame;
     private javax.swing.JLabel dtfim;
     private javax.swing.JLabel dtinicio;
     private javax.swing.JLabel dtresult;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JLabel lblCampus;
     private javax.swing.JLabel lblInstituicao;
-    private javax.swing.JLabel lblTituloVotacao;
+    private javax.swing.JTextArea lblTituloVotacao;
     private javax.swing.JLabel returdadosdt;
     private javax.swing.JLabel returdadosdt2;
     private javax.swing.JLabel returdadosdt3;
     // End of variables declaration//GEN-END:variables
-  
+ 
 }
+
