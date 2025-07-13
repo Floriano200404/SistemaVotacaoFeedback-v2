@@ -2,6 +2,7 @@ package br.edu.ifro.calama.votacaofeedback.service;
 
 
 import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
@@ -85,7 +86,16 @@ public class VotacaoService {
             }
         }
     }
-    
+   public List<Votacao> buscarVotacoesAtivasPorUsuario(Usuario usuario) {
+    try {
+        // Simplesmente chama o método do repositório que já criamos
+        return votacaoRepository.buscarAtivasPorUsuario(usuario);
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Em caso de erro, retorna uma lista vazia para a tela não quebrar
+        return new ArrayList<>(); 
+    }
+}
   
     public void aprovarVotacao(int idVotacao) {
         try {
