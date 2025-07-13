@@ -6,6 +6,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.UsuarioRepository;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.event.ActionListener;
 
@@ -16,12 +17,13 @@ import java.awt.event.ActionListener;
 public class MenuPrincipalView extends javax.swing.JFrame {
 
     private Usuario usuariologado;
-    private Votacao votacaoEmAndamento;
     
    public MenuPrincipalView(Usuario usuario) {
     initComponents();
     
     this.usuariologado = usuario;
+    this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    this.setLocationRelativeTo(null);
     
     if (this.usuariologado != null) {
         System.out.println("--- DEBUG VIEW ---");
@@ -280,12 +282,17 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
-    
-        painelConteudo.add(painelAprovar, "cardAprovar");
-    
-        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardAprovar");
+        if (isUsuarioAdmin()) {
+            AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
+            
+            // Lógica para trocar o painel visível
+            painelConteudo.removeAll();
+            painelConteudo.add(painelAprovar);
+            painelConteudo.revalidate();
+            painelConteudo.repaint();
+        } else {
+            exibirMensagemDeErro("Acesso negado. Apenas administradores.");
+        }
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
@@ -319,7 +326,25 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
-private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
+    private boolean isUsuarioAdmin() {
+        if (this.usuariologado == null) {
+            return false;
+        }
+        try {
+            UsuarioRepository userRepo = new UsuarioRepository();
+            return userRepo.isUsuarioEmGrupo(this.usuariologado.getId(), "ADMINISTRADORES");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public void exibirMensagemDeErro(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
+    
+    private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     javax.swing.JPanel card = new javax.swing.JPanel();
 
     card.setPreferredSize(new java.awt.Dimension(300, 65));
