@@ -227,6 +227,10 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="TituloPrincipal">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="CRIAR VOTA&#xc7;&#xc3;O - OP&#xc7;&#xd5;ES"/>
               </Properties>
               <Constraints>
@@ -350,6 +354,9 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="btnVoltar">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="18" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Voltar"/>
                   </Properties>
                   <Events>

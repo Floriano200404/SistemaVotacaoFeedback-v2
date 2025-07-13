@@ -176,8 +176,8 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             btnClose.setFont(new Font("Segoe UI", Font.BOLD, 14));
             btnClose.setForeground(Color.GRAY);
             btnClose.setColor(Color.WHITE);
-            btnClose.setColorOver(new Color(220, 220, 220));
-            btnClose.setColorClick(new Color(210, 210, 210));
+            btnClose.setColorOver(new Color(242, 242, 242));
+            btnClose.setColorClick(new Color(220, 220, 220));
             btnClose.setRadius(999);
             btnClose.setBorderColor(Color.WHITE);
             btnClose.setPreferredSize(new Dimension(30, 30));
@@ -379,6 +379,8 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         formCardPanel.setPreferredSize(new java.awt.Dimension(500, 500));
         formCardPanel.setLayout(new java.awt.GridBagLayout());
 
+        TituloPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TituloPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TituloPrincipal.setText("CRIAR VOTAÇÃO - OPÇÕES");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -467,6 +469,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         botoesInferiores.setOpaque(false);
         botoesInferiores.setLayout(new java.awt.GridLayout(1, 2, 30, 0));
 
+        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
