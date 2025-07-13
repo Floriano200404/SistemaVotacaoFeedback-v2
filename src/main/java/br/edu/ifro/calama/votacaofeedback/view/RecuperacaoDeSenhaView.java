@@ -211,7 +211,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             exibirMensagem("Formato de e-mail inválido.");
             return;
         }
-
+        
         bntEnviarEmail.setEnabled(false);
         bntEnviarEmail.setText("ENVIANDO...");
 
@@ -224,15 +224,16 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             @Override
             protected void done() {
                 try {
-                    boolean sucesso = get();
-                    exibirMensagemDeSucesso("Um código de recuperação de senha foi enviado.");
-
-                    if (sucesso) {
+                    boolean emailFoiEncontrado = get();
+                    if (emailFoiEncontrado) {
+                        exibirMensagemDeSucesso("Código de recuperação enviado!");
                         new TelaCodigoRecuperacaoView(email).setVisible(true);
                         dispose();
+                    } else {
+                        exibirMensagem("E-mail não encontrado no sistema.");
                     }
                 } catch (Exception e) {
-                    exibirMensagem("Erro ao tentar enviar o e-mail.");
+                    exibirMensagem("Erro ao tentar conectar com o serviço.");
                     e.printStackTrace();
                 } finally {
                     bntEnviarEmail.setText("ENVIAR E-MAIL");
@@ -248,9 +249,6 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_bntVoltarActionPerformed
     
-
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntEnviarEmail;
     private javax.swing.JButton bntVoltar;
@@ -279,53 +277,14 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             g2d.fillRect(0, 0, width, height);
         }
     }
-  private class EmailSenderWorker extends SwingWorker<Boolean, Void> {
-        private final String email;
-
-        public EmailSenderWorker(String email) {
-            this.email = email;
-        }
-
-        @Override
-        protected Boolean doInBackground() throws Exception {
-            try {
-                Thread.sleep(2000); // Simula espera de 2 segundos
-            } catch (InterruptedException e) {
-                // Tratamento de exceção
-            }
-            return null;
-        };
-
-        @Override
-        protected void done() {
-            try {
-                boolean emailEnviadoComSucesso = get();
-                if (emailEnviadoComSucesso) {
-                    JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this,
-                            "Um e-mail com as instruções de recuperação foi enviado para:\n" + email,
-                            "E-mail Enviado!", JOptionPane.INFORMATION_MESSAGE);
-                    txtEmail.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this,
-                            "Não foi possível enviar o e-mail de recuperação.",
-                            "Erro ao Enviar E-mail", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(RecuperacaoDeSenhaView.this, "Ocorreu um erro inesperado.", "Erro", JOptionPane.ERROR_MESSAGE);
-            } finally {
-                bntEnviarEmail.setText("ENVIAR E-MAIL");
-                bntEnviarEmail.setEnabled(true);
-            }
-        }
-    }
   private class RoundedButton extends JButton {
-    private int cornerRadius = 15; // Raio dos cantos
+    private int cornerRadius = 15;
 
     public RoundedButton(String text) {
         super(text);
-        setContentAreaFilled(false); // Não pinta a área de conteúdo padrão
-        setFocusPainted(false);      // Não pinta o foco
-        setBorderPainted(false);     // Não pinta a borda
+        setContentAreaFilled(false);
+        setFocusPainted(false); 
+        setBorderPainted(false); 
     }
 
     @Override
@@ -333,19 +292,14 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Define a cor de fundo baseada no estado do botão (pressionado, hover, normal)
         if (getModel().isPressed()) {
             g2.setColor(getBackground().darker());
         } else if (getModel().isRollover()) {
             g2.setColor(getBackground().brighter());
-        } else {
-            g2.setColor(getBackground());
-        }
-
-        // Desenha o retângulo com cantos arredondados
+            } else {
+                g2.setColor(getBackground());
+            }
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius);
-
-        // Deixa o método pai pintar o texto (label) do botão por cima
         super.paintComponent(g);
 
         g2.dispose();
@@ -374,7 +328,6 @@ private class RoundedTextField extends JTextField {
         g2.dispose();
     }
     
-    // Este método ajuda a definir a área de colisão do componente
     @Override
     public boolean contains(int x, int y) {
         if (shape == null || !shape.getBounds().equals(getBounds())) {
