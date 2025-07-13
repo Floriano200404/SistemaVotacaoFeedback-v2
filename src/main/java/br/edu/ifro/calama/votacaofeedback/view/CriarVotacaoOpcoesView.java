@@ -133,8 +133,8 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         }
 
         if (isEditMode) {
-            TituloPrincipal.setText("EDITAR OPÇÕES DA VOTAÇÃO");
-            btnFinalizar.setText("SALVAR ALTERAÇÕES");
+            TituloPrincipal.setText("EDITAR VOTAÇÃO - OPÇÕES");
+            btnFinalizar.setText("SALVAR");
             preencherDadosExistentes();
         } else {
             TituloPrincipal.setText("CRIAR VOTAÇÃO - OPÇÕES");
@@ -147,6 +147,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
     private void preencherDadosExistentes() throws Exception {
         txtPergunta.setText(votacao.getPergunta());
+        txtPergunta.setForeground(Color.BLACK);
         OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
         List<OpcaoVoto> opcoesExistentes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
         for (int i = 0; i < opcoesExistentes.size(); i++) {
@@ -171,6 +172,9 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         JTextField textField = new JTextField(textoInicial);
         textField.setName("txtOpcao" + novoIndice);
         PlaceHolderUtil.setPlaceholder(textField, "Digite o texto da opção");
+        if (!textoInicial.trim().isEmpty()) {
+            textField.setForeground(Color.BLACK);
+        }
 
         final int ALTURA_PADRAO = 35;
         textField.setMinimumSize(new Dimension(10, ALTURA_PADRAO));
@@ -179,7 +183,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
 
         javax.swing.border.Border bordaArredondadaPreta = new br.edu.ifro.calama.votacaofeedback.util.RoundedVotacoesUtil(15, Color.BLACK);
         textField.setBackground(Color.WHITE);
-        textField.setForeground(Color.BLACK);
+//        textField.setForeground(Color.BLACK);
         textField.setBorder(bordaArredondadaPreta);
         textField.setMargin(new java.awt.Insets(2, 10, 2, 10));
 
