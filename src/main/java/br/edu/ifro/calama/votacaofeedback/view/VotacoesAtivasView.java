@@ -23,30 +23,37 @@ public class VotacoesAtivasView extends javax.swing.JPanel {
        
     }
     public void carregarVotacoes(Usuario usuarioLogado) {
-    // Cria uma instância do nosso serviço
+   
     VotacaoService votacaoService = new VotacaoService();
 
     try {
-        // CHAMA O NOVO MÉTODO para buscar os dados filtrados
-        List<Votacao> votacoesAtivas = votacaoService.buscarAtivasPorUsuario(usuarioLogado);
+       
+        List<Votacao> votacoesAtivas = votacaoService.buscarVotacoesAtivasPorUsuario(usuarioLogado);
 
-        // Limpa a grade antes de adicionar novos cards
+       
         this.removeAll();
 
-        // Para cada votação que veio do banco, cria e adiciona um card
+       
         for (Votacao votacao : votacoesAtivas) {
             CardView card = new CardView();
-            card.setDados(votacao); 
+            card.setDados(votacao);
+            card.setModo(DetalhesVotacaoDialog.ModoDialogo.PARTICIPACAO);
             this.add(card);
-        }
+}
+        for (Votacao votacao : votacoesAtivas) {
+    CardView card = new CardView();
+    card.setDados(votacao);
+    card.setUsuario(usuarioLogado);
+    this.add(card);
+}
 
-        // Atualiza a interface para mostrar as mudanças
+        
         this.revalidate();
         this.repaint();
 
     } catch (Exception e) {
         e.printStackTrace();
-        // Mostra uma mensagem de erro para o usuário
+        
     }
 }
 
