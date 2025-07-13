@@ -9,11 +9,17 @@ import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import java.awt.Color;
 import java.awt.Component;
-/**
- *
- * @author floriano
- */
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+
 public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     private Votacao votacaoAtual;
     private final Component telaDeOrigem;
@@ -25,6 +31,95 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         APROVACAO,
         GERENCIAMENTO
     }
+    class RoundedButton extends JButton {
+        public RoundedButton(String text) {
+            super(text);
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(getBackground());
+            g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
+            super.paintComponent(g);
+            g2.dispose();
+        }
+    }
+    
+    class RoundedPanel extends JPanel {
+        public RoundedPanel() {
+            super();
+            setOpaque(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setColor(getBackground());
+            g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
+            super.paintComponent(g);
+            g2.dispose();
+        }
+    }
+    
+    class ShadowPanel extends JPanel {
+        private int shadowSize = 5;
+        private float shadowOpacity = 0.4f;
+        private int arc = 20;
+
+        public ShadowPanel() {
+            super();
+            setOpaque(false);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            int width = getWidth();
+            int height = getHeight();
+
+            for (int i = 0; i < shadowSize; i++) {
+                g2.setColor(new Color(180, 180, 180, (int) (shadowOpacity * 255 * (1.0f - (float) i / shadowSize))));
+                g2.fillRoundRect(i, i, width - i * 2, height - i * 2, arc, arc);
+            }
+            
+            g2.setColor(getBackground());
+            g2.fillRoundRect(shadowSize, shadowSize, width - shadowSize * 2, height - shadowSize * 2, arc, arc);
+            g2.dispose();
+            
+            super.paintComponent(g);
+        }
+
+        @Override
+        public java.awt.Insets getInsets() {
+            return new java.awt.Insets(shadowSize, shadowSize, shadowSize, shadowSize);
+        }
+    }
+    
+    class GradientPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            
+            Color color1 = new Color(15, 61, 111);
+            Color color2 = new Color(11, 41, 81); // A cor que você já usava
+            
+            int w = getWidth();
+            int h = getHeight();
+            
+            GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, w, h);
+        }
+    }
     
     public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario, Component telaDeOrigem) {
         super(parent, modal);
@@ -32,10 +127,15 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         this.telaDeOrigem = telaDeOrigem;
         initComponents();
         
-        // Lógica para esconder os botões inicialmente
         btnAprovarDialog.setVisible(false);
         btnReprovarDialog.setVisible(false);
         btnEditar.setVisible(false);
+        lblDataInicial.setOpaque(false);
+        lblDataFinal.setOpaque(false);
+        lblDataResultado.setOpaque(false);
+        lblParticipantes.setOpaque(false);
+        lblTipoVotacao.setOpaque(false);
+        lblPerguntaPrincipal.setOpaque(false);
     }
     
     public void setModo(ModoDialogo modo) {
@@ -59,38 +159,38 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnVoltarDialog = new javax.swing.JButton();
-        btnReprovarDialog = new javax.swing.JButton();
-        btnAprovarDialog = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        btnVoltarDialog = new RoundedButton("X Voltar");
+        btnReprovarDialog = new RoundedButton("X Reprovar");
+        btnAprovarDialog = new RoundedButton("✓ Aprovar");
+        jPanel2 = new GradientPanel();
         lblTituloPrincipal = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtAreaDescricao = new javax.swing.JTextArea();
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = new RoundedPanel();
         jLabel9 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = new ShadowPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        jPanel5 = new RoundedPanel();
         lblDataInicial = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        jPanel7 = new RoundedPanel();
         lblDataFinal = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel8 = new RoundedPanel();
         lblDataResultado = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        jPanel9 = new RoundedPanel();
         lblPerguntaPrincipal = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        jPanel10 = new RoundedPanel();
         lblTipoVotacao = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        jPanel11 = new RoundedPanel();
         lblParticipantes = new javax.swing.JLabel();
-        btnEditar = new javax.swing.JButton();
+        btnEditar = new RoundedButton("✓ Editar");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -164,7 +264,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         txtAreaDescricao.setOpaque(false);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/WhatsApp Image 2025-07-10 at 00.50.52-Photoroom.png"))); // NOI18N
 
@@ -188,16 +287,16 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(38, 38, 38)
                         .addComponent(jLabel8))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +310,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)))
-                .addGap(8, 8, 8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
@@ -221,31 +320,32 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtAreaDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAreaDescricao, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(18, 18, 18)
+                    .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(318, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 8, Short.MAX_VALUE)
                         .addComponent(lblTituloPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtAreaDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAreaDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -273,7 +373,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         jLabel6.setText("Data do Resultado da Votação:");
 
         jPanel5.setBackground(new java.awt.Color(239, 239, 239));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel5.setForeground(new java.awt.Color(220, 220, 220));
 
         lblDataInicial.setBackground(new java.awt.Color(204, 204, 204));
@@ -299,7 +398,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         );
 
         jPanel7.setBackground(new java.awt.Color(239, 239, 239));
-        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         lblDataFinal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblDataFinal.setForeground(new java.awt.Color(153, 153, 153));
@@ -316,14 +414,14 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblDataFinal)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel8.setBackground(new java.awt.Color(239, 239, 239));
-        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel8.setForeground(new java.awt.Color(239, 239, 239));
 
         lblDataResultado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblDataResultado.setForeground(new java.awt.Color(153, 153, 153));
@@ -347,7 +445,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         );
 
         jPanel9.setBackground(new java.awt.Color(239, 239, 239));
-        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         lblPerguntaPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblPerguntaPrincipal.setForeground(new java.awt.Color(153, 153, 153));
@@ -359,8 +456,8 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPerguntaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblPerguntaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 702, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,7 +468,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         );
 
         jPanel10.setBackground(new java.awt.Color(239, 239, 239));
-        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         lblTipoVotacao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTipoVotacao.setForeground(new java.awt.Color(153, 153, 153));
@@ -383,19 +479,18 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTipoVotacao, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(lblTipoVotacao, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTipoVotacao)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblTipoVotacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel11.setBackground(new java.awt.Color(239, 239, 239));
-        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         lblParticipantes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblParticipantes.setForeground(new java.awt.Color(153, 153, 153));
@@ -426,9 +521,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 20, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -445,13 +537,16 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel5)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5))
                                 .addGap(14, 14, 14))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
+                                .addContainerGap())))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 16, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -498,13 +593,14 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addGap(29, 29, 29)
                         .addComponent(btnAprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnReprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -516,8 +612,10 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -527,10 +625,10 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                     .addComponent(btnReprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(35, 35, 35))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 490));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -570,10 +668,8 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     private void btnAprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprovarDialogActionPerformed
         try {
         VotacaoRepository votacaoRepo = new VotacaoRepository();
-        // Chama o método para APROVAR, usando o ID da votação que está sendo exibida
         votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
 
-        // Mostra uma mensagem de sucesso e fecha o pop-up
         javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
         if (telaDeOrigem != null) {
             ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
@@ -589,9 +685,6 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnVoltarDialogActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
    
 public void setDados(Votacao votacao) {
     this.votacaoAtual = votacao; 
