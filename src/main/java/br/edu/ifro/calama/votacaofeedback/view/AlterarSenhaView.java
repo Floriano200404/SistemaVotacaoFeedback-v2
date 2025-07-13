@@ -122,13 +122,24 @@ public class AlterarSenhaView extends javax.swing.JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            Color color1 = new Color(9, 32, 63);
-            Color color2 = new Color(11, 41, 81);
-            int w = getWidth();
-            int h = getHeight();
-            GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
+            int width = getWidth();
+            int height = getHeight();
+
+            // Cores para o gradiente de duas fases, igual ao da tela de Login
+            Color color1 = new Color(9, 32, 63);   // Azul escuro
+            Color color2 = new Color(0, 0, 0);     // Preto
+
+            // Define o ponto de transição em 25% da largura da tela
+            int pontoTransicaoX = (int) (width * 0.25);
+
+            // 1. Pinta a primeira parte (25%) com a cor sólida
+            g2d.setColor(color1);
+            g2d.fillRect(0, 0, pontoTransicaoX, height);
+            
+            // 2. Pinta o resto (75%) com um gradiente horizontal do azul para o preto
+            GradientPaint gp = new GradientPaint(pontoTransicaoX, 0, color1, width, 0, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, w, h);
+            g2d.fillRect(pontoTransicaoX, 0, width - pontoTransicaoX, height);
         }
     }
     
