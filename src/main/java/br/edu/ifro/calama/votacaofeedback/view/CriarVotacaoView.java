@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 /**
  *
@@ -47,6 +48,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         this.votacaoParaEditar = votacao;
         this.isEditando = isEditando;
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         if (this.votacaoParaEditar != null) {
             System.out.println("[DEBUG CriarVotacaoView] O campo votacaoParaEditar foi definido com o título: " + this.votacaoParaEditar.getTitulo());

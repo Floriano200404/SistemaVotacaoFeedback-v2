@@ -17,6 +17,7 @@ import java.awt.Graphics2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -39,7 +40,7 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() {
         initComponents();
 
-        
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         txtLogin.setMargin(new java.awt.Insets(2, 10, 2, 2));
         pwdSenha.setMargin(new java.awt.Insets(2, 10, 2, 2));
         jPanelImages.setOpaque(false);
@@ -48,7 +49,6 @@ public class LoginView extends javax.swing.JFrame {
         PlaceHolderUtil.setPlaceholder(txtLogin, "aluno@estudante.ifro.edu.br");
         PlaceHolderUtil.setPlaceholder(pwdSenha, "Digite sua senha");
         
-        this.setLocationRelativeTo(null);
         
         jPanel1.setFocusable(true);
         

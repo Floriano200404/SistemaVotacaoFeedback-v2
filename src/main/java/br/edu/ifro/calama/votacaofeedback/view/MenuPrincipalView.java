@@ -8,6 +8,7 @@ import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,47 +19,47 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private Usuario usuariologado;
     private Votacao votacaoEmAndamento;
     
-   public MenuPrincipalView(Usuario usuario) {
-    initComponents();
-    
-    this.usuariologado = usuario;
-    
-    if (this.usuariologado != null) {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
-    } else {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu um usuário NULO!");
-    }
-    
-    if (this.usuariologado != null) {
+    public MenuPrincipalView(Usuario usuario) {
+        initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.usuariologado = usuario;
 
-        String nomeDoUsuario = this.usuariologado.getNome();
-        
-        labelNomeUsuario.setText(nomeDoUsuario);
-        
-        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
-   
-    }
-    inicializarMenuLateral();
-   
-    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeCima.setOpaque(false);
+        if (this.usuariologado != null) {
+            System.out.println("--- DEBUG VIEW ---");
+            System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
+        } else {
+            System.out.println("--- DEBUG VIEW ---");
+            System.out.println("A Tela Principal recebeu um usuário NULO!");
+        }
 
-    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeBaixo.setOpaque(false);
-    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+        if (this.usuariologado != null) {
 
-    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
-    painelDosCards.add(linhaDeCima);
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
-    painelDosCards.add(linhaDeBaixo);
-    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+            String nomeDoUsuario = this.usuariologado.getNome();
+
+            labelNomeUsuario.setText(nomeDoUsuario);
+
+            txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+
+        }
+        inicializarMenuLateral();
+
+        javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeCima.setOpaque(false);
+
+        javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeBaixo.setOpaque(false);
+        linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+        linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+        linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+        linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+
+        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+        painelDosCards.add(linhaDeCima);
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+        painelDosCards.add(linhaDeBaixo);
+        painelDosCards.add(javax.swing.Box.createVerticalGlue());
     }
     
 

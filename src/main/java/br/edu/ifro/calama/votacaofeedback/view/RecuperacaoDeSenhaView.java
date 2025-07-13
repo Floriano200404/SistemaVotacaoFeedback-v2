@@ -21,6 +21,7 @@ import javax.swing.border.AbstractBorder;
 import java.awt.Insets;
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 /**
  *
@@ -32,8 +33,8 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     
     public RecuperacaoDeSenhaView() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); 
-        setLocationRelativeTo(null);
         this.email = email;
     }
 
