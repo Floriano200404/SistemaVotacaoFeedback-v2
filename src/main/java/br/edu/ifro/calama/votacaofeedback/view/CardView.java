@@ -237,13 +237,13 @@ import javax.swing.JPanel;
         Local.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Local.setForeground(new java.awt.Color(102, 102, 102));
         Local.setText("Porto Velho Calama");
-        jPanel1.add(Local, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, -1, -1));
+        jPanel1.add(Local, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
 
         lblCampus.setBackground(new java.awt.Color(102, 102, 102));
         lblCampus.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         lblCampus.setForeground(new java.awt.Color(102, 102, 102));
         lblCampus.setText("Campus");
-        jPanel1.add(lblCampus, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, 20));
+        jPanel1.add(lblCampus, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, 20));
 
         lblInstituicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/WhatsApp Image 2025-07-10 at 00.50.52-Photoroom.png"))); // NOI18N
         jPanel1.add(lblInstituicao, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 100, 120));
