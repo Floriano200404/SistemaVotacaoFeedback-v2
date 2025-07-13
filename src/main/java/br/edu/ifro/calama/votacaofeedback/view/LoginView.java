@@ -150,14 +150,16 @@ public class LoginView extends javax.swing.JFrame {
 
         jPanel2 = new jPanelGradient();
         jPanel1 = new javax.swing.JPanel();
+        btnEntrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        txtLogin = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
         jLabLogin = new javax.swing.JLabel();
         jLabEmail = new javax.swing.JLabel();
-        txtLogin = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
+        txtLogin1 = new br.edu.ifro.calama.votacaofeedback.util.RoundedTextFieldUtil();
         jLabSenha = new javax.swing.JLabel();
         painelSenha = new br.edu.ifro.calama.votacaofeedback.util.RoundedPanelUtil(15, new java.awt.Color(255, 255, 255));
         pwdSenha = new javax.swing.JPasswordField();
         jLabEye = new javax.swing.JLabel();
-        btnEntrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        btnEntrar1 = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         jSeparator1 = new javax.swing.JSeparator();
         painelBotoes = new javax.swing.JPanel();
         btnCadastrar = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
@@ -166,6 +168,9 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabTextIF = new javax.swing.JLabel();
         jLabLogo = new javax.swing.JLabel();
+        jLabLogo1 = new javax.swing.JLabel();
+        jLabTextIF1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(9, 32, 63));
@@ -191,6 +196,28 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
         jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        btnEntrar.setBackground(new java.awt.Color(0, 149, 255));
+        btnEntrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrar.setText("ACESSAR");
+        btnEntrar.setBorder(null);
+        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEntrar.setName("btnEntrar"); // NOI18N
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEntrar);
+
+        txtLogin.setName(""); // NOI18N
+        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtLogin);
 
         jLabLogin.setBackground(new java.awt.Color(255, 255, 255));
         jLabLogin.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
@@ -219,8 +246,10 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 80, 5, 80);
         jPanel1.add(jLabEmail, gridBagConstraints);
 
-        txtLogin.setName(""); // NOI18N
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+        txtLogin1.setText("CADASTRAR");
+        txtLogin1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtLogin1.setName(""); // NOI18N
+        txtLogin1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
             }
@@ -232,11 +261,12 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints.ipady = 15;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 80, 15, 80);
-        jPanel1.add(txtLogin, gridBagConstraints);
+        jPanel1.add(txtLogin1, gridBagConstraints);
 
         jLabSenha.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabSenha.setForeground(new java.awt.Color(255, 255, 255));
         jLabSenha.setText("Senha:");
+        jLabSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -282,14 +312,14 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 80, 20, 80);
         jPanel1.add(painelSenha, gridBagConstraints);
 
-        btnEntrar.setBackground(new java.awt.Color(0, 149, 255));
-        btnEntrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnEntrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEntrar.setText("ACESSAR");
-        btnEntrar.setBorder(null);
-        btnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnEntrar.setName("btnEntrar"); // NOI18N
-        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrar1.setBackground(new java.awt.Color(0, 149, 255));
+        btnEntrar1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEntrar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnEntrar1.setText("ACESSAR");
+        btnEntrar1.setBorder(null);
+        btnEntrar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEntrar1.setName("btnEntrar"); // NOI18N
+        btnEntrar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
             }
@@ -301,7 +331,7 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints.ipady = 15;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 80, 10, 80);
-        jPanel1.add(btnEntrar, gridBagConstraints);
+        jPanel1.add(btnEntrar1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -324,6 +354,11 @@ public class LoginView extends javax.swing.JFrame {
 
         btnEsqueciSenha.setText("ESQUECI A SENHA");
         btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEsqueciSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsqueciSenhaActionPerformed(evt);
+            }
+        });
         painelBotoes.add(btnEsqueciSenha);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -399,6 +434,28 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(63, 0, 90, 20);
         jPanel2.add(jPanelImages, gridBagConstraints);
+
+        jLabLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
+        jLabLogo1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabLogo1.setName("FOTO DO IF"); // NOI18N
+        jLabLogo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabLogoMouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabLogo1);
+
+        jLabTextIF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        jLabTextIF1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabTextIF1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabTextIFMouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabTextIF1);
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/textoeditado1.png"))); // NOI18N
+        jPanel2.add(jLabel3);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -548,14 +605,18 @@ public class LoginView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnEntrar;
+    private javax.swing.JButton btnEntrar1;
     private javax.swing.JButton btnEsqueciSenha;
     private javax.swing.JLabel jLabEmail;
     private javax.swing.JLabel jLabEye;
     private javax.swing.JLabel jLabLogin;
     private javax.swing.JLabel jLabLogo;
+    private javax.swing.JLabel jLabLogo1;
     private javax.swing.JLabel jLabSenha;
     private javax.swing.JLabel jLabTextIF;
+    private javax.swing.JLabel jLabTextIF1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelImages;
@@ -564,5 +625,6 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JPanel painelSenha;
     private javax.swing.JPasswordField pwdSenha;
     private javax.swing.JTextField txtLogin;
+    private javax.swing.JTextField txtLogin1;
     // End of variables declaration//GEN-END:variables
 }
