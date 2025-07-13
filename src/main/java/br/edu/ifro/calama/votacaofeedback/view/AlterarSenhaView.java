@@ -378,7 +378,9 @@ public class AlterarSenhaView extends javax.swing.JFrame {
     }//GEN-LAST:event_bntCadastrarNovaSenhaActionPerformed
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
-        // TODO add your handling code here:
+        LoginView telaLogin = new LoginView();
+        telaLogin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_bntVoltarActionPerformed
 
     /**

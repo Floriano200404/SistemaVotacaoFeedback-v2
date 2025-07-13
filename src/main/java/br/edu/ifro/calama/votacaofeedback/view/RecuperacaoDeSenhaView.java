@@ -211,10 +211,8 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             exibirMensagem("Formato de e-mail inválido.");
             return;
         }
-        
         bntEnviarEmail.setEnabled(false);
         bntEnviarEmail.setText("ENVIANDO...");
-
         new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
@@ -227,15 +225,18 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
                     boolean emailFoiEncontrado = get();
                     if (emailFoiEncontrado) {
                         exibirMensagemDeSucesso("Código de recuperação enviado!");
-                        new TelaCodigoRecuperacaoView(email).setVisible(true);
-                        dispose();
+                        new javax.swing.Timer(1500, e -> {
+                            new TelaCodigoRecuperacaoView(email).setVisible(true);
+                            dispose();
+                        }){{setRepeats(false);}}.start();
                     } else {
-                        exibirMensagem("E-mail não encontrado no sistema.");
+                        exibirMensagem("E-mail não cadastrado no sistema.");
+                        bntEnviarEmail.setText("ENVIAR E-MAIL");
+                        bntEnviarEmail.setEnabled(true);
                     }
                 } catch (Exception e) {
                     exibirMensagem("Erro ao tentar conectar com o serviço.");
                     e.printStackTrace();
-                } finally {
                     bntEnviarEmail.setText("ENVIAR E-MAIL");
                     bntEnviarEmail.setEnabled(true);
                 }
