@@ -1,7 +1,7 @@
 package br.edu.ifro.calama.votacaofeedback.repository;
 
 
-import br.edu.ifro.calama.votacaofeedback.controller.ResultadoVotacao;
+import br.edu.ifro.calama.votacaofeedback.model.ResultadoVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.Voto;
 import br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil;
 import java.sql.Connection;

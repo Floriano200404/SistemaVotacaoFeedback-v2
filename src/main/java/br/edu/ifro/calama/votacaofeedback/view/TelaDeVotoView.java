@@ -21,6 +21,10 @@ public class TelaDeVotoView extends javax.swing.JPanel {
   private Votacao votacaoAtual;
 private Usuario usuarioLogado;
 private javax.swing.ButtonGroup grupoDeOpcoes;
+public enum ModoTela {
+    VOTAR,
+    RESULTADO
+}
     /**
      * Creates new form TelaDeVotoView
      */
