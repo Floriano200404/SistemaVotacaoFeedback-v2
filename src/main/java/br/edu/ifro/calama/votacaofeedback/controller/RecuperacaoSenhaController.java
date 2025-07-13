@@ -38,36 +38,34 @@ public class RecuperacaoSenhaController {
     }
     
     public boolean verificarToken(String email, String tokenDigitado) throws Exception {
-    UsuarioRepository usuarioRepo = new UsuarioRepository();
-    Usuario usuario = usuarioRepo.buscarPorEmail(email);
+        UsuarioRepository usuarioRepo = new UsuarioRepository();
+        Usuario usuario = usuarioRepo.buscarPorEmail(email);
 
-    System.out.println("\n--- INICIANDO DEBUG DA VERIFICAÇÃO DE TOKEN ---");
+        System.out.println("\n--- INICIANDO DEBUG DA VERIFICAÇÃO DE TOKEN ---");
 
-    if (usuario == null || usuario.getToken() == null || usuario.getTokenExpiracao() == null) {
-        System.out.println("[DEBUG] Falha: Usuário ou token no banco é nulo.");
-        return false;
-    }
+        if (usuario == null || usuario.getToken() == null || usuario.getTokenExpiracao() == null) {
+            System.out.println("[DEBUG] Falha: Usuário ou token no banco é nulo.");
+            return false;
+        }
 
-    // 1. Comparando os tokens
-    String tokenDoBanco = usuario.getToken();
-    System.out.println("[DEBUG] Token Digitado: '" + tokenDigitado + "'");
-    System.out.println("[DEBUG] Token do Banco:  '" + tokenDoBanco + "'");
-    boolean tokensCoincidem = tokenDigitado.equals(tokenDoBanco);
-    System.out.println("[DEBUG] >> Os tokens coincidem? " + tokensCoincidem);
+        String tokenDoBanco = usuario.getToken();
+        System.out.println("[DEBUG] Token Digitado: '" + tokenDigitado + "'");
+        System.out.println("[DEBUG] Token do Banco:  '" + tokenDoBanco + "'");
+        boolean tokensCoincidem = tokenDigitado.equals(tokenDoBanco);
+        System.out.println("[DEBUG] >> Os tokens coincidem? " + tokensCoincidem);
 
-    // 2. Comparando as datas
-    Date agora = new Date();
-    Date dataDeExpiracao = usuario.getTokenExpiracao();
-    System.out.println("[DEBUG] Hora Atual:      " + agora);
-    System.out.println("[DEBUG] Expira Em:       " + dataDeExpiracao);
-    boolean naoExpirou = agora.before(dataDeExpiracao);
-    System.out.println("[DEBUG] >> O token não expirou? " + naoExpirou);
+        Date agora = new Date();
+        Date dataDeExpiracao = usuario.getTokenExpiracao();
+        System.out.println("[DEBUG] Hora Atual:      " + agora);
+        System.out.println("[DEBUG] Expira Em:       " + dataDeExpiracao);
+        boolean naoExpirou = agora.before(dataDeExpiracao);
+        System.out.println("[DEBUG] >> O token não expirou? " + naoExpirou);
 
-    boolean resultadoFinal = tokensCoincidem && naoExpirou;
-    System.out.println("[DEBUG] >> RESULTADO FINAL DA VALIDAÇÃO: " + resultadoFinal);
-    System.out.println("------------------------------------------------\n");
-    
-    return resultadoFinal;
+        boolean resultadoFinal = tokensCoincidem && naoExpirou;
+        System.out.println("[DEBUG] >> RESULTADO FINAL DA VALIDAÇÃO: " + resultadoFinal);
+        System.out.println("------------------------------------------------\n");
+
+        return resultadoFinal;
 }
 
     public boolean redefinirSenha(String email, String novaSenha) throws Exception {
@@ -80,6 +78,11 @@ public class RecuperacaoSenhaController {
 
         usuarioRepo.atualizarSenha(usuario.getId(), novaSenha);
         return true;
+    }
+    
+    public boolean isSenhaAnterior(String email, String novaSenha) throws Exception {
+        UsuarioRepository usuarioRepo = new UsuarioRepository();
+        return usuarioRepo.verificarSenhaAnterior(email, novaSenha);
     }
 }
 

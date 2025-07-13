@@ -144,15 +144,35 @@ public class UsuarioRepository {
     }
     
     public void atualizarSenha(int usuarioId, String novaSenha) throws SQLException, Exception {
-    String sql = "UPDATE Usuarios SET senha = SHA2(?, 256), token = NULL, token_expiracao = NULL WHERE id_usuario = ?";
+        String sql = "UPDATE Usuarios SET senha = SHA2(?, 256), token = NULL, token_expiracao = NULL WHERE id_usuario = ?";
+
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement ps = conexao.prepareStatement(sql)) {
+
+            ps.setString(1, novaSenha);
+            ps.setInt(2, usuarioId);
+            ps.executeUpdate();
+        }
+    }
+    
+    public boolean verificarSenhaAnterior(String email, String senhaParaVerificar) throws SQLException, Exception {
+    String sql = "SELECT id_usuario FROM Usuarios WHERE email = ? AND senha = SHA2(?, 256)";
+    boolean senhaEhIgual = false;
     
     try (Connection conexao = DatabaseUtil.getConnection();
          PreparedStatement ps = conexao.prepareStatement(sql)) {
         
-        ps.setString(1, novaSenha);
-        ps.setInt(2, usuarioId);
-        ps.executeUpdate();
+        ps.setString(1, email);
+        ps.setString(2, senhaParaVerificar);
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                senhaEhIgual = true;
+            }
+        }
     }
+    return senhaEhIgual;
 }
+    
     
 }

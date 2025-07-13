@@ -338,7 +338,7 @@ public class AlterarSenhaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntCadastrarNovaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarNovaSenhaActionPerformed
-       String novaSenha = new String(pwdNovaSenha.getPassword());
+        String novaSenha = new String(pwdNovaSenha.getPassword());
         String confirmarSenha = new String(pwdConfirmarSenha.getPassword());
 
         if (novaSenha.isEmpty() || confirmarSenha.isEmpty()) {
@@ -356,6 +356,10 @@ public class AlterarSenhaView extends javax.swing.JFrame {
         
         try {
             RecuperacaoSenhaController controller = new RecuperacaoSenhaController();
+            if (controller.isSenhaAnterior(this.email, novaSenha)) {
+                exibirMensagem("A nova senha não pode ser igual à anterior.");
+                return;
+            }
             boolean sucesso = controller.redefinirSenha(this.email, novaSenha);
 
             if (sucesso) {
