@@ -6,6 +6,7 @@ package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
+import br.edu.ifro.calama.votacaofeedback.repository.UsuarioRepository;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.event.ActionListener;
 
@@ -20,54 +21,55 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private final VotacoesAtivasView telaVotacoesAtivas;
     private final TelaDeVotoView telaDeVoto;
     private VotacoesArquivadasView telaVotacoesArquivadas;
-   public MenuPrincipalView(Usuario usuario) {
-    initComponents();
     
-    this.usuarioLogado = usuario;
-    
-    this.telaVotacoesAtivas = new VotacoesAtivasView();
-    painelConteudo.add(this.telaVotacoesAtivas, "cardVotacoesAtivas");
-    this.telaVotacoesArquivadas = new VotacoesArquivadasView();
-painelConteudo.add(this.telaVotacoesArquivadas, "cardArquivadas");
-    // 3. Tela para Votar
-    this.telaDeVoto = new TelaDeVotoView();
-    painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
-    if (this.usuarioLogado != null) {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu o usuário: " + this.usuarioLogado.getNome());
-    } else {
-        System.out.println("--- DEBUG VIEW ---");
-        System.out.println("A Tela Principal recebeu um usuário NULO!");
-    }
-    
-    if (this.usuarioLogado != null) {
+    public MenuPrincipalView(Usuario usuario) {
+        initComponents();
 
-        String nomeDoUsuario = this.usuarioLogado.getNome();
-        
-        labelNomeUsuario.setText(nomeDoUsuario);
-        
-        txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
-   
-    }
-    inicializarMenuLateral();
-   
-    javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeCima.setOpaque(false);
+        this.usuarioLogado = usuario;
 
-    javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
-    linhaDeBaixo.setOpaque(false);
-    linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
-    linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
-    linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
-    linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
-    linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+        this.telaVotacoesAtivas = new VotacoesAtivasView();
+        painelConteudo.add(this.telaVotacoesAtivas, "cardVotacoesAtivas");
+        this.telaVotacoesArquivadas = new VotacoesArquivadasView();
+        painelConteudo.add(this.telaVotacoesArquivadas, "cardArquivadas");
+        // 3. Tela para Votar
+        this.telaDeVoto = new TelaDeVotoView();
+        painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
+        if (this.usuarioLogado != null) {
+            System.out.println("--- DEBUG VIEW ---");
+            System.out.println("A Tela Principal recebeu o usuário: " + this.usuarioLogado.getNome());
+        } else {
+            System.out.println("--- DEBUG VIEW ---");
+            System.out.println("A Tela Principal recebeu um usuário NULO!");
+        }
 
-    painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
-    painelDosCards.add(linhaDeCima);
-    painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
-    painelDosCards.add(linhaDeBaixo);
-    painelDosCards.add(javax.swing.Box.createVerticalGlue());
+        if (this.usuarioLogado != null) {
+
+            String nomeDoUsuario = this.usuarioLogado.getNome();
+
+            labelNomeUsuario.setText(nomeDoUsuario);
+
+            txtbemVindo.setText("Bem-Vindo(a), " + nomeDoUsuario + "!");
+
+        }
+        inicializarMenuLateral();
+
+        javax.swing.JPanel linhaDeCima = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeCima.setOpaque(false);
+
+        javax.swing.JPanel linhaDeBaixo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        linhaDeBaixo.setOpaque(false);
+        linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", "8 Votações"));
+        linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", "8 Votações"));
+        linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", "8 Votações"));
+        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", "8 Votações"));
+        linhaDeBaixo.add(criarCard("EDITAR VOTAÇÃO", "8 Votações"));
+
+        painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
+        painelDosCards.add(linhaDeCima);
+        painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
+        painelDosCards.add(linhaDeBaixo);
+        painelDosCards.add(javax.swing.Box.createVerticalGlue());
     }
     
 
@@ -308,12 +310,18 @@ cl.show(painelConteudo, "cardVotacoesAtivas");
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuarioLogado);
-    
-        painelConteudo.add(painelAprovar, "cardAprovar");
-    
-        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardAprovar");
+
+        if (isUsuarioAdmin()) {
+            AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuarioLogado);
+            
+            // Lógica para trocar o painel visível
+            painelConteudo.removeAll();
+            painelConteudo.add(painelAprovar);
+            painelConteudo.revalidate();
+            painelConteudo.repaint();
+        } else {
+            exibirMensagemDeErro("Acesso negado. Apenas administradores.");
+        }
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
@@ -347,14 +355,30 @@ cl.show(painelConteudo, "cardVotacoesAtivas");
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
+    private boolean isUsuarioAdmin() {
+        if (this.usuarioLogado == null) {
+            return false;
+        }
+        try {
+            UsuarioRepository userRepo = new UsuarioRepository();
+            return userRepo.isUsuarioEmGrupo(this.usuarioLogado.getId(), "ADMINISTRADORES");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public void exibirMensagemDeErro(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
+    
     private void votoArquivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_votoArquivadoActionPerformed
-       if (this.usuarioLogado != null) {
-    telaVotacoesArquivadas.carregarVotacoesArquivadas(this.usuarioLogado);
-}
-
-
-java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-cl.show(painelConteudo, "cardArquivadas");
+        if (this.usuarioLogado != null) {
+            telaVotacoesArquivadas.carregarVotacoesArquivadas(this.usuarioLogado);
+        }
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardArquivadas");
         // TODO add your handling code here:
     }//GEN-LAST:event_votoArquivadoActionPerformed
 
