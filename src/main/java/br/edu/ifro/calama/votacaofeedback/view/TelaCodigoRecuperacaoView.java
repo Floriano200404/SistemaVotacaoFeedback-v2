@@ -243,11 +243,18 @@ public class TelaCodigoRecuperacaoView extends javax.swing.JFrame {
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
             int height = getHeight();
-            Color color1 = new Color(9, 32, 63);
-            Color color2 = new Color(21, 52, 98);
-            GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2);
+
+            Color color1 = new Color(9, 32, 63);  
+            Color color2 = new Color(0, 0, 0);  
+
+            int pontoTransicaoX = (int) (width * 0.25);
+
+            g2d.setColor(color1);
+            g2d.fillRect(0, 0, pontoTransicaoX, height);
+            
+            GradientPaint gp = new GradientPaint(pontoTransicaoX, 0, color1, width, 0, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, width, height);
+            g2d.fillRect(pontoTransicaoX, 0, width - pontoTransicaoX, height);
         }
     }
 
