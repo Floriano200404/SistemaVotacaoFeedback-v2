@@ -16,13 +16,13 @@ import java.util.List;
 
 public class VotacoesArquivadasView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form VotacoesArquivadasView
-     */
+    private Usuario usuarioLogado;
+    private MenuPrincipalView menuPrincipal;
     
-    public VotacoesArquivadasView() {
+    public VotacoesArquivadasView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
-       
+        this.menuPrincipal = menuPrincipal;
+        this.usuarioLogado = usuario;
     
     }
         public void carregarVotacoesArquivadas(Usuario usuarioLogado) {

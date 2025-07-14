@@ -22,21 +22,26 @@ import javax.swing.JPanel;
  * @author floriano
  */
 public class TelaDeVotoView extends javax.swing.JPanel {
-  private Votacao votacaoAtual;
-private Usuario usuarioLogado;
-private javax.swing.ButtonGroup grupoDeOpcoes;
+    
+    private Votacao votacaoAtual;
+    private Usuario usuarioLogado;
+    private javax.swing.ButtonGroup grupoDeOpcoes;
+    private final MenuPrincipalView menuPrincipal;
 
     /**
      * Creates new form TelaDeVotoView
      */
-    public TelaDeVotoView() {
+    public TelaDeVotoView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
         this.grupoDeOpcoes = new javax.swing.ButtonGroup();
+        this.menuPrincipal = menuPrincipal;
+        this.usuarioLogado = usuario;
     }
-public enum ModoTela {
-    VOTAR,
-    RESULTADO
-}
+    
+    public enum ModoTela {
+        VOTAR,
+        RESULTADO
+    }
 
 public void carregarDados(Votacao votacao, Usuario usuario, ModoTela modo) {
     

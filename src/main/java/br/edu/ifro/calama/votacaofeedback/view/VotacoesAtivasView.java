@@ -15,12 +15,13 @@ import java.util.List;
  */
 public class VotacoesAtivasView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form VotacoesAtivasView
-     */
-    public VotacoesAtivasView() {
+    private final MenuPrincipalView menuPrincipal;
+    private Usuario usuarioLogado;
+    
+    public VotacoesAtivasView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
-       
+        this.menuPrincipal = menuPrincipal;
+        this.usuarioLogado = usuario;
     }
     public void carregarVotacoes(Usuario usuarioLogado) {
    
