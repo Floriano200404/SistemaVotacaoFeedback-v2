@@ -22,55 +22,53 @@ import javax.swing.JPanel;
 public class MenuPrincipalView extends javax.swing.JFrame {
 
     private Usuario usuariologado;
+    private Votacao votacaoEmAndamento;
+    private final VotacoesAtivasView telaVotacoesAtivas;
+    private final TelaDeVotoView telaDeVoto;
     private JLabel labelContagemAtivas;
     private JLabel labelContagemAprovacao;
     private JLabel labelContagemArquivadas;
     private JLabel labelContagemGerenciar;
 
     
-   public MenuPrincipalView(Usuario usuario) throws Exception {
-    initComponents();
-    this.usuariologado = usuario;
-    
-    //if (this.usuariologado != null) {
-        //System.out.println("--- DEBUG VIEW ---");
-        //System.out.println("A Tela Principal recebeu o usuário: " + this.usuariologado.getNome());
-    //} else {
-       // System.out.println("--- DEBUG VIEW ---");
-        //System.out.println("A Tela Principal recebeu um usuário NULO!");
-    //}
-    
-    if (this.usuariologado != null) {
-            labelNomeUsuario.setText(this.usuariologado.getNome());
-            txtbemVindo.setText("Bem-Vindo(a), " + this.usuariologado.getNome() + "!");
-        }
-    inicializarMenuLateral();
-    construirDashboard();
-    carregarDadosDashboard();
-    
-    }
+    public MenuPrincipalView(Usuario usuario) throws Exception {
+        initComponents();
+        this.usuariologado = usuario;
+
+        if (this.usuariologado != null) {
+                labelNomeUsuario.setText(this.usuariologado.getNome());
+                txtbemVindo.setText("Bem-Vindo(a), " + this.usuariologado.getNome() + "!");
+         }
+
+        this.telaVotacoesAtivas = new VotacoesAtivasView();
+        painelConteudo.add(this.telaVotacoesAtivas, "cardVotacoesAtivas");
+
+        this.telaDeVoto = new TelaDeVotoView();
+        painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
+
+        inicializarMenuLateral();
+        construirDashboard();
+        carregarDadosDashboard();
+   
+   }   
    
     private void construirDashboard() {
-        // Inicializa os JLabels que guardarão os números
         labelContagemAtivas = new JLabel("0 Votações");
         labelContagemAprovacao = new JLabel("0 Votações");
         labelContagemArquivadas = new JLabel("0 Votações");
         labelContagemGerenciar = new JLabel("0 Votações");
 
-        // Cria as duas linhas de cards
         JPanel linhaDeCima = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
         linhaDeCima.setOpaque(false);
         JPanel linhaDeBaixo = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
         linhaDeBaixo.setOpaque(false);
 
-        // Adiciona os cards às linhas, passando o título, o label do subtítulo e a AÇÃO DE CLIQUE
         linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", labelContagemAtivas, () -> navegarPara("participar")));
         linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", labelContagemAprovacao, () -> navegarPara("aprovar")));
         linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", labelContagemArquivadas, () -> navegarPara("arquivadas")));
         linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", new JLabel("Começar uma nova votação"), () -> criarVotacao.doClick()));
         linhaDeBaixo.add(criarCard("GERENCIAR VOTAÇÕES", labelContagemGerenciar, () -> gerenciaVotacao.doClick()));
 
-        // Adiciona as linhas ao painel principal do dashboard
         painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
         painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
         painelDosCards.add(linhaDeCima);
@@ -84,7 +82,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         VotacaoController controller = new VotacaoController();
         int[] stats = controller.getDashboardStats(this.usuariologado.getId());
         
-        // Formata o texto para singular ou plural
         labelContagemAtivas.setText(stats[0] + (stats[0] == 1 ? " Votação" : " Votações"));
         labelContagemAprovacao.setText(stats[1] + (stats[1] == 1 ? " Votação" : " Votações"));
         labelContagemArquivadas.setText(stats[2] + (stats[2] == 1 ? " Votação" : " Votações"));
@@ -94,7 +91,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private void navegarPara(String nomeDoPainel) {
         CardLayout cl = (CardLayout)(painelConteudo.getLayout());
         
-        // Lógica para criar e adicionar os painéis dinamicamente
         if (nomeDoPainel.equals("aprovar")) {
             AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
             painelConteudo.add(painelAprovar, "cardAprovar");
@@ -104,7 +100,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             painelConteudo.add(painelGerenciar, "cardGerenciar");
             cl.show(painelConteudo, "cardGerenciar");
         }
-        //aqui tem que adicionar outros if/else para as outras telas quando estiverem feitas
     }
     
     private JPanel criarCard(String titulo, JLabel labelSubtitulo, Runnable acao) {
@@ -133,7 +128,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (acao != null) {
-                    acao.run(); // Executa a ação de clique
+                    acao.run();
                 }
             }
             @Override
@@ -342,7 +337,18 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         }
     }).start();
     }//GEN-LAST:event_labelIconeMenuMouseClicked
+    public void navegarParaVotacoesAtivas() {
 
+        if (telaVotacoesAtivas != null && this.usuariologado != null) {
+
+            telaVotacoesAtivas.carregarVotacoes(this.usuariologado);
+        }
+
+
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardVotacoesAtivas");
+    }
+    
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
         CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, null, false);
 
@@ -354,7 +360,11 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
-        // TODO add your handling code here:
+        if (this.usuariologado != null) {
+            telaVotacoesAtivas.carregarVotacoes(this.usuariologado);
+        }
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardVotacoesAtivas");
     }//GEN-LAST:event_participarVotacaoActionPerformed
 
     private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
@@ -451,57 +461,68 @@ private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
 
     return card;
 }
-private void inicializarMenuLateral() {
-     java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
-        criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
-    );
-    configurarBotao(criarVotacao, "criarVoto.png");
-    configurarBotao(participarVotacao, "peoplemais.png");
-    configurarBotao(gerenciaVotacao, "configpast.png");
-    configurarBotao(aprovarVotacao, "list_check.png");
-    configurarBotao(votoArquivado, "arquivada.png");
-    for (javax.swing.JButton botao : botoes) {
-        adicionarListeners(botao);
-    }
-}
-
-private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-    botao.putClientProperty("JButton.buttonType", "toolBarButton");
-    botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
-    botao.setIconTextGap(15);
-    botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-    try {
-        botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
-    } catch (Exception e) {
-        System.out.println("ERRO ao carregar ícone: " + nomeIcone);
-    }
-}
-
-private void adicionarListeners(javax.swing.JButton botao) {
-    final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
-    final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
-
-    botao.addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseEntered(java.awt.event.MouseEvent evt) {
-            botao.setBackground(COR_HOVER_AZUL);
-            botao.setOpaque(true);
+    private void inicializarMenuLateral() {
+         java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
+            criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
+        );
+        configurarBotao(criarVotacao, "criarVoto.png");
+        configurarBotao(participarVotacao, "peoplemais.png");
+        configurarBotao(gerenciaVotacao, "configpast.png");
+        configurarBotao(aprovarVotacao, "list_check.png");
+        configurarBotao(votoArquivado, "arquivada.png");
+        for (javax.swing.JButton botao : botoes) {
+            adicionarListeners(botao);
         }
+    }
 
-        @Override
-        public void mouseExited(java.awt.event.MouseEvent evt) {
-            botao.setOpaque(false);
-            botao.setBackground(COR_FUNDO_SIDEBAR); 
+    private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
+        botao.putClientProperty("JButton.buttonType", "toolBarButton");
+        botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        botao.setIconTextGap(15);
+        botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+        try {
+            botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
+        } catch (Exception e) {
+            System.out.println("ERRO ao carregar ícone: " + nomeIcone);
         }
-    });
+    }
 
-    botao.addActionListener(e -> {
-        System.out.println("Botão '" + botao.getText() + "' clicado!");
-    });
-}
+    private void adicionarListeners(javax.swing.JButton botao) {
+        final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
+        final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
 
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botao.setBackground(COR_HOVER_AZUL);
+                botao.setOpaque(true);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botao.setOpaque(false);
+                botao.setBackground(COR_FUNDO_SIDEBAR); 
+            }
+        });
+
+        botao.addActionListener(e -> {
+            System.out.println("Botão '" + botao.getText() + "' clicado!");
+        });
+    }
+
+    public void navegarParaTelaDeVoto(Votacao votacao) {
+
+        if (telaDeVoto != null) { 
+
+            telaDeVoto.carregarDadosVotacao(votacao, this.usuariologado);
+
+
+            java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+            cl.show(painelConteudo, "cardTelaDeVoto");
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;
     private javax.swing.JPanel cardDashboard;

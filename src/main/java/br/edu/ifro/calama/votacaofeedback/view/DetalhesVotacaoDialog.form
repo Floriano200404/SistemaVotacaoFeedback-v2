@@ -92,6 +92,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnEditar" min="-2" pref="85" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="btnParticipar" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -162,7 +163,9 @@
                           <Component id="btnAprovarDialog" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="88" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnParticipar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="50" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -286,6 +289,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnParticipar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Participar"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

@@ -41,13 +41,11 @@ public final class AprovarVotacaoView extends javax.swing.JPanel {
             painelDaGrade.removeAll();
             
             for (Votacao votacao : votacoesPendentes) {
-                CardView card = new CardView();
-                card.setDados(votacao);
-                card.setUsuario(this.usuarioLogado);
-                card.setModo(DetalhesVotacaoDialog.ModoDialogo.APROVACAO);
-                
-                painelDaGrade.add(card);
-            }
+                 CardView card = new CardView();
+                 card.setDados(votacao);
+                 card.setModo(DetalhesVotacaoDialog.ModoDialogo.APROVACAO); // << MODO DE APROVAÇÃO
+                 painelDaGrade.add(card);
+}
 
             painelDaGrade.revalidate();
             painelDaGrade.repaint();

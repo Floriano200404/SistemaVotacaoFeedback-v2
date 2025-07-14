@@ -84,7 +84,7 @@ CREATE TABLE `opcao_voto` (
   UNIQUE KEY `id_opcao_UNIQUE` (`id_opcao`),
   KEY `id_votacao_idx` (`id_votacao`),
   CONSTRAINT `FKid_votacao` FOREIGN KEY (`id_votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `opcao_voto` (
 
 LOCK TABLES `opcao_voto` WRITE;
 /*!40000 ALTER TABLE `opcao_voto` DISABLE KEYS */;
-INSERT INTO `opcao_voto` VALUES (29,2,'adada'),(30,2,'adadadad'),(31,2,'dadad'),(32,2,'dadada'),(33,2,'dadadad');
+INSERT INTO `opcao_voto` VALUES (1,1,'testando a alteração 1'),(2,1,'testando a alteração 2'),(3,2,'dadada'),(4,2,'dadada'),(5,3,'teste 1'),(6,3,'teste 2'),(7,4,'dadada'),(8,4,'dadada'),(9,5,'Temporada 2015-16: O MVP Unânime'),(10,5,'Temporada 2021-22: O Legado Consolidado'),(11,5,'Temporada 2014-15: O Início da Dinastia'),(12,5,'Temporada 2020-21: O Show Individual');
 /*!40000 ALTER TABLE `opcao_voto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +147,7 @@ CREATE TABLE `usuario_grupos` (
   KEY `fk_usuariogrupo_grupo_idx` (`id_grupo`),
   CONSTRAINT `fk_usuariogrupo_grupo` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_Grupos`),
   CONSTRAINT `fk_usuariogrupo_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,6 +156,7 @@ CREATE TABLE `usuario_grupos` (
 
 LOCK TABLES `usuario_grupos` WRITE;
 /*!40000 ALTER TABLE `usuario_grupos` DISABLE KEYS */;
+INSERT INTO `usuario_grupos` VALUES (1,41,5),(2,42,6);
 /*!40000 ALTER TABLE `usuario_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,14 +175,15 @@ CREATE TABLE `usuarios` (
   `email` varchar(45) NOT NULL,
   `senha` char(64) NOT NULL,
   `Tipo_usuario` varchar(45) NOT NULL,
-  `Token` varchar(45) DEFAULT NULL,
+  `token` varchar(10) DEFAULT NULL,
+  `token_expiracao` datetime DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `ID_usuario_UNIQUE` (`id_usuario`),
   UNIQUE KEY `Nome_UNIQUE` (`nome`),
   UNIQUE KEY `CPF_UNIQUE` (`CPF`),
   UNIQUE KEY `Matricula_UNIQUE` (`matricula`),
   UNIQUE KEY `UN_email_usuario` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +192,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN',NULL);
+INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN','826159','2025-07-12 12:09:40'),(41,'Athos Ribeiro','092.189.074-91','2024106090016','athos.r@estudante.ifro.edu.br','481f6cc0511143ccdd7e2d1b1b94faf0a700a8b49cd13922a70b5ae28acaa8c5','DISCENTE','690014','2025-07-13 02:21:51'),(42,'Floriano Araujo','089.452.175-93','2024106090025','f.araujo@estudante.ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','DISCENTE','832770','2025-07-12 22:53:09');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +209,7 @@ CREATE TABLE `votacao` (
   `id_grupo_destino` int NOT NULL,
   `data_Resultado` date NOT NULL,
   `titulo` varchar(225) NOT NULL,
-  `descricao` varchar(225) NOT NULL,
+  `descricao` text,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
   `status` enum('PENDENTE','APROVADA','REPROVADA') NOT NULL,
@@ -218,7 +220,7 @@ CREATE TABLE `votacao` (
   KEY `id_grupo_destino_idx` (`id_grupo_destino`),
   CONSTRAINT `FK_idCriador` FOREIGN KEY (`id_Criador`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idGrupoDestino` FOREIGN KEY (`id_grupo_destino`) REFERENCES `grupos` (`id_Grupos`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +229,7 @@ CREATE TABLE `votacao` (
 
 LOCK TABLES `votacao` WRITE;
 /*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
-INSERT INTO `votacao` VALUES (2,1,5,'1314-01-13','adadaddad','dadadad','1314-01-13','3133-07-31','PENDENTE','adada');
+INSERT INTO `votacao` VALUES (1,1,14,'2025-07-25','Criando votação para testes','Descrição para o teste sobre o id_opcao','2025-07-18','2025-07-22','APROVADA','Alterando a pergunta para o teste'),(2,1,5,'2025-07-10','dada','dada','2025-07-10','2025-07-10','APROVADA','adada'),(3,1,13,'2025-07-14','Teste de Validação','Criando mais uma para teste de validação','2025-07-11','2025-07-13','APROVADA','Pergunta teste de validação'),(4,1,5,'2025-07-16','akdjadf','fasdfadf','2025-07-13','2025-07-15','APROVADA','dada'),(5,1,13,'2025-07-21','Melhor Temporada de Stephen Curry','Esta votação busca a opinião da equipe para eleger qual campanha representa o auge da carreira do \"Chef Curry\". Analise as opções que marcaram a história da NBA e escolha a que mais te impressionou.','2025-07-12','2025-07-19','PENDENTE','Qual foi a temporada mais icônica de Stephen Curry?');
 /*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,4 +275,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-08 19:36:44
+-- Dump completed on 2025-07-13  2:21:30
