@@ -12,6 +12,7 @@ import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.service.VotoService;
 import br.edu.ifro.calama.votacaofeedback.util.PainelArredondadoUtil;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -29,6 +30,44 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
     public TelaDeVotoView() {
         initComponents();
         this.grupoDeOpcoes = new javax.swing.ButtonGroup();
+        int cornerRadius = 15;
+
+        Color corVoltar = new Color(0x6A6A6A);
+        Color corVoltarHover = new Color(0x8A8A8A);
+        Color corVoltarClick = new Color(0x5A5A5A);
+
+        btnVoltarVotacao.setText("VOLTAR");
+        btnVoltarVotacao.setForeground(Color.WHITE);
+        btnVoltarVotacao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 11));
+        btnVoltarVotacao.setFocusPainted(false);
+        btnVoltarVotacao.setBorder(null);
+        
+        btnVoltarVotacao.setPreferredSize(new java.awt.Dimension(100, 25));
+
+
+        br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnVoltarCustom = (br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnVoltarVotacao;
+        btnVoltarCustom.setColor(corVoltar);
+        btnVoltarCustom.setColorOver(corVoltarHover);
+        btnVoltarCustom.setColorClick(corVoltarClick);
+
+        Color corSalvar = new Color(0x0095FF);
+        Color corSalvarHover = new Color(0x33ADFF);
+        Color corSalvarClick = new Color(0x0078CC);
+
+        btnSalvarVoto.setText("SALVAR");
+        btnSalvarVoto.setForeground(Color.WHITE);
+        btnSalvarVoto.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 11));
+        btnSalvarVoto.setFocusPainted(false);
+        btnSalvarVoto.setBorder(null);
+        
+        btnSalvarVoto.setPreferredSize(new java.awt.Dimension(100, 25));
+
+
+        br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnSalvarCustom = (br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnSalvarVoto;
+        btnSalvarCustom.setColor(corSalvar);
+        btnSalvarCustom.setColorOver(corSalvarHover);
+        btnSalvarCustom.setColorClick(corSalvarClick);
+
     }
     public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
 
@@ -105,8 +144,8 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
         painelTitulo = new javax.swing.JPanel();
         lblTituloDaPagina = new javax.swing.JLabel();
         painelBotoesAcao = new javax.swing.JPanel();
-        btnVoltarVotacao = new javax.swing.JButton();
-        btnSalvarVoto = new javax.swing.JButton();
+        btnVoltarVotacao = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
+        btnSalvarVoto = new br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil();
         painelCorpoConteudo = new javax.swing.JPanel();
         painelTextosVotacao = new javax.swing.JPanel();
         lblTituloEspecifico = new javax.swing.JLabel();
