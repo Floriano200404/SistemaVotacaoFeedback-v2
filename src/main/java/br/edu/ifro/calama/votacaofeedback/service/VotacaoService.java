@@ -69,6 +69,9 @@ public class VotacaoService {
         // Em caso de erro, retorna uma lista vazia para a tela não quebrar
         return new ArrayList<>(); 
     }
+}   public List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
+    // Simplesmente chama o método do repositório que já criamos
+    return votacaoRepository.buscarAtivasPorUsuario(usuario);
 }
     public List<Votacao> buscarPendentes() throws Exception{
         return this.votacaoRepository.buscarTodosPendentes();
@@ -137,6 +140,7 @@ public class VotacaoService {
             e.printStackTrace();
         }
     }
+    
 
     public List<Votacao> buscarTodosPendentes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
