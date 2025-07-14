@@ -39,8 +39,8 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         btnAprovarDialog.setVisible(false);
         btnReprovarDialog.setVisible(false);
         btnParticipar.setVisible(false);
-        btnEditar.setVisible(false); // Supondo que você tenha um botão de editar
-
+        btnEditar.setVisible(false); 
+        btnVerResultado.setVisible(false);
         
         if (this.modo == null) return;
 
@@ -50,28 +50,29 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                 btnReprovarDialog.setVisible(true);
                 btnEditar.setVisible(false);
                 btnParticipar.setVisible(false);
+                btnVerResultado.setVisible(false);
                 break;
             case PARTICIPACAO:
                 btnParticipar.setVisible(true);
                 btnAprovarDialog.setVisible(false);
                 btnReprovarDialog.setVisible(false);
                 btnEditar.setVisible(false);
-               
+               btnVerResultado.setVisible(false);
                 break;
             case GERENCIAMENTO:
                 btnAprovarDialog.setVisible(false);
                 btnReprovarDialog.setVisible(false);
                 btnEditar.setVisible(true);
                 btnParticipar.setVisible(false);
-                
+                btnVerResultado.setVisible(false);
                 break;
-                case RESULTADO: // <-- LÓGICA NOVA
-           btnAprovarDialog.setVisible(false);
-            btnReprovarDialog.setVisible(false);
-            btnEditar.setVisible(false);
-            btnParticipar.setVisible(false);
-            btnVerResultado.setVisible(true);
-            break;
+            case RESULTADO: 
+                btnAprovarDialog.setVisible(false);
+                btnReprovarDialog.setVisible(false);
+                btnEditar.setVisible(false);
+                btnParticipar.setVisible(false);
+                btnVerResultado.setVisible(true);
+                break;
            
         }
     }
@@ -415,7 +416,16 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnParticiparActionPerformed
 
     private void btnVerResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerResultadoActionPerformed
+ MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
 
+   
+    if (menuPrincipal != null) {
+        
+        menuPrincipal.navegarParaTelaDeResultado(this.votacaoAtual);
+    }
+
+   
+    this.dispose();
            
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVerResultadoActionPerformed

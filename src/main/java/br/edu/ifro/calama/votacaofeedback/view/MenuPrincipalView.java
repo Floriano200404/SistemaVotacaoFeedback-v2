@@ -352,7 +352,7 @@ cl.show(painelConteudo, "cardVotacoesAtivas");
     telaVotacoesArquivadas.carregarVotacoesArquivadas(this.usuarioLogado);
 }
 
-// Depois, mostra a tela já preenchida
+
 java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
 cl.show(painelConteudo, "cardArquivadas");
         // TODO add your handling code here:
@@ -410,6 +410,16 @@ private void inicializarMenuLateral() {
         adicionarListeners(botao);
     }
 }
+ public void navegarParaTelaDeResultado(Votacao votacao) {
+
+    if (telaDeVoto != null) { 
+        // Manda a tela carregar os dados no MODO DE RESULTADO
+        telaDeVoto.carregarDados(votacao, this.usuarioLogado, TelaDeVotoView.ModoTela.RESULTADO);
+
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardTelaDeVoto");
+    }
+}
 
 private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
     botao.putClientProperty("JButton.buttonType", "toolBarButton");
@@ -452,8 +462,7 @@ public void navegarParaTelaDeVoto(Votacao votacao) {
     
     if (telaDeVoto != null) { 
         
-        telaDeVoto.carregarDadosVotacao(votacao, this.usuarioLogado);
-
+        telaDeVoto.carregarDados(votacao, this.usuarioLogado, TelaDeVotoView.ModoTela.VOTAR);
        
         java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
         cl.show(painelConteudo, "cardTelaDeVoto"); // Use o nome do card que você definiu
