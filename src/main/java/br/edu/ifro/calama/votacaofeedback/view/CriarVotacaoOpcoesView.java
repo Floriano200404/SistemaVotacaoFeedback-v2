@@ -255,9 +255,33 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     
     private void navegarParaMenuPrincipal() {
         new Timer(1500, e -> {
-            new MenuPrincipalView(this.usuarioLogado).setVisible(true);
+            try {
+            MenuPrincipalView menuPrincipal = new MenuPrincipalView(this.usuarioLogado);
+            menuPrincipal.setLocationRelativeTo(null);
+            menuPrincipal.setVisible(true);
+
             this.dispose();
-        }){{setRepeats(false);}}.start();
+
+        } catch (Exception ex) {
+            exibirMensagem("Erro ao carregar o menu principal: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }){{setRepeats(false);}}.start();
+    }
+    
+    private JTextField findTextFieldInPanel(JPanel container) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JTextField) {
+                return (JTextField) c;
+            }
+            if (c instanceof JPanel) {
+                JTextField found = findTextFieldInPanel((JPanel) c);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -561,12 +585,17 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconeMenuMouseClicked
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
-
-        telaDeCriacao.setLocationRelativeTo(null);
-        telaDeCriacao.setVisible(true);
-
+        try {
+        MenuPrincipalView telaPrincipal = new MenuPrincipalView(this.usuarioLogado);
+        telaPrincipal.setLocationRelativeTo(null);
+        telaPrincipal.setVisible(true);
+        
         this.dispose();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar o menu principal: " + e.getMessage(), "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_labelLogoMouseClicked
 
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
@@ -605,29 +634,32 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        
         String pergunta = txtPergunta.getText().trim();
-        if (pergunta.isEmpty()) {
+        String placeholderPergunta = "Escreva a pergunta da votação.";
+        if (pergunta.isEmpty() || pergunta.equals(placeholderPergunta)) {
             exibirMensagem("O campo 'Pergunta' é obrigatório.");
             return;
         }
         this.votacao.setPergunta(pergunta);
 
-        List<String> novasOpcoes = new ArrayList<>();
+        List<String> opcoesValidas = new ArrayList<>();
+        String placeholderOpcao = "Digite o texto da opção";
+
         for (JPanel painelOpcao : paineisDeOpcao) {
-            for (Component comp : painelOpcao.getComponents()) {
-                if (comp instanceof JTextField) {
-                    String textoOpcao = ((JTextField) comp).getText().trim();
-                    if (textoOpcao.isEmpty()) {
-                        exibirMensagem("Preencha todos os campos de opção em branco.");
-                        return;
-                    }
-                    novasOpcoes.add(textoOpcao);
+            JTextField textFieldDaOpcao = findTextFieldInPanel(painelOpcao);
+
+            if (textFieldDaOpcao != null) {
+                String textoOpcao = textFieldDaOpcao.getText().trim();
+
+                if (!textoOpcao.isEmpty() && !textoOpcao.equals(placeholderOpcao)) {
+                    opcoesValidas.add(textoOpcao);
                 }
             }
         }
 
-        if (novasOpcoes.size() < 2) {
-            exibirMensagem("A votação deve ter pelo menos 2 opções.");
+        if (opcoesValidas.size() < 2) {
+            exibirMensagem("Preencha pelo menos as 2 primeiras opções.");
             return;
         }
 
@@ -638,7 +670,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
         if (isEditMode) {
             try {
                 controller.atualizarVotacao(this.votacao);
-                service.sincronizarOpcoes(this.votacao.getIdVotacao(), novasOpcoes);
+                service.sincronizarOpcoes(this.votacao.getIdVotacao(), opcoesValidas);
                 exibirMensagemDeSucesso("Votação atualizada com sucesso!");
                 navegarParaMenuPrincipal();
 
@@ -650,7 +682,7 @@ public class CriarVotacaoOpcoesView extends javax.swing.JFrame {
             try {
                 int novoId = controller.criarVotacao(this.votacao);
                 if (novoId > 0) {
-                    for (String descricaoOpcao : novasOpcoes) {
+                    for (String descricaoOpcao : opcoesValidas) {
                         OpcaoVoto op = new OpcaoVoto();
                         op.setDescricao(descricaoOpcao);
                         op.setIdVotacao(novoId);

@@ -3,6 +3,7 @@ package br.edu.ifro.calama.votacaofeedback.service;
 
 import br.edu.ifro.calama.votacaofeedback.model.ResultadoVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
+import br.edu.ifro.calama.votacaofeedback.model.StatusVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
@@ -145,6 +146,33 @@ public class VotacaoService {
     public List<Votacao> buscarTodosPendentes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public long contarVotacoesAguardandoAprovacao() throws Exception {
+        return this.votacaoRepository.countByStatus(StatusVotacao.PENDENTE);
+    }
 
-  
+    public long contarVotacoesAtivas() throws Exception {
+        return this.votacaoRepository.countAtivas();
+    }
+
+    public long contarVotacoesArquivadas() throws Exception {
+        long concluidas = this.votacaoRepository.countByStatus(StatusVotacao.CONCLUIDA);
+        long reprovadas = this.votacaoRepository.countByStatus(StatusVotacao.REPROVADA);
+        return concluidas + reprovadas;
+    }
+
+    public long contarMinhasVotacoesGerenciaveis(int idCriador) throws Exception {
+        return this.votacaoRepository.countPendentesPorCriador(idCriador);
+    }
+
+    // Adicione este método para ser usado pela tela VotacoesArquivadasView
+    public List<Votacao> buscarArquivadasPorUsuario(Usuario usuario) {
+        try {
+            return votacaoRepository.buscarArquivadasPorUsuario(usuario);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+    
 }

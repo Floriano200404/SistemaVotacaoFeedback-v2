@@ -4,6 +4,7 @@
  */
 package br.edu.ifro.calama.votacaofeedback.repository;
 
+import br.edu.ifro.calama.votacaofeedback.model.StatusVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil;
@@ -210,4 +211,83 @@ public java.util.List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Ex
         return votacao;
     }
     
+    //contagem das votações pelo status, mais para pendente
+    public int countByStatus(String status) throws Exception {
+        String sql = "SELECT COUNT(*) FROM votacao WHERE status = ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    //contagem das votações ativas
+    public int countAtivas() throws Exception {
+        // NOW() é uma função do MySQL para pegar a data e hora atuais.
+        String sql = "SELECT COUNT(*) FROM votacao WHERE status = 'APROVADA' AND NOW() BETWEEN data_inicio AND data_fim";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int countPendentesPorCriador(int idCriador) throws Exception {
+    String sql = "SELECT COUNT(*) FROM votacao WHERE status = 'PENDENTE' AND id_criador = ?";
+    try (Connection conn = DatabaseUtil.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idCriador);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
+    
+    public List<Votacao> buscarArquivadasPorUsuario(Usuario usuario) throws Exception {
+        List<Votacao> votacoes = new ArrayList<>();
+        String sql;
+
+        // Se for admin, mostra todas as concluídas.
+        if ("ADMIN".equals(usuario.getTipo_usuario())) {
+            sql = "SELECT * FROM votacao WHERE status = '" + StatusVotacao.CONCLUIDA + "' OR status = '" + StatusVotacao.REPROVADA + "'";
+        } else {
+            // Se for usuário comum, mostra as concluídas/reprovadas que ele podia ver (dos grupos dele)
+            sql = "SELECT v.* FROM votacao v " +
+                  "INNER JOIN usuario_grupos ug ON v.id_grupo_destino = ug.id_grupo " +
+                  "WHERE ug.id_usuario = ? AND (v.status = '" + StatusVotacao.CONCLUIDA + "' OR v.status = '" + StatusVotacao.REPROVADA + "')";
+        }
+
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (!"ADMIN".equals(usuario.getTipo_usuario())) {
+                ps.setInt(1, usuario.getId());
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    votacoes.add(mapRowToVotacao(rs));
+                }
+            }
+        }
+        return votacoes;
+    }
+
 }

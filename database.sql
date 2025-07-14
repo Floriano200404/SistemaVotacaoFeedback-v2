@@ -84,7 +84,7 @@ CREATE TABLE `opcao_voto` (
   UNIQUE KEY `id_opcao_UNIQUE` (`id_opcao`),
   KEY `id_votacao_idx` (`id_votacao`),
   CONSTRAINT `FKid_votacao` FOREIGN KEY (`id_votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `opcao_voto` (
 
 LOCK TABLES `opcao_voto` WRITE;
 /*!40000 ALTER TABLE `opcao_voto` DISABLE KEYS */;
-INSERT INTO `opcao_voto` VALUES (1,1,'testando a alteração 1'),(2,1,'testando a alteração 2'),(3,2,'dadada'),(4,2,'dadada'),(5,3,'teste 1'),(6,3,'teste 2'),(7,4,'dadada'),(8,4,'dadada'),(9,5,'Temporada 2015-16: O MVP Unânime'),(10,5,'Temporada 2021-22: O Legado Consolidado'),(11,5,'Temporada 2014-15: O Início da Dinastia'),(12,5,'Temporada 2020-21: O Show Individual'),(13,6,'dadad'),(14,6,'adada');
+INSERT INTO `opcao_voto` VALUES (1,1,'eu'),(2,1,'sim'),(3,2,'dada'),(4,2,'da');
 /*!40000 ALTER TABLE `opcao_voto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +212,7 @@ CREATE TABLE `votacao` (
   `descricao` text,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
-  `status` enum('PENDENTE','APROVADA','REPROVADA') NOT NULL,
+  `status` enum('PENDENTE','APROVADA','REPROVADA','CONCLUIDA') NOT NULL,
   `pergunta` varchar(100) NOT NULL,
   PRIMARY KEY (`id_Votacao`),
   UNIQUE KEY `id_Votacao_UNIQUE` (`id_Votacao`),
@@ -220,7 +220,7 @@ CREATE TABLE `votacao` (
   KEY `id_grupo_destino_idx` (`id_grupo_destino`),
   CONSTRAINT `FK_idCriador` FOREIGN KEY (`id_Criador`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idGrupoDestino` FOREIGN KEY (`id_grupo_destino`) REFERENCES `grupos` (`id_Grupos`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +229,7 @@ CREATE TABLE `votacao` (
 
 LOCK TABLES `votacao` WRITE;
 /*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
-INSERT INTO `votacao` VALUES (1,1,14,'2025-07-25','Criando votação para testes','Descrição para o teste sobre o id_opcao','2025-07-18','2025-07-22','APROVADA','Alterando a pergunta para o teste'),(2,1,5,'2025-07-10','dada','dada','2025-07-10','2025-07-10','APROVADA','adada'),(3,1,13,'2025-07-14','Teste de Validação','Criando mais uma para teste de validação','2025-07-11','2025-07-13','APROVADA','Pergunta teste de validação'),(4,1,5,'2025-07-16','akdjadf','fasdfadf','2025-07-13','2025-07-15','APROVADA','dada'),(5,1,13,'2025-07-21','Melhor Temporada de Stephen Curry','Esta votação busca a opinião da equipe para eleger qual campanha representa o auge da carreira do \"Chef Curry\". Analise as opções que marcaram a história da NBA e escolha a que mais te impressionou.','2025-07-12','2025-07-19','APROVADA','Qual foi a temporada mais icônica de Stephen Curry?'),(6,41,5,'2025-07-14','dad','adada','2025-07-14','2025-07-14','APROVADA','dada');
+INSERT INTO `votacao` VALUES (1,1,5,'2025-07-14','Titulo','Descreve','2025-07-14','2025-07-14','APROVADA','Eu mesmo?'),(2,1,5,'2025-07-14','dada','','2025-07-14','2025-07-14','APROVADA','dada');
 /*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +254,7 @@ CREATE TABLE `voto` (
   CONSTRAINT `FK_id_Usuario` FOREIGN KEY (`id_Usuario`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idOpcao` FOREIGN KEY (`id_Opcao`) REFERENCES `opcao_voto` (`id_opcao`),
   CONSTRAINT `FK_idVotacao` FOREIGN KEY (`id_Votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,6 +263,7 @@ CREATE TABLE `voto` (
 
 LOCK TABLES `voto` WRITE;
 /*!40000 ALTER TABLE `voto` DISABLE KEYS */;
+INSERT INTO `voto` VALUES (1,2,1,3,'2025-07-14');
 /*!40000 ALTER TABLE `voto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -275,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 17:24:53
+-- Dump completed on 2025-07-14 19:46:39
