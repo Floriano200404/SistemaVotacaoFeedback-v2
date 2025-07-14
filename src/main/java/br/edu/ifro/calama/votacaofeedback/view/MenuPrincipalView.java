@@ -9,6 +9,7 @@ import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,14 +23,7 @@ import javax.swing.JPanel;
 public class MenuPrincipalView extends javax.swing.JFrame {
 
     private Usuario usuariologado;
-    private Votacao votacaoEmAndamento;
-    private final VotacoesAtivasView telaVotacoesAtivas;
-    private final TelaDeVotoView telaDeVoto;
-    private final VotacoesArquivadasView telaVotacoesArquivadas;
-    private JLabel labelContagemAtivas;
-    private JLabel labelContagemAprovacao;
-    private JLabel labelContagemArquivadas;
-    private JLabel labelContagemGerenciar;
+    private JLabel labelContagemAtivas, labelContagemAprovacao, labelContagemArquivadas, labelContagemGerenciar;
 
     
     public MenuPrincipalView(Usuario usuario) throws Exception {
@@ -41,14 +35,9 @@ public class MenuPrincipalView extends javax.swing.JFrame {
                 txtbemVindo.setText("Bem-Vindo(a), " + this.usuariologado.getNome() + "!");
          }
 
-        this.telaVotacoesAtivas = new VotacoesAtivasView();
-        painelConteudo.add(this.telaVotacoesAtivas, "cardVotacoesAtivas");
-
-        this.telaDeVoto = new TelaDeVotoView();
-        painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
-        
-        this.telaVotacoesArquivadas = new VotacoesArquivadasView();
-        painelConteudo.add(this.telaVotacoesArquivadas, "cardArquivadas");
+        painelConteudo.add(cardDashboard, "cardDashboard");
+        CardLayout cl = (CardLayout) painelConteudo.getLayout();
+        cl.show(painelConteudo, "cardDashboard");
 
         inicializarMenuLateral();
         construirDashboard();
@@ -57,53 +46,90 @@ public class MenuPrincipalView extends javax.swing.JFrame {
    }   
    
     private void construirDashboard() {
-        labelContagemAtivas = new JLabel("0 Votações");
-        labelContagemAprovacao = new JLabel("0 Votações");
-        labelContagemArquivadas = new JLabel("0 Votações");
-        labelContagemGerenciar = new JLabel("0 Votações");
+        labelContagemAtivas = new JLabel("Buscando...");
+        labelContagemAprovacao = new JLabel("Buscando...");
+        labelContagemArquivadas = new JLabel("Buscando...");
+        labelContagemGerenciar = new JLabel("Buscando...");
 
         JPanel linhaDeCima = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
         linhaDeCima.setOpaque(false);
         JPanel linhaDeBaixo = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
         linhaDeBaixo.setOpaque(false);
+        
+        // Associa cada card a um clique no botão do menu lateral
+        linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", labelContagemAtivas, () -> participarVotacao.doClick()));
+        linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", labelContagemAprovacao, () -> aprovarVotacao.doClick()));
+        linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", labelContagemArquivadas, () -> votoArquivado.doClick()));
+        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", new JLabel("Começar do zero"), () -> criarVotacao.doClick()));
+        linhaDeBaixo.add(criarCard("GERENCIAR MINHAS VOTAÇÕES", labelContagemGerenciar, () -> gerenciaVotacao.doClick()));
 
-        linhaDeCima.add(criarCard("VOTAÇÕES ATIVAS", labelContagemAtivas, () -> navegarPara("participar")));
-        linhaDeCima.add(criarCard("AGUARDANDO APROVAÇÃO", labelContagemAprovacao, () -> navegarPara("aprovar")));
-        linhaDeCima.add(criarCard("VOTAÇÕES ARQUIVADAS", labelContagemArquivadas, () -> navegarPara("arquivadas")));
-        linhaDeBaixo.add(criarCard("CRIAR VOTAÇÃO", new JLabel("Começar uma nova votação"), () -> criarVotacao.doClick()));
-        linhaDeBaixo.add(criarCard("GERENCIAR VOTAÇÕES", labelContagemGerenciar, () -> gerenciaVotacao.doClick()));
-
+        painelDosCards.removeAll();
         painelDosCards.setLayout(new javax.swing.BoxLayout(painelDosCards, javax.swing.BoxLayout.Y_AXIS));
         painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 20)));
         painelDosCards.add(linhaDeCima);
         painelDosCards.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 15)));
         painelDosCards.add(linhaDeBaixo);
         painelDosCards.add(javax.swing.Box.createVerticalGlue());
+        painelDosCards.revalidate();
+        painelDosCards.repaint();
     }
     
     private void carregarDadosDashboard() throws Exception {
         if (usuariologado == null) return;
-        VotacaoController controller = new VotacaoController();
-        int[] stats = controller.getDashboardStats(this.usuariologado.getId());
-        
-        labelContagemAtivas.setText(stats[0] + (stats[0] == 1 ? " Votação" : " Votações"));
-        labelContagemAprovacao.setText(stats[1] + (stats[1] == 1 ? " Votação" : " Votações"));
-        labelContagemArquivadas.setText(stats[2] + (stats[2] == 1 ? " Votação" : " Votações"));
-        labelContagemGerenciar.setText(stats[3] + (stats[3] == 1 ? " Votação " : " Votações"));
+        try {
+            VotacaoController controller = new VotacaoController();
+            int[] stats = controller.getDashboardStats(this.usuariologado.getId());
+            
+            labelContagemAtivas.setText(stats[0] + (stats[0] == 1 ? " Votação" : " Votações"));
+            labelContagemAprovacao.setText(stats[1] + (stats[1] == 1 ? " Votação" : " Votações"));
+            labelContagemArquivadas.setText(stats[2] + (stats[2] == 1 ? " Votação" : " Votações"));
+            labelContagemGerenciar.setText(stats[3] + (stats[3] == 1 ? " Votação" : " Votações"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
-    private void navegarPara(String nomeDoPainel) {
-        CardLayout cl = (CardLayout)(painelConteudo.getLayout());
-        
-        if (nomeDoPainel.equals("aprovar")) {
-            AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
-            painelConteudo.add(painelAprovar, "cardAprovar");
-            cl.show(painelConteudo, "cardAprovar");
-        } else if (nomeDoPainel.equals("gerenciar")) {
-            GerenciarVotacaoView painelGerenciar = new GerenciarVotacaoView(this.usuariologado);
-            painelConteudo.add(painelGerenciar, "cardGerenciar");
-            cl.show(painelConteudo, "cardGerenciar");
+    private void navegarPara(String painelDaGrade) {
+        CardLayout cl = (CardLayout) painelConteudo.getLayout();
+        JPanel painelParaExibir = null;
+        String cardKey = "card" + painelDaGrade;
+
+        for (Component comp : painelConteudo.getComponents()) {
+            if (!(comp instanceof JPanel && comp == cardDashboard)) {
+                painelConteudo.remove(comp);
+            }
         }
+
+        switch (painelDaGrade) {
+            case "dashboard":
+                painelParaExibir = cardDashboard;
+                break;
+            case "aprovar":
+                if (isUsuarioAdmin()) {
+                    painelParaExibir = new AprovarVotacaoView(this, usuariologado);
+                } else {
+                    exibirMensagemDeErro("Acesso negado. Apenas administradores.");
+                }
+                break;
+            case "gerenciar":
+                painelParaExibir = new GerenciarVotacaoView(this, usuariologado);
+                break;
+            case "participar":
+                painelParaExibir = new VotacoesAtivasView(this, usuariologado);
+                break;
+            case "arquivadas":
+                painelParaExibir = new VotacoesArquivadasView(this, usuariologado);
+                break;
+        }
+
+        if (painelParaExibir != null) {
+            painelConteudo.add(painelParaExibir, cardKey);
+            cl.show(painelConteudo, cardKey);
+        }
+    }
+
+    public void exibirMensagemDeErro(String msg) {
+        ToastUtil.create(this, msg, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT).display();
     }
     
     private JPanel criarCard(String titulo, JLabel labelSubtitulo, Runnable acao) {
@@ -146,6 +172,8 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         });
         return card;
     }
+    
+    
     
 
     /**
@@ -368,29 +396,18 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
-        if (this.usuariologado != null) {
-            telaVotacoesAtivas.carregarVotacoes(this.usuariologado);
-        }
-        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardVotacoesAtivas");
+        telaVotacoesAtivas.carregarVotacoes(this.usuariologado); // Recarrega os dados
+        ((CardLayout) painelConteudo.getLayout()).show(painelConteudo, "cardParticipar");
     }//GEN-LAST:event_participarVotacaoActionPerformed
 
     private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
-        GerenciarVotacaoView painelGerenciar = new GerenciarVotacaoView(this.usuariologado);
-    
-        painelConteudo.add(painelGerenciar, "cardGerenciar");
-    
-        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardGerenciar");
+        telaGerenciarVotacao.carregarVotacoesDoUsuario(); // Recarrega os dados
+        ((CardLayout) painelConteudo.getLayout()).show(painelConteudo, "cardGerenciar");
     }//GEN-LAST:event_gerenciaVotacaoActionPerformed
 
     private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        AprovarVotacaoView painelAprovar = new AprovarVotacaoView(this.usuariologado);
-    
-        painelConteudo.add(painelAprovar, "cardAprovar");
-    
-        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-        cl.show(painelConteudo, "cardAprovar");
+        telaAprovarVotacao.carregarVotacoesParaAprovacao(); // Recarrega os dados
+        ((CardLayout) painelConteudo.getLayout()).show(painelConteudo, "cardAprovar");
     }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
@@ -431,11 +448,8 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
     private void votoArquivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_votoArquivadoActionPerformed
-        if (this.usuariologado != null) {
-            telaVotacoesArquivadas.carregarVotacoesArquivadas(this.usuariologado);
-        }
-            java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-            cl.show(painelConteudo, "cardArquivadas");
+        telaVotacoesArquivadas.carregarVotacoesArquivadas(this.usuariologado); // Recarrega os dados
+        ((CardLayout) painelConteudo.getLayout()).show(painelConteudo, "cardArquivadas");
     }//GEN-LAST:event_votoArquivadoActionPerformed
 
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
