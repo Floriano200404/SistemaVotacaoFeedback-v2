@@ -26,16 +26,15 @@ public class VotacoesArquivadasView extends javax.swing.JPanel {
     
     }
         public void carregarVotacoesArquivadas(Usuario usuarioLogado) {
-    // 1. Cria uma instância do nosso serviço
+    
     VotacaoService votacaoService = new VotacaoService();
 
-    // 2. Limpa a grade antes de adicionar novos cards
-    this.removeAll(); // ou painelDaGrade.removeAll(); se você criou um painel específico
-
-    // 3. Busca os resultados apurados
+    
+    this.removeAll(); 
+    
     List<Votacao> votacoesArquivadas = votacaoService.buscarVotacoesComResultadoDisponivel();
 
-    // 4. Para cada votação arquivada, cria um card e o adiciona
+    
    for (Votacao votacao : votacoesArquivadas) {
     CardView card = new CardView();
     card.setDados(votacao);
@@ -45,7 +44,7 @@ public class VotacoesArquivadasView extends javax.swing.JPanel {
     this.add(card);
 }
 
-    // 5. "Redesenha" a tela para mostrar as mudanças
+   
     this.revalidate();
     this.repaint();
 }
