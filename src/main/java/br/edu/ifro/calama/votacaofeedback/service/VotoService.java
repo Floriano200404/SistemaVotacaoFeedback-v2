@@ -1,6 +1,6 @@
 package br.edu.ifro.calama.votacaofeedback.service;
 
-// ... seus imports ...
+
 import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
