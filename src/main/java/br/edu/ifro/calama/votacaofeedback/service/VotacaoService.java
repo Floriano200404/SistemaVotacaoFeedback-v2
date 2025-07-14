@@ -60,7 +60,16 @@ public class VotacaoService {
         return new ArrayList<>(); 
     }
 }
-    
+    public List<Votacao> buscarVotacoesComResultadoDisponivel() {
+    try {
+        // Simplesmente chama o método do repositório que já criamos
+        return votacaoRepository.buscarVotacoesComResultadoDisponivel();
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Em caso de erro, retorna uma lista vazia para a tela não quebrar
+        return new ArrayList<>(); 
+    }
+}
     public List<Votacao> buscarPendentes() throws Exception{
         return this.votacaoRepository.buscarTodosPendentes();
     }
@@ -132,4 +141,6 @@ public class VotacaoService {
     public List<Votacao> buscarTodosPendentes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+  
 }
