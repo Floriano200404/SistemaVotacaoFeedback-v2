@@ -25,6 +25,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private Votacao votacaoEmAndamento;
     private final VotacoesAtivasView telaVotacoesAtivas;
     private final TelaDeVotoView telaDeVoto;
+    private final VotacoesArquivadasView telaVotacoesArquivadas;
     private JLabel labelContagemAtivas;
     private JLabel labelContagemAprovacao;
     private JLabel labelContagemArquivadas;
@@ -45,6 +46,9 @@ public class MenuPrincipalView extends javax.swing.JFrame {
 
         this.telaDeVoto = new TelaDeVotoView();
         painelConteudo.add(this.telaDeVoto, "cardTelaDeVoto");
+        
+        this.telaVotacoesArquivadas = new VotacoesArquivadasView();
+        painelConteudo.add(this.telaVotacoesArquivadas, "cardArquivadas");
 
         inicializarMenuLateral();
         construirDashboard();
@@ -178,7 +182,6 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1480, 800));
-        setPreferredSize(new java.awt.Dimension(1480, 800));
 
         painelHeader.setBackground(new java.awt.Color(0, 0, 51));
         painelHeader.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -302,6 +305,11 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         painelSidebar.add(aprovarVotacao);
 
         votoArquivado.setText("Votações Arquivadas");
+        votoArquivado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                votoArquivadoActionPerformed(evt);
+            }
+        });
         painelSidebar.add(votoArquivado);
         painelSidebar.add(filler1);
 
@@ -422,6 +430,14 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     perfil.setVisible(true);
     }//GEN-LAST:event_labelIconePerfilMouseClicked
 
+    private void votoArquivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_votoArquivadoActionPerformed
+        if (this.usuariologado != null) {
+            telaVotacoesArquivadas.carregarVotacoesArquivadas(this.usuariologado);
+        }
+            java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+            cl.show(painelConteudo, "cardArquivadas");
+    }//GEN-LAST:event_votoArquivadoActionPerformed
+
 private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
     javax.swing.JPanel card = new javax.swing.JPanel();
 
@@ -473,7 +489,18 @@ private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
         for (javax.swing.JButton botao : botoes) {
             adicionarListeners(botao);
         }
+}
+
+ public void navegarParaTelaDeResultado(Votacao votacao) {
+
+    if (telaDeVoto != null) { 
+        telaDeVoto.carregarDados(votacao, this.usuariologado, TelaDeVotoView.ModoTela.RESULTADO);
+
+        java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
+        cl.show(painelConteudo, "cardTelaDeVoto");
     }
+}
+
 
     private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
         botao.putClientProperty("JButton.buttonType", "toolBarButton");
@@ -510,18 +537,6 @@ private javax.swing.JPanel criarCard(String titulo, String subtitulo) {
         botao.addActionListener(e -> {
             System.out.println("Botão '" + botao.getText() + "' clicado!");
         });
-    }
-
-    public void navegarParaTelaDeVoto(Votacao votacao) {
-
-        if (telaDeVoto != null) { 
-
-            telaDeVoto.carregarDadosVotacao(votacao, this.usuariologado);
-
-
-            java.awt.CardLayout cl = (java.awt.CardLayout)(painelConteudo.getLayout());
-            cl.show(painelConteudo, "cardTelaDeVoto");
-        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprovarVotacao;

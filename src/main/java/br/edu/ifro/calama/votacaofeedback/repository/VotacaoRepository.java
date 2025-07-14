@@ -124,6 +124,25 @@ public class VotacaoRepository {
     }
   
     
+    public java.util.List<Votacao> buscarVotacoesComResultadoDisponivel() throws Exception {
+    // Este SQL seleciona todas as votações onde a data de resultado é hoje ou já passou
+    String sql = "SELECT * FROM votacao WHERE data_Resultado <= CURDATE()";
+
+    java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
+
+    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+         java.sql.ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            // Aqui usamos o método 'mapRowToVotacao' que já criamos para evitar repetir código
+            Votacao votacao = mapRowToVotacao(rs);
+            votacoes.add(votacao);
+        }
+    }
+    return votacoes;
+}
+    
   
 public java.util.List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
     String sql;
