@@ -4,6 +4,7 @@
  */
 package br.edu.ifro.calama.votacaofeedback.repository;
 
+import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil;
 import java.sql.Connection;
@@ -121,6 +122,78 @@ public class VotacaoRepository {
             ps.executeUpdate();
         }
     }
+  
+    
+    public java.util.List<Votacao> buscarVotacoesComResultadoDisponivel() throws Exception {
+    // Este SQL seleciona todas as votações onde a data de resultado é hoje ou já passou
+    String sql = "SELECT * FROM votacao WHERE data_Resultado <= CURDATE()";
+
+    java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
+
+    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+         java.sql.ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            // Aqui usamos o método 'mapRowToVotacao' que já criamos para evitar repetir código
+            Votacao votacao = mapRowToVotacao(rs);
+            votacoes.add(votacao);
+        }
+    }
+    return votacoes;
+}
+    
+  
+public java.util.List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
+    String sql;
+    java.util.List<Votacao> votacoes = new java.util.ArrayList<>();
+    java.util.Date hoje = new java.util.Date(); // Pega a data atual para comparação
+
+    
+    if ("ADMIN".equals(usuario.getTipo_usuario())) {
+        sql = "SELECT * FROM votacao WHERE status = 'APROVADA' AND ? BETWEEN data_inicio AND data_fim";
+    } else {
+         
+        sql = "SELECT v.* FROM votacao v " +
+              "INNER JOIN usuario_grupos ug ON v.id_grupo_destino = ug.id_grupo " +
+              "WHERE ug.id_usuario = ? AND v.status = 'APROVADA' AND ? BETWEEN v.data_inicio AND v.data_fim";
+    }
+
+    try (java.sql.Connection conn = br.edu.ifro.calama.votacaofeedback.util.DatabaseUtil.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        
+        if ("ADMIN".equals(usuario.getTipo_usuario())) {
+            ps.setDate(1, new java.sql.Date(hoje.getTime()));
+        } else {
+            ps.setInt(1, usuario.getId());
+            ps.setDate(2, new java.sql.Date(hoje.getTime()));
+        }
+
+        try (java.sql.ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                Votacao votacao = new Votacao();
+        
+                votacao.setIdVotacao(rs.getInt("id_Votacao"));
+                votacao.setTitulo(rs.getString("titulo"));
+                votacao.setDescricao(rs.getString("descricao"));
+                votacao.setDataInicial(rs.getDate("data_inicio"));
+                votacao.setDataFinal(rs.getDate("data_fim"));
+                votacao.setDataResultado(rs.getDate("data_Resultado"));
+                votacao.setStatus(rs.getString("status"));
+                votacao.setPergunta(rs.getString("pergunta"));
+                votacao.setIdCriador(rs.getInt("id_Criador"));
+                votacao.setIdGrupoDestino(rs.getInt("id_grupo_destino"));
+
+                votacoes.add(votacao);
+            }
+        }
+    }
+    return votacoes; // Retorna a lista de votações encontradas
+}
+    
+    
     
     private Votacao mapRowToVotacao(ResultSet rs) throws SQLException {
         Votacao votacao = new Votacao();
