@@ -11,14 +11,16 @@ import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.service.VotoService;
+import br.edu.ifro.calama.votacaofeedback.util.PainelArredondadoUtil;
 import java.util.List;
+import javax.swing.JPanel;
 
 /**
  *
  * @author floriano
  */
 public class TelaDeVotoView extends javax.swing.JPanel {
-  private Votacao votacaoAtual;
+private Votacao votacaoAtual;
 private Usuario usuarioLogado;
 private javax.swing.ButtonGroup grupoDeOpcoes;
     /**
@@ -28,92 +30,87 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
         initComponents();
         this.grupoDeOpcoes = new javax.swing.ButtonGroup();
     }
-public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
-    
-    this.votacaoAtual = votacao;
-    this.usuarioLogado = usuario;
+    public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
 
-    
-    lblTituloEspecifico.setText(votacao.getTitulo());
-    txtAreaDescricaoVotacao.setText(votacao.getDescricao());
-    lblPerguntaPrincipal.setText(votacao.getPergunta());
+        this.votacaoAtual = votacao;
+        this.usuarioLogado = usuario;
 
-    
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-    if (votacao.getDataInicial() != null) {
-        lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
-    }
-    if (votacao.getDataFinal() != null) {
-        lblDataFinal.setText(sdf.format(votacao.getDataFinal()));
-    }
-    if (votacao.getDataResultado() != null) {
-        lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
-    }
 
-    try {
-        GrupoRepository grupoRepo = new GrupoRepository();
-        Grupo grupo = grupoRepo.buscarPorId(votacao.getIdGrupoDestino());
-        if (grupo != null) {
-            lblParticipantes.setText(grupo.getNome());
-        } else {
-            lblParticipantes.setText("Grupo não encontrado");
+        lblTituloEspecifico.setText(votacao.getTitulo());
+        txtAreaDescricaoVotacao.setText(votacao.getDescricao());
+        lblPerguntaPrincipal.setText(votacao.getPergunta());
+
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        if (votacao.getDataInicial() != null) {
+            lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
         }
-    } catch (Exception e) {
-        lblParticipantes.setText("Erro ao buscar grupo");
-        e.printStackTrace();
-    }
-
-   
-    OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
-    painelDeOpcoes.removeAll(); 
-    try {
-        java.util.List<OpcaoVoto> opcoes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
-            System.out.println("DEBUG: Encontradas " + opcoes.size() + " opções para a votação ID " + votacao.getIdVotacao());
-
-
-        for (OpcaoVoto opcao : opcoes) {
-            
-            javax.swing.JRadioButton radioBotao = new javax.swing.JRadioButton(opcao.getDescricao());
-            radioBotao.setFont(new java.awt.Font("Segoe UI", 0, 14));
-
-           
-            radioBotao.putClientProperty("opcao_objeto", opcao);
-
-          
-            this.grupoDeOpcoes.add(radioBotao);
-            painelDeOpcoes.add(radioBotao);
+        if (votacao.getDataFinal() != null) {
+            lblDataFinal.setText(sdf.format(votacao.getDataFinal()));
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        
-    }
+        if (votacao.getDataResultado() != null) {
+            lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
+        }
 
-    
-    painelDeOpcoes.revalidate();
-    painelDeOpcoes.repaint();
-}
+        try {
+            GrupoRepository grupoRepo = new GrupoRepository();
+            Grupo grupo = grupoRepo.buscarPorId(votacao.getIdGrupoDestino());
+            if (grupo != null) {
+                lblParticipantes.setText(grupo.getNome());
+            } else {
+                lblParticipantes.setText("Grupo não encontrado");
+            }
+        } catch (Exception e) {
+            lblParticipantes.setText("Erro ao buscar grupo");
+            e.printStackTrace();
+        }
+
+
+        OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
+        painelDeOpcoes.removeAll(); 
+        try {
+            java.util.List<OpcaoVoto> opcoes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
+                System.out.println("DEBUG: Encontradas " + opcoes.size() + " opções para a votação ID " + votacao.getIdVotacao());
+
+
+            for (OpcaoVoto opcao : opcoes) {
+
+                javax.swing.JRadioButton radioBotao = new javax.swing.JRadioButton(opcao.getDescricao());
+                radioBotao.setFont(new java.awt.Font("Segoe UI", 0, 12));
+
+
+                radioBotao.putClientProperty("opcao_objeto", opcao);
+
+
+                this.grupoDeOpcoes.add(radioBotao);
+                painelDeOpcoes.add(radioBotao);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+
+        this.revalidate();
+        this.repaint();
+    }
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        painelConteudoCentral = new javax.swing.JPanel();
+        painelBrancoInterno = new PainelArredondadoUtil();
         painelTitulo = new javax.swing.JPanel();
         lblTituloDaPagina = new javax.swing.JLabel();
         painelBotoesAcao = new javax.swing.JPanel();
         btnVoltarVotacao = new javax.swing.JButton();
         btnSalvarVoto = new javax.swing.JButton();
-        painelConteudoCentral = new javax.swing.JPanel();
+        painelCorpoConteudo = new javax.swing.JPanel();
         painelTextosVotacao = new javax.swing.JPanel();
         lblTituloEspecifico = new javax.swing.JLabel();
         txtAreaDescricaoVotacao = new javax.swing.JTextArea();
-        lblPerguntaPrincipal = new javax.swing.JLabel();
-        painelDeOpcoes = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
         painelInfoCard = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -125,8 +122,24 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        painelPerguntaEOpcoes = new javax.swing.JPanel();
+        lblPerguntaPrincipal = new javax.swing.JLabel();
+        painelDeOpcoes = new javax.swing.JPanel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jRadioButton5 = new javax.swing.JRadioButton();
 
         setLayout(new java.awt.BorderLayout());
+
+        painelConteudoCentral.setBackground(new java.awt.Color(240, 240, 240));
+        painelConteudoCentral.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 50, 50, 50));
+        painelConteudoCentral.setLayout(new java.awt.BorderLayout());
+
+        painelBrancoInterno.setBackground(new java.awt.Color(236, 236, 236));
+        painelBrancoInterno.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        painelBrancoInterno.setLayout(new java.awt.BorderLayout());
 
         painelTitulo.setBackground(new java.awt.Color(0, 0, 51));
         painelTitulo.setPreferredSize(new java.awt.Dimension(100, 60));
@@ -138,7 +151,7 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
         lblTituloDaPagina.setText("VOTAÇÃO");
         painelTitulo.add(lblTituloDaPagina, java.awt.BorderLayout.CENTER);
 
-        add(painelTitulo, java.awt.BorderLayout.PAGE_START);
+        painelBrancoInterno.add(painelTitulo, java.awt.BorderLayout.NORTH);
 
         painelBotoesAcao.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -158,28 +171,79 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
         });
         painelBotoesAcao.add(btnSalvarVoto);
 
-        add(painelBotoesAcao, java.awt.BorderLayout.PAGE_END);
+        painelBrancoInterno.add(painelBotoesAcao, java.awt.BorderLayout.SOUTH);
 
-        painelConteudoCentral.setLayout(new java.awt.BorderLayout());
+        painelCorpoConteudo.setLayout(new java.awt.BorderLayout());
 
-        painelTextosVotacao.setLayout(new javax.swing.BoxLayout(painelTextosVotacao, javax.swing.BoxLayout.Y_AXIS));
+        painelTextosVotacao.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        painelTextosVotacao.setLayout(new java.awt.BorderLayout());
 
-        lblTituloEspecifico.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        lblTituloEspecifico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloEspecifico.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTituloEspecifico.setText("VOTAÇÃO PARA DIREÇÃO-GERAL DO CAMPUS CALAMA");
-        painelTextosVotacao.add(lblTituloEspecifico);
+        painelTextosVotacao.add(lblTituloEspecifico, java.awt.BorderLayout.PAGE_START);
 
         txtAreaDescricaoVotacao.setEditable(false);
         txtAreaDescricaoVotacao.setColumns(20);
+        txtAreaDescricaoVotacao.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         txtAreaDescricaoVotacao.setLineWrap(true);
-        txtAreaDescricaoVotacao.setRows(5);
+        txtAreaDescricaoVotacao.setRows(3);
         txtAreaDescricaoVotacao.setText("Lorem ipsum.");
         txtAreaDescricaoVotacao.setWrapStyleWord(true);
         txtAreaDescricaoVotacao.setOpaque(false);
-        painelTextosVotacao.add(txtAreaDescricaoVotacao);
+        painelTextosVotacao.add(txtAreaDescricaoVotacao, java.awt.BorderLayout.CENTER);
 
+        painelInfoCard.setLayout(new java.awt.GridLayout(5, 2, 10, 5));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel1.setText("Data Início:");
+        painelInfoCard.add(jLabel1);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel2.setText("Data Fim:");
+        painelInfoCard.add(jLabel2);
+
+        lblDataInicial.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblDataInicial.setText("jLabel3");
+        painelInfoCard.add(lblDataInicial);
+
+        lblDataFinal.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblDataFinal.setText("jLabel4");
+        painelInfoCard.add(lblDataFinal);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel5.setText("Data Resultado:");
+        painelInfoCard.add(jLabel5);
+
+        lblDataResultado.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblDataResultado.setText("jLabel6");
+        painelInfoCard.add(lblDataResultado);
+
+        lblParticipantes.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblParticipantes.setText("jLabel7");
+        painelInfoCard.add(lblParticipantes);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel8.setText("Tipo Votação");
+        painelInfoCard.add(jLabel8);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel3.setText("jLabel3");
+        painelInfoCard.add(jLabel3);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabel4.setText("Participantes:");
+        painelInfoCard.add(jLabel4);
+
+        painelTextosVotacao.add(painelInfoCard, java.awt.BorderLayout.EAST);
+
+        painelCorpoConteudo.add(painelTextosVotacao, java.awt.BorderLayout.NORTH);
+
+        painelPerguntaEOpcoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        painelPerguntaEOpcoes.setLayout(new javax.swing.BoxLayout(painelPerguntaEOpcoes, javax.swing.BoxLayout.Y_AXIS));
+
+        lblPerguntaPrincipal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPerguntaPrincipal.setText("Pergunta");
-        painelTextosVotacao.add(lblPerguntaPrincipal);
+        painelPerguntaEOpcoes.add(lblPerguntaPrincipal);
 
         painelDeOpcoes.setLayout(new javax.swing.BoxLayout(painelDeOpcoes, javax.swing.BoxLayout.Y_AXIS));
 
@@ -208,84 +272,13 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
         jRadioButton5.setText("teste5");
         painelDeOpcoes.add(jRadioButton5);
 
-        painelTextosVotacao.add(painelDeOpcoes);
+        painelPerguntaEOpcoes.add(painelDeOpcoes);
 
-        painelConteudoCentral.add(painelTextosVotacao, java.awt.BorderLayout.CENTER);
+        painelCorpoConteudo.add(painelPerguntaEOpcoes, java.awt.BorderLayout.CENTER);
 
-        jLabel1.setText("lblDataInicioInfo");
+        painelBrancoInterno.add(painelCorpoConteudo, java.awt.BorderLayout.CENTER);
 
-        jLabel2.setText("lblDataFimInfo");
-
-        lblDataInicial.setText("jLabel3");
-
-        lblDataFinal.setText("jLabel4");
-
-        jLabel5.setText("lblDataResultadoInfo");
-
-        lblDataResultado.setText("jLabel6");
-
-        lblParticipantes.setText("jLabel7");
-
-        jLabel8.setText("lblTipoVotacaoInfo");
-
-        jLabel3.setText("jLabel3");
-
-        jLabel4.setText("lblParticipantesInfo");
-
-        javax.swing.GroupLayout painelInfoCardLayout = new javax.swing.GroupLayout(painelInfoCard);
-        painelInfoCard.setLayout(painelInfoCardLayout);
-        painelInfoCardLayout.setHorizontalGroup(
-            painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelInfoCardLayout.createSequentialGroup()
-                .addGroup(painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelInfoCardLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDataInicial))
-                    .addGroup(painelInfoCardLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblDataFinal))
-                    .addGroup(painelInfoCardLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(lblDataResultado))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelInfoCardLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelInfoCardLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblParticipantes)))
-                .addContainerGap())
-        );
-        painelInfoCardLayout.setVerticalGroup(
-            painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelInfoCardLayout.createSequentialGroup()
-                .addGroup(painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(lblDataInicial))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lblDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(lblDataResultado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel3))
-                .addGap(13, 13, 13)
-                .addGroup(painelInfoCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblParticipantes)
-                    .addComponent(jLabel4))
-                .addGap(0, 237, Short.MAX_VALUE))
-        );
-
-        painelConteudoCentral.add(painelInfoCard, java.awt.BorderLayout.LINE_END);
+        painelConteudoCentral.add(painelBrancoInterno, java.awt.BorderLayout.PAGE_START);
 
         add(painelConteudoCentral, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -296,6 +289,17 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
 
     private void btnVoltarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarVotacaoActionPerformed
         // TODO add your handling code here:
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (menuPrincipal != null) {
+            menuPrincipal.navegarParaVotacoesAtivas();
+        } else {
+            System.err.println("Erro: A tela de voto não foi encontrada dentro de um MenuPrincipalView.");
+            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (window != null) {
+                window.dispose();
+            }
+        }
     }//GEN-LAST:event_btnVoltarVotacaoActionPerformed
 
     private void btnSalvarVotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarVotoActionPerformed
@@ -360,11 +364,15 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
     private javax.swing.JLabel lblTituloDaPagina;
     private javax.swing.JLabel lblTituloEspecifico;
     private javax.swing.JPanel painelBotoesAcao;
+    private javax.swing.JPanel painelBrancoInterno;
     private javax.swing.JPanel painelConteudoCentral;
+    private javax.swing.JPanel painelCorpoConteudo;
     private javax.swing.JPanel painelDeOpcoes;
     private javax.swing.JPanel painelInfoCard;
+    private javax.swing.JPanel painelPerguntaEOpcoes;
     private javax.swing.JPanel painelTextosVotacao;
     private javax.swing.JPanel painelTitulo;
     private javax.swing.JTextArea txtAreaDescricaoVotacao;
     // End of variables declaration//GEN-END:variables
+
 }
