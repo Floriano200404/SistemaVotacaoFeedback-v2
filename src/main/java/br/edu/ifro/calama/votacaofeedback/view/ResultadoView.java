@@ -88,10 +88,12 @@ public class ResultadoView extends javax.swing.JPanel {
 
         add(painelBotoesAcao, java.awt.BorderLayout.PAGE_END);
 
-        painelTitulo.setBackground(new java.awt.Color(204, 255, 255));
+        painelTitulo.setBackground(new java.awt.Color(0, 0, 51));
         painelTitulo.setPreferredSize(new java.awt.Dimension(100, 60));
 
+        lblTituloDaPagina.setBackground(new java.awt.Color(0, 0, 51));
         lblTituloDaPagina.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        lblTituloDaPagina.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloDaPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloDaPagina.setText("RESULTADO DA VOTAÇÃO");
 

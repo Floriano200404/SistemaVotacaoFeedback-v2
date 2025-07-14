@@ -6,12 +6,16 @@ package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
+import br.edu.ifro.calama.votacaofeedback.model.ResultadoVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
+import br.edu.ifro.calama.votacaofeedback.repository.VotoRepository;
 import br.edu.ifro.calama.votacaofeedback.service.VotoService;
 import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,10 +25,7 @@ public class TelaDeVotoView extends javax.swing.JPanel {
   private Votacao votacaoAtual;
 private Usuario usuarioLogado;
 private javax.swing.ButtonGroup grupoDeOpcoes;
-public enum ModoTela {
-    VOTAR,
-    RESULTADO
-}
+
     /**
      * Creates new form TelaDeVotoView
      */
@@ -32,7 +33,12 @@ public enum ModoTela {
         initComponents();
         this.grupoDeOpcoes = new javax.swing.ButtonGroup();
     }
-public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
+public enum ModoTela {
+    VOTAR,
+    RESULTADO
+}
+
+public void carregarDados(Votacao votacao, Usuario usuario, ModoTela modo) {
     
     this.votacaoAtual = votacao;
     this.usuarioLogado = usuario;
@@ -40,56 +46,45 @@ public void carregarDadosVotacao(Votacao votacao, Usuario usuario) {
     
     lblTituloEspecifico.setText(votacao.getTitulo());
     txtAreaDescricaoVotacao.setText(votacao.getDescricao());
-    lblPerguntaPrincipal.setText(votacao.getPergunta());
+    
+    painelDeOpcoes.removeAll(); 
 
     
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-    if (votacao.getDataInicial() != null) {
-        lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
-    }
-    if (votacao.getDataFinal() != null) {
-        lblDataFinal.setText(sdf.format(votacao.getDataFinal()));
-    }
-    if (votacao.getDataResultado() != null) {
-        lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
-    }
-
-    try {
-        GrupoRepository grupoRepo = new GrupoRepository();
-        Grupo grupo = grupoRepo.buscarPorId(votacao.getIdGrupoDestino());
-        if (grupo != null) {
-            lblParticipantes.setText(grupo.getNome());
-        } else {
-            lblParticipantes.setText("Grupo não encontrado");
-        }
-    } catch (Exception e) {
-        lblParticipantes.setText("Erro ao buscar grupo");
-        e.printStackTrace();
-    }
-
-   
-    OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
-    painelDeOpcoes.removeAll(); 
-    try {
-        java.util.List<OpcaoVoto> opcoes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
-            System.out.println("DEBUG: Encontradas " + opcoes.size() + " opções para a votação ID " + votacao.getIdVotacao());
-
-
-        for (OpcaoVoto opcao : opcoes) {
+    switch (modo) {
+        case VOTAR:
             
-            javax.swing.JRadioButton radioBotao = new javax.swing.JRadioButton(opcao.getDescricao());
-            radioBotao.setFont(new java.awt.Font("Segoe UI", 0, 14));
+            btnSalvarVoto.setVisible(true); // Garante que o botão de salvar aparece
 
+            OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
+            this.grupoDeOpcoes = new javax.swing.ButtonGroup();
+            try {
+                List<OpcaoVoto> opcoes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
+                for (OpcaoVoto opcao : opcoes) {
+                    javax.swing.JRadioButton radioBotao = new javax.swing.JRadioButton(opcao.getDescricao());
+                    radioBotao.putClientProperty("opcao_objeto", opcao);
+                    this.grupoDeOpcoes.add(radioBotao);
+                    painelDeOpcoes.add(radioBotao);
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+            break;
+
+        case RESULTADO:
            
-            radioBotao.putClientProperty("opcao_objeto", opcao);
+            btnSalvarVoto.setVisible(false); 
 
-          
-            this.grupoDeOpcoes.add(radioBotao);
-            painelDeOpcoes.add(radioBotao);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        
+            VotoRepository votoRepo = new VotoRepository();
+            try {
+                List<ResultadoVotacao> resultados = votoRepo.contarVotosPorVotacao(votacao.getIdVotacao());
+                for (ResultadoVotacao resultado : resultados) {
+                    JPanel painelLinha = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+                    JLabel lblDescricao = new JLabel(resultado.getDescricaoOpcao() + ": ");
+                    JLabel lblQuantidade = new JLabel(String.valueOf(resultado.getQuantidadeVotos()) + " votos");
+                    painelLinha.add(lblDescricao);
+                    painelLinha.add(lblQuantidade);
+                    painelDeOpcoes.add(painelLinha);
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+            break;
     }
 
     
