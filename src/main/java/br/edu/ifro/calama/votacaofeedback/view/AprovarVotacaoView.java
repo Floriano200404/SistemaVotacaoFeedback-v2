@@ -7,9 +7,6 @@ package br.edu.ifro.calama.votacaofeedback.view;
 import br.edu.ifro.calama.votacaofeedback.controller.VotacaoController;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
-import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
-import br.edu.ifro.calama.votacaofeedback.service.VotacaoService;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,12 +16,14 @@ import java.util.List;
 public final class AprovarVotacaoView extends javax.swing.JPanel {
 
     private Usuario usuarioLogado;
+    private MenuPrincipalView menuPrincipal;
     /**
      * Creates new form AprovarVotacaoView
      */
-    public AprovarVotacaoView(Usuario usuario) {
+    public AprovarVotacaoView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
         this.usuarioLogado = usuario;
+        this.menuPrincipal = menuPrincipal;
 
         if (this.usuarioLogado == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro fatal: Usuário não fornecido para a tela de aprovação.", "Erro de Sessão", javax.swing.JOptionPane.ERROR_MESSAGE);

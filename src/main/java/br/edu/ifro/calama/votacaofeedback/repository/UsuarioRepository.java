@@ -92,7 +92,6 @@ public class UsuarioRepository {
             }
         }
 
-        // O seu debug continua útil aqui
         if (usuarioEncontrado != null) {
             System.out.println("--- DEBUG REPOSITORY (CORRIGIDO) ---");
             System.out.println("Usuário ENCONTRADO e dados completos carregados.");
@@ -156,23 +155,42 @@ public class UsuarioRepository {
     }
     
     public boolean verificarSenhaAnterior(String email, String senhaParaVerificar) throws SQLException, Exception {
-    String sql = "SELECT id_usuario FROM Usuarios WHERE email = ? AND senha = SHA2(?, 256)";
-    boolean senhaEhIgual = false;
-    
-    try (Connection conexao = DatabaseUtil.getConnection();
-         PreparedStatement ps = conexao.prepareStatement(sql)) {
-        
-        ps.setString(1, email);
-        ps.setString(2, senhaParaVerificar);
-        
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                senhaEhIgual = true;
+        String sql = "SELECT id_usuario FROM Usuarios WHERE email = ? AND senha = SHA2(?, 256)";
+        boolean senhaEhIgual = false;
+
+        try (Connection conexao = DatabaseUtil.getConnection();
+             PreparedStatement ps = conexao.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setString(2, senhaParaVerificar);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    senhaEhIgual = true;
+                }
             }
         }
+        return senhaEhIgual;
     }
-    return senhaEhIgual;
-}
     
-    
+    public boolean isUsuarioEmGrupo(int idUsuario, String nomeGrupo) throws SQLException, Exception {
+    // Esta query junta as tabelas para descobrir se o usuário está no grupo desejado.
+        String sql = "SELECT COUNT(*) FROM Usuario_Grupos ug " +
+                     "JOIN Grupos g ON ug.id_grupo = g.id_Grupos " +
+                     "WHERE ug.id_usuario = ? AND g.nome = ?";
+
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUsuario);
+            stmt.setString(2, nomeGrupo);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }    
 }

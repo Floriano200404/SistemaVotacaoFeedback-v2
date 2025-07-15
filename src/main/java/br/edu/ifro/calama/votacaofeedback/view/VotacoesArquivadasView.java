@@ -13,51 +13,43 @@ import java.util.List;
  *
  * @author floriano
  */
-public class VotacoesAtivasView extends javax.swing.JPanel {
 
-    private final MenuPrincipalView menuPrincipal;
+public class VotacoesArquivadasView extends javax.swing.JPanel {
+
     private Usuario usuarioLogado;
+    private MenuPrincipalView menuPrincipal;
     
-    public VotacoesAtivasView(MenuPrincipalView menuPrincipal, Usuario usuario) {
+    public VotacoesArquivadasView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
         this.menuPrincipal = menuPrincipal;
         this.usuarioLogado = usuario;
-    }
-    public void carregarVotacoes(Usuario usuarioLogado) {
     
-    this.removeAll();
-
-   
+    }
+        public void carregarVotacoesArquivadas(Usuario usuarioLogado) {
+    
     VotacaoService votacaoService = new VotacaoService();
 
-    try {
-        
-        List<Votacao> votacoesAtivas = votacaoService.buscarAtivasPorUsuario(usuarioLogado);
+    
+    this.removeAll(); 
+    
+    List<Votacao> votacoesArquivadas = votacaoService.buscarVotacoesComResultadoDisponivel();
 
-       
-        for (Votacao votacao : votacoesAtivas) {
-            CardView card = new CardView();
-            card.setDados(votacao);
-            card.setUsuario(usuarioLogado);
-            card.setTelaDeOrigem(this); // Define o contexto
-            card.setModo(DetalhesVotacaoDialog.ModoDialogo.PARTICIPACAO);
-            this.add(card);
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Erro ao carregar as votações ativas.",
-            "Erro de Conexão",
-            javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+    
+   for (Votacao votacao : votacoesArquivadas) {
+    CardView card = new CardView();
+    card.setDados(votacao);
+    card.setUsuario(usuarioLogado); // Passa o usuário para o card
+    card.setTelaDeOrigem(this);
+    card.setModo(DetalhesVotacaoDialog.ModoDialogo.RESULTADO); // << MODO DE RESULTADO
+    this.add(card);
+}
 
    
     this.revalidate();
     this.repaint();
 }
 
-   
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

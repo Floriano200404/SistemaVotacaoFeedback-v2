@@ -6,14 +6,18 @@ package br.edu.ifro.calama.votacaofeedback.view;
 
 import br.edu.ifro.calama.votacaofeedback.model.Grupo;
 import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
+import br.edu.ifro.calama.votacaofeedback.model.ResultadoVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
+import br.edu.ifro.calama.votacaofeedback.repository.VotoRepository;
 import br.edu.ifro.calama.votacaofeedback.service.VotoService;
 import br.edu.ifro.calama.votacaofeedback.util.PainelArredondadoUtil;
 import java.awt.Color;
 import java.util.List;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -21,15 +25,23 @@ import javax.swing.JPanel;
  * @author floriano
  */
 public class TelaDeVotoView extends javax.swing.JPanel {
+
 private Votacao votacaoAtual;
 private Usuario usuarioLogado;
 private javax.swing.ButtonGroup grupoDeOpcoes;
+private final MenuPrincipalView menuPrincipal;
+private final java.awt.Color corVoltar = new java.awt.Color(127, 140, 141);
+private final java.awt.Color corVoltarHover = new java.awt.Color(149, 165, 166);
+private final java.awt.Color corVoltarClick = new java.awt.Color(93, 109, 126);
+
+
     /**
      * Creates new form TelaDeVotoView
      */
-    public TelaDeVotoView() {
+    public TelaDeVotoView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
         this.grupoDeOpcoes = new javax.swing.ButtonGroup();
+
         int cornerRadius = 15;
 
         Color corVoltar = new Color(0x6A6A6A);
@@ -43,6 +55,65 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
         btnVoltarVotacao.setBorder(null);
         
         btnVoltarVotacao.setPreferredSize(new java.awt.Dimension(100, 25));
+
+        this.menuPrincipal = menuPrincipal;
+        this.usuarioLogado = usuario;
+    }
+    
+    public enum ModoTela {
+        VOTAR,
+        RESULTADO
+    }
+
+public void carregarDados(Votacao votacao, Usuario usuario, ModoTela modo) {
+    
+    this.votacaoAtual = votacao;
+    this.usuarioLogado = usuario;
+
+    
+    lblTituloEspecifico.setText(votacao.getTitulo());
+    txtAreaDescricaoVotacao.setText(votacao.getDescricao());
+    
+    painelDeOpcoes.removeAll(); 
+
+    
+    switch (modo) {
+        case VOTAR:
+            
+            btnSalvarVoto.setVisible(true); // Garante que o botão de salvar aparece
+
+            OpcaoVotoRepository opcaoRepo = new OpcaoVotoRepository();
+            this.grupoDeOpcoes = new javax.swing.ButtonGroup();
+            try {
+                List<OpcaoVoto> opcoes = opcaoRepo.buscarPorIdVotacao(votacao.getIdVotacao());
+                for (OpcaoVoto opcao : opcoes) {
+                    javax.swing.JRadioButton radioBotao = new javax.swing.JRadioButton(opcao.getDescricao());
+                    radioBotao.putClientProperty("opcao_objeto", opcao);
+                    this.grupoDeOpcoes.add(radioBotao);
+                    painelDeOpcoes.add(radioBotao);
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+            break;
+
+        case RESULTADO:
+           
+            btnSalvarVoto.setVisible(false); 
+
+            VotoRepository votoRepo = new VotoRepository();
+            try {
+                List<ResultadoVotacao> resultados = votoRepo.contarVotosPorVotacao(votacao.getIdVotacao());
+                for (ResultadoVotacao resultado : resultados) {
+                    JPanel painelLinha = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+                    JLabel lblDescricao = new JLabel(resultado.getDescricaoOpcao() + ": ");
+                    JLabel lblQuantidade = new JLabel(String.valueOf(resultado.getQuantidadeVotos()) + " votos");
+                    painelLinha.add(lblDescricao);
+                    painelLinha.add(lblQuantidade);
+                    painelDeOpcoes.add(painelLinha);
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+            break;
+    }
+
 
 
         br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil btnVoltarCustom = (br.edu.ifro.calama.votacaofeedback.util.RoundedButtonUtil) btnVoltarVotacao;

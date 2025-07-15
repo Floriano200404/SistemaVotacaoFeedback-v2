@@ -1,18 +1,18 @@
 package br.edu.ifro.calama.votacaofeedback.service;
 
 
+import br.edu.ifro.calama.votacaofeedback.model.ResultadoVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.OpcaoVoto;
+import br.edu.ifro.calama.votacaofeedback.model.StatusVotacao;
 import br.edu.ifro.calama.votacaofeedback.model.Usuario;
 import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.OpcaoVotoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
+import br.edu.ifro.calama.votacaofeedback.repository.VotoRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Esta classe contém a lógica de negócio para o gerenciamento de votações.
- * Ela atua como uma ponte entre a View (telas) e o Repository (banco de dados).
- */
+
 public class VotacaoService {
 
     private VotacaoRepository votacaoRepository;
@@ -51,7 +51,29 @@ public class VotacaoService {
             return new java.util.ArrayList<>();
         }
     }
-    
+    public List<ResultadoVotacao> apurarResultados(int idVotacao) {
+    try {
+        
+        VotoRepository votoRepo = new VotoRepository();
+        return votoRepo.contarVotosPorVotacao(idVotacao);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return new ArrayList<>(); 
+    }
+}
+    public List<Votacao> buscarVotacoesComResultadoDisponivel() {
+    try {
+        // Simplesmente chama o método do repositório que já criamos
+        return votacaoRepository.buscarVotacoesComResultadoDisponivel();
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Em caso de erro, retorna uma lista vazia para a tela não quebrar
+        return new ArrayList<>(); 
+    }
+}   public List<Votacao> buscarAtivasPorUsuario(Usuario usuario) throws Exception {
+    // Simplesmente chama o método do repositório que já criamos
+    return votacaoRepository.buscarAtivasPorUsuario(usuario);
+}
     public List<Votacao> buscarPendentes() throws Exception{
         return this.votacaoRepository.buscarTodosPendentes();
     }
@@ -119,8 +141,38 @@ public class VotacaoService {
             e.printStackTrace();
         }
     }
+    
 
     public List<Votacao> buscarTodosPendentes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public long contarVotacoesAguardandoAprovacao() throws Exception {
+        return this.votacaoRepository.countByStatus(StatusVotacao.PENDENTE);
+    }
+
+    public long contarVotacoesAtivas() throws Exception {
+        return this.votacaoRepository.countAtivas();
+    }
+
+    public long contarVotacoesArquivadas() throws Exception {
+        long concluidas = this.votacaoRepository.countByStatus(StatusVotacao.CONCLUIDA);
+        long reprovadas = this.votacaoRepository.countByStatus(StatusVotacao.REPROVADA);
+        return concluidas + reprovadas;
+    }
+
+    public long contarMinhasVotacoesGerenciaveis(int idCriador) throws Exception {
+        return this.votacaoRepository.countPendentesPorCriador(idCriador);
+    }
+
+    // Adicione este método para ser usado pela tela VotacoesArquivadasView
+    public List<Votacao> buscarArquivadasPorUsuario(Usuario usuario) {
+        try {
+            return votacaoRepository.buscarArquivadasPorUsuario(usuario);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+    
 }
