@@ -84,7 +84,7 @@ CREATE TABLE `opcao_voto` (
   UNIQUE KEY `id_opcao_UNIQUE` (`id_opcao`),
   KEY `id_votacao_idx` (`id_votacao`),
   CONSTRAINT `FKid_votacao` FOREIGN KEY (`id_votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,6 @@ CREATE TABLE `opcao_voto` (
 
 LOCK TABLES `opcao_voto` WRITE;
 /*!40000 ALTER TABLE `opcao_voto` DISABLE KEYS */;
-INSERT INTO `opcao_voto` VALUES (1,1,'eu'),(2,1,'sim'),(3,2,'dada'),(4,2,'da');
 /*!40000 ALTER TABLE `opcao_voto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +191,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN','826159','2025-07-12 12:09:40'),(41,'Athos Ribeiro','092.189.074-91','2024106090016','athos.r@estudante.ifro.edu.br','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','DISCENTE',NULL,NULL),(42,'Floriano Araujo','089.452.175-93','2024106090025','f.araujo@estudante.ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','DISCENTE','832770','2025-07-12 22:53:09');
+INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN','826159','2025-07-12 12:09:40'),(41,'Athos Ribeiro','092.189.074-91','2024106090016','athos.r@estudante.ifro.edu.br','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','DISCENTE','589435','2025-07-14 22:06:26'),(42,'Floriano Araujo','089.452.175-93','2024106090025','f.araujo@estudante.ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','DISCENTE','832770','2025-07-12 22:53:09');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +219,7 @@ CREATE TABLE `votacao` (
   KEY `id_grupo_destino_idx` (`id_grupo_destino`),
   CONSTRAINT `FK_idCriador` FOREIGN KEY (`id_Criador`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idGrupoDestino` FOREIGN KEY (`id_grupo_destino`) REFERENCES `grupos` (`id_Grupos`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +228,6 @@ CREATE TABLE `votacao` (
 
 LOCK TABLES `votacao` WRITE;
 /*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
-INSERT INTO `votacao` VALUES (1,1,5,'2025-07-14','Titulo','Descreve','2025-07-14','2025-07-14','APROVADA','Eu mesmo?'),(2,1,5,'2025-07-14','dada','','2025-07-14','2025-07-14','APROVADA','dada');
 /*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +252,7 @@ CREATE TABLE `voto` (
   CONSTRAINT `FK_id_Usuario` FOREIGN KEY (`id_Usuario`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idOpcao` FOREIGN KEY (`id_Opcao`) REFERENCES `opcao_voto` (`id_opcao`),
   CONSTRAINT `FK_idVotacao` FOREIGN KEY (`id_Votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +261,6 @@ CREATE TABLE `voto` (
 
 LOCK TABLES `voto` WRITE;
 /*!40000 ALTER TABLE `voto` DISABLE KEYS */;
-INSERT INTO `voto` VALUES (1,2,1,3,'2025-07-14');
 /*!40000 ALTER TABLE `voto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -276,4 +273,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-14 19:46:39
+-- Dump completed on 2025-07-14 23:34:18
