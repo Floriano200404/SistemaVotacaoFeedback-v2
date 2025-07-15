@@ -698,9 +698,7 @@ public void setModo(ModoDialogo modo) {
         votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
 
         javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
-        if (telaDeOrigem != null) {
-            ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
-        }
+      
         this.dispose();
     } catch (Exception e) {
         e.printStackTrace();
@@ -730,9 +728,7 @@ public void setModo(ModoDialogo modo) {
         votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
 
         javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
-        if (telaDeOrigem != null) {
-            ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
-        }
+
         this.dispose(); 
     } catch (Exception e) {
         e.printStackTrace();
