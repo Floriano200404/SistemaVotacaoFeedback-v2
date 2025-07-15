@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints; 
 import java.awt.geom.RoundRectangle2D; 
 import javax.swing.JButton; 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -33,7 +34,10 @@ public class AlterarSenhaView extends javax.swing.JFrame {
 
     public AlterarSenhaView(String email) {
         initComponents();
+        setSize(1280, 720);
+        setLocationRelativeTo(null); 
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.email = email;
         jLabEyeSenha.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -122,19 +126,27 @@ public class AlterarSenhaView extends javax.swing.JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            Color color1 = new Color(9, 32, 63);
-            Color color2 = new Color(11, 41, 81);
-            int w = getWidth();
-            int h = getHeight();
-            GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
+            int width = getWidth();
+            int height = getHeight();
+
+            Color color1 = new Color(9, 32, 63);   // Azul escuro
+            Color color2 = new Color(0, 0, 0);     // Preto
+
+            int pontoTransicaoX = (int) (width * 0.25);
+
+            g2d.setColor(color1);
+            g2d.fillRect(0, 0, pontoTransicaoX, height);
+            
+            GradientPaint gp = new GradientPaint(pontoTransicaoX, 0, color1, width, 0, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, w, h);
+            g2d.fillRect(pontoTransicaoX, 0, width - pontoTransicaoX, height);
         }
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelFundoPrincipal = new GradientPanel();
         jPanelCaixaTexto = new javax.swing.JPanel();
@@ -156,6 +168,8 @@ public class AlterarSenhaView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanelFundoPrincipal.setLayout(new java.awt.GridBagLayout());
 
         jPanelCaixaTexto.setBackground(new java.awt.Color(11, 41, 81));
 
@@ -228,7 +242,7 @@ public class AlterarSenhaView extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(pwdConfirmarSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabEyeConfirmarSenha)
                 .addContainerGap())
@@ -248,89 +262,75 @@ public class AlterarSenhaView extends javax.swing.JFrame {
             .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
                 .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabelSenha)
-                                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelCaixaTextoLayout.createSequentialGroup()
-                                .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabelConfirmarSenha, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bntCadastrarNovaSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelSenha)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelConfirmarSenha)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bntCadastrarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                        .addGap(127, 127, 127)
+                        .addGap(134, 134, 134)
                         .addComponent(jLabelAlterarSenha)))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanelCaixaTextoLayout.setVerticalGroup(
             jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(34, 34, 34)
                 .addComponent(jLabelAlterarSenha)
-                .addGap(43, 43, 43)
+                .addGap(41, 41, 41)
                 .addComponent(jLabelSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabelConfirmarSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(33, 33, 33)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(bntCadastrarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addComponent(bntCadastrarNovaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
                 .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(68, 68, 68))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 4;
+        gridBagConstraints.ipadx = 59;
+        gridBagConstraints.ipady = 72;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(147, 112, 162, 0);
+        jPanelFundoPrincipal.add(jPanelCaixaTexto, gridBagConstraints);
 
         jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(175, 45, 0, 0);
+        jPanelFundoPrincipal.add(jLabLogo, gridBagConstraints);
 
         jLabIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(201, 6, 0, 233);
+        jPanelFundoPrincipal.add(jLabIF, gridBagConstraints);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/img-Photoroom.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanelFundoPrincipalLayout = new javax.swing.GroupLayout(jPanelFundoPrincipal);
-        jPanelFundoPrincipal.setLayout(jPanelFundoPrincipalLayout);
-        jPanelFundoPrincipalLayout.setHorizontalGroup(
-            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
-                .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabLogo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabIF))
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1)))
-                .addContainerGap(208, Short.MAX_VALUE))
-        );
-        jPanelFundoPrincipalLayout.setVerticalGroup(
-            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                                .addGap(114, 114, 114)
-                                .addComponent(jLabLogo))
-                            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                                .addGap(175, 175, 175)
-                                .addComponent(jLabIF)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(174, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(50, 60, 0, 233);
+        jPanelFundoPrincipal.add(jLabel1, gridBagConstraints);
 
         getContentPane().add(jPanelFundoPrincipal, java.awt.BorderLayout.CENTER);
 

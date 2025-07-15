@@ -131,37 +131,41 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         lblPerguntaPrincipal.setOpaque(false);
     }
     
-public void setModo(ModoDialogo modo) {
-    this.modo = modo;
+    public void setModo(ModoDialogo modo) {
+        this.modo = modo;
 
-    btnAprovarDialog.setVisible(false);
-    btnReprovarDialog.setVisible(false);
-    pnlAcoesDinamicas.setVisible(true); 
+        btnAprovarDialog.setVisible(false);
+        btnReprovarDialog.setVisible(false);
 
-    java.awt.CardLayout cl = (java.awt.CardLayout)(pnlAcoesDinamicas.getLayout());
+        pnlAcoesDinamicas.setVisible(true);
 
-    if (modo == null) return;
+        java.awt.CardLayout cl = (java.awt.CardLayout) pnlAcoesDinamicas.getLayout();
 
-    switch (modo) {
-        case APROVACAO:
-            btnAprovarDialog.setVisible(true);
-            btnReprovarDialog.setVisible(true);
-            pnlAcoesDinamicas.setVisible(false); 
-            break;
-        case PARTICIPACAO:
-            cl.show(pnlAcoesDinamicas, "card_participar");
-            break;
-        case GERENCIAMENTO:
-            cl.show(pnlAcoesDinamicas, "card_editar");
-            break;
-        case RESULTADO:
-            cl.show(pnlAcoesDinamicas, "card_resultado");
-            break;
-        default:
-             pnlAcoesDinamicas.setVisible(false);
-            break;
+        if (modo == null) {
+            pnlAcoesDinamicas.setVisible(false);
+            return;
+        }
+
+        switch (modo) {
+            case APROVACAO:
+                btnAprovarDialog.setVisible(true);
+                btnReprovarDialog.setVisible(true);
+                pnlAcoesDinamicas.setVisible(false); 
+                break;
+            case PARTICIPACAO:
+                cl.show(pnlAcoesDinamicas, "card_participar");
+                break;
+            case GERENCIAMENTO:
+                cl.show(pnlAcoesDinamicas, "card_editar");
+                break;
+            case RESULTADO:
+                cl.show(pnlAcoesDinamicas, "card_resultado");
+                break;
+            default:
+                pnlAcoesDinamicas.setVisible(false);
+                break;
+        }
     }
-}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -679,11 +683,12 @@ public void setModo(ModoDialogo modo) {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(80, 80, 80))
         );
 
@@ -693,47 +698,75 @@ public void setModo(ModoDialogo modo) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprovarDialogActionPerformed
-   try {
-        VotacaoRepository votacaoRepo = new VotacaoRepository();
-        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
-      
-        this.dispose();
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao reprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
+        if (menuPrincipal == null) {
+             javax.swing.JOptionPane.showMessageDialog(this, "Erro crítico: Tela principal não encontrada.");
+             return;
+         }
+
+        try {
+             VotacaoRepository votacaoRepo = new VotacaoRepository();
+             votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
+
+             menuPrincipal.exibirMensagem("Votação reprovada.");
+
+             menuPrincipal.atualizarDashboard();
+
+             if (telaDeOrigem instanceof AprovarVotacaoView) {
+                 ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
+             }
+
+             this.dispose();
+        } catch (Exception e) {
+             e.printStackTrace();
+             menuPrincipal.exibirMensagemDeErro("Erro ao reprovar votação: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnReprovarDialogActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (this.votacaoAtual != null) {
-            System.out.println("[DEBUG DetalhesVotacaoDialog] Enviando votação com título: '" + this.votacaoAtual.getTitulo() + "'");
-        } else {
-            System.out.println("[DEBUG DetalhesVotacaoDialog] ERRO: Tentando enviar uma votação NULA!");
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (menuPrincipal == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro: Não foi possível encontrar a tela principal.");
+            return;
         }
-        
+
         if (this.votacaoAtual != null && this.usuarioLogado != null) {
-            CriarVotacaoView telaDeEdicao = new CriarVotacaoView(this.usuarioLogado, this.votacaoAtual, true);
-            telaDeEdicao.setLocationRelativeTo(null);
+            CriarVotacaoView telaDeEdicao = new CriarVotacaoView(menuPrincipal, this.usuarioLogado, this.votacaoAtual, true);
             telaDeEdicao.setVisible(true);
 
-            ((java.awt.Frame) getParent()).dispose();
+            menuPrincipal.setVisible(false);
             this.dispose();
         }
     }//GEN-LAST:event_btnEditarActionPerformed
     private void btnAprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprovarDialogActionPerformed
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (menuPrincipal == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro crítico: Tela principal não encontrada.");
+            return;
+        }
+
         try {
-        VotacaoRepository votacaoRepo = new VotacaoRepository();
-        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
+            VotacaoRepository votacaoRepo = new VotacaoRepository();
+            votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
+            menuPrincipal.exibirMensagemDeSucesso("Votação aprovada com sucesso!");
 
-        this.dispose(); 
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao aprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }    
+            menuPrincipal.atualizarDashboard();
+
+            if (telaDeOrigem instanceof AprovarVotacaoView) {
+                ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
+            } else if (telaDeOrigem instanceof GerenciarVotacaoView) {
+                ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
+            }
+
+            this.dispose(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            menuPrincipal.exibirMensagemDeErro("Erro ao aprovar votação: ");
+        }
     }//GEN-LAST:event_btnAprovarDialogActionPerformed
 
     private void btnVoltarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarDialogActionPerformed

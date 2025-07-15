@@ -26,13 +26,17 @@ import javax.swing.JPanel;
  */
 public class TelaDeVotoView extends javax.swing.JPanel {
 
-private Votacao votacaoAtual;
-private Usuario usuarioLogado;
-private javax.swing.ButtonGroup grupoDeOpcoes;
-private final MenuPrincipalView menuPrincipal;
-private final java.awt.Color corVoltar = new java.awt.Color(127, 140, 141);
-private final java.awt.Color corVoltarHover = new java.awt.Color(149, 165, 166);
-private final java.awt.Color corVoltarClick = new java.awt.Color(93, 109, 126);
+    
+    private ModoTela modoAtual;
+
+
+    private Votacao votacaoAtual;
+    private Usuario usuarioLogado;
+    private javax.swing.ButtonGroup grupoDeOpcoes;
+    private final MenuPrincipalView menuPrincipal;
+    private final java.awt.Color corVoltar = new java.awt.Color(127, 140, 141);
+    private final java.awt.Color corVoltarHover = new java.awt.Color(149, 165, 166);
+    private final java.awt.Color corVoltarClick = new java.awt.Color(93, 109, 126);
 
 
     /**
@@ -69,6 +73,7 @@ public void carregarDados(Votacao votacao, Usuario usuario, ModoTela modo) {
     
     this.votacaoAtual = votacao;
     this.usuarioLogado = usuario;
+    this.modoAtual = modo;
 
     
     lblTituloEspecifico.setText(votacao.getTitulo());
@@ -398,22 +403,15 @@ public void carregarDados(Votacao votacao, Usuario usuario, ModoTela modo) {
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void btnVoltarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarVotacaoActionPerformed
-        // TODO add your handling code here:
-        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
 
-        if (menuPrincipal != null) {
-            menuPrincipal.navegarParaVotacoesAtivas();
+        if (this.modoAtual == ModoTela.VOTAR) {
+            this.menuPrincipal.navegarPara("ATIVAS");
         } else {
-            System.err.println("Erro: A tela de voto não foi encontrada dentro de um MenuPrincipalView.");
-            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
-            if (window != null) {
-                window.dispose();
-            }
+            this.menuPrincipal.navegarPara("ARQUIVADAS");
         }
     }//GEN-LAST:event_btnVoltarVotacaoActionPerformed
 
     private void btnSalvarVotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarVotoActionPerformed
-    System.out.println("--- 1. Botão Salvar Clicado ---");
     OpcaoVoto opcaoSelecionada = null;
 
     for (java.util.Enumeration<javax.swing.AbstractButton> buttons = this.grupoDeOpcoes.getElements(); buttons.hasMoreElements();) {
@@ -425,26 +423,26 @@ public void carregarDados(Votacao votacao, Usuario usuario, ModoTela modo) {
     }
 
     if (opcaoSelecionada == null) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecione uma opção para votar.", "Atenção", javax.swing.JOptionPane.WARNING_MESSAGE);
+        if (menuPrincipal != null) {
+            menuPrincipal.exibirMensagemDeErro("Selecione uma opção para votar.");
+        }
         return;
     }
-
-    System.out.println("Opção selecionada: " + opcaoSelecionada.getDescricao() + " (ID: " + opcaoSelecionada.getIdOpcaoVoto() + ")");
 
     try {
         VotoService votoService = new VotoService();
         votoService.registrarVoto(this.votacaoAtual, opcaoSelecionada, this.usuarioLogado);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Voto registrado com sucesso!");
-
-
-        MenuPrincipalView menu = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
-        if (menu != null) {
-            menu.navegarParaVotacoesAtivas();
+        if (menuPrincipal != null) {
+            menuPrincipal.exibirMensagemDeSucesso("Voto registrado com sucesso!");
+            
+            menuPrincipal.navegarPara("ATIVAS");
         }
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao registrar voto:\n" + e.getMessage(), "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+        if (menuPrincipal != null) {
+            menuPrincipal.exibirMensagemDeErro("Seu voto já foi registrado!");
+        }
         e.printStackTrace();
     }
         // TODO add your handling code here:

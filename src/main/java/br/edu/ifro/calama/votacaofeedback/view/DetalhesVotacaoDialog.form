@@ -99,11 +99,13 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnAprovarDialog" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="btnReprovarDialog" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="btnVoltarDialog" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="pnlAcoesDinamicas" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnAprovarDialog" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="btnReprovarDialog" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="btnVoltarDialog" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
               </Group>

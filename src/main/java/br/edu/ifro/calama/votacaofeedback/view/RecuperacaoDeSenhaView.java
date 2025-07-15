@@ -21,6 +21,7 @@ import javax.swing.border.AbstractBorder;
 import java.awt.Insets;
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 /**
  *
@@ -32,8 +33,8 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     
     public RecuperacaoDeSenhaView() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); 
-        setLocationRelativeTo(null);
         this.email = email;
     }
 
@@ -50,6 +51,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelFundoPrincipal = new GradientPanel();
         jPanelCaixaTexto = new javax.swing.JPanel();
@@ -67,6 +69,7 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanelFundoPrincipal.setBackground(new java.awt.Color(9, 32, 63));
+        jPanelFundoPrincipal.setLayout(new java.awt.GridBagLayout());
 
         jPanelCaixaTexto.setBackground(new java.awt.Color(11, 41, 81));
 
@@ -116,81 +119,82 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
                 .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(jLaRelembrarSenha))
-                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                            .addGap(51, 51, 51)
                             .addGroup(jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabEmail)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(bntEnviarEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabOrientacoes)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                                .addComponent(jLabOrientacoes)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCaixaTextoLayout.createSequentialGroup()
+                            .addGap(45, 45, 45)
+                            .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelCaixaTextoLayout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLaRelembrarSenha)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanelCaixaTextoLayout.setVerticalGroup(
             jPanelCaixaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCaixaTextoLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap(66, Short.MAX_VALUE)
                 .addComponent(jLaRelembrarSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(54, 54, 54)
                 .addComponent(jLabEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bntEnviarEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(jLabOrientacoes)
-                .addGap(56, 56, 56)
+                .addGap(43, 43, 43)
                 .addComponent(bntVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                .addGap(58, 58, 58))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.ipady = 60;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(170, 175, 151, 0);
+        jPanelFundoPrincipal.add(jPanelCaixaTexto, gridBagConstraints);
 
         jLabIF.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/TEXTO IF.png"))); // NOI18N
         jLabIF.setMaximumSize(new java.awt.Dimension(100, 160));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipady = 116;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(170, 6, 0, 0);
+        jPanelFundoPrincipal.add(jLabIF, gridBagConstraints);
 
         jLabLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/IF.png"))); // NOI18N
         jLabLogo.setMaximumSize(new java.awt.Dimension(203, 230));
         jLabLogo.setMinimumSize(new java.awt.Dimension(203, 230));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = -15;
+        gridBagConstraints.ipady = 15;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(170, 67, 0, 0);
+        jPanelFundoPrincipal.add(jLabLogo, gridBagConstraints);
 
         jLabInfo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/img-Photoroom.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanelFundoPrincipalLayout = new javax.swing.GroupLayout(jPanelFundoPrincipal);
-        jPanelFundoPrincipal.setLayout(jPanelFundoPrincipalLayout);
-        jPanelFundoPrincipalLayout.setHorizontalGroup(
-            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(133, Short.MAX_VALUE))
-        );
-        jPanelFundoPrincipalLayout.setVerticalGroup(
-            jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelFundoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabIF, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)))
-                .addComponent(jLabInfo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelFundoPrincipalLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jPanelCaixaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 81, 0, 161);
+        jPanelFundoPrincipal.add(jLabInfo, gridBagConstraints);
 
         getContentPane().add(jPanelFundoPrincipal, java.awt.BorderLayout.CENTER);
 
@@ -271,13 +275,21 @@ public class RecuperacaoDeSenhaView extends javax.swing.JFrame {
             Graphics2D g2d = (Graphics2D) g;
             int width = getWidth();
             int height = getHeight();
-            Color color1 = new Color(9, 32, 63);
-            Color color2 = new Color(21, 52, 98);
-            GradientPaint gp = new GradientPaint(0, 0, color1, 0, height, color2);
+            
+            Color color1 = new Color(9, 32, 63); 
+            Color color2 = new Color(0, 0, 0);   
+
+            int pontoTransicaoX = (int) (width * 0.25);
+
+            g2d.setColor(color1);
+            g2d.fillRect(0, 0, pontoTransicaoX, height);
+            
+            GradientPaint gp = new GradientPaint(pontoTransicaoX, 0, color1, width, 0, color2);
             g2d.setPaint(gp);
-            g2d.fillRect(0, 0, width, height);
+            g2d.fillRect(pontoTransicaoX, 0, width - pontoTransicaoX, height);
         }
     }
+ 
   private class RoundedButton extends JButton {
     private int cornerRadius = 15;
 

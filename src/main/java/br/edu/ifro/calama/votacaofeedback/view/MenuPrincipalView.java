@@ -13,6 +13,7 @@ import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
@@ -33,10 +34,12 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     private VotacoesArquivadasView telaVotacoesArquivadas;
     private TelaDeVotoView telaDeVoto;
     
+
     public MenuPrincipalView(Usuario usuario) throws Exception {
         initComponents();
         this.usuariologado = usuario;
         this.votacaoService = new VotacaoService();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         if (this.usuariologado != null) {
                 labelNomeUsuario.setText(this.usuariologado.getNome());
@@ -53,7 +56,17 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         carregarDadosDashboard();
         atualizarDashboard();
    
-   }   
+   }
+    
+    public void exibirMensagemDeErro(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
+
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
     
     private void inicializarPaineis() {
         // Instancia cada painel UMA VEZ, passando a referência do MenuPrincipal quando necessário
@@ -484,13 +497,9 @@ public class MenuPrincipalView extends javax.swing.JFrame {
     }
     
     private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this.usuariologado, null, false);
-
-        telaDeCriacao.setLocationRelativeTo(null);
+        CriarVotacaoView telaDeCriacao = new CriarVotacaoView(this, this.usuariologado, null, false);
         telaDeCriacao.setVisible(true);
-
-        this.dispose();
-
+        this.setVisible(false);
     }//GEN-LAST:event_criarVotacaoActionPerformed
 
     private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
