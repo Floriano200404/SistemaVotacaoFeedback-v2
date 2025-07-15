@@ -39,6 +39,7 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         initComponents();
         this.usuariologado = usuario;
         this.votacaoService = new VotacaoService();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         if (this.usuariologado != null) {
                 labelNomeUsuario.setText(this.usuariologado.getNome());
@@ -55,7 +56,17 @@ public class MenuPrincipalView extends javax.swing.JFrame {
         carregarDadosDashboard();
         atualizarDashboard();
    
-   }   
+   }
+    
+    public void exibirMensagemDeErro(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
+
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
     
     private void inicializarPaineis() {
         // Instancia cada painel UMA VEZ, passando a referência do MenuPrincipal quando necessário

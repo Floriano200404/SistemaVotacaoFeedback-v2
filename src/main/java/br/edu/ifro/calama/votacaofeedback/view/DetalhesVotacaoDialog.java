@@ -47,14 +47,12 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     public void setModo(ModoDialogo modo) {
         this.modo = modo;
 
-        // Esconde todos por padrão
         btnAprovarDialog.setVisible(false);
         btnReprovarDialog.setVisible(false);
         btnParticipar.setVisible(false);
         btnEditar.setVisible(false);
         btnVerResultado.setVisible(false);
 
-        // Mostra apenas os necessários para o modo atual
         if (modo == null) return;
 
         switch (modo) {
@@ -304,19 +302,30 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprovarDialogActionPerformed
-   try {
-        VotacaoRepository votacaoRepo = new VotacaoRepository();
-        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
 
-        javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
-        if (telaDeOrigem != null) {
-            ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
+        if (menuPrincipal == null) {
+             javax.swing.JOptionPane.showMessageDialog(this, "Erro crítico: Tela principal não encontrada.");
+             return;
+         }
+
+        try {
+             VotacaoRepository votacaoRepo = new VotacaoRepository();
+             votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
+
+             menuPrincipal.exibirMensagem("Votação reprovada.");
+
+             menuPrincipal.atualizarDashboard();
+
+             if (telaDeOrigem instanceof AprovarVotacaoView) {
+                 ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
+             }
+
+             this.dispose();
+        } catch (Exception e) {
+             e.printStackTrace();
+             menuPrincipal.exibirMensagemDeErro("Erro ao reprovar votação: " + e.getMessage());
         }
-        this.dispose();
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao reprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_btnReprovarDialogActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -336,20 +345,32 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
     private void btnAprovarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprovarDialogActionPerformed
-        try {
-        VotacaoRepository votacaoRepo = new VotacaoRepository();
-        
-        votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
-        
-        javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
-        if (telaDeOrigem != null) {
-            ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+        if (menuPrincipal == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro crítico: Tela principal não encontrada.");
+            return;
         }
-        this.dispose(); 
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao aprovar votação.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }    
+
+        try {
+            VotacaoRepository votacaoRepo = new VotacaoRepository();
+            votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "APROVADA");
+
+            menuPrincipal.exibirMensagemDeSucesso("Votação aprovada com sucesso!");
+
+            menuPrincipal.atualizarDashboard();
+
+            if (telaDeOrigem instanceof AprovarVotacaoView) {
+                ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
+            } else if (telaDeOrigem instanceof GerenciarVotacaoView) {
+                ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
+            }
+
+            this.dispose(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            menuPrincipal.exibirMensagemDeErro("Erro ao aprovar votação: ");
+        }    
     }//GEN-LAST:event_btnAprovarDialogActionPerformed
 
     private void btnVoltarDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarDialogActionPerformed
