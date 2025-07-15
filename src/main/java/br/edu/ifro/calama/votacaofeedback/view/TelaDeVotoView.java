@@ -151,16 +151,16 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
         lblTituloEspecifico = new javax.swing.JLabel();
         txtAreaDescricaoVotacao = new javax.swing.JTextArea();
         painelInfoCard = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        DataInicio = new javax.swing.JLabel();
         lblDataInicial = new javax.swing.JLabel();
+        DataFim = new javax.swing.JLabel();
         lblDataFinal = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        DataREsultado = new javax.swing.JLabel();
         lblDataResultado = new javax.swing.JLabel();
+        TipoVotacao = new javax.swing.JLabel();
+        lblTipoVotacao = new javax.swing.JLabel();
+        Participantes = new javax.swing.JLabel();
         lblParticipantes = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         painelPerguntaEOpcoes = new javax.swing.JPanel();
         lblPerguntaPrincipal = new javax.swing.JLabel();
         painelDeOpcoes = new javax.swing.JPanel();
@@ -231,47 +231,47 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
         txtAreaDescricaoVotacao.setOpaque(false);
         painelTextosVotacao.add(txtAreaDescricaoVotacao, java.awt.BorderLayout.CENTER);
 
-        painelInfoCard.setLayout(new java.awt.GridLayout(5, 2, 10, 5));
+        painelInfoCard.setLayout(new java.awt.GridLayout(5, 2, 4, 5));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel1.setText("Data Início:");
-        painelInfoCard.add(jLabel1);
+        DataInicio.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        DataInicio.setText("Data Início:");
+        painelInfoCard.add(DataInicio);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel2.setText("Data Fim:");
-        painelInfoCard.add(jLabel2);
-
-        lblDataInicial.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblDataInicial.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         lblDataInicial.setText("jLabel3");
         painelInfoCard.add(lblDataInicial);
 
-        lblDataFinal.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        DataFim.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        DataFim.setText("Data Fim:");
+        painelInfoCard.add(DataFim);
+
+        lblDataFinal.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         lblDataFinal.setText("jLabel4");
         painelInfoCard.add(lblDataFinal);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel5.setText("Data Resultado:");
-        painelInfoCard.add(jLabel5);
+        DataREsultado.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        DataREsultado.setText("Data Resultado:");
+        painelInfoCard.add(DataREsultado);
 
-        lblDataResultado.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        lblDataResultado.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         lblDataResultado.setText("jLabel6");
         painelInfoCard.add(lblDataResultado);
 
-        lblParticipantes.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        TipoVotacao.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        TipoVotacao.setText("Tipo Votação:");
+        painelInfoCard.add(TipoVotacao);
+
+        lblTipoVotacao.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        lblTipoVotacao.setText("Escolha Única");
+        painelInfoCard.add(lblTipoVotacao);
+
+        Participantes.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        Participantes.setText("Participantes:");
+        painelInfoCard.add(Participantes);
+
+        lblParticipantes.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         lblParticipantes.setText("jLabel7");
         painelInfoCard.add(lblParticipantes);
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel8.setText("Tipo Votação");
-        painelInfoCard.add(jLabel8);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel3.setText("jLabel3");
-        painelInfoCard.add(jLabel3);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel4.setText("Participantes:");
-        painelInfoCard.add(jLabel4);
 
         painelTextosVotacao.add(painelInfoCard, java.awt.BorderLayout.EAST);
 
@@ -381,15 +381,14 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DataFim;
+    private javax.swing.JLabel DataInicio;
+    private javax.swing.JLabel DataREsultado;
+    private javax.swing.JLabel Participantes;
+    private javax.swing.JLabel TipoVotacao;
     private javax.swing.JButton btnSalvarVoto;
     private javax.swing.JButton btnVoltarVotacao;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
@@ -400,6 +399,7 @@ private javax.swing.ButtonGroup grupoDeOpcoes;
     private javax.swing.JLabel lblDataResultado;
     private javax.swing.JLabel lblParticipantes;
     private javax.swing.JLabel lblPerguntaPrincipal;
+    private javax.swing.JLabel lblTipoVotacao;
     private javax.swing.JLabel lblTituloDaPagina;
     private javax.swing.JLabel lblTituloEspecifico;
     private javax.swing.JPanel painelBotoesAcao;
