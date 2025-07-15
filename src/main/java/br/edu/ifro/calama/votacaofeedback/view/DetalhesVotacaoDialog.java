@@ -64,13 +64,13 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground());
-            g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
-            super.paintComponent(g);
-            g2.dispose();
+        protected void paintComponent (Graphics g){
+          Graphics2D g2 = (Graphics2D) g.create();
+          g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+          g2.setColor(getBackground());
+          g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 15, 15));
+          super.paintComponent(g);
+          g2.dispose();
         }
     }
     
@@ -109,26 +109,8 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         }
     }
     
-    class GradientPanel extends JPanel {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            
-            Color color1 = new Color(15, 61, 111);
-            Color color2 = new Color(11, 41, 81); // A cor que você já usava
-            
-            int w = getWidth();
-            int h = getHeight();
-            
-            GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
-            g2d.setPaint(gp);
-            g2d.fillRect(0, 0, w, h);
-        }
-    }
 
-    public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario, Component telaDeOrigem) {
+   public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario, Component telaDeOrigem) {
         super(parent, modal);
         this.usuarioLogado = usuario;
         this.telaDeOrigem = telaDeOrigem;
@@ -154,7 +136,6 @@ public void setModo(ModoDialogo modo) {
 
     btnAprovarDialog.setVisible(false);
     btnReprovarDialog.setVisible(false);
-
     pnlAcoesDinamicas.setVisible(true); 
 
     java.awt.CardLayout cl = (java.awt.CardLayout)(pnlAcoesDinamicas.getLayout());
@@ -165,23 +146,18 @@ public void setModo(ModoDialogo modo) {
         case APROVACAO:
             btnAprovarDialog.setVisible(true);
             btnReprovarDialog.setVisible(true);
-            // Esconde o painel de ações dinâmicas, pois os botões de aprovação estão fora dele
             pnlAcoesDinamicas.setVisible(false); 
             break;
         case PARTICIPACAO:
-            // Mostra a "carta" com o botão de participar
             cl.show(pnlAcoesDinamicas, "card_participar");
             break;
         case GERENCIAMENTO:
-            // Mostra a "carta" com o botão de editar
             cl.show(pnlAcoesDinamicas, "card_editar");
             break;
         case RESULTADO:
-            // Mostra a "carta" com o botão de resultado
             cl.show(pnlAcoesDinamicas, "card_resultado");
             break;
         default:
-            // Se nenhum modo corresponder, esconde o painel
              pnlAcoesDinamicas.setVisible(false);
             break;
     }
@@ -197,7 +173,22 @@ public void setModo(ModoDialogo modo) {
         btnVoltarDialog = new RoundedButton("X Voltar");
         btnReprovarDialog = new RoundedButton("X Reprovar");
         btnAprovarDialog = new RoundedButton("✓ Aprovar");
-        jPanel2 = new GradientPanel();
+        jPanel2 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+
+                java.awt.Graphics2D g2d = (java.awt.Graphics2D) g;
+                g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+                java.awt.Color color1 = new java.awt.Color(9, 32, 63);
+                java.awt.Color color2 = new java.awt.Color(21, 52, 98);
+
+                java.awt.GradientPaint gp = new java.awt.GradientPaint(0, 0, color1, 0, getHeight(), color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
         lblTituloPrincipal = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtAreaDescricao = new javax.swing.JTextArea();
@@ -226,9 +217,9 @@ public void setModo(ModoDialogo modo) {
         jPanel11 = new RoundedPanel();
         lblParticipantes = new javax.swing.JLabel();
         pnlAcoesDinamicas = new javax.swing.JPanel();
-        btnParticipar = new javax.swing.JButton();
+        btnParticipar = btnParticipar = new RoundedButton("✓ Participar");
         btnEditar = new RoundedButton("✓ Editar");
-        btnVerResultado = new javax.swing.JButton();
+        btnVerResultado = btnVerResultado = new RoundedButton("✓ Resultado");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -280,8 +271,6 @@ public void setModo(ModoDialogo modo) {
                 btnAprovarDialogActionPerformed(evt);
             }
         });
-
-        jPanel2.setBackground(new java.awt.Color(11, 41, 81));
 
         lblTituloPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTituloPrincipal.setForeground(new java.awt.Color(255, 255, 255));
@@ -621,6 +610,7 @@ public void setModo(ModoDialogo modo) {
         btnParticipar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnParticipar.setForeground(new java.awt.Color(255, 255, 255));
         btnParticipar.setText("✓ Participar");
+        btnParticipar.setBorder(null);
         btnParticipar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnParticiparActionPerformed(evt);
@@ -644,6 +634,7 @@ public void setModo(ModoDialogo modo) {
         btnVerResultado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnVerResultado.setForeground(new java.awt.Color(255, 255, 255));
         btnVerResultado.setText("✓ Resultado");
+        btnVerResultado.setBorder(null);
         btnVerResultado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerResultadoActionPerformed(evt);
@@ -657,11 +648,10 @@ public void setModo(ModoDialogo modo) {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(505, 505, 505)
-                        .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -694,10 +684,10 @@ public void setModo(ModoDialogo modo) {
                     .addComponent(btnReprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(92, 92, 92))
+                .addGap(80, 80, 80))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
