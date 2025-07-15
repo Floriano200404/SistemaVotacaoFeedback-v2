@@ -38,13 +38,15 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private Usuario usuarioLogado;
     private Votacao votacaoParaEditar;
     private boolean isEditando;
+    private MenuPrincipalView menuPrincipal;
 
     
 
-    public CriarVotacaoView(Usuario usuario, Votacao votacao, boolean isEditando) {
+    public CriarVotacaoView(MenuPrincipalView menu, Usuario usuario, Votacao votacao, boolean isEditando) {
         System.out.println("[DEBUG CriarVotacaoView] Recebeu isEditando = " + isEditando);
         initComponents();
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.menuPrincipal = menu;
         this.usuarioLogado = usuario;
         this.votacaoParaEditar = votacao;
         this.isEditando = isEditando;
@@ -65,7 +67,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
             labelNomeUsuario.setText(this.usuarioLogado.getNome());
         }
         aplicarEstilos();
-        inicializarMenuLateral();
         txtDescricao.setLineWrap(true);
         txtDescricao.setWrapStyleWord(true);
         
@@ -85,7 +86,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         jScrollPane.setBorder(null);
         
         painelHeader.addMouseListener(focusRemoverListener);
-        painelSidebar.addMouseListener(focusRemoverListener);
         painelConteudo.addMouseListener(focusRemoverListener);
         
         this.revalidate();
@@ -259,19 +259,10 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         painelHeader = new javax.swing.JPanel();
         painelHeaderEsquerda = new javax.swing.JPanel();
-        labelIconeMenu = new javax.swing.JLabel();
         labelLogo = new javax.swing.JLabel();
         painelHeaderDireita = new javax.swing.JPanel();
         labelNomeUsuario = new javax.swing.JLabel();
         labelIconePerfil = new javax.swing.JLabel();
-        painelSidebar = new javax.swing.JPanel();
-        menutxt = new javax.swing.JLabel();
-        criarVotacao = new javax.swing.JButton();
-        participarVotacao = new javax.swing.JButton();
-        gerenciaVotacao = new javax.swing.JButton();
-        aprovarVotacao = new javax.swing.JButton();
-        votoArquivado = new javax.swing.JButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         painelConteudo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         TituloPrincipal = new javax.swing.JLabel();
@@ -302,14 +293,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
 
         painelHeaderEsquerda.setOpaque(false);
         painelHeaderEsquerda.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 5));
-
-        labelIconeMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu.png"))); // NOI18N
-        labelIconeMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelIconeMenuMouseClicked(evt);
-            }
-        });
-        painelHeaderEsquerda.add(labelIconeMenu);
 
         labelLogo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelLogo.setForeground(new java.awt.Color(255, 255, 255));
@@ -345,49 +328,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         painelHeader.add(painelHeaderDireita, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(painelHeader, java.awt.BorderLayout.PAGE_START);
-
-        painelSidebar.setBackground(new java.awt.Color(255, 255, 255));
-        painelSidebar.setPreferredSize(new java.awt.Dimension(230, 0));
-        painelSidebar.setLayout(new javax.swing.BoxLayout(painelSidebar, javax.swing.BoxLayout.Y_AXIS));
-        painelSidebar.add(menutxt);
-
-        criarVotacao.setText("Criar Votação");
-        criarVotacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                criarVotacaoActionPerformed(evt);
-            }
-        });
-        painelSidebar.add(criarVotacao);
-
-        participarVotacao.setText("Participar de Votação ");
-        participarVotacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                participarVotacaoActionPerformed(evt);
-            }
-        });
-        painelSidebar.add(participarVotacao);
-
-        gerenciaVotacao.setText("Gerenciar Votação");
-        gerenciaVotacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gerenciaVotacaoActionPerformed(evt);
-            }
-        });
-        painelSidebar.add(gerenciaVotacao);
-
-        aprovarVotacao.setText("Aprovar Votações\n");
-        aprovarVotacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aprovarVotacaoActionPerformed(evt);
-            }
-        });
-        painelSidebar.add(aprovarVotacao);
-
-        votoArquivado.setText("Votações Arquivadas");
-        painelSidebar.add(votoArquivado);
-        painelSidebar.add(filler1);
-
-        getContentPane().add(painelSidebar, java.awt.BorderLayout.LINE_START);
 
         painelConteudo.setLayout(new java.awt.GridBagLayout());
 
@@ -552,69 +492,29 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void labelIconeMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelIconeMenuMouseClicked
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (painelSidebar.getWidth() > 0) {
-                    try {
-                        for (int i = painelSidebar.getWidth(); i >= 0; i--) {
-                            painelSidebar.setSize(i, painelSidebar.getHeight());
-                            Thread.sleep(1);
-                        }
-                    } catch (InterruptedException ex) {
-                        System.out.println(ex);
-                    }
-                } else {
-                    try {
-                        for (int i = 0; i <= 210; i++) {
-                            painelSidebar.setSize(i, painelSidebar.getHeight());
-                            Thread.sleep(1);
-                        }
-                    } catch (InterruptedException ex) {
-                        System.out.println(ex);
-                    }
-                }
-            }
-        }).start();
-    }//GEN-LAST:event_labelIconeMenuMouseClicked
-
     private void labelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoMouseClicked
-        MenuPrincipalView telaDeCriacao = new MenuPrincipalView(this.usuarioLogado);
-
-        telaDeCriacao.setLocationRelativeTo(null);
-        telaDeCriacao.setVisible(true);
-
+        try {
+        MenuPrincipalView telaPrincipal = new MenuPrincipalView(this.usuarioLogado);
+        telaPrincipal.setLocationRelativeTo(null);
+        telaPrincipal.setVisible(true);
+        
         this.dispose();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao carregar o menu principal: " + e.getMessage(), "Erro de Conexão", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_labelLogoMouseClicked
-
-    private void criarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarVotacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_criarVotacaoActionPerformed
-
-    private void participarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarVotacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_participarVotacaoActionPerformed
-
-    private void gerenciaVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerenciaVotacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_gerenciaVotacaoActionPerformed
-
-    private void aprovarVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aprovarVotacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aprovarVotacaoActionPerformed
 
     private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTituloActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        MenuPrincipalView menu = new MenuPrincipalView(this.usuarioLogado);
-
-        menu.setVisible(true);
-
+        if (this.menuPrincipal != null) {
+            this.menuPrincipal.setVisible(true);
+            this.menuPrincipal.atualizarDashboard();
+        }
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -683,7 +583,7 @@ public class CriarVotacaoView extends javax.swing.JFrame {
                 votacaoParaEnviar = novaVotacao;
             }
 
-            CriarVotacaoOpcoesView telaDeOpcoes = new CriarVotacaoOpcoesView(this.usuarioLogado, votacaoParaEnviar);
+            CriarVotacaoOpcoesView telaDeOpcoes = new CriarVotacaoOpcoesView(this.menuPrincipal, this.usuarioLogado, votacaoParaEnviar);
             telaDeOpcoes.setLocationRelativeTo(null);
             telaDeOpcoes.setVisible(true);
             this.dispose();
@@ -709,57 +609,6 @@ public class CriarVotacaoView extends javax.swing.JFrame {
         System.out.println("Data Inicial: " + dataInicial);
         System.out.println("Data Final: " + dataFinal);
         System.out.println("Data Divulgação: " + dataDivulgacao);
-    }                                          
-    private void inicializarMenuLateral() {
-         java.util.List<javax.swing.JButton> botoes = java.util.Arrays.asList(
-            criarVotacao, participarVotacao, gerenciaVotacao, aprovarVotacao, votoArquivado
-        );
-        configurarBotao(criarVotacao, "criarVoto.png");
-        configurarBotao(participarVotacao, "peoplemais.png");
-        configurarBotao(gerenciaVotacao, "configpast.png");
-        configurarBotao(aprovarVotacao, "list_check.png");
-        configurarBotao(votoArquivado, "arquivada.png");
-
-        for (javax.swing.JButton botao : botoes) {
-            adicionarListeners(botao);
-        }
-
-    }
-    private void configurarBotao(javax.swing.JButton botao, String nomeIcone) {
-       botao.putClientProperty("JButton.buttonType", "toolBarButton");
-        botao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 15, 8, 15));
-        botao.setIconTextGap(15);
-        botao.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
-        try {
-            botao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/" + nomeIcone)));
-        } catch (Exception e) {
-            System.out.println("ERRO ao carregar ícone: " + nomeIcone);
-        }
-    }
-
-    private void adicionarListeners(javax.swing.JButton botao) {
-        final java.awt.Color COR_FUNDO_SIDEBAR = painelSidebar.getBackground();
-        final java.awt.Color COR_HOVER_AZUL = new java.awt.Color(235, 240, 255);
-
-        botao.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                botao.setBackground(COR_HOVER_AZUL);
-                botao.setOpaque(true);
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                botao.setOpaque(false);
-                botao.setBackground(COR_FUNDO_SIDEBAR); 
-            }
-        });
-
-        botao.addActionListener(e -> {
-            System.out.println("Botão '" + botao.getText() + "' clicado!");
-        });
 
     }//GEN-LAST:event_btnAvancarActionPerformed
 
@@ -801,33 +650,24 @@ public class CriarVotacaoView extends javax.swing.JFrame {
     private javax.swing.JLabel TituloParticipante;
     private javax.swing.JLabel TituloPrincipal;
     private javax.swing.JLabel TituloVotacao;
-    private javax.swing.JButton aprovarVotacao;
     private javax.swing.JButton btnAvancar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> comboParticipantes;
-    private javax.swing.JButton criarVotacao;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton gerenciaVotacao;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBotoesInferiores;
     private javax.swing.JScrollPane jScrollPane;
-    private javax.swing.JLabel labelIconeMenu;
     private javax.swing.JLabel labelIconePerfil;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelNomeUsuario;
-    private javax.swing.JLabel menutxt;
     private javax.swing.JPanel painelConteudo;
     private javax.swing.JPanel painelHeader;
     private javax.swing.JPanel painelHeaderDireita;
     private javax.swing.JPanel painelHeaderEsquerda;
-    private javax.swing.JPanel painelSidebar;
-    private javax.swing.JButton participarVotacao;
     private javax.swing.JLabel tituloDivulga;
     private com.toedter.calendar.JDateChooser txtDataDivulgacao;
     private com.toedter.calendar.JDateChooser txtDataFinal;
     private com.toedter.calendar.JDateChooser txtDataInicial;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtTitulo;
-    private javax.swing.JButton votoArquivado;
     // End of variables declaration//GEN-END:variables
 }

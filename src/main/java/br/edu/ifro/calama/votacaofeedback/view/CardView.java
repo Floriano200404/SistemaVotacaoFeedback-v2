@@ -25,8 +25,24 @@ import javax.swing.JPanel;
         private Usuario usuarioLogado;
         private java.awt.Component telaDeOrigem;
         private javax.swing.JTextArea tituloTextArea;
-
      
+        public CardView() {
+            initComponents();
+            this.setOpaque(false);
+            this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
+        }
+
+        public void setTelaDeOrigem(java.awt.Component tela) {
+            this.telaDeOrigem = tela;
+        }
+        
+        public void setModo(DetalhesVotacaoDialog.ModoDialogo modo) {
+            this.modo = modo;
+        }
+
+        public void setUsuario(Usuario usuario) {
+            this.usuarioLogado = usuario;
+        }
 
     private static class RoundedButton extends JButton {
 
@@ -99,16 +115,6 @@ import javax.swing.JPanel;
             return new java.awt.Insets(shadowSize, shadowSize, shadowSize, shadowSize);
         }
     }
-        
-    public CardView() {
-    initComponents();
-    this.setOpaque(false);
-    this.modo = DetalhesVotacaoDialog.ModoDialogo.APROVACAO;
-    }
-    
-    public void setTelaDeOrigem(java.awt.Component tela) { this.telaDeOrigem = tela; }
-    public void setModo(DetalhesVotacaoDialog.ModoDialogo modo) { this.modo = modo; }
-    public void setUsuario(Usuario usuario) { this.usuarioLogado = usuario; }
     
     private void inicializarTituloCustomizado() {
         java.awt.Rectangle bounds = lblTituloVotacao.getBounds();
@@ -133,7 +139,6 @@ import javax.swing.JPanel;
             tituloTextArea.setBounds(bounds);
         }
     }
-
 
         public void setDados(Votacao votacao) {
 
@@ -265,14 +270,25 @@ import javax.swing.JPanel;
 
     private void btnVerVotacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerVotacaoActionPerformed
 
-        java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
-        DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog((java.awt.Frame) parentWindow, true, this.usuarioLogado, this.telaDeOrigem);
-        
-        dialog.setDados(this.votacaoAtual);
-        dialog.setModo(this.modo);
-        dialog.setLocationRelativeTo(parentWindow);
-        dialog.setVisible(true);
+   
+    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
 
+    
+    DetalhesVotacaoDialog dialog = new DetalhesVotacaoDialog(
+        (java.awt.Frame) parentWindow, 
+        true, 
+        this.usuarioLogado,
+        this 
+    );
+
+    
+    dialog.setDados(this.votacaoAtual);
+
+    
+    dialog.setModo(this.modo); 
+
+    dialog.setLocationRelativeTo(parentWindow);
+    dialog.setVisible(true);
     }//GEN-LAST:event_btnVerVotacaoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

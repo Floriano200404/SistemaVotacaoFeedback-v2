@@ -258,6 +258,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Vota&#xe7;&#xf5;es Arquivadas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="votoArquivadoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.Box$Filler" name="filler1">
           <Properties>

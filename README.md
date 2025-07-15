@@ -1,266 +1,217 @@
 # Sistema Integrado de Votação e Feedback Acadêmico – Campus Calama
 
-Projeto desktop desenvolvido em **Java Swing**, com arquitetura em camadas, voltado para criar e gerenciar votações e feedbacks acadêmicos no IFRO Campus Calama.
+<p align="center">
+  <img src="https://img.shields.io/badge/status-em%20desenvolvimento-yellow" alt="Status do Projeto">
+  <img src="https://img.shields.io/badge/Java-17%2B-blue?logo=java&logoColor=white" alt="Java 17+">
+  <img src="https://img.shields.io/badge/Interface-Java%20Swing-orange" alt="Java Swing">
+  <img src="https://img.shields.io/badge/Banco%20de%20Dados-MySQL-blue?logo=mysql&logoColor=white" alt="MySQL">
+</p>
 
-> Este repositório foi criado como parte do projeto final da disciplina de Engenharia de Software, visando substituir métodos manuais por uma solução automatizada, **segura, transparente e inclusiva**.
+## 📝 Índice
 
----
-
-## 🎯 Objetivo
-
-Criar uma plataforma desktop que:
-- Substitua processos manuais e descentralizados por uma solução automatizada
-- Garanta **transparência, segurança e anonimato**
-- Permita **eleições formais, pesquisas institucionais, feedback anônimo e enquetes rápidas**
-
----
-
-## 🔧 Tecnologias Utilizadas
-
-| Tecnologia | Uso |
-|------------|-----|
-| Java 17+ | Linguagem principal |
-| Java Swing | Interface gráfica desktop |
-| MySQL / JDBC | Banco de dados e persistência |
-| Git + GitHub/GitLab | Controle de versão e colaboração |
+1.  [Sobre o Projeto](#-sobre-o-projeto)
+2.  [✨ Funcionalidades](#-funcionalidades)
+3.  [🎨 Design da Interface (UI/UX)](#-design-da-interface-uiux)
+4.  [🛠️ Tecnologias e Arquitetura](#️-tecnologias-e-arquitetura)
+5.  [🚀 Como Configurar e Executar](#-como-configurar-e-executar)
+6.  [🌿 Fluxo de Trabalho com Git](#-fluxo-de-trabalho-com-git)
+7.  [🤝 Como Contribuir](#-como-contribuir)
+8.  [🏷️ Padrão de Labels](#️-padrão-de-labels)
+9.  [👥 Equipe](#-equipe)
+10. [📄 Licença](#-licença)
 
 ---
 
-## 🗂 Arquitetura em Camadas
+## 📌 Sobre o Projeto
 
-O projeto segue uma **estrutura organizada em camadas** para facilitar manutenção e escalabilidade:
+O **Sistema Integrado de Votação e Feedback Acadêmico** é uma solução desktop desenvolvida em **Java Swing** para modernizar e automatizar os processos de eleições e coletas de feedback no **IFRO Campus Calama**.
 
-| Camada       | Função |
-|--------------|--------|
-| **Model**     | Entidades do sistema (`Usuario`, `Enquete`, `Voto`) |
-| **View**      | Telas gráficas (`Login`, `Menu Principal`, etc.) |
-| **Controller**| Lógica de ações do usuário |
-| **Service**   | Regras de negócio (futuro) |
-| **Repository**| Acesso ao banco de dados (simulado ou real) |
-| **Util**      | Funções auxiliares (conexão com banco, logs) |
+> Este projeto foi concebido como parte da disciplina de Engenharia de Software, Programação Visual e Banco de Dados, com a missão de substituir métodos manuais por uma plataforma centralizada, **segura, transparente e inclusiva**.
 
 ---
 
-## 🚀 Como Executar o Projeto
+## ✨ Funcionalidades
 
-### Pré-requisitos
-
-- JDK 17 ou superior instalado
-- IDE Java (como Netbeans)
-- Git instalado
-- MySQL (opcional - futuro)
-
-  ## Modelagem das interfaces
-
-A modelagem das interfaces é feito através da plataforma FIGMA. Para acessar, [clique aqui](https://www.figma.com/proto/bUeKRzIuL4ZGmvmXlLJ2Rt/Sistema-Eleitoral-para-o-Campus-Calama?node-id=0-1&t=XJctViub0FrLasjG-1).
-
-## Configuração do setup
-
-Antes de iniciar a configuração do projeto, verifique se você possui os seguintes passos realizados:
-
-- Chave SSH gerada e salva dentro do seu perfil no Github
-
-```
-ssh-keygen -t rsa
-```
-
-- Usuário Git configurado
-
-```
-git config --global user.name "Your-name"
-git config --global user.email "Your-email"
-```
-
-## Configuração inicial do projeto
-
-- Para clonar o projeto em sua máquina, clique em "Clone" na tela inicial do projeto no Github e selecione a opção "Clone with SSH";
-- Agora, dentro do PhpStorm, clique em "GET FROM VCS" e cole o link copiado do github
-
-
-### Passo a passo
-
-1. Clone o repositório:
-
-\`\`\`bash
-git clone git@github.com:Floriano200404/SistemaVotacaoFeedback.git
-cd SistemaVotacaoFeedback
-\`\`\`
-
-2. Abra o projeto na sua IDE:
-   - IntelliJ: File > Open > Selecione a pasta do projeto
-   - Marque a pasta \`src\` como fonte (Sources Root)
-
-3. Execute a classe \`Main.java\`
-
-4. Teste com:
-   - **Login:** \`admin\`
-   - **Senha:** \`123\`
-
+-   **Gestão de Eleições Formais:** Crie, gerencie e audite votações para representantes de turma, diretórios acadêmicos e outras finalidades oficiais.
+-   **Pesquisas Institucionais:** Elabore e aplique pesquisas para avaliar a satisfação com infraestrutura, eventos e serviços do campus.
+-   **Feedback Anônimo:** Permita que alunos e servidores enviem sugestões e críticas de forma segura e anônima.
+-   **Enquetes Rápidas:** Realize consultas informais sobre temas diversos de maneira ágil.
+-   **Autenticação Segura:** Controle de acesso por níveis de permissão (administrador, votante).
 
 ---
 
-## 📋 Git Flow Adotado
+## 🎨 Design da Interface (UI/UX)
 
-Para garantir controle de versão seguro e eficiente, adotamos o seguinte fluxo:
+Toda a modelagem das interfaces e prototipagem do fluxo de usuário foi realizada na plataforma **Figma**. O design busca ser intuitivo e acessível para todos os públicos do campus.
+
+> 🔗 **[Acesse o protótipo no Figma aqui](https://www.figma.com/proto/bUeKRzIuL4ZGmvmXlLJ2Rt/Sistema-Eleitoral-para-o-Campus-Calama?node-id=0-1&t=XJctViub0FrLasjG-1)**
+
+---
+
+## 🛠️ Tecnologias e Arquitetura
+
+### Tecnologias Utilizadas
+
+| Tecnologia | Aplicação |
+| :--- | :--- |
+| **Java 17+** | Linguagem principal do projeto. |
+| **Java Swing** | Construção das interfaces gráficas desktop. |
+| **MySQL/JDBC** | Persistência e gerenciamento de dados. |
+| **Figma** | Design e prototipagem das telas (UI/UX). |
+| **Git/GitHub** | Controle de versão e colaboração. |
+
+### Arquitetura em Camadas
+
+O projeto segue uma arquitetura em camadas para garantir a separação de responsabilidades, facilitando a manutenção, testabilidade e escalabilidade.
+
+| Camada | Responsabilidade |
+| :--- | :--- |
+| **View** | Interface gráfica (`Login`, `MenuPrincipal`, etc). |
+| **Controller** | Intermedia a View e o Model, tratando eventos. |
+| **Model** | Entidades e objetos de negócio (`Usuario`, `Voto`). |
+| **Service** | Regras de negócio complexas. |
+| **Repository** | Camada de acesso aos dados (interação com o BD). |
+| **Util** | Classes utilitárias (conexão, logs, etc). |
+
+---
+
+## 🚀 Como Configurar e Executar
+
+Siga os passos abaixo para configurar o ambiente de desenvolvimento e executar o projeto.
+
+### 1. Pré-requisitos
+
+-   **JDK 17** ou superior.
+-   **Git** instalado e configurado.
+-   Uma **IDE Java** (NetBeans, IntelliJ, Eclipse).
+-   **MySQL Server** e um cliente de banco de dados (MySQL Workbench, DBeaver).
+
+> 📚 **Precisando de ajuda com Git ou a configuração inicial? [Acesse nosso Guia Completo aqui](https://docs.google.com/document/d/1HHP1YgrczhxzryjZ-kSDeyXaN_lxsu2g-c4aHI8usIU/edit?usp=sharing)**
+
+### 2. Passos de Instalação e Execução
+
+1.  **Clone o Repositório**
+    ```bash
+    git clone git@github.com:Floriano200404/SistemaVotacaoFeedback.git
+    cd SistemaVotacaoFeedback
+    ```
+
+2.  **Configure o Banco de Dados**
+    a. Abra seu cliente MySQL e crie um novo schema (banco de dados) com o nome exato `mydb`.
+    ```sql
+    CREATE SCHEMA mydb;
+    ```
+    b. Localize o arquivo de script `schema.sql` na raiz do projeto.
+    c. Execute este script no schema `mydb` para criar todas as tabelas.
+
+3.  **Configure a Conexão no Código**
+    a. Na sua IDE, navegue até o pacote `util` e abra o arquivo de conexão (ex: `Database.java`).
+    b. Atualize as credenciais `USER` e `PASSWORD` com as suas informações de acesso ao MySQL.
+
+4.  **Execute o Projeto**
+    a. Abra o projeto na sua IDE.
+    b. Localize e execute a classe principal `Main.java`.
+    c. Use as seguintes credenciais para o primeiro acesso:
+       - **Login:** `admin@ifro.edu.br`
+       - **Senha:** `123`
+
+---
+
+## 🌿 Fluxo de Trabalho com Git
+
+Adotamos o **Git Flow** para organizar o desenvolvimento. Todo o trabalho deve ser feito em *branches* separadas para garantir a estabilidade da `main` e da `develop`.
 
 | Branch | Finalidade |
-|--------|------------|
-| \`main\` | Versão estável do projeto – apenas via Pull Request |
-| \`develop\` | Ramo de desenvolvimento principal |
-| \`feature/nome-da-funcionalidade\` | Novas funcionalidades |
-| \`bugfix/descricao\` | Correções de bugs |
+| :--- | :--- |
+| `main` | Versão estável e de produção. Recebe merges apenas da `develop`. |
+| `develop`| Ramo principal de desenvolvimento. Integra todas as *features*. |
+| `feature/nome-da-funcionalidade` | Desenvolvimento de novas funcionalidades. |
+| `bugfix/descricao-do-bug` | Correções de bugs que não são urgentes. |
+| `hotfix/correcao-urgente` | Correções críticas que precisam ir direto para a `main`. |
 
-# Sempre comece pela develop
+### Passo a Passo para uma Contribuição
+
+
+### 1. Mude para a branch 'develop' e sincronize com o repositório remoto
+```
 git checkout develop
 git pull origin develop
-
-# Crie uma nova feature branch
-git checkout -b feature/tela-login
-# Trabalhe nas telas e classes
-
-# Adicione e faça commit
+```
+### 2. Crie uma nova branch para sua funcionalidade
+```
+# Exemplo: git checkout -b feature/implementar-tela-login
+git checkout -b feature/sua-funcionalidade
+```
+### 3. Desenvolva sua tarefa e faça commits atômicos
+```
+# Use o padrão de Commits Semânticos (ex: "feat:", "fix:", "docs:")
 git add .
-git commit -m "feat: implementa tela de login com validação"
+git commit -m "tipo(escopo): mensagem descritiva"
+```
 
-# Envie a branch para o repositório
-git push origin feature/tela-login
+### 4. Envie sua branch para o repositório remoto
+```
+git push origin feature/sua-funcionalidade
+Abra um Pull Request: Ao finalizar o desenvolvimento na sua branch, abra um Pull Request para a develop do repositório original, referenciando a issue que você criou no título ou na descrição.
+```
+## 🤝 Como Contribuir
+Este projeto é aberto a contribuições! Para ajudar, siga estes passos:
 
-### Exemplo de uso:
+Crie uma Issue: Antes de começar, crie uma issue para descrever o bug que você encontrou ou a funcionalidade que deseja adicionar. Isso ajuda a alinhar as expectativas. Use os nossos labels para categorizar.
 
-\`\`\`bash
-git checkout develop
-git pull origin develop
+Faça um Fork: Crie um fork do projeto para o seu próprio GitHub.
 
-git checkout -b feature/tela-login
-# Desenvolva sua nova tela
+Siga o Fluxo de Trabalho: Siga o fluxo de trabalho com Git descrito acima.
 
-git add .
-git commit -m "Tela de login concluída"
-git push origin feature/tela-login
-\`\`\`
+## 🏷️ Padrão de Labels
 
-Após revisão, abra uma **Pull Request** para \`develop\`.
+Utilizamos labels para organizar, priorizar e rastrear o status de *Issues* e *Pull Requests*.
 
----
-## 🏷️ Labels
+| Label                 | Cor       | Descrição                                                              |
+| :-------------------- | :-------- | :--------------------------------------------------------------------- |
+| `01 not started`      | `#FFD700` | A tarefa ainda não foi iniciada.                                       |
+| `02 work in progress` | `#0E8A16` | Tarefa em andamento.                                                   |
+| `03 bug`              | `#B60205` | Relata um erro ou comportamento inesperado no sistema.                 |
+| `04 question`         | `#D876E3` | Dúvida ou pergunta sobre o projeto.                                    |
+| `05 dependent`        | `#FBCA04` | Tarefa que depende da conclusão de outra.                              |
+| `06 priority`         | `#E99695` | Indica a prioridade da tarefa.                                         |
+| `07 enhancement`      | `#A2EEEF` | Proposta de nova funcionalidade ou melhoria de uma existente.          |
+| `11 front-end`        | `#006B75` | Relacionado à interface do usuário (Swing).                            |
+| `12 back-end`         | `#0052CC` | Relacionado à lógica de negócios, serviços ou banco de dados.          |
+| `13 documentation`    | `#5319E7` | Tarefas relacionadas à documentação do projeto (`README`, wikis).      |
+| `15 done`             | `#00C775` | Tarefa concluída e pronta para revisão ou merge.                       |
+| `16 standby`          | `#E6E6E6` | Tarefa em espera por mais informações ou recursos.                     |
 
-Os labels são usados para categorizar issues e pull requests de forma consistente, ajudando na organização e acompanhamento das tarefas. Abaixo estão os labels utilizados no projeto e suas funções:
-
-| Label | Cor | Descrição |
-|-------|-----|-----------|
-| `01 not started` | Amarelo | A issue ou PR ainda não foi iniciada. |
-| `02 work in progress` | Verde | A issue ou PR está em andamento. |
-| `03 bug` | Vermelho | Relata um problema ou erro no sistema. |
-| `04 question` | Roxo | Uma dúvida ou pergunta relacionada ao projeto. |
-| `05 dependent` | Laranja | A issue depende da conclusão de outra issue antes de ser finalizada. |
-| `06 priority` | Rosa | Indica a prioridade da issue ou PR. |
-| `07 enhancement` | Verde claro | Proposta de nova funcionalidade ou melhoria. |
-| `08 update request` | Roxo claro | Solicitação de atualização ou correção. |
-| `09 correction` | Marrom | Correção de algo que não está funcionando corretamente. |
-| `10 sql` | Azul | Issues ou PRs relacionados ao banco de dados SQL. |
-| `11 front-end` | Verde escuro | Issues ou PRs relacionadas à interface do usuário (front-end). |
-| `12 back-end` | Verde-azulado | Issues ou PRs relacionadas ao servidor ou lógica de negócios (back-end). |
-| `13 documentation` | Roxo escuro | Issues ou PRs relacionadas à documentação do projeto. |
-| `14 database` | Cinza | Issues ou PRs relacionadas ao banco de dados. |
-| `15 done` | verde-claro | A issue ou PR foi concluída e pronta para revisão. |
-| `16 standby` | Cinza-claro | A issue ou PR está em espera por mais informações ou recursos. |
-
-> 💡 Dica: Use até 3 labels por issue ou pull request para manter tudo claro e organizado.
+> 💡 **Dica:** Use no máximo 3 labels por issue/PR para manter a organização.
 
 ---
 
-## 📌 Como Criar uma Issue
+## 👥 Equipe
 
-Issues são ótimas para acompanhar bugs, melhorias, tarefas e perguntas.
-
-### Passo a passo:
-
-1. No GitHub/GitLab, clique em **"Issues"** no repositório.
-2. Clique em **"New issue"**.
-3. Escreva um título claro e descritivo:
-   - Exemplo: `[Front-end] Implementar tela de login`
-4. Na descrição, inclua:
-   - O que precisa ser feito
-   - Por quê é importante
-   - Qualquer link ou referência relevante
-5. Adicione os **labels adequados** (ex.: `02 front-end`, `07 enhancement`)
-6. Clique em **Submit new issue**
+| Nome                         | Função                             | Contato                       |
+| :--------------------------- | :--------------------------------- | :---------------------------- |
+| Floriano Vieira de Araújo Neto | Gerente de Projeto & Desenvolvedor | florianoneto2004@gmail.com    |
+| *Athos Moreno Ribeiro* | *Banco/Back-end* | *athos8197@gmail.com* |
+| *Estenio Silva de Castro* | *Figma/Front-end* | *estenio.silva.castro@gmail.com* |
+| *Eychila Vitória Maia das Chagas* | *Front-end* | *eychilamaia@gmail.com* |
+| *Manoel de Jesus Moreira de Aguiar* | *Front-end* | *manoelmaguiar@gmail.com* |
 
 ---
 
-### 🔍 Exemplo de Issue
+## 📄 Licença
 
-#### Título:
-`[Back-end] Conexão com banco de dados MySQL`
+Este projeto é distribuído sob a licença MIT. Veja o arquivo `LICENSE.md` para mais detalhes.
 
-#### Descrição:
-Implementar conexão JDBC com o banco de dados MySQL para permitir persistência dos votos e usuários. Incluir tratamento de exceções e uso de padrões de projeto.
 
-#### Labels:
-- `02 back-end`
-- `14 database`
 
 ---
 
-## 🔄 Como Criar um Pull Request (PR)
-
-Pull Requests são usados para revisar e integrar alterações ao projeto.
-
-### Passo a passo:
-
-1. **Crie uma branch de feature:**
-   ```bash
-   git checkout develop
-   git pull origin develop
-   git checkout -b feature/nova-funcionalidade
-
-## 👥 Integrantes do Projeto
-
-| Nome | Função | Contato |
-|------|--------|---------|
-| Floriano Vieira de Araújo Neto | Gerente de Projeto | florianoneto2004@gmail.com |
-| [Nome do colega] | Desenvolvedor | email@example.com |
-| [Nome do colega] | Desenvolvedor / Testador | email@example.com |
-
----
+<p align="center">
+  Mantido por <strong>Floriano Vieira de Araújo Neto</strong>
+  <br>
+  Aluno de Análise e Desenvolvimento de Sistemas – IFRO Campus Calama
+</p>
 
 
 
 
-## 💬 Ajuda e Suporte
-
-Tem dúvidas? Encontrou problemas?
-- Crie uma **issue** no repositório
-- Ou entre em contato com o responsável pelo projeto
-
----
-
-## 🤝 Contribuição
-
-Contribuições são bem-vindas!
-
-### Como contribuir:
-
-1. Fork o projeto
-2. Crie uma branch: \`git checkout -b feature/minha-feature\`
-3. Faça suas alterações
-4. Commit: \`git commit -m "Descrição das alterações"\`
-5. Push: \`git push origin feature/minha-feature\`
-6. Abra uma Pull Request
-
----
-
-
-
-## 📌 Referências Úteis
-
-- [Como criar merge requests](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html )
-- [GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/ )
-- [Controle de branches](https://docs.gitlab.com/topics/git/add_files/ )
-- [Integrações no GitLab](https://gitlab.com/silvakaio/sgi-3/-/settings/integrations )
-
----
-
-> ✅ Este projeto é mantido por **Floriano Vieira de Araújo Neto**  
-> Aluno de Analista de Sistema ADS – IFRO Campus Calama  
-> Email: florianoneto2004@gmail.com
