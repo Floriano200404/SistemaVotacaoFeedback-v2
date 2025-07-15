@@ -56,7 +56,7 @@ CREATE TABLE `grupos` (
   `nome` varchar(225) NOT NULL,
   `tipo_grupo` varchar(20) NOT NULL DEFAULT 'CURSO',
   PRIMARY KEY (`id_Grupos`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `grupos` (
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
-INSERT INTO `grupos` VALUES (5,'ANÁLISE E DESENVOLVIMENTO DE SISTEMAS','CURSO'),(6,'ENGENHARIA CIVIL','CURSO'),(7,'ENGENHARIA DE CONTROLE E AUTOMAÇÃO','CURSO'),(8,'ENGENHARIA QUÍMICA','CURSO'),(9,'FÍSICA','CURSO'),(10,'PROFESSOR','CURSO'),(11,'SERVIDOR','CURSO'),(12,'TODOS OS ALUNOS','VIRTUAL'),(13,'TODOS OS SERVIDORES','VIRTUAL'),(14,'SERVIDORES E ALUNOS','VIRTUAL');
+INSERT INTO `grupos` VALUES (5,'ANÁLISE E DESENVOLVIMENTO DE SISTEMAS','CURSO'),(6,'ENGENHARIA CIVIL','CURSO'),(7,'ENGENHARIA DE CONTROLE E AUTOMAÇÃO','CURSO'),(8,'ENGENHARIA QUÍMICA','CURSO'),(9,'FÍSICA','CURSO'),(10,'PROFESSOR','CURSO'),(11,'SERVIDOR','CURSO'),(12,'TODOS OS ALUNOS','VIRTUAL'),(13,'TODOS OS SERVIDORES','VIRTUAL'),(14,'SERVIDORES E ALUNOS','VIRTUAL'),(15,'ADMINISTRADORES','PERMISSAO');
 /*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +84,7 @@ CREATE TABLE `opcao_voto` (
   UNIQUE KEY `id_opcao_UNIQUE` (`id_opcao`),
   KEY `id_votacao_idx` (`id_votacao`),
   CONSTRAINT `FKid_votacao` FOREIGN KEY (`id_votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `opcao_voto` (
 
 LOCK TABLES `opcao_voto` WRITE;
 /*!40000 ALTER TABLE `opcao_voto` DISABLE KEYS */;
-INSERT INTO `opcao_voto` VALUES (29,2,'adada'),(30,2,'adadadad'),(31,2,'dadad'),(32,2,'dadada'),(33,2,'dadadad');
+INSERT INTO `opcao_voto` VALUES (1,1,'eu'),(2,1,'sim'),(3,2,'dada'),(4,2,'da');
 /*!40000 ALTER TABLE `opcao_voto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +147,7 @@ CREATE TABLE `usuario_grupos` (
   KEY `fk_usuariogrupo_grupo_idx` (`id_grupo`),
   CONSTRAINT `fk_usuariogrupo_grupo` FOREIGN KEY (`id_grupo`) REFERENCES `grupos` (`id_Grupos`),
   CONSTRAINT `fk_usuariogrupo_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,6 +156,7 @@ CREATE TABLE `usuario_grupos` (
 
 LOCK TABLES `usuario_grupos` WRITE;
 /*!40000 ALTER TABLE `usuario_grupos` DISABLE KEYS */;
+INSERT INTO `usuario_grupos` VALUES (1,41,5),(2,42,6),(3,1,15);
 /*!40000 ALTER TABLE `usuario_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,14 +175,15 @@ CREATE TABLE `usuarios` (
   `email` varchar(45) NOT NULL,
   `senha` char(64) NOT NULL,
   `Tipo_usuario` varchar(45) NOT NULL,
-  `Token` varchar(45) DEFAULT NULL,
+  `token` varchar(10) DEFAULT NULL,
+  `token_expiracao` datetime DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `ID_usuario_UNIQUE` (`id_usuario`),
   UNIQUE KEY `Nome_UNIQUE` (`nome`),
   UNIQUE KEY `CPF_UNIQUE` (`CPF`),
   UNIQUE KEY `Matricula_UNIQUE` (`matricula`),
   UNIQUE KEY `UN_email_usuario` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +192,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN',NULL);
+INSERT INTO `usuarios` VALUES (1,'Administrador','000.000.000-00','0000000000000','admin@ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','ADMIN','826159','2025-07-12 12:09:40'),(41,'Athos Ribeiro','092.189.074-91','2024106090016','athos.r@estudante.ifro.edu.br','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92','DISCENTE',NULL,NULL),(42,'Floriano Araujo','089.452.175-93','2024106090025','f.araujo@estudante.ifro.edu.br','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','DISCENTE','832770','2025-07-12 22:53:09');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,10 +209,10 @@ CREATE TABLE `votacao` (
   `id_grupo_destino` int NOT NULL,
   `data_Resultado` date NOT NULL,
   `titulo` varchar(225) NOT NULL,
-  `descricao` varchar(225) NOT NULL,
+  `descricao` text,
   `data_inicio` date NOT NULL,
   `data_fim` date NOT NULL,
-  `status` enum('PENDENTE','APROVADA','REPROVADA') NOT NULL,
+  `status` enum('PENDENTE','APROVADA','REPROVADA','CONCLUIDA') NOT NULL,
   `pergunta` varchar(100) NOT NULL,
   PRIMARY KEY (`id_Votacao`),
   UNIQUE KEY `id_Votacao_UNIQUE` (`id_Votacao`),
@@ -227,7 +229,7 @@ CREATE TABLE `votacao` (
 
 LOCK TABLES `votacao` WRITE;
 /*!40000 ALTER TABLE `votacao` DISABLE KEYS */;
-INSERT INTO `votacao` VALUES (2,1,5,'1314-01-13','adadaddad','dadadad','1314-01-13','3133-07-31','PENDENTE','adada');
+INSERT INTO `votacao` VALUES (1,1,5,'2025-07-14','Titulo','Descreve','2025-07-14','2025-07-14','APROVADA','Eu mesmo?'),(2,1,5,'2025-07-14','dada','','2025-07-14','2025-07-14','APROVADA','dada');
 /*!40000 ALTER TABLE `votacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +241,7 @@ DROP TABLE IF EXISTS `voto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voto` (
-  `id_Voto` int NOT NULL,
+  `id_Voto` int NOT NULL AUTO_INCREMENT,
   `id_Votacao` int NOT NULL,
   `id_Usuario` int NOT NULL,
   `id_Opcao` int NOT NULL,
@@ -252,7 +254,7 @@ CREATE TABLE `voto` (
   CONSTRAINT `FK_id_Usuario` FOREIGN KEY (`id_Usuario`) REFERENCES `usuarios` (`id_usuario`),
   CONSTRAINT `FK_idOpcao` FOREIGN KEY (`id_Opcao`) REFERENCES `opcao_voto` (`id_opcao`),
   CONSTRAINT `FK_idVotacao` FOREIGN KEY (`id_Votacao`) REFERENCES `votacao` (`id_Votacao`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,6 +263,7 @@ CREATE TABLE `voto` (
 
 LOCK TABLES `voto` WRITE;
 /*!40000 ALTER TABLE `voto` DISABLE KEYS */;
+INSERT INTO `voto` VALUES (1,2,1,3,'2025-07-14');
 /*!40000 ALTER TABLE `voto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -273,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-08 19:36:44
+-- Dump completed on 2025-07-14 19:46:39

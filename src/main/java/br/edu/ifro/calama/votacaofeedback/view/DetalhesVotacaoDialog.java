@@ -10,6 +10,10 @@ import br.edu.ifro.calama.votacaofeedback.model.Votacao;
 import br.edu.ifro.calama.votacaofeedback.repository.GrupoRepository;
 import br.edu.ifro.calama.votacaofeedback.repository.VotacaoRepository;
 import java.awt.Color;
+import br.edu.ifro.calama.votacaofeedback.view.AprovarVotacaoView;
+import br.edu.ifro.calama.votacaofeedback.view.CriarVotacaoView;
+import br.edu.ifro.calama.votacaofeedback.view.GerenciarVotacaoView;
+import br.edu.ifro.calama.votacaofeedback.view.MenuPrincipalView;
 import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -21,16 +25,19 @@ import javax.swing.JPanel;
 
 
 public class DetalhesVotacaoDialog extends javax.swing.JDialog {
+      public enum ModoDialogo {
+        APROVACAO,
+        GERENCIAMENTO,
+        PARTICIPACAO,
+        RESULTADO
+    }
     private Votacao votacaoAtual;
     private final Component telaDeOrigem;
     private AprovarVotacaoView origem;
     private Usuario usuarioLogado;
+    private ModoDialogo modo;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetalhesVotacaoDialog.class.getName());
-    
-    public enum ModoDialogo {
-        APROVACAO,
-        GERENCIAMENTO
-    }
+
     class RoundedButton extends JButton {
         public RoundedButton(String text) {
             super(text);
@@ -120,12 +127,16 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             g2d.fillRect(0, 0, w, h);
         }
     }
-    
+
     public DetalhesVotacaoDialog(java.awt.Frame parent, boolean modal, Usuario usuario, Component telaDeOrigem) {
         super(parent, modal);
         this.usuarioLogado = usuario;
         this.telaDeOrigem = telaDeOrigem;
         initComponents();
+        
+        pnlAcoesDinamicas.add(btnParticipar, "card_participar");
+        pnlAcoesDinamicas.add(btnVerResultado, "card_resultado");
+        pnlAcoesDinamicas.add(btnEditar, "card_editar");
         
         btnAprovarDialog.setVisible(false);
         btnReprovarDialog.setVisible(false);
@@ -138,20 +149,44 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         lblPerguntaPrincipal.setOpaque(false);
     }
     
-    public void setModo(ModoDialogo modo) {
-        if (modo == ModoDialogo.APROVACAO) {
+public void setModo(ModoDialogo modo) {
+    this.modo = modo;
+
+    btnAprovarDialog.setVisible(false);
+    btnReprovarDialog.setVisible(false);
+
+    pnlAcoesDinamicas.setVisible(true); 
+
+    java.awt.CardLayout cl = (java.awt.CardLayout)(pnlAcoesDinamicas.getLayout());
+
+    if (modo == null) return;
+
+    switch (modo) {
+        case APROVACAO:
             btnAprovarDialog.setVisible(true);
             btnReprovarDialog.setVisible(true);
-            btnEditar.setVisible(false);
-        } else if (modo == ModoDialogo.GERENCIAMENTO) {
-            btnAprovarDialog.setVisible(false);
-            btnReprovarDialog.setVisible(false);
-            btnEditar.setVisible(true);
-        }
-
+            // Esconde o painel de ações dinâmicas, pois os botões de aprovação estão fora dele
+            pnlAcoesDinamicas.setVisible(false); 
+            break;
+        case PARTICIPACAO:
+            // Mostra a "carta" com o botão de participar
+            cl.show(pnlAcoesDinamicas, "card_participar");
+            break;
+        case GERENCIAMENTO:
+            // Mostra a "carta" com o botão de editar
+            cl.show(pnlAcoesDinamicas, "card_editar");
+            break;
+        case RESULTADO:
+            // Mostra a "carta" com o botão de resultado
+            cl.show(pnlAcoesDinamicas, "card_resultado");
+            break;
+        default:
+            // Se nenhum modo corresponder, esconde o painel
+             pnlAcoesDinamicas.setVisible(false);
+            break;
     }
+}
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -190,7 +225,10 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         lblTipoVotacao = new javax.swing.JLabel();
         jPanel11 = new RoundedPanel();
         lblParticipantes = new javax.swing.JLabel();
+        pnlAcoesDinamicas = new javax.swing.JPanel();
+        btnParticipar = new javax.swing.JButton();
         btnEditar = new RoundedButton("✓ Editar");
+        btnVerResultado = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -545,7 +583,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 16, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -577,11 +615,41 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                 .addGap(14, 14, 14))
         );
 
+        pnlAcoesDinamicas.setLayout(new java.awt.CardLayout());
+
+        btnParticipar.setBackground(new java.awt.Color(0, 153, 204));
+        btnParticipar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnParticipar.setForeground(new java.awt.Color(255, 255, 255));
+        btnParticipar.setText("✓ Participar");
+        btnParticipar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParticiparActionPerformed(evt);
+            }
+        });
+        pnlAcoesDinamicas.add(btnParticipar, "card4");
+
         btnEditar.setBackground(new java.awt.Color(0, 153, 204));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("✓ Editar");
         btnEditar.setBorder(null);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        pnlAcoesDinamicas.add(btnEditar, "card2");
+
+        btnVerResultado.setBackground(new java.awt.Color(0, 153, 204));
+        btnVerResultado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnVerResultado.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerResultado.setText("✓ Resultado");
+        btnVerResultado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerResultadoActionPerformed(evt);
+            }
+        });
+        pnlAcoesDinamicas.add(btnVerResultado, "card3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -589,10 +657,11 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(505, 505, 505)
+                        .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -623,12 +692,12 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReprovarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                    .addComponent(btnVoltarDialog, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlAcoesDinamicas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(92, 92, 92))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 510));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -685,42 +754,60 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnVoltarDialogActionPerformed
 
-   
-public void setDados(Votacao votacao) {
-    this.votacaoAtual = votacao; 
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-    lblTituloPrincipal.setText(votacao.getTitulo());
-    txtAreaDescricao.setText(votacao.getDescricao());
-    if (votacao.getDataInicial() != null) {
-        lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
-    }
-    if (votacao.getDataFinal() != null) {
-        lblDataFinal.setText(sdf.format(votacao.getDataFinal()));
-    }
-    if (votacao.getDataResultado() != null) {
-        lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
-    }
-    lblPerguntaPrincipal.setText(votacao.getPergunta());
-    
-    try {
-        GrupoRepository grupoRepo = new GrupoRepository();
-        int idDoGrupo = votacao.getIdGrupoDestino();
-        Grupo grupo = grupoRepo.buscarPorId(idDoGrupo);
-        if (grupo != null) {
-            lblParticipantes.setText(grupo.getNome()); 
-        } else {
-            lblParticipantes.setText("Grupo não encontrado");
+    private void btnParticiparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParticiparActionPerformed
+       MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+        if (menuPrincipal != null && this.votacaoAtual != null) {
+        menuPrincipal.navegarParaTelaDeVoto(this.votacaoAtual, TelaDeVotoView.ModoTela.VOTAR);
         }
-    } catch (Exception e) {
-        lblParticipantes.setText("Erro ao buscar dados");
-        e.printStackTrace();
+        this.dispose();
+    }//GEN-LAST:event_btnParticiparActionPerformed
+
+    private void btnVerResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerResultadoActionPerformed
+        MenuPrincipalView menuPrincipal = (MenuPrincipalView) javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (menuPrincipal != null && this.votacaoAtual != null) {
+            menuPrincipal.navegarParaTelaDeVoto(this.votacaoAtual, TelaDeVotoView.ModoTela.RESULTADO);
+        }
+        this.dispose();
+    }//GEN-LAST:event_btnVerResultadoActionPerformed
+
+   
+    public void setDados(Votacao votacao) {
+        this.votacaoAtual = votacao; 
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        lblTituloPrincipal.setText(votacao.getTitulo());
+        txtAreaDescricao.setText(votacao.getDescricao());
+        if (votacao.getDataInicial() != null) {
+            lblDataInicial.setText(sdf.format(votacao.getDataInicial()));
+        }
+        if (votacao.getDataFinal() != null) {
+            lblDataFinal.setText(sdf.format(votacao.getDataFinal()));
+        }
+        if (votacao.getDataResultado() != null) {
+            lblDataResultado.setText(sdf.format(votacao.getDataResultado()));
+        }
+        lblPerguntaPrincipal.setText(votacao.getPergunta());
+
+        try {
+            GrupoRepository grupoRepo = new GrupoRepository();
+            int idDoGrupo = votacao.getIdGrupoDestino();
+            Grupo grupo = grupoRepo.buscarPorId(idDoGrupo);
+            if (grupo != null) {
+                lblParticipantes.setText(grupo.getNome()); 
+            } else {
+                lblParticipantes.setText("Grupo não encontrado");
+            }
+        } catch (Exception e) {
+            lblParticipantes.setText("Erro ao buscar dados");
+            e.printStackTrace();
+        }
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAprovarDialog;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnParticipar;
     private javax.swing.JButton btnReprovarDialog;
+    private javax.swing.JButton btnVerResultado;
     private javax.swing.JButton btnVoltarDialog;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -752,6 +839,7 @@ public void setDados(Votacao votacao) {
     private javax.swing.JLabel lblPerguntaPrincipal;
     private javax.swing.JLabel lblTipoVotacao;
     private javax.swing.JLabel lblTituloPrincipal;
+    private javax.swing.JPanel pnlAcoesDinamicas;
     private javax.swing.JTextArea txtAreaDescricao;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,11 +18,13 @@ import java.util.List;
  */
 public final class GerenciarVotacaoView extends javax.swing.JPanel {
 
-    private final Usuario usuarioLogado;
+    private Usuario usuarioLogado;
+    private MenuPrincipalView menuPrincipal;
     
-    public GerenciarVotacaoView(Usuario usuario) {
+    public GerenciarVotacaoView(MenuPrincipalView menuPrincipal, Usuario usuario) {
         initComponents();
         this.usuarioLogado = usuario;
+        this.menuPrincipal = menuPrincipal;
 
         if (this.usuarioLogado == null) {
             javax.swing.JOptionPane.showMessageDialog(this, "Erro: Usuário não identificado.", "Erro de Sessão", javax.swing.JOptionPane.ERROR_MESSAGE);

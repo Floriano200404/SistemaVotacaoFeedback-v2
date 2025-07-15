@@ -4,6 +4,8 @@
  */
 package br.edu.ifro.calama.votacaofeedback.view;
 
+import br.edu.ifro.calama.votacaofeedback.controller.RecuperacaoSenhaController;
+import br.edu.ifro.calama.votacaofeedback.util.ToastUtil;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -11,7 +13,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints; 
 import java.awt.geom.RoundRectangle2D; 
 import javax.swing.JButton; 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -21,53 +25,64 @@ public class AlterarSenhaView extends javax.swing.JFrame {
 
     private boolean senhaVisivel = false;
     private boolean confirmarSenhaVisivel = false;
+    private String email;
     
     private final javax.swing.ImageIcon eyeOpenIcon = new javax.swing.ImageIcon(getClass().getResource("/icons/eye_open.png"));
     private final javax.swing.ImageIcon eyeClosedIcon = new javax.swing.ImageIcon(getClass().getResource("/icons/eye_closed.png"));
     
 
-    public AlterarSenhaView() {
+    public AlterarSenhaView(String email) {
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.email = email;
         jLabEyeSenha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                senhaVisivel = !senhaVisivel; // Inverte o estado
+                senhaVisivel = !senhaVisivel;
                 if (senhaVisivel) {
-                    pwdNovaSenha.setEchoChar((char) 0); // Mostra a senha
-                    jLabEyeSenha.setIcon(eyeOpenIcon); // Muda para o ícone de olho aberto
+                    pwdNovaSenha.setEchoChar((char) 0);
+                    jLabEyeSenha.setIcon(eyeOpenIcon);
                 } else {
-                    pwdNovaSenha.setEchoChar('●'); // Oculta a senha
-                    jLabEyeSenha.setIcon(eyeClosedIcon); // Muda para o ícone de olho fechado
+                    pwdNovaSenha.setEchoChar('●');
+                    jLabEyeSenha.setIcon(eyeClosedIcon);
                 }
             }
         });
 
-        // Adiciona o listener para o ícone do campo "Confirmar Senha"
         jLabEyeConfirmarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                confirmarSenhaVisivel = !confirmarSenhaVisivel; // Inverte o estado
+                confirmarSenhaVisivel = !confirmarSenhaVisivel;
                 if (confirmarSenhaVisivel) {
-                    pwdConfirmarSenha.setEchoChar((char) 0); // Mostra a senha
-                    jLabEyeConfirmarSenha.setIcon(eyeOpenIcon); // Muda para o ícone de olho aberto
+                    pwdConfirmarSenha.setEchoChar((char) 0);
+                    jLabEyeConfirmarSenha.setIcon(eyeOpenIcon);
                 } else {
-                    pwdConfirmarSenha.setEchoChar('●'); // Oculta a senha
-                    jLabEyeConfirmarSenha.setIcon(eyeClosedIcon); // Muda para o ícone de olho fechado
+                    pwdConfirmarSenha.setEchoChar('●');
+                    jLabEyeConfirmarSenha.setIcon(eyeClosedIcon);
                 }
             }
         });
         
-        // Inicia os campos de senha com o caractere de eco padrão
         pwdNovaSenha.setEchoChar('●');
         pwdConfirmarSenha.setEchoChar('●');
-        // --- FIM DO CÓDIGO A ADICIONAR ---
+    }
+    
+    public void exibirMensagem(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.ERROR, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
+    }
+
+    public void exibirMensagemDeSucesso(String mensagem) {
+        ToastUtil toast = new ToastUtil(this, mensagem, ToastUtil.ToastType.SUCCESS, ToastUtil.ToastPosition.TOP_RIGHT);
+        toast.display();
     }
    
 
     class RoundedButton extends JButton {
         public RoundedButton(String text) {
             super(text);
-            setContentAreaFilled(false); // Remove o preenchimento padrão
-            setFocusPainted(false); // Remove a borda de foco
-            setBorderPainted(false); // Remove a borda padrão
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
         }
 
         @Override
@@ -75,24 +90,20 @@ public class AlterarSenhaView extends javax.swing.JFrame {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             
-            // Define a cor do botão. Usa o getBackground() para que possamos mudá-la
             g2.setColor(getBackground());
-            // Desenha um retângulo arredondado
             g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 30, 30));
 
             g2.setColor(getForeground());
-            // Centraliza o texto
             g2.drawString(getText(), (getWidth() - g2.getFontMetrics().stringWidth(getText())) / 2,
                     (getHeight() + g2.getFontMetrics().getAscent()) / 2 - g2.getFontMetrics().getDescent());
             g2.dispose();
         }
     }
 
-    // Classe para um Painel com cantos arredondados
     class RoundedPanel extends JPanel {
         public RoundedPanel() {
             super();
-            setOpaque(false); // Torna o painel transparente para desenharmos nossa própria forma
+            setOpaque(false);
         }
 
         @Override
@@ -121,11 +132,6 @@ public class AlterarSenhaView extends javax.swing.JFrame {
         }
     }
     
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -332,101 +338,54 @@ public class AlterarSenhaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntCadastrarNovaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCadastrarNovaSenhaActionPerformed
-       String novaSenha = new String(pwdNovaSenha.getPassword());
+        String novaSenha = new String(pwdNovaSenha.getPassword());
         String confirmarSenha = new String(pwdConfirmarSenha.getPassword());
 
-        // 1. Verifica se os campos estão vazios
         if (novaSenha.isEmpty() || confirmarSenha.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this, 
-                "Por favor, preencha ambos os campos de senha.", 
-                "Erro de Validação", 
-                javax.swing.JOptionPane.ERROR_MESSAGE
-            );
-            return; // Para a execução do método aqui
+            exibirMensagem("Por favor, preencha ambos os campos de senha.");
+            return;
         }
+        if (novaSenha.length() < 6) { // Exemplo de validação de tamanho
+            exibirMensagem("A senha deve ter no mínimo 6 caracteres.");
+            return;
+        }
+        if (!novaSenha.equals(confirmarSenha)) {
+            exibirMensagem("As senhas não coincidem. Tente novamente.");
+            return;
+        }
+        
+        try {
+            RecuperacaoSenhaController controller = new RecuperacaoSenhaController();
+            if (controller.isSenhaAnterior(this.email, novaSenha)) {
+                exibirMensagem("A nova senha não pode ser igual à anterior.");
+                return;
+            }
+            boolean sucesso = controller.redefinirSenha(this.email, novaSenha);
 
-        // 2. Verifica se as senhas são iguais
-        if (novaSenha.equals(confirmarSenha)) {
-            // Se forem iguais, mostra uma mensagem de sucesso
-            javax.swing.JOptionPane.showMessageDialog(
-                this, 
-                "Senha alterada com sucesso!", 
-                "Confirmação", 
-                javax.swing.JOptionPane.INFORMATION_MESSAGE
-            );
-            // TODO: Adicionar aqui a lógica para salvar a nova senha no banco de dados ou no usuário.
-            // Ex: usuarioLogado.setSenha(novaSenha);
-            //     usuarioDAO.atualizar(usuarioLogado);
-            
-            // Opcional: Limpar os campos após o sucesso
-            pwdNovaSenha.setText("");
-            pwdConfirmarSenha.setText("");
-            
-        } else {
-            // Se forem diferentes, mostra uma mensagem de erro
-            javax.swing.JOptionPane.showMessageDialog(
-                this, 
-                "As senhas não coincidem. Por favor, tente novamente.", 
-                "Erro de Validação", 
-                javax.swing.JOptionPane.ERROR_MESSAGE
-            );
+            if (sucesso) {
+                exibirMensagemDeSucesso("Senha alterada com sucesso!");
+                new Timer(1500, e -> {
+                    new LoginView().setVisible(true);
+                    this.dispose();
+                }){{setRepeats(false);}}.start();
+            } else {
+                exibirMensagem("Não foi possível alterar a senha.");
+            }
+        } catch (Exception e) {
+            exibirMensagem("Ocorreu um erro ao salvar a nova senha.");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_bntCadastrarNovaSenhaActionPerformed
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
-        // TODO add your handling code here:
+        LoginView telaLogin = new LoginView();
+        telaLogin.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_bntVoltarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-       try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlterarSenhaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AlterarSenhaView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntCadastrarNovaSenha;
