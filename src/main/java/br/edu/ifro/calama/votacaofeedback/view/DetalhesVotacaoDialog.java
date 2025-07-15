@@ -309,9 +309,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
         votacaoRepo.atualizarStatus(this.votacaoAtual.getIdVotacao(), "REPROVADA");
 
         javax.swing.JOptionPane.showMessageDialog(this, "Votação Reprovada.");
-        if (telaDeOrigem != null) {
-            ((AprovarVotacaoView) telaDeOrigem).carregarVotacoesParaAprovacao();
-        }
+      
         this.dispose();
     } catch (Exception e) {
         e.printStackTrace();
@@ -343,9 +341,7 @@ public class DetalhesVotacaoDialog extends javax.swing.JDialog {
 
        
         javax.swing.JOptionPane.showMessageDialog(this, "Votação Aprovada com Sucesso!");
-        if (telaDeOrigem != null) {
-            ((GerenciarVotacaoView) telaDeOrigem).carregarVotacoesDoUsuario();
-        }
+
         this.dispose(); 
     } catch (Exception e) {
         e.printStackTrace();
